@@ -99,12 +99,16 @@ int main(int argc, char *argv[])
 
         // ----> Keyboard handling
         int key = cv::waitKey( 5 );
-        //if(key!=-1) std::cout << key << std::endl;
 
-        if(key=='q' || key=='Q') // Quit
-            break;
-        else
-            handleKeyboard( cap, key );
+        if( key != -1 )
+        {
+             //std::cout << key << std::endl;
+
+            if(key=='q' || key=='Q') // Quit
+                break;
+            else
+                handleKeyboard( cap, key );
+        }
         // <---- Keyboard handling
     }
 
@@ -365,6 +369,24 @@ void changeControlValue( zed::VideoCapture &cap, bool increase )
         break;
 
     case Gain:
+    {
+        int curValueLeft = cap.getGainSetting(zed::CAM_SENS_POS::LEFT);
+        int curValueRight = cap.getGainSetting(zed::CAM_SENS_POS::RIGHT);
+
+        if(increase)
+        {
+            cap.setGainSetting(zed::CAM_SENS_POS::LEFT,++curValueLeft);
+            cap.setGainSetting(zed::CAM_SENS_POS::RIGHT,++curValueRight);
+        }
+        else
+        {
+            cap.setGainSetting(zed::CAM_SENS_POS::LEFT,--curValueLeft);
+            cap.setGainSetting(zed::CAM_SENS_POS::RIGHT,--curValueRight);;
+        }
+
+        std::cout << "New Left Gain value: " << cap.getGainSetting(zed::CAM_SENS_POS::LEFT) << std::endl;
+        std::cout << "New Right Gain value: " << cap.getGainSetting(zed::CAM_SENS_POS::RIGHT) << std::endl;
+    }
         break;
 
     case WhiteBalance:
@@ -381,14 +403,7 @@ void changeControlValue( zed::VideoCapture &cap, bool increase )
         break;
     }
 
-    if(activeControl!=WhiteBalance)
-    {
-        if(increase)
-            setControlValue( cap, ++curValue);
-        else
-            setControlValue( cap, --curValue);
-    }
-    else
+    if(activeControl==WhiteBalance)
     {
         if(increase)
             curValue += 100;
@@ -398,6 +413,14 @@ void changeControlValue( zed::VideoCapture &cap, bool increase )
         cap.setWhiteBalanceSetting( curValue );
 
         std::cout << "New White Balance value: " << cap.getWhiteBalanceSetting() << std::endl;
+
+    }
+    else if(activeControl != Gain)
+    {
+        if(increase)
+            setControlValue( cap, ++curValue);
+        else
+            setControlValue( cap, --curValue);
     }
 }
 

@@ -67,6 +67,12 @@ enum class FPS {
     LAST = 101
 };
 
+enum class CAM_SENS_POS {
+    LEFT = 0,
+    RIGHT = 1,
+    LAST = 3
+};
+
 typedef struct _video_params
 {
     _video_params() {

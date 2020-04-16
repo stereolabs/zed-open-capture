@@ -25,29 +25,34 @@
 #define MASK_ON     0x02
 #define MASK_OFF    0xFD
 
-#define ADD_EXP_H 0x3500
-#define ADD_EXP_M 0x3501
-#define ADD_EXP_L 0x3502
-#define ADD_GAIN_H 0x3507
-#define ADD_GAIN_M 0x3508
-#define ADD_GAIN_L 0x3509
+#define ADD_EXP_H   0x3500
+#define ADD_EXP_M   0x3501
+#define ADD_EXP_L   0x3502
+#define ADD_GAIN_H  0x3507
+#define ADD_GAIN_M  0x3508
+#define ADD_GAIN_L  0x3509
 
-#define XU_TASK_SET 0x50
-#define XU_TASK_GET 0x51
+#define XU_TASK_SET     0x50
+#define XU_TASK_GET     0x51
+#define XU_ISP_CTRL     0x07
+#define XU_EXP_GAIN     0x25
 
-#define LINUX_CTRL_BRIGHTNESS 9963776
-#define LINUX_CTRL_CONTRAST 9963777
-#define LINUX_CTRL_HUE 9963779
-#define LINUX_CTRL_SATURATION 9963778
-#define LINUX_CTRL_GAIN 9963795
-#define LINUX_CTRL_AWB 9963802
-#define LINUX_CTRL_AWB_AUTO 9963788
-#define LINUX_CTRL_SHARPNESS 9963803
-#define LINUX_CTRL_GAMMA 9963792
+#define LINUX_CTRL_BRIGHTNESS   9963776
+#define LINUX_CTRL_CONTRAST     9963777
+#define LINUX_CTRL_HUE          9963779
+#define LINUX_CTRL_SATURATION   9963778
+#define LINUX_CTRL_GAIN         9963795
+#define LINUX_CTRL_AWB          9963802
+#define LINUX_CTRL_AWB_AUTO     9963788
+#define LINUX_CTRL_SHARPNESS    9963803
+#define LINUX_CTRL_GAMMA        9963792
 
 #define DEFAULT_GAMMA_NOECT 1
-#define DEFAULT_MIN_GAMMA 1
-#define DEFAULT_MAX_GAMMA 9
+#define DEFAULT_MIN_GAMMA   1
+#define DEFAULT_MAX_GAMMA   9
+
+#define DEFAULT_MIN_GAIN   0
+#define DEFAULT_MAX_GAIN   255
 
 namespace zed
 {
@@ -1080,23 +1085,28 @@ int VideoCapture::linux_cbs_is_aecagc(int side) {
     return result;
 }
 
-int VideoCapture::linux_ISPGainGet(unsigned char *val, unsigned char sensorID) {
-    unsigned char buf[384];
-    memset(buf, 0, 384);
-
+int VideoCapture::linux_ISPGainGet(uint8_t *val, uint8_t sensorID) {
     int hr = 0;
     uint8_t buffL, buffM, buffH;
 
-    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_GAIN_H, (uint8_t*) & buffH);
-    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_GAIN_M, (uint8_t*) & buffM);
-    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_GAIN_L, (uint8_t*) & buffL);
+    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_GAIN_H, &buffH);
+    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_GAIN_M, &buffM);
+    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_GAIN_L, &buffL);
 
     *val = buffL;
     *(val + 1) = buffM;
     *(val + 2) = buffH;
 
     return hr;
+}
 
+int VideoCapture::linux_ISPManualGain(unsigned char ucGainH, unsigned char ucGainM, unsigned char ucGainL, int sensorID)
+{
+    int hr = 0;
+    hr += linux_cbs_write_sensor_register(sensorID, 1, ADD_GAIN_H, ucGainH);
+    hr += linux_cbs_write_sensor_register(sensorID, 1, ADD_GAIN_M, ucGainM);
+    hr += linux_cbs_write_sensor_register(sensorID, 1, ADD_GAIN_L, ucGainL);
+    return hr;
 }
 
 int VideoCapture::setLEDValue(bool status)
@@ -1422,6 +1432,44 @@ void VideoCapture::resetAECAGC()
 {
     setAECAGC(true);
 }
+
+void VideoCapture::setGainSetting(CAM_SENS_POS cam, int value)
+{
+    uint8_t ucGainH=0, ucGainM=0, ucGainL=0;
+
+    if(getAECAGC())
+        setAECAGC(false);
+
+    if(value < DEFAULT_MIN_GAIN)
+        value = DEFAULT_MIN_GAIN;
+    if(value > DEFAULT_MAX_GAIN)
+        value = DEFAULT_MAX_GAIN;
+
+    int sensorId = static_cast<int>(cam);
+
+    ucGainM = (value >> 8) & 0xff;
+    ucGainL = value & 0xff;
+    linux_ISPManualGain(ucGainH, ucGainM, ucGainL, sensorId);
+
+}
+
+int VideoCapture::getGainSetting(CAM_SENS_POS cam)
+{
+    int gain=0;
+
+    uint8_t val[3];
+    memset(val, 0, 3);
+
+    int sensorId = static_cast<int>(cam);
+    int r = linux_ISPGainGet(val, sensorId);
+    if(r<0)
+        return r;
+
+    gain = (int) ((val[1] << 8) + val[0]);
+    return gain;
+}
+
+
 
 } // namespace zed
 

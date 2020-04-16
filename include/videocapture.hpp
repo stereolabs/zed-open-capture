@@ -133,6 +133,9 @@ public:
     bool getAECAGC();
     void resetAECAGC();
 
+    void setGainSetting(CAM_SENS_POS cam, int value);
+    int getGainSetting(CAM_SENS_POS cam);
+
     // <---- Camera Settings control
 
 private:
@@ -150,11 +153,10 @@ private:
     int linux_cbs_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t *value);
     int linux_cbs_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value);
 
-
     int linux_cbs_ispaecagc_enable(int side, bool enable);
     int linux_cbs_is_aecagc(int side);
 
-    int linux_ISPGainGet(unsigned char *val, unsigned char sensorID);
+    int linux_ISPGainGet(uint8_t *val, uint8_t sensorID);
     int linux_ISPManualGain(unsigned char ucGainH, unsigned char ucGainM, unsigned char ucGainL, int sensorID);
     int linux_ISPExposureGet(unsigned char *val, unsigned char sensorID);
     int linux_ISPManualExposure(unsigned char ucExpH, unsigned char ucExpM, unsigned char ucExpL, int sensorID);
