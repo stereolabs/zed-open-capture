@@ -16,6 +16,7 @@ typedef enum _cam_control
     Hue,
     Saturation,
     Gain,
+    Exposure,
     WhiteBalance,
     Sharpness,
     Gamma
@@ -41,7 +42,7 @@ void toggleAutomaticControl( zed::VideoCapture &cap );
 int main(int argc, char *argv[])
 {
     // ----> Set parameters
-    zed::Params params;
+    zed::VideoParams params;
     params.res = zed::RESOLUTION::HD1080;
     params.fps = zed::FPS::FPS_30;
     params.verbose = true;
@@ -68,7 +69,7 @@ int main(int argc, char *argv[])
     while (1)
     {
         // Get last available frame
-        zed::Frame* frame = cap.getLastFrame();
+        const zed::Frame* frame = cap.getLastFrame();
 
         // If the frame is valid we can display it
         if(frame != nullptr)
@@ -122,7 +123,6 @@ void handleKeyboard( zed::VideoCapture &cap, int key )
     switch(key)
     {
     case 'l':
-    case 'L': // Toggle led
     {
         bool led;
         cap.toggleLED( &led );
@@ -131,37 +131,42 @@ void handleKeyboard( zed::VideoCapture &cap, int key )
         break;
 
     case 'b':
-    case 'B': // Brightness control
         setActiveControl( Brightness );
         break;
 
-    case 's':
-    case 'S': // Sharpness control
+    case 'S':
         setActiveControl( Sharpness );
         break;
 
     case 'c':
-    case 'C': // Contrast control
         setActiveControl( Contrast );
         break;
 
-    case 'h':
-    case 'H': // Hue control
+    case 'H':
         setActiveControl( Hue );
         break;
 
-    case 'd':
-    case 'D': // Saturation control
+    case 's':
         setActiveControl( Saturation );
         break;
 
     case 'w':
-    case 'W': // White Balance control
         setActiveControl( WhiteBalance );
         break;
 
+    case 'g':
+        setActiveControl( Gamma );
+        break;
+
+    case 'e':
+        setActiveControl( Exposure );
+        break;
+
+    case 'G':
+        setActiveControl( Gain );
+        break;
+
     case 'a':
-    case 'A':
         toggleAutomaticControl( cap );
         break;
 
@@ -173,8 +178,10 @@ void handleKeyboard( zed::VideoCapture &cap, int key )
         cap.resetHueSetting();
         cap.resetSaturationSetting();
         cap.resetWhiteBalanceSetting();
+        cap.resetGammaSetting();
+        cap.resetAECAGC();
 
-        std::cout << "Reset all control settings to default values" << std::endl;
+        std::cout << "All control settings are reset to default values" << std::endl;
         break;
 
     case '+':
@@ -186,6 +193,27 @@ void handleKeyboard( zed::VideoCapture &cap, int key )
     case 173:
         changeControlValue(cap,false);
         break;
+
+    case 'h':
+    case '?':
+        std::cout << "COMMANDS HELP" << std::endl;
+        std::cout << " * 'q' or 'Q' -> Quit the example" << std::endl;
+        std::cout << " * 'h' or '?' -> This help menu" << std::endl;
+        std::cout << " * 'l' -> Toggle camera led" << std::endl;
+        std::cout << " * 'b' -> Brightness control" << std::endl;
+        std::cout << " * 's' -> Saturation control" << std::endl;
+        std::cout << " * 'c' -> Contrast control" << std::endl;
+        std::cout << " * 'h' -> Hue control" << std::endl;
+        std::cout << " * 'S' -> Sharpness control" << std::endl;
+        std::cout << " * 'w' -> White Balance control" << std::endl;
+        std::cout << " * 'g' -> Gamma control" << std::endl;
+        std::cout << " * 'e' -> Exposure control" << std::endl;
+        std::cout << " * 'G' -> Gain control" << std::endl;
+        std::cout << " * 'a' -> Toggle automatic for White Balance or Exposure and Gain" << std::endl;
+        std::cout << " * 'r' or 'R' -> Reset to default configuration" << std::endl;
+        std::cout << " * '+' -> Increase the current control value" << std::endl;
+        std::cout << " * '-' -> Decrease the current control value" << std::endl;
+        std::cout << " * '0' .. '9' -> Set the current control value" << std::endl;
     }
 }
 
@@ -244,6 +272,9 @@ void setActiveControl( CamControl control )
     case Gamma:
         ctrlStr = "Gamma";
         break;
+    case Exposure:
+        ctrlStr = "Exposure";
+        break;
     }
 
     std::cout << "Active camera control: " << ctrlStr << std::endl;
@@ -300,6 +331,10 @@ void setControlValue(zed::VideoCapture &cap, int value )
         break;
 
     case Gamma:
+        cap.setGammaSetting( value);
+        newValue = cap.getGammaSetting();
+
+        std::cout << "New Gamma value: ";
         break;
     }
 
@@ -342,6 +377,7 @@ void changeControlValue( zed::VideoCapture &cap, bool increase )
         break;
 
     case Gamma:
+        curValue = cap.getGammaSetting();
         break;
     }
 
@@ -372,6 +408,14 @@ void toggleAutomaticControl( zed::VideoCapture &cap )
         bool curValue = cap.getAutoWhiteBalanceSetting();
         cap.setAutoWhiteBalanceSetting( !curValue );
 
-        std::cout << "Auto White Balance " << ((!curValue)?"ENABLED":"DISABLED") << std::endl;
+        std::cout << "Automatic White Balance control: " << ((!curValue)?"ENABLED":"DISABLED") << std::endl;
+    }
+
+    if(activeControl == Exposure || activeControl == Gain )
+    {
+        bool curValue = cap.getAECAGC();
+        cap.setAECAGC( !curValue );
+
+        std::cout << "Automatic Exposure and Gain control: " << ((!curValue)?"ENABLED":"DISABLED") << std::endl;
     }
 }

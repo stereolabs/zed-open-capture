@@ -19,6 +19,19 @@
 #define READ_MODE   1
 #define WRITE_MODE  2
 
+#define ISP_LEFT    0x80181033
+#define ISP_RIGHT   0x80181833
+
+#define MASK_ON     0x02
+#define MASK_OFF    0xFD
+
+#define ADD_EXP_H 0x3500
+#define ADD_EXP_M 0x3501
+#define ADD_EXP_L 0x3502
+#define ADD_GAIN_H 0x3507
+#define ADD_GAIN_M 0x3508
+#define ADD_GAIN_L 0x3509
+
 #define XU_TASK_SET 0x50
 #define XU_TASK_GET 0x51
 
@@ -32,13 +45,14 @@
 #define LINUX_CTRL_SHARPNESS 9963803
 #define LINUX_CTRL_GAMMA 9963792
 
+#define DEFAULT_GAMMA_NOECT 1
 #define DEFAULT_MIN_GAMMA 1
 #define DEFAULT_MAX_GAMMA 9
 
 namespace zed
 {
 
-VideoCapture::VideoCapture(Params params)
+VideoCapture::VideoCapture(VideoParams params)
 {
     mVerbose = params.verbose;
 
@@ -110,7 +124,7 @@ void VideoCapture::reset()
     mInitialized=false;
 }
 
-void VideoCapture::checkResFps( Params par )
+void VideoCapture::checkResFps( VideoParams par )
 {
     mWidth = cameraResolution[static_cast<int>(par.res)].width*2;
     mHeight = cameraResolution[static_cast<int>(par.res)].height;
@@ -680,7 +694,7 @@ void VideoCapture::grabThreadFunc()
     mGrabRunning = false;
 }
 
-zed::Frame* VideoCapture::getLastFrame( uint64_t timeout_msec )
+const Frame *VideoCapture::getLastFrame( uint64_t timeout_msec )
 {
     // ----> Wait for a new frame
     uint64_t time_count = timeout_msec*10;
@@ -875,11 +889,221 @@ int VideoCapture::linux_cbs_set_gpio_direction(int gpio_number, int direction)
     return hr;
 }
 
-int VideoCapture::setLEDValue(bool display)
+int VideoCapture::linux_cbs_read_system_register(uint64_t address, uint8_t *value)
+{
+    unsigned char xu_buf[384];
+    memset(xu_buf, 0, 384);
+
+    //Set xubuf
+    xu_buf[0] = XU_TASK_GET;
+    xu_buf[1] = 0xA2;
+    xu_buf[2] = 0;
+    xu_buf[3] = 0x04; //Address width in bytes
+    xu_buf[4] = 0x01; //data width in bytes
+
+    xu_buf[5] = ((address) >> 24) & 0xff;
+    xu_buf[6] = ((address) >> 16) & 0xff;
+    xu_buf[7] = ((address) >> 8) & 0xff;
+    xu_buf[8] = (address) & 0xff;
+    xu_buf[9] = 0x00;
+    xu_buf[10] = 0x01;
+    xu_buf[11] = 0x00;
+    xu_buf[12] = 0x01;
+
+    int hr = linux_cbs_VendorControl(xu_buf, 384, READ_MODE);
+    *value = xu_buf[17];
+    return hr;
+}
+
+int VideoCapture::linux_cbs_write_system_register(uint64_t address, uint8_t value)
+{
+    unsigned char xu_buf[384];
+    memset(xu_buf, 0, 384);
+
+    //Set xubuf
+    xu_buf[0] = XU_TASK_SET;
+    xu_buf[1] = 0xA2;
+    xu_buf[2] = 0;
+    xu_buf[3] = 0x04; //Address width in bytes
+    xu_buf[4] = 0x01; //data width in bytes
+
+    xu_buf[5] = ((address) >> 24) & 0xff;
+    xu_buf[6] = ((address) >> 16) & 0xff;
+    xu_buf[7] = ((address) >> 8) & 0xff;
+    xu_buf[8] = (address) & 0xff;
+    xu_buf[9] = 0x00;
+    xu_buf[10] = 0x01;
+    xu_buf[11] = 0x00;
+    xu_buf[12] = 0x01;
+    xu_buf[16] = value;
+
+    int hr = linux_cbs_VendorControl(xu_buf, 384, 0);
+    return hr;
+}
+
+#define ASIC_INT_NULL_I2C    0xa3
+#define ASIC_INT_I2C         0xa5
+
+int VideoCapture::linux_cbs_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t* value)
+{
+    unsigned char xu_buf[384];
+    memset(xu_buf, 0, 384);
+
+
+    //Set xubuf
+    xu_buf[0] = XU_TASK_GET;
+    if (side == 0)
+        xu_buf[1] = ASIC_INT_NULL_I2C;
+    else
+        xu_buf[1] = ASIC_INT_I2C;
+    xu_buf[2] = 0x6c;
+    xu_buf[3] = sscb_id + 1; //Address width in bytes
+    xu_buf[4] = 0x01; //data width in bytes
+
+    xu_buf[5] = ((address) >> 24) & 0xff;
+    xu_buf[6] = ((address) >> 16) & 0xff;
+    xu_buf[7] = ((address) >> 8) & 0xff;
+    xu_buf[8] = (address) & 0xff;
+
+    xu_buf[9] = 0x00;
+    xu_buf[10] = 0x01;
+    xu_buf[11] = 0x00;
+    xu_buf[12] = 0x01;
+
+    int limit = 1;
+
+    xu_buf[9] = (limit >> 8) & 0xff;
+    xu_buf[10] = (limit >> 0) & 0xff;
+
+    //set page addr
+    xu_buf[9] = xu_buf[9] & 0x0f;
+    xu_buf[9] = xu_buf[9] | 0x10;
+    xu_buf[9] = xu_buf[9] | 0x80;
+
+    int hr = linux_cbs_VendorControl(xu_buf, 384, READ_MODE);
+    *value = xu_buf[17];
+    return hr;
+}
+
+int VideoCapture::linux_cbs_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value)
+{
+
+    unsigned char xu_buf[384];
+    memset(xu_buf, 0, 384);
+
+    //Set xubuf
+    xu_buf[0] = XU_TASK_SET;
+    if (side == 0)
+        xu_buf[1] = ASIC_INT_NULL_I2C;
+    else
+        xu_buf[1] = ASIC_INT_I2C;
+    xu_buf[2] = 0x6c;
+    xu_buf[3] = sscb_id + 1; //Address width in bytes
+    xu_buf[4] = 0x01; //data width in bytes
+
+    xu_buf[5] = ((address) >> 24) & 0xff;
+    xu_buf[6] = ((address) >> 16) & 0xff;
+    xu_buf[7] = ((address) >> 8) & 0xff;
+    xu_buf[8] = (address) & 0xff;
+    xu_buf[9] = 0x00;
+    xu_buf[10] = 0x01;
+    xu_buf[11] = 0x00;
+    xu_buf[12] = 0x01;
+    xu_buf[16] = value;
+
+
+    xu_buf[9] = 0x00;
+    xu_buf[10] = 0x01;
+    xu_buf[11] = 0x00;
+    xu_buf[12] = 0x01;
+
+    int limit = 1;
+    xu_buf[9] = (limit >> 8) & 0xff;
+    xu_buf[10] = (limit >> 0) & 0xff;
+
+    //set page addr
+    xu_buf[9] = xu_buf[9] & 0x0f;
+    xu_buf[9] = xu_buf[9] | 0x10;
+    xu_buf[9] = xu_buf[9] | 0x80;
+    memcpy(&xu_buf[16], &value, sizeof (uint8_t));
+    int hr = linux_cbs_VendorControl(xu_buf, 384, 0);
+
+    return hr;
+}
+
+int VideoCapture::linux_cbs_ispaecagc_enable(int side, bool enable) {
+    uint64_t Address = 0;
+    uint8_t value = 0;
+    int hr = 0;
+    if (side == 0)
+        Address = ISP_LEFT; //ISP L
+    else if (side == 1)
+        Address = ISP_RIGHT; //ISP R
+    else
+        return -2;
+
+    //Read Current sysregister
+    hr += linux_cbs_read_system_register(Address, &value);
+
+    // Adjust Value
+    if (enable)
+        value = value | MASK_ON;
+    else
+        value = value & MASK_OFF;
+
+    hr += linux_cbs_write_system_register(Address, value);
+
+    return hr;
+}
+
+int VideoCapture::linux_cbs_is_aecagc(int side) {
+    uint64_t Address = 0;
+    uint8_t value = 0;
+    int result = 0;
+    int hr = 0;
+    if (side == 0)
+        Address = ISP_LEFT; //ISP L
+    else if (side == 1)
+        Address = ISP_RIGHT; //ISP R
+    else
+        return -2;
+
+    //Read Current sysregister
+    hr += linux_cbs_read_system_register(Address, &value);
+
+    // Adjust Value
+    if (hr == 0)
+        result = ((value & MASK_ON) == MASK_ON); //check that secodn bit is on
+    else
+        return hr;
+
+    return result;
+}
+
+int VideoCapture::linux_ISPGainGet(unsigned char *val, unsigned char sensorID) {
+    unsigned char buf[384];
+    memset(buf, 0, 384);
+
+    int hr = 0;
+    uint8_t buffL, buffM, buffH;
+
+    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_GAIN_H, (uint8_t*) & buffH);
+    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_GAIN_M, (uint8_t*) & buffM);
+    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_GAIN_L, (uint8_t*) & buffL);
+
+    *val = buffL;
+    *(val + 1) = buffM;
+    *(val + 2) = buffH;
+
+    return hr;
+
+}
+
+int VideoCapture::setLEDValue(bool status)
 {
     int hr = 0;
     //LED GPIO : GPIO 2
-    if (display) {
+    if (status) {
         hr += linux_cbs_set_gpio_direction(2, 0);
         hr += linux_cbs_set_gpio_value(2, 1);
     } else {
@@ -1004,6 +1228,48 @@ void VideoCapture::resetCameraControlSettings(int ctrl_id) {
     return;
 }
 
+int VideoCapture::setGammaPreset(int side, int value)
+{
+    if (!mInitialized)
+        return -1;
+
+    if(value < DEFAULT_MIN_GAMMA)
+        value = DEFAULT_MIN_GAMMA;
+    if(value > DEFAULT_MAX_GAMMA)
+        value = DEFAULT_MAX_GAMMA;
+
+    uint64_t ulAddr = 0x80181500;
+
+    if (side == 1)
+        ulAddr = 0x80181D00;
+
+    int hr = 0;
+
+    for (int i = 0; i < 15; i++) {
+        hr += linux_cbs_write_system_register(ulAddr, cbs::PRESET_GAMMA[value-1][i]);
+        usleep(10);
+        uint8_t valRead = 0x0;
+        hr += linux_cbs_read_system_register(ulAddr, &valRead);
+        if (valRead != cbs::PRESET_GAMMA[value-1][i]) {
+            return -3;
+        }
+        ulAddr++;
+    }
+
+    ulAddr = 0x80181510;
+
+    if (side == 1)
+        ulAddr = 0x80181D10;
+    hr += linux_cbs_write_system_register(ulAddr, 0x01);
+    usleep(10);
+    uint8_t valRead = 0x0;
+    hr += linux_cbs_read_system_register(ulAddr, &valRead);
+    if (valRead != 0x01)
+        return -2;
+
+    return hr;
+}
+
 void VideoCapture::setBrightnessSetting(int value)
 {
     setCameraControlSettings(LINUX_CTRL_BRIGHTNESS, value);
@@ -1111,6 +1377,50 @@ void VideoCapture::setAutoWhiteBalanceSetting(bool active)
 void VideoCapture::resetAutoWhiteBalanceSetting()
 {
     setAutoWhiteBalanceSetting(true);
+}
+
+void VideoCapture::setGammaSetting(int value)
+{
+    int current_gamma = getCameraControlSettings(LINUX_CTRL_GAMMA);
+
+    if (value!=current_gamma)
+    {
+        setGammaPreset(0,value);
+        setGammaPreset(1,value);
+        setCameraControlSettings(LINUX_CTRL_GAMMA, value);
+    }
+}
+
+void VideoCapture::resetGammaSetting()
+{
+    int def_value = DEFAULT_GAMMA_NOECT;
+    setGammaPreset(0,def_value);
+    setGammaPreset(1,def_value);
+    setCameraControlSettings(LINUX_CTRL_GAMMA, def_value);
+}
+
+int VideoCapture::getGammaSetting() {
+    return getCameraControlSettings(LINUX_CTRL_GAMMA);
+}
+
+int VideoCapture::setAECAGC(bool active)
+{
+    int res = 0;
+    res += linux_cbs_ispaecagc_enable(0, active);
+    res += linux_cbs_ispaecagc_enable(1, active);
+    return res;
+}
+
+bool VideoCapture::getAECAGC()
+{
+    int resL = linux_cbs_is_aecagc(0);
+    int resR = linux_cbs_is_aecagc(1);
+    return (resL && resR);
+}
+
+void VideoCapture::resetAECAGC()
+{
+    setAECAGC(true);
 }
 
 } // namespace zed

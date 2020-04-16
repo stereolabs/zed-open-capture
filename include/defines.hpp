@@ -67,9 +67,9 @@ enum class FPS {
     LAST = 101
 };
 
-typedef struct _params
+typedef struct _video_params
 {
-    _params() {
+    _video_params() {
         res = RESOLUTION::HD2K;
         fps = FPS::FPS_15;
         verbose=false;
@@ -78,7 +78,7 @@ typedef struct _params
     RESOLUTION res;
     FPS fps;
     bool verbose;
-} Params;
+} VideoParams;
 
 struct Resolution {
     size_t width; /**< array width in pixels  */
@@ -102,7 +102,7 @@ static const uint16_t SL_USB_PROD_ZED = 0xf580;         //!< Old ZED firmware Pr
 static const uint16_t SL_USB_PROD_ZED_M = 0xf680;       //!< Old ZED-M binary modified firmware Product ID
 static const uint16_t SL_USB_PROD_ZED_CBS = 0xf582;     //!< CBS ZED Firmware Product ID
 static const uint16_t SL_USB_PROD_ZED_M_CBS = 0xf682;   //!< CBS ZED-M Firmware Product ID
-static const uint16_t SL_USB_PROD_ZED_2_CBS = 0xf780;     //!< CBS ZED 2 Firmware Product ID
+static const uint16_t SL_USB_PROD_ZED_2_CBS = 0xf780;   //!< CBS ZED 2 Firmware Product ID
 }
 
 #endif //DEFINES_HPP
