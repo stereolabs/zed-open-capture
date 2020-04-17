@@ -14,6 +14,8 @@
 #include <sstream>
 #include <fstream>            // for char_traits, basic_istream::operator>>
 
+#include <cmath>              // for round
+
 #define cbs_xu_unit_id          0x04 //mapped to wIndex 0x0400
 #define cbs_xu_control_selector 0x02 //mapped to wValue 0x0200
 #define READ_MODE   1
@@ -52,7 +54,27 @@
 #define DEFAULT_MAX_GAMMA   9
 
 #define DEFAULT_MIN_GAIN   0
-#define DEFAULT_MAX_GAIN   255
+#define DEFAULT_MAX_GAIN   100
+#define DEFAULT_MIN_EXP    0
+#define DEFAULT_MAX_EXP    100
+
+// Gain working zones
+#define GAIN_ZONE1_MIN 0
+#define GAIN_ZONE1_MAX 255
+#define GAIN_ZONE2_MIN 378
+#define GAIN_ZONE2_MAX 511
+#define GAIN_ZONE3_MIN 890
+#define GAIN_ZONE3_MAX 1023
+#define GAIN_ZONE4_MIN 1914
+#define GAIN_ZONE4_MAX 2047
+
+// Raw exposure max values
+#define EXP_RAW_MAX_15FPS   1550
+#define EXP_RAW_MAX_30FPS   1100
+#define EXP_RAW_MAX_60FPS   880
+#define EXP_RAW_MAX_100FPS  720
+
+#define EXP_RAW_MIN         2
 
 namespace zed
 {
@@ -72,6 +94,17 @@ VideoCapture::VideoCapture(VideoParams params)
     }
 
     checkResFps( params );
+
+    mGainSegMax = (GAIN_ZONE4_MAX-GAIN_ZONE4_MIN)+(GAIN_ZONE3_MAX-GAIN_ZONE3_MIN)+(GAIN_ZONE2_MAX-GAIN_ZONE2_MIN)+(GAIN_ZONE1_MAX-GAIN_ZONE1_MIN);
+
+    if( mFps <= 15 )
+        mExpoureRawMax = EXP_RAW_MAX_15FPS;
+    else if( mFps <= 30 )
+        mExpoureRawMax = EXP_RAW_MAX_30FPS;
+    else if( mFps <= 60 )
+        mExpoureRawMax = EXP_RAW_MAX_60FPS;
+    else
+        mExpoureRawMax = EXP_RAW_MAX_100FPS;
 }
 
 VideoCapture::~VideoCapture()
@@ -729,7 +762,6 @@ int VideoCapture::linux_cbs_VendorControl(unsigned char *buf, int len, int readM
     if (!mInitialized)
         return -3;
 
-
     unsigned char tmp[2] = {0};
     struct uvc_xu_control_query xu_query_info;
     xu_query_info.unit = cbs_xu_unit_id;
@@ -762,22 +794,34 @@ int VideoCapture::linux_cbs_VendorControl(unsigned char *buf, int len, int readM
     if (io_err != 0) {
         int res = errno;
 
-        const char *err;
+        const char *err=nullptr;
         switch (res) {
-        case ENOENT: err = "Extension unit or control not found";
+        case ENOENT:
+            err = "Extension unit or control not found";
             break;
-        case ENOBUFS: err = "Buffer size does not match control size";
+        case ENOBUFS:
+            err = "Buffer size does not match control size";
             break;
-        case EINVAL: err = "Invalid request code";
+        case EINVAL:
+            err = "Invalid request code";
             break;
-        case EBADRQC: err = "Request not supported by control";
+        case EBADRQC:
+            err = "Request not supported by control";
             break;
-        default: err = strerror(res);
+        default:
+            err = strerror(res);
             break;
         }
-#if 0
-        printf("CBS SET failed %s. (System code: %d) %d \n\r", err, res, xu_query_send.size);
-#endif
+        if(mVerbose)
+        {
+            std::string msg = std::string("CBS SET failed") +
+                    std::string(err) +
+                    std::string(". (System code: ") +
+                    std::to_string(res) +
+                    std::string(") ") +
+                    std::to_string(xu_query_send.size);
+            ERROR_OUT(msg);
+        }
         return -1;
     }
 
@@ -813,9 +857,17 @@ int VideoCapture::linux_cbs_VendorControl(unsigned char *buf, int len, int readM
             default: err = strerror(res);
                 break;
             }
-#if 0
-            printf("CBS GET failed %s. (System code: %d) \n\r", err, res);
-#endif
+
+            if(mVerbose)
+            {
+                std::string msg = std::string("CBS GET failed") +
+                        std::string(err) +
+                        std::string(". (System code: ") +
+                        std::to_string(res) +
+                        std::string(") ") +
+                        std::to_string(xu_query_send.size);
+                ERROR_OUT(msg);
+            }
             return -1;
         }
 
@@ -1109,6 +1161,35 @@ int VideoCapture::linux_ISPManualGain(unsigned char ucGainH, unsigned char ucGai
     return hr;
 }
 
+int VideoCapture::linux_ISPExposureGet(unsigned char *val, unsigned char sensorID)
+{
+    int hr = 0;
+    uint8_t buffL = 0;
+    uint8_t buffM = 0;
+    uint8_t buffH = 0;
+
+    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_EXP_H, (uint8_t*) & buffH);
+    usleep(10);
+    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_EXP_M, (uint8_t*) & buffM);
+    usleep(10);
+    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_EXP_L, (uint8_t*) & buffL);
+
+    *val = buffL;
+    *(val + 1) = buffM;
+    *(val + 2) = buffH;
+
+    return hr;
+}
+
+int VideoCapture::linux_ISPManualExposure(unsigned char ucExpH, unsigned char ucExpM, unsigned char ucExpL, int sensorID)
+{
+    int hr = 0;
+    hr += linux_cbs_write_sensor_register(sensorID, 1, ADD_EXP_H, ucExpH);
+    hr += linux_cbs_write_sensor_register(sensorID, 1, ADD_EXP_M, ucExpM);
+    hr += linux_cbs_write_sensor_register(sensorID, 1, ADD_EXP_L, ucExpL);
+    return hr;
+}
+
 int VideoCapture::setLEDValue(bool status)
 {
     int hr = 0;
@@ -1184,7 +1265,7 @@ void VideoCapture::setCameraControlSettings(int ctrl_id, int ctrl_val) {
     struct v4l2_queryctrl queryctrl;
     memset(&queryctrl, 0, sizeof (queryctrl));
     memset(&control_s, 0, sizeof (control_s));
-    int min, max, step, val_def;
+    int min, max/*, step, val_def*/;
 
     // save_controls(fd);
     queryctrl.id = ctrl_id;
@@ -1192,8 +1273,8 @@ void VideoCapture::setCameraControlSettings(int ctrl_id, int ctrl_val) {
     if (0 == res) {
         min = queryctrl.minimum;
         max = queryctrl.maximum;
-        step = queryctrl.step;
-        val_def = queryctrl.default_value;
+        //step = queryctrl.step;
+        //val_def = queryctrl.default_value;
 
         if (ctrl_id == LINUX_CTRL_GAMMA) {
             min = DEFAULT_MIN_GAMMA;
@@ -1204,9 +1285,7 @@ void VideoCapture::setCameraControlSettings(int ctrl_id, int ctrl_val) {
         min = 0; // queryctrl.minimum;
         max = 6500; // queryctrl.maximum;
         //step = queryctrl.step;
-        val_def = queryctrl.default_value;
-
-
+        //val_def = queryctrl.default_value;
     }
 
     if ((ctrl_val >= min) && (ctrl_val <= max)) {
@@ -1433,29 +1512,31 @@ void VideoCapture::resetAECAGC()
     setAECAGC(true);
 }
 
-void VideoCapture::setGainSetting(CAM_SENS_POS cam, int value)
+void VideoCapture::setGainSetting(CAM_SENS_POS cam, int gain)
 {
-    uint8_t ucGainH=0, ucGainM=0, ucGainL=0;
-
     if(getAECAGC())
         setAECAGC(false);
 
-    if(value < DEFAULT_MIN_GAIN)
-        value = DEFAULT_MIN_GAIN;
-    if(value > DEFAULT_MAX_GAIN)
-        value = DEFAULT_MAX_GAIN;
+    if (gain <= DEFAULT_MIN_GAIN)
+        gain = DEFAULT_MIN_GAIN;
+    else if (gain >= DEFAULT_MAX_GAIN)
+        gain = DEFAULT_MAX_GAIN;
+
+    uint8_t ucGainH=0, ucGainM=0, ucGainL=0;
+
+    int rawGain = calcRawGainValue(gain);
 
     int sensorId = static_cast<int>(cam);
 
-    ucGainM = (value >> 8) & 0xff;
-    ucGainL = value & 0xff;
+    ucGainM = (rawGain >> 8) & 0xff;
+    ucGainL = rawGain & 0xff;
     linux_ISPManualGain(ucGainH, ucGainM, ucGainL, sensorId);
 
 }
 
 int VideoCapture::getGainSetting(CAM_SENS_POS cam)
 {
-    int gain=0;
+    int rawGain=0;
 
     uint8_t val[3];
     memset(val, 0, 3);
@@ -1465,10 +1546,106 @@ int VideoCapture::getGainSetting(CAM_SENS_POS cam)
     if(r<0)
         return r;
 
-    gain = (int) ((val[1] << 8) + val[0]);
-    return gain;
+    rawGain = (int) ((val[1] << 8) + val[0]);
+    return calcGainValue(rawGain);
 }
 
+void VideoCapture::setExposureSetting(CAM_SENS_POS cam, int exposure)
+{
+    unsigned char ucExpH, ucExpM, ucExpL;
+
+    if(getAECAGC())
+        setAECAGC(false);
+
+    if(exposure < DEFAULT_MIN_EXP)
+        exposure = DEFAULT_MIN_EXP;
+    if(exposure > DEFAULT_MAX_EXP)
+        exposure = DEFAULT_MAX_EXP;
+
+    int rawExp = (mExpoureRawMax * ((float) exposure / 100.0));
+    if(rawExp<EXP_RAW_MIN)
+        rawExp = EXP_RAW_MIN;
+
+    std::cout << "Set Raw Exp: " << rawExp << std::endl;
+
+    int sensorId = static_cast<int>(cam);
+
+    ucExpH = (rawExp >> 12) & 0xff;
+    ucExpM = (rawExp >> 4) & 0xff;
+    ucExpL = (rawExp << 4) & 0xf0;
+    linux_ISPManualExposure(ucExpH, ucExpM, ucExpL, sensorId);
+}
+
+int VideoCapture::getExposureSetting(CAM_SENS_POS cam)
+{
+    int rawExp=0;
+
+    unsigned char val[3];
+    memset(val, 0, 3);
+
+    int sensorId = static_cast<int>(cam);
+
+    int r = linux_ISPExposureGet(val, sensorId);
+    if(r<0)
+        return r;
+    rawExp = (int) ((val[2] << 12) + (val[1] << 4) + (val[0] >> 4));
+
+    std::cout << "Get Raw Exp: " << rawExp << std::endl;
+
+    int exposure = static_cast<int>(std::round((100.0*rawExp)/mExpoureRawMax));
+    return exposure;
+}
+
+int VideoCapture::calcRawGainValue(int gain) {
+
+    // From [0,100] to segmented gain
+    int segmentedGain = static_cast<int>(std::round(mGainSegMax * (static_cast<double>(gain) / 100.0)));
+    int rawGain = 0;
+
+    // ----> Calculate correct GAIN ZONE
+    int gainZone1nbVal = GAIN_ZONE1_MAX - GAIN_ZONE1_MIN;
+    int gainZone2nbVal = GAIN_ZONE2_MAX - GAIN_ZONE2_MIN;
+    int gainZone3nbVal = GAIN_ZONE3_MAX - GAIN_ZONE3_MIN;
+    int gainZone4nbVal = GAIN_ZONE4_MAX - GAIN_ZONE4_MIN;
+
+    if (segmentedGain <= gainZone1nbVal)
+        rawGain = segmentedGain + GAIN_ZONE1_MIN;
+    else if (segmentedGain <= gainZone1nbVal + gainZone2nbVal)
+        rawGain = segmentedGain + GAIN_ZONE2_MIN - (gainZone1nbVal);
+    else if (segmentedGain <= gainZone1nbVal + gainZone2nbVal + gainZone3nbVal)
+        rawGain = segmentedGain + GAIN_ZONE3_MIN - (gainZone1nbVal + gainZone2nbVal);
+    else if (segmentedGain <= gainZone1nbVal + gainZone2nbVal + gainZone3nbVal + gainZone4nbVal)
+        rawGain = segmentedGain + GAIN_ZONE4_MIN - (gainZone1nbVal + gainZone2nbVal + gainZone3nbVal);
+    // <---- Calculate correct GAIN ZONE
+
+    return rawGain;
+}
+
+int VideoCapture::calcGainValue(int rawGain)
+{
+    int segmentedGain;
+
+    // ----> Calculate correct GAIN ZONE
+    int gainZone1nbVal = GAIN_ZONE1_MAX - GAIN_ZONE1_MIN;
+    int gainZone2nbVal = GAIN_ZONE2_MAX - GAIN_ZONE2_MIN;
+    int gainZone3nbVal = GAIN_ZONE3_MAX - GAIN_ZONE3_MIN;
+    if (rawGain >= GAIN_ZONE1_MIN && rawGain <= GAIN_ZONE1_MAX)
+        segmentedGain = rawGain - GAIN_ZONE1_MIN;
+    else if (rawGain >= GAIN_ZONE2_MIN && rawGain <= GAIN_ZONE2_MAX)
+        segmentedGain = rawGain - GAIN_ZONE2_MIN + gainZone1nbVal;
+    else if (rawGain >= GAIN_ZONE3_MIN && rawGain <= GAIN_ZONE3_MAX)
+        segmentedGain = rawGain - GAIN_ZONE3_MIN + gainZone1nbVal + gainZone2nbVal;
+    else if (rawGain >= GAIN_ZONE4_MIN && rawGain <= GAIN_ZONE4_MAX)
+        segmentedGain = rawGain - GAIN_ZONE4_MIN + gainZone1nbVal + gainZone2nbVal + gainZone3nbVal;
+    else
+        segmentedGain = -1;
+    // <---- Calculate correct GAIN ZONE
+
+    // From segmented gain to [0,100]
+    int gain = static_cast<int>(std::round((100.0*segmentedGain)/mGainSegMax));
+
+    return gain;
+}
 
 
 } // namespace zed

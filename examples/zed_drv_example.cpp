@@ -43,8 +43,8 @@ int main(int argc, char *argv[])
 {
     // ----> Set parameters
     zed::VideoParams params;
-    params.res = zed::RESOLUTION::HD1080;
-    params.fps = zed::FPS::FPS_30;
+    params.res = zed::RESOLUTION::VGA;
+    params.fps = zed::FPS::FPS_100;
     params.verbose = true;
     // <---- Set parameters
 
@@ -315,10 +315,7 @@ void setControlValue(zed::VideoCapture &cap, int value )
         newValue = cap.getSaturationSetting();
 
         std::cout << "New Saturation value: ";
-        break;
-
-    case Gain:
-        break;
+        break;    
 
     case WhiteBalance:
         cap.setWhiteBalanceSetting( 2800+value*411 );
@@ -339,7 +336,13 @@ void setControlValue(zed::VideoCapture &cap, int value )
         newValue = cap.getGammaSetting();
 
         std::cout << "New Gamma value: ";
-        break;
+        break;        
+
+    case Gain:
+    case Exposure:
+    default:
+        // Nothing to do here
+        return;
     }
 
     std::cout << newValue << std::endl;
@@ -389,6 +392,27 @@ void changeControlValue( zed::VideoCapture &cap, bool increase )
     }
         break;
 
+    case Exposure:
+    {
+        int curValueLeft = cap.getExposureSetting(zed::CAM_SENS_POS::LEFT);
+        int curValueRight = cap.getExposureSetting(zed::CAM_SENS_POS::RIGHT);
+
+        if(increase)
+        {
+            cap.setExposureSetting(zed::CAM_SENS_POS::LEFT,++curValueLeft);
+            cap.setExposureSetting(zed::CAM_SENS_POS::RIGHT,++curValueRight);
+        }
+        else
+        {
+            cap.setExposureSetting(zed::CAM_SENS_POS::LEFT,--curValueLeft);
+            cap.setExposureSetting(zed::CAM_SENS_POS::RIGHT,--curValueRight);;
+        }
+
+        std::cout << "New Left Exposure value: " << cap.getExposureSetting(zed::CAM_SENS_POS::LEFT) << std::endl;
+        std::cout << "New Right Exposure value: " << cap.getExposureSetting(zed::CAM_SENS_POS::RIGHT) << std::endl;
+    }
+        break;
+
     case WhiteBalance:
         cap.setAutoWhiteBalanceSetting(false);
         curValue = cap.getWhiteBalanceSetting();
@@ -415,7 +439,7 @@ void changeControlValue( zed::VideoCapture &cap, bool increase )
         std::cout << "New White Balance value: " << cap.getWhiteBalanceSetting() << std::endl;
 
     }
-    else if(activeControl != Gain)
+    else if(activeControl != Gain && activeControl != Exposure)
     {
         if(increase)
             setControlValue( cap, ++curValue);

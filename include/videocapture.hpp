@@ -2,6 +2,7 @@
 #define VIDEOCAPTURE_HPP
 
 #include "defines.hpp"
+#include "videocapture_def.hpp"
 
 #include <chrono>
 #include <thread>
@@ -16,18 +17,10 @@ struct SL_DRV_EXPORT Frame
 {
     uint64_t frame_id = 0;          //!< Increasing index of frames
     uint64_t timestamp = 0;         //!< Timestamp in nanoseconds
-    unsigned char* data = nullptr;  //!< Frame data in YUV 4:2:2 format
+    uint8_t* data = nullptr;  //!< Frame data in YUV 4:2:2 format
     uint16_t width = 0;             //!< Frame width
     uint16_t height = 0;            //!< Frame height
     uint8_t channels = 0;           //!< Number of channels per pixel
-};
-
-/*!
- * \brief The Buffer struct used by UVC to store frame data
- */
-struct Buffer {
-    void *start;
-    size_t length;
 };
 
 /*!
@@ -122,7 +115,7 @@ public:
     bool getAutoWhiteBalanceSetting();
     void resetAutoWhiteBalanceSetting();
 
-    void setGammaSetting(int value);
+    void setGammaSetting(int value); // 1 -> 9
     int getGammaSetting();
     void resetGammaSetting();
 
@@ -133,9 +126,11 @@ public:
     bool getAECAGC();
     void resetAECAGC();
 
-    void setGainSetting(CAM_SENS_POS cam, int value);
+    void setGainSetting(CAM_SENS_POS cam, int gain); // 0 -> 100
     int getGainSetting(CAM_SENS_POS cam);
 
+    void setExposureSetting(CAM_SENS_POS cam, int value); // 0 -> 100
+    int getExposureSetting(CAM_SENS_POS cam);
     // <---- Camera Settings control
 
 private:
@@ -168,6 +163,8 @@ private:
 
     int setGammaPreset(int side, int value);
 
+    int calcRawGainValue(int gain); // Convert "user gain" to "ISP gain"
+    int calcGainValue(int rawGain); // Convert "ISP Gain" to "User gain"
 
     bool openCamera( uint8_t devId );
     bool startCapture();
@@ -216,6 +213,9 @@ private:
     uint64_t mStartTs=0;
     // ts in us to compute diff with buffer ts
     uint64_t mInitTs=0;
+
+    int mGainSegMax=0;
+    int mExpoureRawMax;
 
     std::thread mGrabThread;    //!< The grabbing thread
 
