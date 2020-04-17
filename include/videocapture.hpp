@@ -70,14 +70,14 @@ public:
      * \param status true for "ON", false for "OFF"
      * \return returns a negative value if an error occurred
      */
-    int setLEDValue(bool status);
+    int setLEDstatus(bool status);
 
     /*!
      * \brief Get the status of the camera led
      * \param value returned status: true for "ON", false for "OFF"
      * \return returns a negative value if an error occurred
      */
-    int getLEDValue(bool *value);
+    int getLEDstatus(bool *status);
 
     /*!
      * \brief Toggle the status of the camera led
@@ -88,49 +88,46 @@ public:
     // <---- Led Control
 
     // ----> Camera Settings control
-    void setBrightnessSetting(int value); // 0 -> 8
-    int getBrightnessSetting();
+    void setBrightness(int brightness); // 0 -> 8
+    int getBrightness();
     void resetBrightnessSetting();
 
-    void setSharpnessSetting(int value); // 0 -> 8
-    int getSharpnessSetting();
-    void resetSharpnessSetting();
+    void setSharpness(int sharpness); // 0 -> 8
+    int getSharpness();
+    void resetSharpness();
 
-    void setContrastSetting(int value); // 0 -> 8
-    int getContrastSetting();
-    void resetContrastSetting();
+    void setContrast(int contrast); // 0 -> 8
+    int getContrast();
+    void resetContrast();
 
-    void setHueSetting(int value); // 0 -> 11
-    int getHueSetting();
-    void resetHueSetting();
+    void setHue(int hue); // 0 -> 11
+    int getHue();
+    void resetHue();
 
-    void setSaturationSetting(int value); // 0 -> 8
-    int getSaturationSetting();
-    void resetSaturationSetting();
+    void setSaturation(int saturation); // 0 -> 8
+    int getSaturation();
+    void resetSaturation();
 
-    void setWhiteBalanceSetting(int value); // 2800 -> 6500
-    int getWhiteBalanceSetting();
-    void resetWhiteBalanceSetting();
-    void setAutoWhiteBalanceSetting(bool active);
-    bool getAutoWhiteBalanceSetting();
-    void resetAutoWhiteBalanceSetting();
+    void setWhiteBalance(int wb); // 2800 -> 6500
+    int getWhiteBalance();
 
-    void setGammaSetting(int value); // 1 -> 9
-    int getGammaSetting();
-    void resetGammaSetting();
+    void setAutoWhiteBalance(bool active);
+    bool getAutoWhiteBalance();
+    void resetAutoWhiteBalance();
 
-    void setLEDStatus(int value, bool useDefault);
-    int getLEDStatus();
+    void setGamma(int gamma); // 1 -> 9
+    int getGamma();
+    void resetGamma();
 
     int setAECAGC(bool active);
     bool getAECAGC();
     void resetAECAGC();
 
-    void setGainSetting(CAM_SENS_POS cam, int gain); // 0 -> 100
-    int getGainSetting(CAM_SENS_POS cam);
+    void setGain(CAM_SENS_POS cam, int gain); // 0 -> 100
+    int getGain(CAM_SENS_POS cam);
 
-    void setExposureSetting(CAM_SENS_POS cam, int value); // 0 -> 100
-    int getExposureSetting(CAM_SENS_POS cam);
+    void setExposure(CAM_SENS_POS cam, int exposure); // 0 -> 100
+    int getExposure(CAM_SENS_POS cam);
     // <---- Camera Settings control
 
 private:
@@ -139,22 +136,22 @@ private:
      */
     void grabThreadFunc();
 
-    int linux_cbs_VendorControl(unsigned char *buf, int len, int readMode, bool safe = false);
-    int linux_cbs_get_gpio_value(int gpio_number, uint8_t* value);
-    int linux_cbs_set_gpio_value(int gpio_number, uint8_t value);
-    int linux_cbs_set_gpio_direction(int gpio_number, int direction);
-    int linux_cbs_read_system_register(uint64_t address, uint8_t* value);
-    int linux_cbs_write_system_register(uint64_t address, uint8_t value);
-    int linux_cbs_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t *value);
-    int linux_cbs_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value);
+    int ll_VendorControl(unsigned char *buf, int len, int readMode, bool safe = false);
+    int ll_get_gpio_value(int gpio_number, uint8_t* value);
+    int ll_set_gpio_value(int gpio_number, uint8_t value);
+    int ll_set_gpio_direction(int gpio_number, int direction);
+    int ll_read_system_register(uint64_t address, uint8_t* value);
+    int ll_write_system_register(uint64_t address, uint8_t value);
+    int ll_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t *value);
+    int ll_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value);
 
-    int linux_cbs_ispaecagc_enable(int side, bool enable);
-    int linux_cbs_is_aecagc(int side);
+    int ll_isp_aecagc_enable(int side, bool enable);
+    int ll_isp_is_aecagc(int side);
 
-    int linux_ISPGainGet(uint8_t *val, uint8_t sensorID);
-    int linux_ISPManualGain(unsigned char ucGainH, unsigned char ucGainM, unsigned char ucGainL, int sensorID);
-    int linux_ISPExposureGet(unsigned char *val, unsigned char sensorID);
-    int linux_ISPManualExposure(unsigned char ucExpH, unsigned char ucExpM, unsigned char ucExpL, int sensorID);
+    int ll_isp_get_gain(uint8_t *val, uint8_t sensorID);
+    int ll_isp_set_gain(unsigned char ucGainH, unsigned char ucGainM, unsigned char ucGainL, int sensorID);
+    int ll_isp_get_exposure(unsigned char *val, unsigned char sensorID);
+    int ll_isp_set_exposure(unsigned char ucExpH, unsigned char ucExpM, unsigned char ucExpL, int sensorID);
 
 
     void setCameraControlSettings(int ctrl_id, int ctrl_val);

@@ -114,7 +114,7 @@ VideoCapture::~VideoCapture()
 
 void VideoCapture::reset()
 {
-    setLEDValue( false );
+    setLEDstatus( false );
 
     mStopCapture = true;
 
@@ -270,7 +270,7 @@ bool VideoCapture::init( int devId/*=-1*/ )
         VERBOSE_OUT( msg );
     }
 
-    setLEDValue( true );
+    setLEDstatus( true );
 
     return mInitialized;
 }
@@ -752,9 +752,7 @@ const Frame *VideoCapture::getLastFrame( uint64_t timeout_msec )
     return &mLastFrame;
 }
 
-
-
-int VideoCapture::linux_cbs_VendorControl(unsigned char *buf, int len, int readMode, bool safe) {
+int VideoCapture::ll_VendorControl(unsigned char *buf, int len, int readMode, bool safe) {
 
     if (len > 384)
         return -2;
@@ -889,7 +887,7 @@ int VideoCapture::linux_cbs_VendorControl(unsigned char *buf, int len, int readM
  * @param value(0x00: low, 0x01 : high)
  * @return 0 if success
  */
-int VideoCapture::linux_cbs_get_gpio_value(int gpio_number, uint8_t *value)
+int VideoCapture::ll_get_gpio_value(int gpio_number, uint8_t *value)
 {
     unsigned char xu_buf[384];
     memset(xu_buf, 0, 384);
@@ -899,7 +897,7 @@ int VideoCapture::linux_cbs_get_gpio_value(int gpio_number, uint8_t *value)
     xu_buf[1] = 0x13;
     xu_buf[2] = gpio_number;
 
-    int hr = linux_cbs_VendorControl(xu_buf, 384, 1);
+    int hr = ll_VendorControl(xu_buf, 384, 1);
     *value = xu_buf[17];
     return hr;
 }
@@ -910,7 +908,7 @@ int VideoCapture::linux_cbs_get_gpio_value(int gpio_number, uint8_t *value)
  * @param value(0x00: low, 0x01 : high)
  * @return 0 if success
  */
-int VideoCapture::linux_cbs_set_gpio_value(int gpio_number, uint8_t value)
+int VideoCapture::ll_set_gpio_value(int gpio_number, uint8_t value)
 {
     unsigned char xu_buf[64];
     memset(xu_buf, 0, 64);
@@ -921,7 +919,7 @@ int VideoCapture::linux_cbs_set_gpio_value(int gpio_number, uint8_t value)
     xu_buf[2] = gpio_number;
     xu_buf[3] = value;
 
-    int hr = linux_cbs_VendorControl(xu_buf, 64, 0);
+    int hr = ll_VendorControl(xu_buf, 64, 0);
     return hr;
 }
 
@@ -931,7 +929,7 @@ int VideoCapture::linux_cbs_set_gpio_value(int gpio_number, uint8_t value)
  * @param direction (0x00 output, 0x01 input)
  * @return  0 if success
  */
-int VideoCapture::linux_cbs_set_gpio_direction(int gpio_number, int direction)
+int VideoCapture::ll_set_gpio_direction(int gpio_number, int direction)
 {
     unsigned char xu_buf[64];
     memset(xu_buf, 0, 64);
@@ -942,11 +940,11 @@ int VideoCapture::linux_cbs_set_gpio_direction(int gpio_number, int direction)
     xu_buf[2] = gpio_number;
     xu_buf[3] = direction;
 
-    int hr = linux_cbs_VendorControl(xu_buf, 64, 0);
+    int hr = ll_VendorControl(xu_buf, 64, 0);
     return hr;
 }
 
-int VideoCapture::linux_cbs_read_system_register(uint64_t address, uint8_t *value)
+int VideoCapture::ll_read_system_register(uint64_t address, uint8_t *value)
 {
     unsigned char xu_buf[384];
     memset(xu_buf, 0, 384);
@@ -967,12 +965,12 @@ int VideoCapture::linux_cbs_read_system_register(uint64_t address, uint8_t *valu
     xu_buf[11] = 0x00;
     xu_buf[12] = 0x01;
 
-    int hr = linux_cbs_VendorControl(xu_buf, 384, READ_MODE);
+    int hr = ll_VendorControl(xu_buf, 384, READ_MODE);
     *value = xu_buf[17];
     return hr;
 }
 
-int VideoCapture::linux_cbs_write_system_register(uint64_t address, uint8_t value)
+int VideoCapture::ll_write_system_register(uint64_t address, uint8_t value)
 {
     unsigned char xu_buf[384];
     memset(xu_buf, 0, 384);
@@ -994,14 +992,14 @@ int VideoCapture::linux_cbs_write_system_register(uint64_t address, uint8_t valu
     xu_buf[12] = 0x01;
     xu_buf[16] = value;
 
-    int hr = linux_cbs_VendorControl(xu_buf, 384, 0);
+    int hr = ll_VendorControl(xu_buf, 384, 0);
     return hr;
 }
 
 #define ASIC_INT_NULL_I2C    0xa3
 #define ASIC_INT_I2C         0xa5
 
-int VideoCapture::linux_cbs_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t* value)
+int VideoCapture::ll_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t* value)
 {
     unsigned char xu_buf[384];
     memset(xu_buf, 0, 384);
@@ -1037,12 +1035,12 @@ int VideoCapture::linux_cbs_read_sensor_register(int side, int sscb_id, uint64_t
     xu_buf[9] = xu_buf[9] | 0x10;
     xu_buf[9] = xu_buf[9] | 0x80;
 
-    int hr = linux_cbs_VendorControl(xu_buf, 384, READ_MODE);
+    int hr = ll_VendorControl(xu_buf, 384, READ_MODE);
     *value = xu_buf[17];
     return hr;
 }
 
-int VideoCapture::linux_cbs_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value)
+int VideoCapture::ll_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value)
 {
 
     unsigned char xu_buf[384];
@@ -1083,12 +1081,12 @@ int VideoCapture::linux_cbs_write_sensor_register(int side, int sscb_id, uint64_
     xu_buf[9] = xu_buf[9] | 0x10;
     xu_buf[9] = xu_buf[9] | 0x80;
     memcpy(&xu_buf[16], &value, sizeof (uint8_t));
-    int hr = linux_cbs_VendorControl(xu_buf, 384, 0);
+    int hr = ll_VendorControl(xu_buf, 384, 0);
 
     return hr;
 }
 
-int VideoCapture::linux_cbs_ispaecagc_enable(int side, bool enable) {
+int VideoCapture::ll_isp_aecagc_enable(int side, bool enable) {
     uint64_t Address = 0;
     uint8_t value = 0;
     int hr = 0;
@@ -1100,7 +1098,7 @@ int VideoCapture::linux_cbs_ispaecagc_enable(int side, bool enable) {
         return -2;
 
     //Read Current sysregister
-    hr += linux_cbs_read_system_register(Address, &value);
+    hr += ll_read_system_register(Address, &value);
 
     // Adjust Value
     if (enable)
@@ -1108,12 +1106,12 @@ int VideoCapture::linux_cbs_ispaecagc_enable(int side, bool enable) {
     else
         value = value & MASK_OFF;
 
-    hr += linux_cbs_write_system_register(Address, value);
+    hr += ll_write_system_register(Address, value);
 
     return hr;
 }
 
-int VideoCapture::linux_cbs_is_aecagc(int side) {
+int VideoCapture::ll_isp_is_aecagc(int side) {
     uint64_t Address = 0;
     uint8_t value = 0;
     int result = 0;
@@ -1126,7 +1124,7 @@ int VideoCapture::linux_cbs_is_aecagc(int side) {
         return -2;
 
     //Read Current sysregister
-    hr += linux_cbs_read_system_register(Address, &value);
+    hr += ll_read_system_register(Address, &value);
 
     // Adjust Value
     if (hr == 0)
@@ -1137,13 +1135,13 @@ int VideoCapture::linux_cbs_is_aecagc(int side) {
     return result;
 }
 
-int VideoCapture::linux_ISPGainGet(uint8_t *val, uint8_t sensorID) {
+int VideoCapture::ll_isp_get_gain(uint8_t *val, uint8_t sensorID) {
     int hr = 0;
     uint8_t buffL, buffM, buffH;
 
-    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_GAIN_H, &buffH);
-    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_GAIN_M, &buffM);
-    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_GAIN_L, &buffL);
+    hr += ll_read_sensor_register(sensorID, 1, ADD_GAIN_H, &buffH);
+    hr += ll_read_sensor_register(sensorID, 1, ADD_GAIN_M, &buffM);
+    hr += ll_read_sensor_register(sensorID, 1, ADD_GAIN_L, &buffL);
 
     *val = buffL;
     *(val + 1) = buffM;
@@ -1152,27 +1150,27 @@ int VideoCapture::linux_ISPGainGet(uint8_t *val, uint8_t sensorID) {
     return hr;
 }
 
-int VideoCapture::linux_ISPManualGain(unsigned char ucGainH, unsigned char ucGainM, unsigned char ucGainL, int sensorID)
+int VideoCapture::ll_isp_set_gain(unsigned char ucGainH, unsigned char ucGainM, unsigned char ucGainL, int sensorID)
 {
     int hr = 0;
-    hr += linux_cbs_write_sensor_register(sensorID, 1, ADD_GAIN_H, ucGainH);
-    hr += linux_cbs_write_sensor_register(sensorID, 1, ADD_GAIN_M, ucGainM);
-    hr += linux_cbs_write_sensor_register(sensorID, 1, ADD_GAIN_L, ucGainL);
+    hr += ll_write_sensor_register(sensorID, 1, ADD_GAIN_H, ucGainH);
+    hr += ll_write_sensor_register(sensorID, 1, ADD_GAIN_M, ucGainM);
+    hr += ll_write_sensor_register(sensorID, 1, ADD_GAIN_L, ucGainL);
     return hr;
 }
 
-int VideoCapture::linux_ISPExposureGet(unsigned char *val, unsigned char sensorID)
+int VideoCapture::ll_isp_get_exposure(unsigned char *val, unsigned char sensorID)
 {
     int hr = 0;
     uint8_t buffL = 0;
     uint8_t buffM = 0;
     uint8_t buffH = 0;
 
-    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_EXP_H, (uint8_t*) & buffH);
+    hr += ll_read_sensor_register(sensorID, 1, ADD_EXP_H, (uint8_t*) & buffH);
     usleep(10);
-    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_EXP_M, (uint8_t*) & buffM);
+    hr += ll_read_sensor_register(sensorID, 1, ADD_EXP_M, (uint8_t*) & buffM);
     usleep(10);
-    hr += linux_cbs_read_sensor_register(sensorID, 1, ADD_EXP_L, (uint8_t*) & buffL);
+    hr += ll_read_sensor_register(sensorID, 1, ADD_EXP_L, (uint8_t*) & buffL);
 
     *val = buffL;
     *(val + 1) = buffM;
@@ -1181,41 +1179,41 @@ int VideoCapture::linux_ISPExposureGet(unsigned char *val, unsigned char sensorI
     return hr;
 }
 
-int VideoCapture::linux_ISPManualExposure(unsigned char ucExpH, unsigned char ucExpM, unsigned char ucExpL, int sensorID)
+int VideoCapture::ll_isp_set_exposure(unsigned char ucExpH, unsigned char ucExpM, unsigned char ucExpL, int sensorID)
 {
     int hr = 0;
-    hr += linux_cbs_write_sensor_register(sensorID, 1, ADD_EXP_H, ucExpH);
-    hr += linux_cbs_write_sensor_register(sensorID, 1, ADD_EXP_M, ucExpM);
-    hr += linux_cbs_write_sensor_register(sensorID, 1, ADD_EXP_L, ucExpL);
+    hr += ll_write_sensor_register(sensorID, 1, ADD_EXP_H, ucExpH);
+    hr += ll_write_sensor_register(sensorID, 1, ADD_EXP_M, ucExpM);
+    hr += ll_write_sensor_register(sensorID, 1, ADD_EXP_L, ucExpL);
     return hr;
 }
 
-int VideoCapture::setLEDValue(bool status)
+int VideoCapture::setLEDstatus(bool status)
 {
     int hr = 0;
     //LED GPIO : GPIO 2
     if (status) {
-        hr += linux_cbs_set_gpio_direction(2, 0);
-        hr += linux_cbs_set_gpio_value(2, 1);
+        hr += ll_set_gpio_direction(2, 0);
+        hr += ll_set_gpio_value(2, 1);
     } else {
-        hr += linux_cbs_set_gpio_direction(2, 0);
-        hr += linux_cbs_set_gpio_value(2, 0);
+        hr += ll_set_gpio_direction(2, 0);
+        hr += ll_set_gpio_value(2, 0);
     }
 
     return hr;
 }
 
-int VideoCapture::getLEDValue(bool *value)
+int VideoCapture::getLEDstatus(bool *status)
 {
-    if( value==nullptr)
+    if( status==nullptr)
     {
         return -1;
     }
 
     uint8_t val;
-    int hr = linux_cbs_set_gpio_direction(2, 1);
-    hr += linux_cbs_get_gpio_value(2, &val);
-    *value = val!=0;
+    int hr = ll_set_gpio_direction(2, 1);
+    hr += ll_get_gpio_value(2, &val);
+    *status = val!=0;
     return hr;
 }
 
@@ -1223,12 +1221,12 @@ int VideoCapture::toggleLED(bool* value)
 {
     bool curVal;
 
-    int ret = getLEDValue( &curVal );
+    int ret = getLEDstatus( &curVal );
 
     if(ret==0)
     {
         bool newVal = !curVal;
-        ret = setLEDValue( newVal );
+        ret = setLEDstatus( newVal );
 
         if( ret==0 && value!=nullptr )
         {
@@ -1335,10 +1333,10 @@ int VideoCapture::setGammaPreset(int side, int value)
     int hr = 0;
 
     for (int i = 0; i < 15; i++) {
-        hr += linux_cbs_write_system_register(ulAddr, cbs::PRESET_GAMMA[value-1][i]);
+        hr += ll_write_system_register(ulAddr, cbs::PRESET_GAMMA[value-1][i]);
         usleep(10);
         uint8_t valRead = 0x0;
-        hr += linux_cbs_read_system_register(ulAddr, &valRead);
+        hr += ll_read_system_register(ulAddr, &valRead);
         if (valRead != cbs::PRESET_GAMMA[value-1][i]) {
             return -3;
         }
@@ -1349,19 +1347,19 @@ int VideoCapture::setGammaPreset(int side, int value)
 
     if (side == 1)
         ulAddr = 0x80181D10;
-    hr += linux_cbs_write_system_register(ulAddr, 0x01);
+    hr += ll_write_system_register(ulAddr, 0x01);
     usleep(10);
     uint8_t valRead = 0x0;
-    hr += linux_cbs_read_system_register(ulAddr, &valRead);
+    hr += ll_read_system_register(ulAddr, &valRead);
     if (valRead != 0x01)
         return -2;
 
     return hr;
 }
 
-void VideoCapture::setBrightnessSetting(int value)
+void VideoCapture::setBrightness(int brightness)
 {
-    setCameraControlSettings(LINUX_CTRL_BRIGHTNESS, value);
+    setCameraControlSettings(LINUX_CTRL_BRIGHTNESS, brightness);
 }
 
 void VideoCapture::resetBrightnessSetting()
@@ -1369,118 +1367,113 @@ void VideoCapture::resetBrightnessSetting()
     resetCameraControlSettings(LINUX_CTRL_BRIGHTNESS);
 }
 
-int VideoCapture::getBrightnessSetting()
+int VideoCapture::getBrightness()
 {
     return getCameraControlSettings(LINUX_CTRL_BRIGHTNESS);
 }
 
-void VideoCapture::setSharpnessSetting(int value)
+void VideoCapture::setSharpness(int sharpness)
 {
-    setCameraControlSettings(LINUX_CTRL_SHARPNESS, value);
+    setCameraControlSettings(LINUX_CTRL_SHARPNESS, sharpness);
 }
 
-void VideoCapture::resetSharpnessSetting()
+void VideoCapture::resetSharpness()
 {
     resetCameraControlSettings(LINUX_CTRL_SHARPNESS);
 }
 
-int VideoCapture::getSharpnessSetting()
+int VideoCapture::getSharpness()
 {
     return getCameraControlSettings(LINUX_CTRL_SHARPNESS);
 }
 
-void VideoCapture::setContrastSetting(int value)
+void VideoCapture::setContrast(int contrast)
 {
-    setCameraControlSettings(LINUX_CTRL_CONTRAST, value);
+    setCameraControlSettings(LINUX_CTRL_CONTRAST, contrast);
 }
 
-void VideoCapture::resetContrastSetting()
+void VideoCapture::resetContrast()
 {
     resetCameraControlSettings(LINUX_CTRL_CONTRAST);
 }
 
-int VideoCapture::getContrastSetting()
+int VideoCapture::getContrast()
 {
     return getCameraControlSettings(LINUX_CTRL_CONTRAST);
 }
 
-void VideoCapture::setHueSetting(int value)
+void VideoCapture::setHue(int hue)
 {
-    setCameraControlSettings(LINUX_CTRL_HUE, value);
+    setCameraControlSettings(LINUX_CTRL_HUE, hue);
 }
 
-void VideoCapture::resetHueSetting()
+void VideoCapture::resetHue()
 {
     resetCameraControlSettings(LINUX_CTRL_HUE);
 }
 
-int VideoCapture::getHueSetting()
+int VideoCapture::getHue()
 {
     return getCameraControlSettings(LINUX_CTRL_HUE);
 }
 
-void VideoCapture::setSaturationSetting(int value)
+void VideoCapture::setSaturation(int saturation)
 {
-    setCameraControlSettings(LINUX_CTRL_SATURATION, value);
+    setCameraControlSettings(LINUX_CTRL_SATURATION, saturation);
 }
 
-void VideoCapture::resetSaturationSetting()
+void VideoCapture::resetSaturation()
 {
     resetCameraControlSettings(LINUX_CTRL_SATURATION);
 }
 
-int VideoCapture::getSaturationSetting()
+int VideoCapture::getSaturation()
 {
     return getCameraControlSettings(LINUX_CTRL_SATURATION);
 }
 
-int VideoCapture::getWhiteBalanceSetting()
+int VideoCapture::getWhiteBalance()
 {
     return getCameraControlSettings(LINUX_CTRL_AWB);
 }
 
-void VideoCapture::setWhiteBalanceSetting(int value)
+void VideoCapture::setWhiteBalance(int wb)
 {
     // Disable auto white balance if active
-    if (getAutoWhiteBalanceSetting() != 0)
-        setAutoWhiteBalanceSetting(false);
+    if (getAutoWhiteBalance() != 0)
+        setAutoWhiteBalance(false);
 
-    setCameraControlSettings(LINUX_CTRL_AWB, value);
+    setCameraControlSettings(LINUX_CTRL_AWB, wb);
 }
 
-void VideoCapture::resetWhiteBalanceSetting()
-{
-    resetAutoWhiteBalanceSetting();
-}
-
-bool VideoCapture::getAutoWhiteBalanceSetting()
+bool VideoCapture::getAutoWhiteBalance()
 {
     return (getCameraControlSettings(LINUX_CTRL_AWB_AUTO)!=0);
 }
 
-void VideoCapture::setAutoWhiteBalanceSetting(bool active)
+void VideoCapture::setAutoWhiteBalance(bool active)
 {
     setCameraControlSettings(LINUX_CTRL_AWB_AUTO, active?1:0);
 }
 
-void VideoCapture::resetAutoWhiteBalanceSetting()
+void VideoCapture::resetAutoWhiteBalance()
 {
-    setAutoWhiteBalanceSetting(true);
+    setAutoWhiteBalance(true);
 }
 
-void VideoCapture::setGammaSetting(int value)
+void VideoCapture::setGamma(int gamma)
 {
     int current_gamma = getCameraControlSettings(LINUX_CTRL_GAMMA);
 
-    if (value!=current_gamma)
+    if (gamma!=current_gamma)
     {
-        setGammaPreset(0,value);
-        setGammaPreset(1,value);
-        setCameraControlSettings(LINUX_CTRL_GAMMA, value);
+        setGammaPreset(0,gamma);
+        setGammaPreset(1,gamma);
+        setCameraControlSettings(LINUX_CTRL_GAMMA, gamma);
     }
 }
 
-void VideoCapture::resetGammaSetting()
+void VideoCapture::resetGamma()
 {
     int def_value = DEFAULT_GAMMA_NOECT;
     setGammaPreset(0,def_value);
@@ -1488,22 +1481,22 @@ void VideoCapture::resetGammaSetting()
     setCameraControlSettings(LINUX_CTRL_GAMMA, def_value);
 }
 
-int VideoCapture::getGammaSetting() {
+int VideoCapture::getGamma() {
     return getCameraControlSettings(LINUX_CTRL_GAMMA);
 }
 
 int VideoCapture::setAECAGC(bool active)
 {
     int res = 0;
-    res += linux_cbs_ispaecagc_enable(0, active);
-    res += linux_cbs_ispaecagc_enable(1, active);
+    res += ll_isp_aecagc_enable(0, active);
+    res += ll_isp_aecagc_enable(1, active);
     return res;
 }
 
 bool VideoCapture::getAECAGC()
 {
-    int resL = linux_cbs_is_aecagc(0);
-    int resR = linux_cbs_is_aecagc(1);
+    int resL = ll_isp_is_aecagc(0);
+    int resR = ll_isp_is_aecagc(1);
     return (resL && resR);
 }
 
@@ -1512,7 +1505,7 @@ void VideoCapture::resetAECAGC()
     setAECAGC(true);
 }
 
-void VideoCapture::setGainSetting(CAM_SENS_POS cam, int gain)
+void VideoCapture::setGain(CAM_SENS_POS cam, int gain)
 {
     if(getAECAGC())
         setAECAGC(false);
@@ -1530,11 +1523,11 @@ void VideoCapture::setGainSetting(CAM_SENS_POS cam, int gain)
 
     ucGainM = (rawGain >> 8) & 0xff;
     ucGainL = rawGain & 0xff;
-    linux_ISPManualGain(ucGainH, ucGainM, ucGainL, sensorId);
+    ll_isp_set_gain(ucGainH, ucGainM, ucGainL, sensorId);
 
 }
 
-int VideoCapture::getGainSetting(CAM_SENS_POS cam)
+int VideoCapture::getGain(CAM_SENS_POS cam)
 {
     int rawGain=0;
 
@@ -1542,7 +1535,7 @@ int VideoCapture::getGainSetting(CAM_SENS_POS cam)
     memset(val, 0, 3);
 
     int sensorId = static_cast<int>(cam);
-    int r = linux_ISPGainGet(val, sensorId);
+    int r = ll_isp_get_gain(val, sensorId);
     if(r<0)
         return r;
 
@@ -1550,7 +1543,7 @@ int VideoCapture::getGainSetting(CAM_SENS_POS cam)
     return calcGainValue(rawGain);
 }
 
-void VideoCapture::setExposureSetting(CAM_SENS_POS cam, int exposure)
+void VideoCapture::setExposure(CAM_SENS_POS cam, int exposure)
 {
     unsigned char ucExpH, ucExpM, ucExpL;
 
@@ -1573,10 +1566,10 @@ void VideoCapture::setExposureSetting(CAM_SENS_POS cam, int exposure)
     ucExpH = (rawExp >> 12) & 0xff;
     ucExpM = (rawExp >> 4) & 0xff;
     ucExpL = (rawExp << 4) & 0xf0;
-    linux_ISPManualExposure(ucExpH, ucExpM, ucExpL, sensorId);
+    ll_isp_set_exposure(ucExpH, ucExpM, ucExpL, sensorId);
 }
 
-int VideoCapture::getExposureSetting(CAM_SENS_POS cam)
+int VideoCapture::getExposure(CAM_SENS_POS cam)
 {
     int rawExp=0;
 
@@ -1585,7 +1578,7 @@ int VideoCapture::getExposureSetting(CAM_SENS_POS cam)
 
     int sensorId = static_cast<int>(cam);
 
-    int r = linux_ISPExposureGet(val, sensorId);
+    int r = ll_isp_get_exposure(val, sensorId);
     if(r<0)
         return r;
     rawExp = (int) ((val[2] << 12) + (val[1] << 4) + (val[0] >> 4));
