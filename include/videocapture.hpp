@@ -8,7 +8,7 @@
 #include <thread>
 #include <mutex>
 
-namespace zed {
+namespace sl_drv {
 
 /*!
  * \brief The Frame struct containing the acquired video frames
@@ -35,7 +35,7 @@ public:
      * \brief The default constructor
      *  * \param params the initialization parameters (see \ref VideoParams)
      */
-    VideoCapture(VideoParams params = _video_params() );
+    VideoCapture( VideoParams params = _video_params() );
 
     /*!
      * \brief Destructor
@@ -62,7 +62,7 @@ public:
      *
      * \note Do not delete the received frame
      */
-    const zed::Frame* getLastFrame(uint64_t timeout_msec=10);
+    const sl_drv::Frame* getLastFrame(uint64_t timeout_msec=10);
 
     // ----> Led Control
     /*!
@@ -130,6 +130,8 @@ public:
     int getExposure(CAM_SENS_POS cam);
     // <---- Camera Settings control
 
+    int getSerialNumber();
+
 private:
     /*!
      * \brief grabThreadFunc The frame grabbing thread function
@@ -144,6 +146,8 @@ private:
     int ll_write_system_register(uint64_t address, uint8_t value);
     int ll_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t *value);
     int ll_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value);
+
+    int ll_SPI_FlashProgramRead(uint8_t *pBuf, int Adr, int len);
 
     int ll_isp_aecagc_enable(int side, bool enable);
     int ll_isp_is_aecagc(int side);
@@ -169,7 +173,7 @@ private:
     int input_set_framerate(int fps);
     int xioctl(int fd, uint64_t IOCTL_X, void *arg);
     void checkResFps( VideoParams par );
-    zed::SL_DEVICE getCameraModel(std::string dev_name);
+    sl_drv::SL_DEVICE getCameraModel(std::string dev_name);
     void reset();
 
     /*!
@@ -199,7 +203,7 @@ private:
     int mChannels = 0;          //!< Frame channels
     int mFps=0;                 //!< Frame per seconds
 
-    zed::SL_DEVICE mCameraModel = zed::SL_DEVICE::NONE; //!< The camera model
+    sl_drv::SL_DEVICE mCameraModel = sl_drv::SL_DEVICE::NONE; //!< The camera model
 
     Frame mLastFrame;           //!< Last grabbed frame
     uint8_t mBufCount = 2;      //!< UVC buffer count

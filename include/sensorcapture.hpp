@@ -2,8 +2,14 @@
 #define SENSORCAPTURE_HPP
 
 #include "defines.hpp"
+#include "sensorcapture_def.hpp"
 
-namespace zed {
+#include <vector>
+#include <map>
+
+#include "hidapi.h"
+
+namespace sl_drv {
 
 /*!
  * \brief The SensorCapture class provides sensor grabbing functions
@@ -16,15 +22,37 @@ public:
     /*!
      * \brief SensorCapture is the default constructor
      */
-    SensorCapture();
+    SensorCapture(SensorParams params=_sensor_params());
 
     /*!
      * \brief ~SensorCapture  destructor
      */
     virtual ~SensorCapture();
 
-private:
+    /*!
+     * \brief Get the list of the serial number of all the available devices
+     * \return a vector containing the serial number of all the available devices
+     */
+    std::vector<int> getDeviceList();
 
+    /*!
+     * \brief Open a connection to the MCU of a ZED Mini or a ZED2 camera using the specified serial number or searching
+     *        for the first available device
+     * \param sn Serial Number of the camera. Use `-1` to open connect to the first available device
+     * \return returns true if the camera is connection is correctly estabilished
+     */
+    bool init( int sn=-1 );
+
+
+private:
+    int enumerateDevices();
+
+private:
+    SensorParams mParams; //!< Sensor capture parameters
+
+    std::map<int,uint16_t> mSlDevPid; //!< All the available Stereolabs MCU (ZED-M and ZED2) product IDs associated to their serial number
+
+    hid_device* mDevHandle = nullptr; //!< Hidapi device handler
 };
 
 }

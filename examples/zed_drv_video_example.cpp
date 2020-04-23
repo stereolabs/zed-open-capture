@@ -1,5 +1,4 @@
 #include "videocapture.hpp"
-#include "sensorcapture.hpp"
 
 #include <iostream>
 #include <iomanip>
@@ -25,31 +24,31 @@ typedef enum _cam_control
 CamControl activeControl = Brightness;
 
 // Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, zed::RESOLUTION res );
+void showImage( std::string name, cv::Mat& img, sl_drv::RESOLUTION res );
 
 // Handle Keyboard
-void handleKeyboard( zed::VideoCapture &cap, int key );
+void handleKeyboard( sl_drv::VideoCapture &cap, int key );
 
 // Change active control
 void setActiveControl( CamControl control );
 // Set new value for the active control
-void setControlValue( zed::VideoCapture &cap, int value );
+void setControlValue( sl_drv::VideoCapture &cap, int value );
 // '+' or '-' pressed
-void changeControlValue( zed::VideoCapture &cap, bool increase );
+void changeControlValue( sl_drv::VideoCapture &cap, bool increase );
 // 'a' or 'A' pressed to enable automatic WhiteBalanse or Gain/Exposure
-void toggleAutomaticControl( zed::VideoCapture &cap );
+void toggleAutomaticControl( sl_drv::VideoCapture &cap );
 
 int main(int argc, char *argv[])
 {
     // ----> Set parameters
-    zed::VideoParams params;
-    params.res = zed::RESOLUTION::HD720;
-    params.fps = zed::FPS::FPS_60;
+    sl_drv::VideoParams params;
+    params.res = sl_drv::RESOLUTION::HD720;
+    params.fps = sl_drv::FPS::FPS_60;
     params.verbose = true;
     // <---- Set parameters
 
     // ----> Create Video Capture
-    zed::VideoCapture cap(params);
+    sl_drv::VideoCapture cap(params);
     if( !cap.init(-1) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
@@ -60,8 +59,7 @@ int main(int argc, char *argv[])
     }
     // <---- Create Video Capture
 
-    // Create Sensor Capture
-    zed::SensorCapture sens;
+    std::cout << "Connected to camera sn: " << cap.getSerialNumber() << std::endl;
 
     // Default camera control setting
     setActiveControl( Brightness );
@@ -69,7 +67,7 @@ int main(int argc, char *argv[])
     while (1)
     {
         // Get last available frame
-        const zed::Frame* frame = cap.getLastFrame();
+        const sl_drv::Frame* frame = cap.getLastFrame();
 
         // If the frame is valid we can display it
         if(frame != nullptr)
@@ -102,7 +100,7 @@ int main(int argc, char *argv[])
 
         if( key != -1 )
         {
-             //std::cout << key << std::endl;
+            //std::cout << key << std::endl;
 
             if(key=='q' || key=='Q') // Quit
                 break;
@@ -115,7 +113,7 @@ int main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
-void handleKeyboard( zed::VideoCapture &cap, int key )
+void handleKeyboard( sl_drv::VideoCapture &cap, int key )
 {
     if(key >= '0' && key <= '9')
     {
@@ -221,22 +219,22 @@ void handleKeyboard( zed::VideoCapture &cap, int key )
     }
 }
 
-void showImage( std::string name, cv::Mat& img, zed::RESOLUTION res )
+void showImage( std::string name, cv::Mat& img, sl_drv::RESOLUTION res )
 {
     cv::Mat resized;
     switch(res)
     {
     default:
-    case zed::RESOLUTION::VGA:
+    case sl_drv::RESOLUTION::VGA:
         resized = img;
         break;
-    case zed::RESOLUTION::HD720:
+    case sl_drv::RESOLUTION::HD720:
         cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
         break;
-    case zed::RESOLUTION::HD1080:
+    case sl_drv::RESOLUTION::HD1080:
         cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
         break;
-    case zed::RESOLUTION::HD2K:
+    case sl_drv::RESOLUTION::HD2K:
         cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
         break;
     }
@@ -284,7 +282,7 @@ void setActiveControl( CamControl control )
     std::cout << "Active camera control: " << ctrlStr << std::endl;
 }
 
-void setControlValue(zed::VideoCapture &cap, int value )
+void setControlValue(sl_drv::VideoCapture &cap, int value )
 {
     int newValue;
     switch( activeControl )
@@ -315,7 +313,7 @@ void setControlValue(zed::VideoCapture &cap, int value )
         newValue = cap.getSaturation();
 
         std::cout << "New Saturation value: ";
-        break;    
+        break;
 
     case WhiteBalance:
         cap.setWhiteBalance( 2800+value*411 );
@@ -336,7 +334,7 @@ void setControlValue(zed::VideoCapture &cap, int value )
         newValue = cap.getGamma();
 
         std::cout << "New Gamma value: ";
-        break;        
+        break;
 
     case Gain:
     case Exposure:
@@ -348,9 +346,9 @@ void setControlValue(zed::VideoCapture &cap, int value )
     std::cout << newValue << std::endl;
 }
 
-void changeControlValue( zed::VideoCapture &cap, bool increase )
+void changeControlValue( sl_drv::VideoCapture &cap, bool increase )
 {
-    int curValue;
+    int curValue=0;
     switch( activeControl )
     {
     case Brightness:
@@ -373,43 +371,43 @@ void changeControlValue( zed::VideoCapture &cap, bool increase )
 
     case Gain:
     {
-        int curValueLeft = cap.getGain(zed::CAM_SENS_POS::LEFT);
-        int curValueRight = cap.getGain(zed::CAM_SENS_POS::RIGHT);
+        int curValueLeft = cap.getGain(sl_drv::CAM_SENS_POS::LEFT);
+        int curValueRight = cap.getGain(sl_drv::CAM_SENS_POS::RIGHT);
 
         if(increase)
         {
-            cap.setGain(zed::CAM_SENS_POS::LEFT,++curValueLeft);
-            cap.setGain(zed::CAM_SENS_POS::RIGHT,++curValueRight);
+            cap.setGain(sl_drv::CAM_SENS_POS::LEFT,++curValueLeft);
+            cap.setGain(sl_drv::CAM_SENS_POS::RIGHT,++curValueRight);
         }
         else
         {
-            cap.setGain(zed::CAM_SENS_POS::LEFT,--curValueLeft);
-            cap.setGain(zed::CAM_SENS_POS::RIGHT,--curValueRight);;
+            cap.setGain(sl_drv::CAM_SENS_POS::LEFT,--curValueLeft);
+            cap.setGain(sl_drv::CAM_SENS_POS::RIGHT,--curValueRight);;
         }
 
-        std::cout << "New Left Gain value: " << cap.getGain(zed::CAM_SENS_POS::LEFT) << std::endl;
-        std::cout << "New Right Gain value: " << cap.getGain(zed::CAM_SENS_POS::RIGHT) << std::endl;
+        std::cout << "New Left Gain value: " << cap.getGain(sl_drv::CAM_SENS_POS::LEFT) << std::endl;
+        std::cout << "New Right Gain value: " << cap.getGain(sl_drv::CAM_SENS_POS::RIGHT) << std::endl;
     }
         break;
 
     case Exposure:
     {
-        int curValueLeft = cap.getExposure(zed::CAM_SENS_POS::LEFT);
-        int curValueRight = cap.getExposure(zed::CAM_SENS_POS::RIGHT);
+        int curValueLeft = cap.getExposure(sl_drv::CAM_SENS_POS::LEFT);
+        int curValueRight = cap.getExposure(sl_drv::CAM_SENS_POS::RIGHT);
 
         if(increase)
         {
-            cap.setExposure(zed::CAM_SENS_POS::LEFT,++curValueLeft);
-            cap.setExposure(zed::CAM_SENS_POS::RIGHT,++curValueRight);
+            cap.setExposure(sl_drv::CAM_SENS_POS::LEFT,++curValueLeft);
+            cap.setExposure(sl_drv::CAM_SENS_POS::RIGHT,++curValueRight);
         }
         else
         {
-            cap.setExposure(zed::CAM_SENS_POS::LEFT,--curValueLeft);
-            cap.setExposure(zed::CAM_SENS_POS::RIGHT,--curValueRight);;
+            cap.setExposure(sl_drv::CAM_SENS_POS::LEFT,--curValueLeft);
+            cap.setExposure(sl_drv::CAM_SENS_POS::RIGHT,--curValueRight);;
         }
 
-        std::cout << "New Left Exposure value: " << cap.getExposure(zed::CAM_SENS_POS::LEFT) << std::endl;
-        std::cout << "New Right Exposure value: " << cap.getExposure(zed::CAM_SENS_POS::RIGHT) << std::endl;
+        std::cout << "New Left Exposure value: " << cap.getExposure(sl_drv::CAM_SENS_POS::LEFT) << std::endl;
+        std::cout << "New Right Exposure value: " << cap.getExposure(sl_drv::CAM_SENS_POS::RIGHT) << std::endl;
     }
         break;
 
@@ -448,7 +446,7 @@ void changeControlValue( zed::VideoCapture &cap, bool increase )
     }
 }
 
-void toggleAutomaticControl( zed::VideoCapture &cap )
+void toggleAutomaticControl( sl_drv::VideoCapture &cap )
 {
     if(activeControl == WhiteBalance)
     {

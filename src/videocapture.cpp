@@ -16,67 +16,7 @@
 
 #include <cmath>              // for round
 
-#define cbs_xu_unit_id          0x04 //mapped to wIndex 0x0400
-#define cbs_xu_control_selector 0x02 //mapped to wValue 0x0200
-#define READ_MODE   1
-#define WRITE_MODE  2
-
-#define ISP_LEFT    0x80181033
-#define ISP_RIGHT   0x80181833
-
-#define MASK_ON     0x02
-#define MASK_OFF    0xFD
-
-#define ADD_EXP_H   0x3500
-#define ADD_EXP_M   0x3501
-#define ADD_EXP_L   0x3502
-#define ADD_GAIN_H  0x3507
-#define ADD_GAIN_M  0x3508
-#define ADD_GAIN_L  0x3509
-
-#define XU_TASK_SET     0x50
-#define XU_TASK_GET     0x51
-#define XU_ISP_CTRL     0x07
-#define XU_EXP_GAIN     0x25
-
-#define LINUX_CTRL_BRIGHTNESS   9963776
-#define LINUX_CTRL_CONTRAST     9963777
-#define LINUX_CTRL_HUE          9963779
-#define LINUX_CTRL_SATURATION   9963778
-#define LINUX_CTRL_GAIN         9963795
-#define LINUX_CTRL_AWB          9963802
-#define LINUX_CTRL_AWB_AUTO     9963788
-#define LINUX_CTRL_SHARPNESS    9963803
-#define LINUX_CTRL_GAMMA        9963792
-
-#define DEFAULT_GAMMA_NOECT 1
-#define DEFAULT_MIN_GAMMA   1
-#define DEFAULT_MAX_GAMMA   9
-
-#define DEFAULT_MIN_GAIN   0
-#define DEFAULT_MAX_GAIN   100
-#define DEFAULT_MIN_EXP    0
-#define DEFAULT_MAX_EXP    100
-
-// Gain working zones
-#define GAIN_ZONE1_MIN 0
-#define GAIN_ZONE1_MAX 255
-#define GAIN_ZONE2_MIN 378
-#define GAIN_ZONE2_MAX 511
-#define GAIN_ZONE3_MIN 890
-#define GAIN_ZONE3_MAX 1023
-#define GAIN_ZONE4_MIN 1914
-#define GAIN_ZONE4_MAX 2047
-
-// Raw exposure max values
-#define EXP_RAW_MAX_15FPS   1550
-#define EXP_RAW_MAX_30FPS   1100
-#define EXP_RAW_MAX_60FPS   880
-#define EXP_RAW_MAX_100FPS  720
-
-#define EXP_RAW_MIN         2
-
-namespace zed
+namespace sl_drv
 {
 
 VideoCapture::VideoCapture(VideoParams params)
@@ -90,7 +30,7 @@ VideoCapture::VideoCapture(VideoParams params)
                 + std::to_string(mDrvMajorVer) + "."
                 + std::to_string(mDrvMinorVer) + "."
                 + std::to_string(mDrvPatchVer);
-        VERBOSE_OUT( ver );
+        INFO_OUT( ver );
     }
 
     checkResFps( params );
@@ -156,7 +96,7 @@ void VideoCapture::reset()
     if( mVerbose && mInitialized)
     {
         std::string msg = "Device closed";
-        VERBOSE_OUT( msg );
+        INFO_OUT( msg );
     }
 
     mInitialized=false;
@@ -233,7 +173,7 @@ void VideoCapture::checkResFps( VideoParams par )
                 + std::to_string(mFps)
                 +std::string("Hz");
 
-        VERBOSE_OUT(msg);
+        INFO_OUT(msg);
     }
 }
 
@@ -267,7 +207,7 @@ bool VideoCapture::init( int devId/*=-1*/ )
     if( mVerbose && mInitialized)
     {
         std::string msg = "Device '" + mDevName + "' opened";
-        VERBOSE_OUT( msg );
+        INFO_OUT( msg );
     }
 
     setLEDstatus( true );
@@ -284,24 +224,24 @@ bool VideoCapture::openCamera( uint8_t devId )
     if( mVerbose )
     {
         std::string msg = "Trying to open the device '" + mDevName + "'";
-        VERBOSE_OUT( msg );
+        INFO_OUT( msg );
     }
 
     // Check camera model
     mCameraModel = getCameraModel(mDevName);
 
-    if( mCameraModel==zed::SL_DEVICE::NONE )
+    if( mCameraModel==sl_drv::SL_DEVICE::NONE )
     {
         std::string msg = "The device '" + mDevName + "' is not a Stereolabs camera";
-        VERBOSE_OUT( msg );
+        INFO_OUT( msg );
         return false;
     }
 
-    if( mCameraModel==zed::SL_DEVICE::ZED ||
-            mCameraModel==zed::SL_DEVICE::ZED_M )
+    if( mCameraModel==sl_drv::SL_DEVICE::ZED ||
+            mCameraModel==sl_drv::SL_DEVICE::ZED_M )
     {
         std::string msg = "The FW of the device '" + mDevName + "' is not supported. Please update it.";
-        VERBOSE_OUT( msg );
+        INFO_OUT( msg );
         return false;
     }
 
@@ -493,6 +433,56 @@ bool VideoCapture::openCamera( uint8_t devId )
     return true;
 }
 
+int VideoCapture::getSerialNumber()
+{
+    if(!mInitialized)
+        return -1;
+
+    int ulValue = -1;
+
+    uint8_t UNIQUE_BUF[384];
+    memset(UNIQUE_BUF, 0, 384);
+
+    int res = -1;
+
+    int try_count = 0;
+    while(res!=0)
+    {
+        res = ll_SPI_FlashProgramRead(&UNIQUE_BUF[0], UNIQUE_ID_START, 64);
+
+        //check bytes read
+        if (UNIQUE_BUF[0] != 'O') {
+            res =  -1;
+        }
+        if (UNIQUE_BUF[1] != 'V') {
+            res =  -1;
+        }
+
+        try_count++;
+        if (try_count>500)
+            break;
+        usleep(1000);
+    }
+
+    if (res != 0)
+        return -1;
+
+    //check bytes read
+    if (UNIQUE_BUF[0] != 'O') {
+        return -1;
+    }
+    if (UNIQUE_BUF[1] != 'V') {
+        return -1;
+    }
+
+    ulValue = (UNIQUE_BUF[2] << 24) + (UNIQUE_BUF[3] << 16) + (UNIQUE_BUF[4] << 8) + UNIQUE_BUF[5];
+
+    char buff[128];
+    memset(buff, 0, 128);
+    sprintf(buff, "%x", ulValue);
+    return (int) atoi(buff);
+}
+
 bool VideoCapture::startCapture()
 {
     // ----> Start capturing
@@ -586,9 +576,9 @@ int VideoCapture::xioctl(int fd, uint64_t IOCTL_X, void *arg)
     return (ret);
 }
 
-zed::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
+sl_drv::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
 {
-    zed::SL_DEVICE camera_device = zed::SL_DEVICE::NONE;
+    sl_drv::SL_DEVICE camera_device = sl_drv::SL_DEVICE::NONE;
     int vid = 0, pid = 0;
     std::string modalias = "";
     std::string name = dev_name.erase(0, 5); //remove /dev/
@@ -639,15 +629,15 @@ zed::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
 
     // check PID VID
     if (pid == SL_USB_PROD_ZED && vid == SL_USB_VENDOR)
-        camera_device = zed::SL_DEVICE::ZED;
+        camera_device = sl_drv::SL_DEVICE::ZED;
     else if (pid == SL_USB_PROD_ZED_M && vid == SL_USB_VENDOR)
-        camera_device = zed::SL_DEVICE::ZED_M;
+        camera_device = sl_drv::SL_DEVICE::ZED_M;
     else if (pid == SL_USB_PROD_ZED_CBS && vid == SL_USB_VENDOR)
-        camera_device = zed::SL_DEVICE::ZED_CBS;
+        camera_device = sl_drv::SL_DEVICE::ZED_CBS;
     else if (pid == SL_USB_PROD_ZED_M_CBS && vid == SL_USB_VENDOR)
-        camera_device = zed::SL_DEVICE::ZED_M_CBS;
+        camera_device = sl_drv::SL_DEVICE::ZED_M_CBS;
     else if (pid == SL_USB_PROD_ZED_2_CBS && vid == SL_USB_VENDOR)
-        camera_device = zed::SL_DEVICE::ZED_2_CBS;
+        camera_device = sl_drv::SL_DEVICE::ZED_2_CBS;
 
     return camera_device;
 }
@@ -1083,6 +1073,33 @@ int VideoCapture::ll_write_sensor_register(int side, int sscb_id, uint64_t addre
     memcpy(&xu_buf[16], &value, sizeof (uint8_t));
     int hr = ll_VendorControl(xu_buf, 384, 0);
 
+    return hr;
+}
+
+int VideoCapture::ll_SPI_FlashProgramRead(uint8_t *pBuf, int Adr, int len) {
+
+    int hr = -1;
+    uint8_t xu_buf[384];
+    memset(xu_buf, 0, 384);
+
+    xu_buf[0] = 0x51;
+    xu_buf[1] = 0xA1;
+    xu_buf[2] = 0x03;
+
+    xu_buf[5] = (Adr >> 24) & 0xff;
+    xu_buf[6] = (Adr >> 16) & 0xff;
+    xu_buf[7] = (Adr >> 8) & 0xff;
+    xu_buf[8] = (Adr) & 0xff;
+
+    int pack_val = 36864 + len;
+    xu_buf[9] = ((pack_val) >> 8) & 0xff;
+    xu_buf[10] = ((pack_val) >> 0) & 0xff;
+
+    xu_buf[11] = ((len) >> 8) & 0xff;
+    xu_buf[12] = ((len) >> 0) & 0xff;
+
+    hr = ll_VendorControl(xu_buf, len, 1, true);
+    memcpy(pBuf, &xu_buf[17], len);
     return hr;
 }
 
@@ -1641,5 +1658,5 @@ int VideoCapture::calcGainValue(int rawGain)
 }
 
 
-} // namespace zed
+} // namespace sl
 

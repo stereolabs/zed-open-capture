@@ -21,7 +21,7 @@
 #endif
 #endif
 
-// SDK VERSION NUMBER
+//// SDK VERSION NUMBER
 #define ZED_DRV_MAJOR_VERSION 0
 #define ZED_DRV_MINOR_VERSION 1
 #define ZED_DRV_PATCH_VERSION 0
@@ -29,12 +29,22 @@
 #define ZED_DRV_VERSION_ATTRIBUTE private: uint32_t mDrvMajorVer = ZED_DRV_MAJOR_VERSION, mDrvMinorVer = ZED_DRV_MINOR_VERSION, mDrvPatchVer = ZED_DRV_PATCH_VERSION;
 
 // Debug output
-#define VERBOSE_OUT(msg) { int status_dem_0; std::cout << "[" << abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status_dem_0) << "] INFO: " << msg << std::endl; }
+#define INFO_OUT(msg) { int status_dem_0; std::cout << "[" << abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status_dem_0) << "] INFO: " << msg << std::endl; }
 #define WARNING_OUT(msg) { int status_dem_0; std::cerr << "[" << abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status_dem_0) << "] WARNING: " << msg << std::endl; }
 #define ERROR_OUT(msg) { int status_dem_0; std::cerr << "[" << abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status_dem_0) << "] ERROR: " << msg << std::endl; }
 
-#ifndef NSEC_PER_SEC
-#define NSEC_PER_SEC                   1000000000ULL
-#endif
+// Convert a wchar array to std::string
+inline std::string wstr2str( wchar_t* wstr)
+{
+    std::wstring ws( wstr );
+    std::string str( ws.begin(), ws.end() );
+    return str;
+}
+
+namespace sl_drv {
+
+const uint16_t SL_USB_VENDOR = 0x2b03;           //!< Stereolabs Vendor ID
+
+}
 
 #endif //DEFINES_HPP
