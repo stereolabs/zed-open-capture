@@ -4,6 +4,7 @@
 #include "defines.hpp"
 #include "sensorcapture_def.hpp"
 
+#include <thread>
 #include <vector>
 #include <map>
 
@@ -45,7 +46,19 @@ public:
 
 
 private:
+    /*!
+     * \brief grabThreadFunc The sensor data grabbing thread function
+     */
+    void grabThreadFunc();
+
+    bool startCapture();
+    void reset();
+
     int enumerateDevices();
+
+    bool enableDataStream(bool enable);
+    bool isDataStreamEnabled();
+    bool sendPing(); //!< Send a ping  each second (before 6 seconds) to keep data streaming alive
 
 private:
     SensorParams mParams; //!< Sensor capture parameters
@@ -53,6 +66,15 @@ private:
     std::map<int,uint16_t> mSlDevPid; //!< All the available Stereolabs MCU (ZED-M and ZED2) product IDs associated to their serial number
 
     hid_device* mDevHandle = nullptr; //!< Hidapi device handler
+
+    bool mInitialized = false;  //!< Inficates if the MCU has been initialized
+    bool mNewData = false;      //!< Indicates if new data are available
+    bool mStopCapture = false;  //!< Indicates if the grabbing thread must be stopped
+    bool mGrabRunning = false;  //!< Indicates if the grabbing thread is running
+
+    SensData mLastData;         //!< Last received sensor dara
+
+    std::thread mGrabThread;    //!< The grabbing thread
 };
 
 }

@@ -11,7 +11,7 @@ SensorCapture::SensorCapture( SensorParams params )
 
 SensorCapture::~SensorCapture()
 {
-
+    reset();
 }
 
 int SensorCapture::enumerateDevices()
@@ -119,6 +119,184 @@ bool SensorCapture::init( int sn )
         msg += sn_str;
 
         INFO_OUT(msg);
+    }
+
+    mInitialized = startCapture();
+
+    return true;
+}
+
+bool SensorCapture::enableDataStream(bool enable) {
+    if( !mDevHandle )
+        return false;
+    unsigned char buf[65];
+    buf[0] = REP_ID_SENSOR_STREAM_STATUS;
+    buf[1] = enable?1:0;
+
+    int res = hid_send_feature_report(mDevHandle, buf, 2);
+    if (res < 0) {
+        if(mParams.verbose)
+        {
+            std::string msg = "Unable to set a feature report [SensStreamStatus] - ";
+            msg += wstr2str(hid_error(mDevHandle));
+
+            WARNING_OUT(msg);
+        }
+
+        return false;
+    }
+
+    return true;
+}
+
+bool SensorCapture::isDataStreamEnabled() {
+    if( !mDevHandle ) {
+        return false;
+    }
+
+    unsigned char buf[65];
+    buf[0] = REP_ID_SENSOR_STREAM_STATUS;
+    int res = hid_get_feature_report(mDevHandle, buf, sizeof(buf));
+    if (res < 0)
+    {
+        std::string msg = "Unable to get a feature report [SensStreamStatus] - ";
+        msg += wstr2str(hid_error(mDevHandle));
+
+        WARNING_OUT( msg );
+
+        return false;
+    }
+
+    if( res < static_cast<int>(sizeof(SensStreamStatus)) )
+    {
+        WARNING_OUT( std::string("SensStreamStatus size mismatch [REP_ID_SENSOR_STREAM_STATUS]"));
+        return false;
+    }
+
+    if( buf[0] != REP_ID_SENSOR_STREAM_STATUS )
+    {
+        WARNING_OUT( std::string("SensStreamStatus type mismatch [REP_ID_SENSOR_STREAM_STATUS]") );
+
+        return false;
+    }
+
+    bool enabled = (buf[1]==1);
+
+    return enabled;
+}
+
+bool SensorCapture::startCapture()
+{
+    if( !enableDataStream(true) )
+    {
+        return false;
+    }
+
+    mGrabThread = std::thread( &SensorCapture::grabThreadFunc,this );
+
+    return true;
+}
+
+void SensorCapture::reset()
+{
+    mStopCapture = true;
+
+    if( mGrabThread.joinable() )
+    {
+        mGrabThread.join();
+    }
+
+    enableDataStream(false);
+
+    if( mDevHandle ) {
+        hid_close(mDevHandle);
+        mDevHandle = nullptr;
+    }
+
+    if( mParams.verbose && mInitialized)
+    {
+        std::string msg = "Device closed";
+        INFO_OUT( msg );
+    }
+
+    mInitialized=false;
+}
+
+void SensorCapture::grabThreadFunc()
+{
+    mNewData = false;
+    mStopCapture = false;
+    mGrabRunning = false;
+
+    // Read sensor data
+    unsigned char buf[65];
+
+    int ping_data_count = 0;
+
+
+    while (!mStopCapture)
+    {
+        // ----> Keep data stream alive
+        // sending a ping once per second
+        if(ping_data_count>=400) {
+            ping_data_count=0;
+            sendPing();
+        };
+        ping_data_count++;
+        // <---- Keep data stream alive
+
+        mGrabRunning=true;
+
+        buf[1]=1;
+        int res = hid_read_timeout( mDevHandle, buf, 64, 500 );
+
+        // TODO count timeout and stop thread
+
+        if( res < static_cast<int>(sizeof(SensData)) )  {
+            hid_set_nonblocking( mDevHandle, 0 );
+            continue;
+        }
+
+        if( buf[0] != REP_ID_SENSOR_DATA )
+        {
+            if(mParams.verbose)
+            {
+                WARNING_OUT( std::string("REP_ID_SENSOR_DATA - Sensor Data type mismatch") );
+            }
+
+            hid_set_nonblocking( mDevHandle, 0 );
+            continue;
+        }
+
+        SensData* data = (SensData*)buf;
+
+        memcpy( &(mLastData.struct_id), buf, sizeof(SensData) );
+
+        std::string msg = std::to_string(mLastData.timestamp);
+
+        INFO_OUT(msg);
+    }
+
+    mGrabRunning = false;
+}
+
+bool SensorCapture::sendPing() {
+    if( !mDevHandle )
+        return false;
+
+    unsigned char buf[65];
+    buf[0] = REP_ID_REQUEST_SET;
+    buf[1] = RQ_CMD_PING;
+
+    int res = hid_send_feature_report(mDevHandle, buf, 2);
+    if (res < 0)
+    {
+        std::string msg = "Unable to send ping [REP_ID_REQUEST_SET-RQ_CMD_PING] - ";
+        msg += wstr2str(hid_error(mDevHandle));
+
+        WARNING_OUT(msg);
+
+        return false;
     }
 
     return true;

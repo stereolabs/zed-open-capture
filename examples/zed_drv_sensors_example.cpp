@@ -19,5 +19,10 @@ int main(int argc, char *argv[])
 
     sens.init( devs[0] );
 
+    while(1)
+    {
+
+    }
+
     return EXIT_SUCCESS;
 }
