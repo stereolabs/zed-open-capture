@@ -321,6 +321,25 @@ void SensorCapture::grabThreadFunc()
         }
         // <---- Environmental data
 
+        // ----> Camera sensors temperature data
+        if(data->temp_cam_left != TEMP_NOT_VALID &&
+           data->temp_cam_left != TEMP_NOT_VALID &&
+                data->env_valid == ENV::NEW_VAL ) // Sensor temperature is linked to Environmental data acquisition at FW level
+        {
+            mLastCamTempData.valid = true;
+            mLastCamTempData.timestamp = data->timestamp*TS_SCALE;
+            mLastCamTempData.temp_left = data->temp_cam_left*TEMP_SCALE;
+            mLastCamTempData.temp_right = data->temp_cam_right*TEMP_SCALE;
+
+            std::string msg = std::to_string(mLastCamTempData.timestamp);
+            INFO_OUT(msg);
+        }
+        else
+        {
+            mLastCamTempData.valid = false;
+        }
+        // <---- Camera sensors temperature data
+
 
     }
 

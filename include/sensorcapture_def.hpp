@@ -12,6 +12,7 @@
 #define HUMID_SCALE_OLD (1.0f/1024.0f)  // FW < v3.9
 
 #define TS_SCALE        (39062.5f)
+#define TEMP_NOT_VALID  (-27315)
 
 namespace sl_drv {
 

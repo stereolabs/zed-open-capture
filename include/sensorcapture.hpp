@@ -67,6 +67,17 @@ struct SL_DRV_EXPORT ENV
 };
 
 /*!
+ * \brief The struct containing the acquired Environmental data
+ */
+struct SL_DRV_EXPORT CAM_TEMP
+{
+    bool valid = false;     //!< Indicates if camera temperature data are valid
+    uint64_t timestamp = 0; //!< Timestamp in nanoseconds
+    float temp_left;        //!< Temperature of the left CMOS camera sensor
+    float temp_right;       //!< Temperature of the right CMOS camera sensor
+};
+
+/*!
  * \brief The SensorCapture class provides sensor grabbing functions
  */
 class SL_DRV_EXPORT SensorCapture
@@ -129,6 +140,7 @@ private:
     IMU mLastIMUData;           //!< Contains the last received IMU data
     MAG mLastMAGData;           //!< Contains the last received Magnetometer data
     ENV mLastENVData;           //!< Contains the last received Environmental data
+    CAM_TEMP mLastCamTempData;  //!< Contains the last received camera sensors temperature data
 
     std::thread mGrabThread;    //!< The grabbing thread
 };
