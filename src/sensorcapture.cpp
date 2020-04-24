@@ -270,11 +270,40 @@ void SensorCapture::grabThreadFunc()
 
         SensData* data = (SensData*)buf;
 
-        memcpy( &(mLastData.struct_id), buf, sizeof(SensData) );
+        // ----> IMU data
+        mLastIMUData.valid = data->imu_not_valid!=1;
+        mLastIMUData.timestamp = data->timestamp*TS_SCALE;
+        mLastIMUData.aX = data->aX*ACC_SCALE;
+        mLastIMUData.aY = data->aY*ACC_SCALE;
+        mLastIMUData.aZ = data->aZ*ACC_SCALE;
+        mLastIMUData.gX = data->gX*GYRO_SCALE;
+        mLastIMUData.gY = data->gY*GYRO_SCALE;
+        mLastIMUData.gZ = data->gZ*GYRO_SCALE;
+        mLastIMUData.temp = data->imu_temp*TEMP_SCALE;
 
-        std::string msg = std::to_string(mLastData.timestamp);
+        //std::string msg = std::to_string(mLastMAGData.timestamp);
+        //INFO_OUT(msg);
+        // <---- IMU data
 
-        INFO_OUT(msg);
+        // ----> Magnetometer data
+        if(data->mag_valid == MAG::MAG_SENS_NEW_VAL)
+        {
+            mLastMAGData.valid = MAG::MAG_SENS_NEW_VAL;
+            mLastMAGData.timestamp = data->timestamp*TS_SCALE;
+            mLastMAGData.mY = data->mY*MAG_SCALE;
+            mLastMAGData.mZ = data->mZ*MAG_SCALE;
+            mLastMAGData.mX = data->mX*MAG_SCALE;
+
+            //std::string msg = std::to_string(mLastMAGData.timestamp);
+            //INFO_OUT(msg);
+        }
+        else
+        {
+            mLastIMUData.valid = static_cast<MAG::MagStatus>(data->mag_valid);
+        }
+        // <---- Magnetometer data
+
+
     }
 
     mGrabRunning = false;

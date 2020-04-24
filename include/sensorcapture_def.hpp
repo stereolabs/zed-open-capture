@@ -1,6 +1,18 @@
 #ifndef SENSORCAPTURE_DEF_HPP
 #define SENSORCAPTURE_DEF_HPP
 
+#define DEFAULT_GRAVITY (9.8189f)
+#define ACC_SCALE       (DEFAULT_GRAVITY*(8.0f/32768.0f))
+#define GYRO_SCALE      (1000.0f/32768.0f)
+#define MAG_SCALE       (1.0f/16.0f)
+#define TEMP_SCALE      (0.01f)
+#define PRESS_SCALE_NEW (0.0001f)       // FM >= V3.9
+#define PRESS_SCALE_OLD (0.01f)         // FW < v3.9
+#define HUMID_SCALE_NEW (0.01f)         // FM >= V3.9
+#define HUMID_SCALE_OLD (1.0f/1024.0f)  // FW < v3.9
+
+#define TS_SCALE        (39062.5f)
+
 namespace sl_drv {
 
 typedef struct _sensor_params

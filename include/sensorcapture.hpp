@@ -13,6 +13,41 @@
 namespace sl_drv {
 
 /*!
+ * \brief The struct containing the acquired IMU data
+ */
+struct SL_DRV_EXPORT IMU
+{
+    bool valid = false;     //!< Indicates if IMU data are valid
+    uint64_t timestamp = 0; //!< Timestamp in nanoseconds
+    float aX;               //!< Acceleration along X axis in m/s²
+    float aY;               //!< Acceleration along Y axis in m/s²
+    float aZ;               //!< Acceleration along Z axis in m/s²
+    float gX;               //!< Angular velocity around X axis in °/s
+    float gY;               //!< Angular velocity around Y axis in °/s
+    float gZ;               //!< Angular velocity around > axis in °/s
+    float temp;             //!< Temperature in °C
+};
+
+/*!
+ * \brief The struct containing the acquired Magnetometer data
+ */
+struct SL_DRV_EXPORT MAG
+{
+    // Validity of the magnetometer sensor data
+    typedef enum _mag_status {
+        MAG_SENS_NOT_PRESENT = 0,
+        MAG_SENS_OLD_VAL = 1,
+        MAG_SENS_NEW_VAL = 2
+    } MagStatus;
+
+    MagStatus valid = MAG_SENS_NOT_PRESENT;     //!< Indicates if Magnetometer data are valid
+    uint64_t timestamp = 0; //!< Timestamp in nanoseconds
+    float mX;               //!< Acceleration along X axis in uT
+    float mY;               //!< Acceleration along Y axis in uT
+    float mZ;               //!< Acceleration along Z axis in uT
+};
+
+/*!
  * \brief The SensorCapture class provides sensor grabbing functions
  */
 class SL_DRV_EXPORT SensorCapture
@@ -72,7 +107,8 @@ private:
     bool mStopCapture = false;  //!< Indicates if the grabbing thread must be stopped
     bool mGrabRunning = false;  //!< Indicates if the grabbing thread is running
 
-    SensData mLastData;         //!< Last received sensor dara
+    IMU mLastIMUData;           //!< Contains the last received IMU data
+    MAG mLastMAGData;           //!< Contains the last received Magnetometer data
 
     std::thread mGrabThread;    //!< The grabbing thread
 };
