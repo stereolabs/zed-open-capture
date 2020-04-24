@@ -286,9 +286,9 @@ void SensorCapture::grabThreadFunc()
         // <---- IMU data
 
         // ----> Magnetometer data
-        if(data->mag_valid == MAG::MAG_SENS_NEW_VAL)
+        if(data->mag_valid == MAG::NEW_VAL)
         {
-            mLastMAGData.valid = MAG::MAG_SENS_NEW_VAL;
+            mLastMAGData.valid = MAG::NEW_VAL;
             mLastMAGData.timestamp = data->timestamp*TS_SCALE;
             mLastMAGData.mY = data->mY*MAG_SCALE;
             mLastMAGData.mZ = data->mZ*MAG_SCALE;
@@ -302,6 +302,24 @@ void SensorCapture::grabThreadFunc()
             mLastIMUData.valid = static_cast<MAG::MagStatus>(data->mag_valid);
         }
         // <---- Magnetometer data
+
+        // ----> Environmental data
+        if(data->env_valid == ENV::NEW_VAL)
+        {
+            mLastENVData.valid = ENV::NEW_VAL;
+            mLastENVData.timestamp = data->timestamp*TS_SCALE;
+            mLastENVData.temp = data->temp*TEMP_SCALE;
+            mLastENVData.press = data->press*PRESS_SCALE_NEW; //TODO add check on FW version to choose the right scale factor!
+            mLastENVData.humid = data->humid*HUMID_SCALE_NEW; //TODO add check on FW version to choose the right scale factor!
+
+            //std::string msg = std::to_string(mLastENVData.timestamp);
+            //INFO_OUT(msg);
+        }
+        else
+        {
+            mLastIMUData.valid = static_cast<MAG::MagStatus>(data->mag_valid);
+        }
+        // <---- Environmental data
 
 
     }

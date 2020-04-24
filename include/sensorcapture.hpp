@@ -25,7 +25,7 @@ struct SL_DRV_EXPORT IMU
     float gX;               //!< Angular velocity around X axis in °/s
     float gY;               //!< Angular velocity around Y axis in °/s
     float gZ;               //!< Angular velocity around > axis in °/s
-    float temp;             //!< Temperature in °C
+    float temp;             //!< Sensor temperature in °C
 };
 
 /*!
@@ -35,16 +35,35 @@ struct SL_DRV_EXPORT MAG
 {
     // Validity of the magnetometer sensor data
     typedef enum _mag_status {
-        MAG_SENS_NOT_PRESENT = 0,
-        MAG_SENS_OLD_VAL = 1,
-        MAG_SENS_NEW_VAL = 2
+        NOT_PRESENT = 0,
+        OLD_VAL = 1,
+        NEW_VAL = 2
     } MagStatus;
 
-    MagStatus valid = MAG_SENS_NOT_PRESENT;     //!< Indicates if Magnetometer data are valid
+    MagStatus valid = NOT_PRESENT;     //!< Indicates if Magnetometer data are valid
     uint64_t timestamp = 0; //!< Timestamp in nanoseconds
     float mX;               //!< Acceleration along X axis in uT
     float mY;               //!< Acceleration along Y axis in uT
     float mZ;               //!< Acceleration along Z axis in uT
+};
+
+/*!
+ * \brief The struct containing the acquired Environmental data
+ */
+struct SL_DRV_EXPORT ENV
+{
+    // Validity of the environmental sensor data
+    typedef enum _env_status {
+        NOT_PRESENT = 0,
+        OLD_VAL = 1,
+        NEW_VAL = 2
+    } EnvStatus;
+
+    EnvStatus valid = NOT_PRESENT;     //!< Indicates if Environmental data are valid
+    uint64_t timestamp = 0; //!< Timestamp in nanoseconds
+    float temp;             //!< Sensor temperature in °C
+    float press;            //!< Atmospheric pressure in hPa
+    float humid;            //!< Humidity in %rH
 };
 
 /*!
@@ -109,6 +128,7 @@ private:
 
     IMU mLastIMUData;           //!< Contains the last received IMU data
     MAG mLastMAGData;           //!< Contains the last received Magnetometer data
+    ENV mLastENVData;           //!< Contains the last received Environmental data
 
     std::thread mGrabThread;    //!< The grabbing thread
 };
