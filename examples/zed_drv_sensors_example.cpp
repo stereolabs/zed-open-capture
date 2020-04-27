@@ -22,11 +22,12 @@ int main(int argc, char *argv[])
     uint64_t last_imu_ts = 0;
     uint64_t last_mag_ts = 0;
     uint64_t last_env_ts = 0;
+    uint64_t last_cam_temp_ts = 0;
 
     while(1)
     {
         const sl_drv::IMU* imuData = sens.getLastIMUData(10);
-        if( imuData )
+        if( imuData && imuData->valid )
         {
             std::cout << "**** New IMU data ****" << std::endl;
             std::cout << " * Timestamp: " << imuData->timestamp << " nsec" << std::endl;
@@ -65,6 +66,20 @@ int main(int argc, char *argv[])
             std::cout << " * Pressure [hPa]: " << envData->press << std::endl;
             std::cout << " * Temperature [°C]: " << envData->temp << std::endl;
             std::cout << " * Relative Humidity [%rH]: " << envData->humid << std::endl;
+        }
+
+        const sl_drv::CAM_TEMP* tempData = sens.getLastCamTempData(1);
+        if( tempData && tempData->valid )
+        {
+            std::cout << "**** New Camera Sensors Temperature data ****" << std::endl;
+            std::cout << " * Timestamp: " << tempData->timestamp << " nsec" << std::endl;
+            if(last_cam_temp_ts!=0)
+            {
+                std::cout << " * Frequency: " << 1e9/static_cast<float>(tempData->timestamp-last_cam_temp_ts) << " Hz" << std::endl;
+            }
+            last_cam_temp_ts = tempData->timestamp;
+            std::cout << " * Left Camera [°C]: " << tempData->temp_left << std::endl;
+            std::cout << " * Right Camera [°C]: " << tempData->temp_right << std::endl;
         }
     }
 

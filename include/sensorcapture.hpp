@@ -137,6 +137,15 @@ public:
      */
     const ENV* getLastEnvData(uint64_t timeout_msec=1);
 
+    /*!
+     * \brief Get the last received camera sensors temperature data
+     * \param timeout_msec data grabbing timeout in milliseconds.
+     * \return returns the last received data as pointer.
+     *
+     * \note Do not delete the received data
+     */
+    const CAM_TEMP* getLastCamTempData(uint64_t timeout_msec=1);
+
 
 private:
     /*!
@@ -155,9 +164,11 @@ private:
 
 private:
     // Flags
-    bool mNewIMUData=false;         //!< Indicates if new IMU data are available
-    bool mNewMagData=false;         //!< Indicates if new MAG data are available
-    bool mNewEnvData=false;         //!< Indicates if new ENV data are available
+    bool mNewIMUData=false;         //!< Indicates if new \ref IMU data are available
+    bool mNewMagData=false;         //!< Indicates if new \ref MAG data are available
+    bool mNewEnvData=false;         //!< Indicates if new \ref ENV data are available
+    bool mNewCamTempData=false;     //!< Indicates if new \ref CAM_TEMP data are available
+
     bool mInitialized = false;  //!< Inficates if the MCU has been initialized
     bool mStopCapture = false;  //!< Indicates if the grabbing thread must be stopped
     bool mGrabRunning = false;  //!< Indicates if the grabbing thread is running
@@ -178,6 +189,8 @@ private:
     std::mutex mIMUMutex;       //!< Mutex for safe access to IMU data buffer
     std::mutex mMagMutex;       //!< Mutex for safe access to MAG data buffer
     std::mutex mEnvMutex;       //!< Mutex for safe access to ENV data buffer
+    std::mutex mCamTempMutex;   //!< Mutex for safe access to CAM_TEMP data buffer
+
 };
 
 }

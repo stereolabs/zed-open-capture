@@ -242,6 +242,7 @@ void SensorCapture::grabThreadFunc()
     mNewIMUData=false;
     mNewMagData=false;
     mNewEnvData=false;
+    mNewCamTempData=false;
 
     // Read sensor data
     unsigned char buf[65];
@@ -351,10 +352,13 @@ void SensorCapture::grabThreadFunc()
            data->temp_cam_left != TEMP_NOT_VALID &&
                 data->env_valid == ENV::NEW_VAL ) // Sensor temperature is linked to Environmental data acquisition at FW level
         {
+            mCamTempMutex.lock();
             mLastCamTempData.valid = true;
             mLastCamTempData.timestamp = data->timestamp*TS_SCALE;
             mLastCamTempData.temp_left = data->temp_cam_left*TEMP_SCALE;
             mLastCamTempData.temp_right = data->temp_cam_right*TEMP_SCALE;
+            mNewCamTempData=true;
+            mCamTempMutex.unlock();
 
             //std::string msg = std::to_string(mLastCamTempData.timestamp);
             //INFO_OUT(msg);
@@ -454,6 +458,27 @@ const ENV* SensorCapture::getLastEnvData(uint64_t timeout_msec)
     const std::lock_guard<std::mutex> lock(mEnvMutex);
     mNewEnvData = false;
     return &mLastEnvData;
+}
+
+const CAM_TEMP* SensorCapture::getLastCamTempData(uint64_t timeout_msec)
+{
+    // ----> Wait for a new frame
+    uint64_t time_count = timeout_msec*10;
+    while( !mNewCamTempData )
+    {
+        if(time_count==0)
+        {
+            return nullptr;
+        }
+        time_count--;
+        usleep(100);
+    }
+    // <---- Wait for a new frame
+
+    // Get the frame mutex
+    const std::lock_guard<std::mutex> lock(mCamTempMutex);
+    mNewCamTempData = false;
+    return &mLastCamTempData;
 }
 
 }
