@@ -26,7 +26,7 @@ VideoCapture::VideoCapture(VideoParams params)
     if( mVerbose )
     {
         std::string ver =
-                "ZED Driver Version: "
+                "ZED Driver - Sensors module - Version: "
                 + std::to_string(mDrvMajorVer) + "."
                 + std::to_string(mDrvMinorVer) + "."
                 + std::to_string(mDrvPatchVer);
@@ -728,10 +728,11 @@ const Frame *VideoCapture::getLastFrame( uint64_t timeout_msec )
     uint64_t time_count = timeout_msec*10;
     while( !mNewFrame )
     {
-        if(--time_count==0)
+        if(time_count==0)
         {
             return nullptr;
         }
+        time_count--;
         usleep(100);
     }
     // <---- Wait for a new frame

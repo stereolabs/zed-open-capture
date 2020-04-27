@@ -62,7 +62,7 @@ public:
      *
      * \note Do not delete the received frame
      */
-    const sl_drv::Frame* getLastFrame(uint64_t timeout_msec=10);
+    const Frame* getLastFrame(uint64_t timeout_msec=10);
 
     // ----> Led Control
     /*!

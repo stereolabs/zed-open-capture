@@ -7,6 +7,7 @@
 #include <thread>
 #include <vector>
 #include <map>
+#include <mutex>
 
 #include "hidapi.h"
 
@@ -109,6 +110,33 @@ public:
      */
     bool init( int sn=-1 );
 
+    /*!
+     * \brief Get the last received IMU data
+     * \param timeout_msec data grabbing timeout in milliseconds.
+     * \return returns the last received data as pointer.
+     *
+     * \note Do not delete the received data
+     */
+    const IMU* getLastIMUData(uint64_t timeout_msec=5);
+
+    /*!
+     * \brief Get the last received Magnetometer data
+     * \param timeout_msec data grabbing timeout in milliseconds.
+     * \return returns the last received data as pointer.
+     *
+     * \note Do not delete the received data
+     */
+    const MAG* getLastMagData(uint64_t timeout_msec=1);
+
+    /*!
+     * \brief Get the last received Environment data
+     * \param timeout_msec data grabbing timeout in milliseconds.
+     * \return returns the last received data as pointer.
+     *
+     * \note Do not delete the received data
+     */
+    const ENV* getLastEnvData(uint64_t timeout_msec=1);
+
 
 private:
     /*!
@@ -126,23 +154,30 @@ private:
     bool sendPing(); //!< Send a ping  each second (before 6 seconds) to keep data streaming alive
 
 private:
-    SensorParams mParams; //!< Sensor capture parameters
+    // Flags
+    bool mNewIMUData=false;         //!< Indicates if new IMU data are available
+    bool mNewMagData=false;         //!< Indicates if new MAG data are available
+    bool mNewEnvData=false;         //!< Indicates if new ENV data are available
+    bool mInitialized = false;  //!< Inficates if the MCU has been initialized
+    bool mStopCapture = false;  //!< Indicates if the grabbing thread must be stopped
+    bool mGrabRunning = false;  //!< Indicates if the grabbing thread is running
 
     std::map<int,uint16_t> mSlDevPid; //!< All the available Stereolabs MCU (ZED-M and ZED2) product IDs associated to their serial number
 
     hid_device* mDevHandle = nullptr; //!< Hidapi device handler
 
-    bool mInitialized = false;  //!< Inficates if the MCU has been initialized
-    bool mNewData = false;      //!< Indicates if new data are available
-    bool mStopCapture = false;  //!< Indicates if the grabbing thread must be stopped
-    bool mGrabRunning = false;  //!< Indicates if the grabbing thread is running
+    SensorParams mParams;       //!< Sensor capture parameters
 
     IMU mLastIMUData;           //!< Contains the last received IMU data
-    MAG mLastMAGData;           //!< Contains the last received Magnetometer data
-    ENV mLastENVData;           //!< Contains the last received Environmental data
+    MAG mLastMagData;           //!< Contains the last received Magnetometer data
+    ENV mLastEnvData;           //!< Contains the last received Environmental data
     CAM_TEMP mLastCamTempData;  //!< Contains the last received camera sensors temperature data
 
     std::thread mGrabThread;    //!< The grabbing thread
+
+    std::mutex mIMUMutex;       //!< Mutex for safe access to IMU data buffer
+    std::mutex mMagMutex;       //!< Mutex for safe access to MAG data buffer
+    std::mutex mEnvMutex;       //!< Mutex for safe access to ENV data buffer
 };
 
 }

@@ -25,26 +25,39 @@ endif()
 
 ############################################################################
 # Options
-option(${PROJECT_NAME}_BUILD_EXAMPLES "Build the ZED Driver examples" ON)
+option(${PROJECT_NAME}_BUILD_VIDEO      "Build the ZED Driver Video Modules (only for Linux)"   ON)
+option(${PROJECT_NAME}_BUILD_SENSORS    "Build the ZED Driver Sensors Modules"                  ON)
+option(${PROJECT_NAME}_BUILD_EXAMPLES   "Build the ZED Driver examples"                         ON)
+
 
 ############################################################################
 # Sources
-set(SRC
-    # Base
+set(SRC_VIDEO
+    ${CMAKE_HOME_DIRECTORY}/src/videocapture.cpp
+)
+
+set(SRC_SENSORS
     ${CMAKE_HOME_DIRECTORY}/src/sensorcapture.cpp
-    ${CMAKE_HOME_DIRECTORY}/src/videocapture.cpp )
+)
 
 ############################################################################
 # Includes
-set(HEADERS
+set(HEADERS_VIDEO
     # Base
-    ${CMAKE_HOME_DIRECTORY}/include/sensorcapture.hpp
     ${CMAKE_HOME_DIRECTORY}/include/videocapture.hpp
     
     # Defines
     ${CMAKE_HOME_DIRECTORY}/include/defines.hpp
-    ${CMAKE_HOME_DIRECTORY}/include/sensorcapture_def.hpp
     ${CMAKE_HOME_DIRECTORY}/include/videocapture_def.hpp
+)
+
+set(HEADERS_SENSORS
+    # Base
+    ${CMAKE_HOME_DIRECTORY}/include/sensorcapture.hpp
+
+    # Defines
+    ${CMAKE_HOME_DIRECTORY}/include/defines.hpp
+    ${CMAKE_HOME_DIRECTORY}/include/sensorcapture_def.hpp
 )
 
 include_directories(
@@ -67,40 +80,47 @@ message(STATUS "libhidapi: libraries at ${HIDAPI_LIBRARIES}")
 include_directories(${HIDAPI_INCLUDE_DIRS})
 
 ############################################################################
-# Generate library
-add_library(${PROJECT_NAME} SHARED ${SRC} )
-target_link_libraries( ${PROJECT_NAME}
-    ${LibUSB_LIBRARIES}
-    ${HIDAPI_LIBRARIES}
-    -lpthread
+# Generate libraries
+if(${PROJECT_NAME}_BUILD_VIDEO)
+    add_library(${PROJECT_NAME}_video SHARED ${SRC_VIDEO} )
+    target_link_libraries( ${PROJECT_NAME}_video
+        ${LibUSB_LIBRARIES}
     )
+endif()
+
+if(${PROJECT_NAME}_BUILD_SENSORS)
+    add_library(${PROJECT_NAME}_sensors SHARED ${SRC_SENSORS} )
+    target_link_libraries(${PROJECT_NAME}_sensors
+        ${LibUSB_LIBRARIES}
+        ${HIDAPI_LIBRARIES}
+        -lpthread
+    )
+endif()
 
 ############################################################################
 # Generate examples
 if(${PROJECT_NAME}_BUILD_EXAMPLES)
 
-  ##### Video Example
-  if(POLICY CMP0054)
-    cmake_policy(SET CMP0054 OLD)
-  endif()
-  if(POLICY CMP0053)
-    cmake_policy(SET CMP0053 OLD)
-  endif()
-  find_package(OpenCV REQUIRED)
-  include_directories(${OpenCV_INCLUDE_DIRS})
+    if(${PROJECT_NAME}_BUILD_VIDEO)
+        ##### Video Example
+        find_package(OpenCV REQUIRED)
+        include_directories(${OpenCV_INCLUDE_DIRS})
 
-  add_executable(${PROJECT_NAME}_video_example "examples/zed_drv_video_example.cpp")
-  target_link_libraries(${PROJECT_NAME}_video_example
-      PUBLIC
-      ${PROJECT_NAME}
-      ${OpenCV_LIBS}
-  )
+        add_executable(${PROJECT_NAME}_video_example "examples/zed_drv_video_example.cpp")
+        target_link_libraries(${PROJECT_NAME}_video_example
+          PUBLIC
+          ${PROJECT_NAME}_video
+          ${OpenCV_LIBS}
+        )
+    endif()
 
-  ##### Sensors Example
-  add_executable(${PROJECT_NAME}_sensors_example "examples/zed_drv_sensors_example.cpp")
-  target_link_libraries(${PROJECT_NAME}_sensors_example
-      PUBLIC
-      ${PROJECT_NAME}
-  )
+    if(${PROJECT_NAME}_BUILD_SENSORS)
+        ##### Sensors Example
+        add_executable(${PROJECT_NAME}_sensors_example "examples/zed_drv_sensors_example.cpp")
+        target_link_libraries(${PROJECT_NAME}_sensors_example
+          PUBLIC
+          ${PROJECT_NAME}_sensors
+        )
+    endif()
 
 endif()

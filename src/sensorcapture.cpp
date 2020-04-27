@@ -1,12 +1,24 @@
-#include "sensorcapture.hpp"
+﻿#include "sensorcapture.hpp"
 
 #include <sstream>
+
+#include <unistd.h>           // for usleep, close
 
 namespace sl_drv {
 
 SensorCapture::SensorCapture( SensorParams params )
 {
     memcpy( &mParams, &params, sizeof(SensorParams) );
+
+    if( mParams.verbose )
+    {
+        std::string ver =
+                "ZED Driver - Sensors module - Version: "
+                + std::to_string(mDrvMajorVer) + "."
+                + std::to_string(mDrvMinorVer) + "."
+                + std::to_string(mDrvPatchVer);
+        INFO_OUT( ver );
+    }
 }
 
 SensorCapture::~SensorCapture()
@@ -224,9 +236,12 @@ void SensorCapture::reset()
 
 void SensorCapture::grabThreadFunc()
 {
-    mNewData = false;
     mStopCapture = false;
     mGrabRunning = false;
+
+    mNewIMUData=false;
+    mNewMagData=false;
+    mNewEnvData=false;
 
     // Read sensor data
     unsigned char buf[65];
@@ -271,6 +286,7 @@ void SensorCapture::grabThreadFunc()
         SensData* data = (SensData*)buf;
 
         // ----> IMU data
+        mIMUMutex.lock();
         mLastIMUData.valid = data->imu_not_valid!=1;
         mLastIMUData.timestamp = data->timestamp*TS_SCALE;
         mLastIMUData.aX = data->aX*ACC_SCALE;
@@ -280,19 +296,25 @@ void SensorCapture::grabThreadFunc()
         mLastIMUData.gY = data->gY*GYRO_SCALE;
         mLastIMUData.gZ = data->gZ*GYRO_SCALE;
         mLastIMUData.temp = data->imu_temp*TEMP_SCALE;
+        mNewIMUData = true;
+        mIMUMutex.unlock();
 
         //std::string msg = std::to_string(mLastMAGData.timestamp);
         //INFO_OUT(msg);
+
         // <---- IMU data
 
         // ----> Magnetometer data
         if(data->mag_valid == MAG::NEW_VAL)
         {
-            mLastMAGData.valid = MAG::NEW_VAL;
-            mLastMAGData.timestamp = data->timestamp*TS_SCALE;
-            mLastMAGData.mY = data->mY*MAG_SCALE;
-            mLastMAGData.mZ = data->mZ*MAG_SCALE;
-            mLastMAGData.mX = data->mX*MAG_SCALE;
+            mMagMutex.lock();
+            mLastMagData.valid = MAG::NEW_VAL;
+            mLastMagData.timestamp = data->timestamp*TS_SCALE;
+            mLastMagData.mY = data->mY*MAG_SCALE;
+            mLastMagData.mZ = data->mZ*MAG_SCALE;
+            mLastMagData.mX = data->mX*MAG_SCALE;
+            mNewMagData = true;
+            mMagMutex.unlock();
 
             //std::string msg = std::to_string(mLastMAGData.timestamp);
             //INFO_OUT(msg);
@@ -306,11 +328,14 @@ void SensorCapture::grabThreadFunc()
         // ----> Environmental data
         if(data->env_valid == ENV::NEW_VAL)
         {
-            mLastENVData.valid = ENV::NEW_VAL;
-            mLastENVData.timestamp = data->timestamp*TS_SCALE;
-            mLastENVData.temp = data->temp*TEMP_SCALE;
-            mLastENVData.press = data->press*PRESS_SCALE_NEW; //TODO add check on FW version to choose the right scale factor!
-            mLastENVData.humid = data->humid*HUMID_SCALE_NEW; //TODO add check on FW version to choose the right scale factor!
+            mEnvMutex.lock();
+            mLastEnvData.valid = ENV::NEW_VAL;
+            mLastEnvData.timestamp = data->timestamp*TS_SCALE;
+            mLastEnvData.temp = data->temp*TEMP_SCALE;
+            mLastEnvData.press = data->press*PRESS_SCALE_NEW; //TODO add check on FW version to choose the right scale factor!
+            mLastEnvData.humid = data->humid*HUMID_SCALE_NEW; //TODO add check on FW version to choose the right scale factor!
+            mNewEnvData = true;
+            mEnvMutex.unlock();
 
             //std::string msg = std::to_string(mLastENVData.timestamp);
             //INFO_OUT(msg);
@@ -331,8 +356,8 @@ void SensorCapture::grabThreadFunc()
             mLastCamTempData.temp_left = data->temp_cam_left*TEMP_SCALE;
             mLastCamTempData.temp_right = data->temp_cam_right*TEMP_SCALE;
 
-            std::string msg = std::to_string(mLastCamTempData.timestamp);
-            INFO_OUT(msg);
+            //std::string msg = std::to_string(mLastCamTempData.timestamp);
+            //INFO_OUT(msg);
         }
         else
         {
@@ -366,6 +391,69 @@ bool SensorCapture::sendPing() {
     }
 
     return true;
+}
+
+const IMU* SensorCapture::getLastIMUData(uint64_t timeout_msec)
+{
+    // ----> Wait for a new frame
+    uint64_t time_count = timeout_msec*10;
+    while( !mNewIMUData )
+    {
+        if(time_count==0)
+        {
+            return nullptr;
+        }
+        time_count--;
+        usleep(100);
+    }
+    // <---- Wait for a new frame
+
+    // Get the frame mutex
+    const std::lock_guard<std::mutex> lock(mIMUMutex);
+    mNewIMUData = false;
+    return &mLastIMUData;
+}
+
+const MAG* SensorCapture::getLastMagData(uint64_t timeout_msec)
+{
+    // ----> Wait for a new frame
+    uint64_t time_count = timeout_msec*10;
+    while( !mNewMagData )
+    {
+        if(time_count==0)
+        {
+            return nullptr;
+        }
+        time_count--;
+        usleep(100);
+    }
+    // <---- Wait for a new frame
+
+    // Get the frame mutex
+    const std::lock_guard<std::mutex> lock(mMagMutex);
+    mNewMagData = false;
+    return &mLastMagData;
+}
+
+const ENV* SensorCapture::getLastEnvData(uint64_t timeout_msec)
+{
+    // ----> Wait for a new frame
+    uint64_t time_count = timeout_msec*10;
+    while( !mNewEnvData )
+    {
+        if(time_count==0)
+        {
+            return nullptr;
+        }
+        time_count--;
+        usleep(100);
+    }
+    // <---- Wait for a new frame
+
+    // Get the frame mutex
+    const std::lock_guard<std::mutex> lock(mEnvMutex);
+    mNewEnvData = false;
+    return &mLastEnvData;
 }
 
 }
