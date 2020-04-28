@@ -153,14 +153,16 @@ private:
      */
     void grabThreadFunc();
 
-    bool startCapture();
-    void reset();
+    bool startCapture();            //!< Start data capture thread
+    void reset();                   //!< Reset  connection
 
-    int enumerateDevices();
+    int enumerateDevices();         //!< Populates the \ref mSlDevPid map with serial number and PID of the available devices
 
-    bool enableDataStream(bool enable);
-    bool isDataStreamEnabled();
-    bool sendPing(); //!< Send a ping  each second (before 6 seconds) to keep data streaming alive
+    // ----> USB commands to MCU
+    bool enableDataStream(bool enable); //!< Enable/Disable the data stream
+    bool isDataStreamEnabled();         //!< Check if the data stream is enabled
+    bool sendPing();                    //!< Send a ping  each second (before 6 seconds) to keep data streaming alive
+    // ----> USB commands to MCU
 
 private:
     // Flags

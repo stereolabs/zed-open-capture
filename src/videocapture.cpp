@@ -21,9 +21,9 @@ namespace sl_drv
 
 VideoCapture::VideoCapture(VideoParams params)
 {
-    mVerbose = params.verbose;
+    memcpy( &mParams, &params, sizeof(VideoParams) );
 
-    if( mVerbose )
+    if( mParams.verbose )
     {
         std::string ver =
                 "ZED Driver - Sensors module - Version: "
@@ -33,7 +33,8 @@ VideoCapture::VideoCapture(VideoParams params)
         INFO_OUT( ver );
     }
 
-    checkResFps( params );
+    // Check that FPS is coherent with user resolution
+    checkResFps( );
 
     mGainSegMax = (GAIN_ZONE4_MAX-GAIN_ZONE4_MIN)+(GAIN_ZONE3_MAX-GAIN_ZONE3_MIN)+(GAIN_ZONE2_MAX-GAIN_ZONE2_MIN)+(GAIN_ZONE1_MAX-GAIN_ZONE1_MIN);
 
@@ -93,7 +94,7 @@ void VideoCapture::reset()
         mLastFrame.data = nullptr;
     }
 
-    if( mVerbose && mInitialized)
+    if( mParams.verbose && mInitialized)
     {
         std::string msg = "Device closed";
         INFO_OUT( msg );
@@ -102,13 +103,13 @@ void VideoCapture::reset()
     mInitialized=false;
 }
 
-void VideoCapture::checkResFps( VideoParams par )
+void VideoCapture::checkResFps()
 {
-    mWidth = cameraResolution[static_cast<int>(par.res)].width*2;
-    mHeight = cameraResolution[static_cast<int>(par.res)].height;
-    mFps = static_cast<int>(par.fps);
+    mWidth = cameraResolution[static_cast<int>(mParams.res)].width*2;
+    mHeight = cameraResolution[static_cast<int>(mParams.res)].height;
+    mFps = static_cast<int>(mParams.fps);
 
-    switch (par.res)
+    switch (mParams.res)
     {
     default:
         WARNING_OUT("RESOLUTION not supported. Using the best value");
@@ -163,7 +164,7 @@ void VideoCapture::checkResFps( VideoParams par )
         }
     }
 
-    if(mVerbose)
+    if(mParams.verbose)
     {
         std::string msg = std::string("Camera resolution: ")
                 + std::to_string(mWidth)
@@ -204,7 +205,7 @@ bool VideoCapture::init( int devId/*=-1*/ )
 
     mInitialized = startCapture();
 
-    if( mVerbose && mInitialized)
+    if( mParams.verbose && mInitialized)
     {
         std::string msg = "Device '" + mDevName + "' opened";
         INFO_OUT( msg );
@@ -221,7 +222,7 @@ bool VideoCapture::openCamera( uint8_t devId )
 
     mDevName = std::string("/dev/video") + std::to_string(mDevId);
 
-    if( mVerbose )
+    if( mParams.verbose )
     {
         std::string msg = "Trying to open the device '" + mDevName + "'";
         INFO_OUT( msg );
@@ -250,7 +251,7 @@ bool VideoCapture::openCamera( uint8_t devId )
     memset(&st, 0, sizeof (struct stat));
     if (-1 == stat(mDevName.c_str(), &st))
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             std::string msg = std::string("Cannot identify '") + mDevName + "': ["
                     + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
@@ -262,7 +263,7 @@ bool VideoCapture::openCamera( uint8_t devId )
 
     if (!S_ISCHR(st.st_mode))
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             std::string msg = mDevName + std::string(" is no device");
             ERROR_OUT(msg);
@@ -277,7 +278,7 @@ bool VideoCapture::openCamera( uint8_t devId )
 
     if (-1 == mFileDesc)
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             std::string msg = std::string("Cannot open '") + mDevName + "': ["
                     + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
@@ -300,7 +301,7 @@ bool VideoCapture::openCamera( uint8_t devId )
 
     if( -1==xioctl(mFileDesc, VIDIOC_QUERYCAP, &cap) )
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             std::string msg = std::string("Cannot query capabilities of '") + mDevName + "': ["
                     + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
@@ -335,7 +336,7 @@ bool VideoCapture::openCamera( uint8_t devId )
     /* Preserve original settings as set by v4l2-ctl for example */
     if( -1==xioctl(mFileDesc, VIDIOC_S_FMT/*VIDIOC_G_FMT*/, &fmt) )
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             std::string msg = std::string("Cannot set pixel format of '") + mDevName + "': ["
                     + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
@@ -384,7 +385,7 @@ bool VideoCapture::openCamera( uint8_t devId )
     req.memory = V4L2_MEMORY_MMAP;
     if( -1==xioctl(mFileDesc, VIDIOC_REQBUFS, &req) )
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             std::string msg = std::string("Cannot request buffers for '") + mDevName + "': ["
                     + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
@@ -407,7 +408,7 @@ bool VideoCapture::openCamera( uint8_t devId )
         buf.flags = V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC;
         if( -1==xioctl(mFileDesc, VIDIOC_QUERYBUF, &buf))
         {
-            if(mVerbose)
+            if(mParams.verbose)
             {
                 std::string msg = std::string("Cannot query buffer for '") + mDevName + "': ["
                         + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
@@ -495,7 +496,7 @@ bool VideoCapture::startCapture()
         buf.index = i;
         if( -1==xioctl(mFileDesc, VIDIOC_QBUF, &buf) )
         {
-            if(mVerbose)
+            if(mParams.verbose)
             {
                 std::string msg = std::string("Cannot queue buffer for '") + mDevName + "': ["
                         + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
@@ -511,7 +512,7 @@ bool VideoCapture::startCapture()
     int priority = V4L2_PRIORITY_RECORD;
     if( -1==xioctl(mFileDesc, VIDIOC_G_PRIORITY, &priority) )
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             std::string msg = std::string("Cannot set priority for '") + mDevName + "': ["
                     + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
@@ -524,7 +525,7 @@ bool VideoCapture::startCapture()
     // Start streaming
     if( -1==xioctl(mFileDesc, VIDIOC_STREAMON, &type) )
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             std::string msg = std::string("Cannot start streaming for '") + mDevName + "': ["
                     + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
@@ -567,7 +568,7 @@ int VideoCapture::xioctl(int fd, uint64_t IOCTL_X, void *arg)
 
     if( ret==-1 )
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             perror( "xioctl");
         }
@@ -584,7 +585,7 @@ sl_drv::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
     std::string name = dev_name.erase(0, 5); //remove /dev/
     if (!(std::ifstream("/sys/class/video4linux/" + name + "/device/modalias") >> modalias))
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             std::string msg =
                     std::string(" Not a modalias : /sys/class/video4linux/")
@@ -596,7 +597,7 @@ sl_drv::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
 
     if (modalias.size() < 14 || modalias.substr(0, 5) != "usb:v" || modalias[9] != 'p')
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             std::string msg = std::string(" not a modalias 2" );
             WARNING_OUT( msg);
@@ -606,7 +607,7 @@ sl_drv::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
 
     if (!(std::istringstream(modalias.substr(5, 4)) >> std::hex >> vid))
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             std::string msg = std::string("unable to read Vendor ID" );
             WARNING_OUT( msg);
@@ -618,7 +619,7 @@ sl_drv::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
 
     if (!(std::istringstream(modalias.substr(10, 4)) >> std::hex >> pid))
     {
-        if(mVerbose)
+        if(mParams.verbose)
         {
             std::string msg = std::string("unable to read Product ID" );
             WARNING_OUT( msg);
@@ -637,7 +638,7 @@ sl_drv::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
     else if (pid == SL_USB_PROD_ZED_M_CBS && vid == SL_USB_VENDOR)
         camera_device = sl_drv::SL_DEVICE::ZED_M_CBS;
     else if (pid == SL_USB_PROD_ZED_2_CBS && vid == SL_USB_VENDOR)
-        camera_device = sl_drv::SL_DEVICE::ZED_2_CBS;
+        camera_device = sl_drv::SL_DEVICE::ZED_2;
 
     return camera_device;
 }
@@ -743,8 +744,8 @@ const Frame *VideoCapture::getLastFrame( uint64_t timeout_msec )
     return &mLastFrame;
 }
 
-int VideoCapture::ll_VendorControl(unsigned char *buf, int len, int readMode, bool safe) {
-
+int VideoCapture::ll_VendorControl(uint8_t *buf, int len, int readMode, bool safe)
+{
     if (len > 384)
         return -2;
 
@@ -763,12 +764,14 @@ int VideoCapture::ll_VendorControl(unsigned char *buf, int len, int readMode, bo
 
     int io_err = ioctl(mFileDesc, UVCIOC_CTRL_QUERY, &xu_query_info);
 
-    if (io_err != 0) {
+    if (io_err != 0)
+    {
         return -4;
-    } else {
+    }
+    else
+    {
         len = (xu_query_info.data[1] << 8) + xu_query_info.data[0];
     }
-
 
     //len should be now 384 for USB3 and 64 for USB2
     // we use the UVC_SET_CUR to write the cmd
@@ -780,7 +783,8 @@ int VideoCapture::ll_VendorControl(unsigned char *buf, int len, int readMode, bo
     xu_query_send.data = buf;
 
     io_err = ioctl(mFileDesc, UVCIOC_CTRL_QUERY, &xu_query_send);
-    if (io_err != 0) {
+    if (io_err != 0)
+    {
         int res = errno;
 
         const char *err=nullptr;
@@ -801,7 +805,8 @@ int VideoCapture::ll_VendorControl(unsigned char *buf, int len, int readMode, bo
             err = strerror(res);
             break;
         }
-        if(mVerbose)
+
+        if(mParams.verbose)
         {
             std::string msg = std::string("CBS SET failed") +
                     std::string(err) +
@@ -811,6 +816,7 @@ int VideoCapture::ll_VendorControl(unsigned char *buf, int len, int readMode, bo
                     std::to_string(xu_query_send.size);
             ERROR_OUT(msg);
         }
+
         return -1;
     }
 
@@ -847,7 +853,7 @@ int VideoCapture::ll_VendorControl(unsigned char *buf, int len, int readMode, bo
                 break;
             }
 
-            if(mVerbose)
+            if(mParams.verbose)
             {
                 std::string msg = std::string("CBS GET failed") +
                         std::string(err) +

@@ -52,8 +52,7 @@ int main(int argc, char *argv[])
     if( !cap.init(-1) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
-        if( !cap.isVerbose() )
-            std::cerr << "Try to enable verbose to get more info" << std::endl;
+        std::cerr << "Try to enable verbose to get more info" << std::endl;
 
         return EXIT_FAILURE;
     }
