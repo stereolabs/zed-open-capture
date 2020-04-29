@@ -14,6 +14,22 @@
 #define TS_SCALE        (39062.5f)
 #define TEMP_NOT_VALID  (-27315)
 
+// ----> FW versions
+static const int FW_ZED_M_ORIGINAL = 514; // First official version for ZED - M(Data rate = 500Hz)
+static const int FW_ZED_M_IMPROVED = 515; // Second official version for ZED-M with data rate up to 800Hz
+
+static const int FW_ZED_2_3_4 = 772;  //ZED2 v3.4
+static const int FW_ZED_2_3_5 = 773;  //ZED2 v3.5
+static const int FW_ZED_2_3_6 = 774;  //ZED2 v3.6
+static const int FW_ZED_2_3_7 = 775;  //ZED2 v3.7
+static const int FW_ZED_2_3_8 = 776;  //ZED2 v3.8
+static const int FW_ZED_2_3_9 = 777;  //ZED2 v3.8
+
+inline bool atLeast(const int &version_current, const int &version_required) {
+    return (version_current >= version_required);
+}
+// <---- FW versions
+
 namespace sl_drv {
 
 // ----> Command to be used with the REPORT ID "REP_ID_REQUEST_SET"

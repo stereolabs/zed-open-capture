@@ -29,6 +29,7 @@ SensorCapture::~SensorCapture()
 int SensorCapture::enumerateDevices()
 {
     mSlDevPid.clear();
+    mSlDevFwVer.clear();
 
     struct hid_device_info *devs, *cur_dev;
 
@@ -45,6 +46,7 @@ int SensorCapture::enumerateDevices()
         int sn = std::stoi( sn_str );
 
         mSlDevPid[sn]=pid;
+        mSlDevFwVer[sn]=cur_dev->release_number;
 
         if(mVerbose)
         {
@@ -107,6 +109,8 @@ bool SensorCapture::init( int sn )
         sn_str = std::to_string(sn);
     }
 
+    mDevSerial = sn;
+
     std::wstring wide_string = std::wstring(sn_str.begin(), sn_str.end());
     const wchar_t* wsn = wide_string.c_str();
 
@@ -122,6 +126,9 @@ bool SensorCapture::init( int sn )
 
         ERROR_OUT(msg);
 
+        mDevFwVer = -1;
+        mDevSerial = -1;
+
         return false;
     }
 
@@ -133,9 +140,22 @@ bool SensorCapture::init( int sn )
         INFO_OUT(msg);
     }
 
+    mDevFwVer = mSlDevFwVer[sn];
+
     mInitialized = startCapture();
 
     return true;
+}
+
+void SensorCapture::getFwVersion( uint16_t& fw_major, uint16_t& fw_minor )
+{
+    if(mDevSerial==-1)
+        return;
+
+    uint16_t release = mSlDevFwVer[mDevSerial];
+
+    fw_major = release>>8;
+    fw_minor = release&0x00FF;
 }
 
 bool SensorCapture::enableDataStream(bool enable) {
@@ -333,8 +353,16 @@ void SensorCapture::grabThreadFunc()
             mLastEnvData.valid = SensEnvData::NEW_VAL;
             mLastEnvData.timestamp = data->timestamp*TS_SCALE;
             mLastEnvData.temp = data->temp*TEMP_SCALE;
-            mLastEnvData.press = data->press*PRESS_SCALE_NEW; //TODO add check on FW version to choose the right scale factor!
-            mLastEnvData.humid = data->humid*HUMID_SCALE_NEW; //TODO add check on FW version to choose the right scale factor!
+            if( atLeast(mDevFwVer, FW_ZED_2_3_9))
+            {
+                mLastEnvData.press = data->press*PRESS_SCALE_NEW;
+                mLastEnvData.humid = data->humid*HUMID_SCALE_NEW;
+            }
+            else
+            {
+                mLastEnvData.press = data->press*PRESS_SCALE_OLD;
+                mLastEnvData.humid = data->humid*HUMID_SCALE_OLD;
+            }
             mNewEnvData = true;
             mEnvMutex.unlock();
 

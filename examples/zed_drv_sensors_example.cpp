@@ -11,9 +11,23 @@ int main(int argc, char *argv[])
     std::vector<int> devs = sens.getDeviceList();
 
     if( devs.size()==0 )
-        return EXIT_SUCCESS;
+    {
+        std::cerr << "No available ZED Mini or ZED2 cameras" << std::endl;
+        return EXIT_FAILURE;
+    }
 
-    sens.init( devs[0] );
+    if( !sens.init( devs[0] ) )
+    {
+        std::cerr << "Connection failed" << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    uint16_t fw_maior;
+    uint16_t fw_minor;
+
+    sens.getFwVersion( fw_maior, fw_minor );
+
+    std::cout << " * Firmware version: " << std::to_string(fw_maior) << "." << std::to_string(fw_minor) << std::endl;
 
     uint64_t last_imu_ts = 0;
     uint64_t last_mag_ts = 0;

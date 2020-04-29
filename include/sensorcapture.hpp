@@ -106,9 +106,16 @@ public:
      * \brief Open a connection to the MCU of a ZED Mini or a ZED2 camera using the specified serial number or searching
      *        for the first available device
      * \param sn Serial Number of the camera. Use `-1` to open connect to the first available device
-     * \return returns true if the camera is connection is correctly estabilished
+     * \return returns true if the connection is correctly estabilished
      */
     bool init( int sn=-1 );
+
+    /*!
+     * \brief Get the MCU firmware version in form `<fw_major>.<fw_minor>
+     * \param fw_major the major firmware version number
+     * \param fw_minor the minor firmware version number
+     */
+    void getFwVersion( uint16_t& fw_major, uint16_t& fw_minor );
 
     /*!
      * \brief Get the last received IMU data
@@ -146,7 +153,6 @@ public:
      */
     const SensCamTempData* getLastCamTempData(uint64_t timeout_msec=1);
 
-
 private:
     /*!
      * \brief grabThreadFunc The sensor data grabbing thread function
@@ -176,9 +182,12 @@ private:
     bool mStopCapture = false;  //!< Indicates if the grabbing thread must be stopped
     bool mGrabRunning = false;  //!< Indicates if the grabbing thread is running
 
-    std::map<int,uint16_t> mSlDevPid; //!< All the available Stereolabs MCU (ZED-M and ZED2) product IDs associated to their serial number
+    std::map<int,uint16_t> mSlDevPid;   //!< All the available Stereolabs MCU (ZED-M and ZED2) product IDs associated to their serial number
+    std::map<int,uint16_t> mSlDevFwVer; //!< All the available Stereolabs MCU (ZED-M and ZED2) product IDs associated to their firmware version
 
-    hid_device* mDevHandle = nullptr; //!< Hidapi device handler
+    hid_device* mDevHandle = nullptr;   //!< Hidapi device handler
+    int mDevSerial = -1;                //!< Serial number of the connected device
+    int mDevFwVer = -1;                 //!< FW version of the connected device
 
     SensImuData mLastIMUData;           //!< Contains the last received IMU data
     SensMagData mLastMagData;           //!< Contains the last received Magnetometer data
