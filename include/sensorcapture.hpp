@@ -16,7 +16,7 @@ namespace sl_drv {
 /*!
  * \brief The struct containing the acquired IMU data
  */
-struct SL_DRV_EXPORT IMU
+struct SL_DRV_EXPORT SensImuData
 {
     bool valid = false;     //!< Indicates if IMU data are valid
     uint64_t timestamp = 0; //!< Timestamp in nanoseconds
@@ -32,7 +32,7 @@ struct SL_DRV_EXPORT IMU
 /*!
  * \brief The struct containing the acquired Magnetometer data
  */
-struct SL_DRV_EXPORT MAG
+struct SL_DRV_EXPORT SensMagData
 {
     // Validity of the magnetometer sensor data
     typedef enum _mag_status {
@@ -51,7 +51,7 @@ struct SL_DRV_EXPORT MAG
 /*!
  * \brief The struct containing the acquired Environmental data
  */
-struct SL_DRV_EXPORT ENV
+struct SL_DRV_EXPORT SensEnvData
 {
     // Validity of the environmental sensor data
     typedef enum _env_status {
@@ -70,7 +70,7 @@ struct SL_DRV_EXPORT ENV
 /*!
  * \brief The struct containing the acquired Environmental data
  */
-struct SL_DRV_EXPORT CAM_TEMP
+struct SL_DRV_EXPORT SensCamTempData
 {
     bool valid = false;     //!< Indicates if camera temperature data are valid
     uint64_t timestamp = 0; //!< Timestamp in nanoseconds
@@ -89,7 +89,7 @@ public:
     /*!
      * \brief SensorCapture is the default constructor
      */
-    SensorCapture(SensorParams params=_sensor_params());
+    SensorCapture( bool verbose=false );
 
     /*!
      * \brief ~SensorCapture  destructor
@@ -117,7 +117,7 @@ public:
      *
      * \note Do not delete the received data
      */
-    const IMU* getLastIMUData(uint64_t timeout_msec=5);
+    const SensImuData* getLastIMUData(uint64_t timeout_msec=5);
 
     /*!
      * \brief Get the last received Magnetometer data
@@ -126,7 +126,7 @@ public:
      *
      * \note Do not delete the received data
      */
-    const MAG* getLastMagData(uint64_t timeout_msec=1);
+    const SensMagData* getLastMagData(uint64_t timeout_msec=1);
 
     /*!
      * \brief Get the last received Environment data
@@ -135,7 +135,7 @@ public:
      *
      * \note Do not delete the received data
      */
-    const ENV* getLastEnvData(uint64_t timeout_msec=1);
+    const SensEnvData* getLastEnvData(uint64_t timeout_msec=1);
 
     /*!
      * \brief Get the last received camera sensors temperature data
@@ -144,7 +144,7 @@ public:
      *
      * \note Do not delete the received data
      */
-    const CAM_TEMP* getLastCamTempData(uint64_t timeout_msec=1);
+    const SensCamTempData* getLastCamTempData(uint64_t timeout_msec=1);
 
 
 private:
@@ -166,6 +166,7 @@ private:
 
 private:
     // Flags
+    bool mVerbose=false;            //!< Verbose status
     bool mNewIMUData=false;         //!< Indicates if new \ref IMU data are available
     bool mNewMagData=false;         //!< Indicates if new \ref MAG data are available
     bool mNewEnvData=false;         //!< Indicates if new \ref ENV data are available
@@ -179,12 +180,10 @@ private:
 
     hid_device* mDevHandle = nullptr; //!< Hidapi device handler
 
-    SensorParams mParams;       //!< Sensor capture parameters
-
-    IMU mLastIMUData;           //!< Contains the last received IMU data
-    MAG mLastMagData;           //!< Contains the last received Magnetometer data
-    ENV mLastEnvData;           //!< Contains the last received Environmental data
-    CAM_TEMP mLastCamTempData;  //!< Contains the last received camera sensors temperature data
+    SensImuData mLastIMUData;           //!< Contains the last received IMU data
+    SensMagData mLastMagData;           //!< Contains the last received Magnetometer data
+    SensEnvData mLastEnvData;           //!< Contains the last received Environmental data
+    SensCamTempData mLastCamTempData;  //!< Contains the last received camera sensors temperature data
 
     std::thread mGrabThread;    //!< The grabbing thread
 

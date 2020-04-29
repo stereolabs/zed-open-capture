@@ -7,6 +7,9 @@
 
 namespace sl_drv {
 
+/*!
+ * \brief Camera models
+ */
 enum class SL_DEVICE {
     ZED,        //!< ZED old FW
     ZED_M,      //!< ZED Mini old FW
@@ -16,6 +19,9 @@ enum class SL_DEVICE {
     NONE
 };
 
+/*!
+ * \brief Available resolutions
+ */
 enum class RESOLUTION {
     HD2K,       /**< 2208*1242, available framerates: 15 fps.*/
     HD1080,     /**< 1920*1080, available framerates: 15, 30 fps.*/
@@ -24,43 +30,64 @@ enum class RESOLUTION {
     LAST
 };
 
+/*!
+ * \brief Available frames per seconds
+ */
 enum class FPS {
-    FPS_15 = 15,
-    FPS_30 = 30,
-    FPS_60 = 60,
-    FPS_100 = 100,
+    FPS_15 = 15,    //!< 15 Frames per second. Available for all the resolutions.
+    FPS_30 = 30,    //!< 30 Frames per second. Not available for \ref RESOLUTION::HD2K.
+    FPS_60 = 60,    //!< 60 Frames per second. Not available for \ref RESOLUTION::HD2K and  \ref RESOLUTION::HD1080.
+    FPS_100 = 100,  //!< 100 Frames per second. Only available for \ref RESOLUTION::VGA.
     LAST = 101
 };
 
+/*!
+ * \brief Position of the Camera CMOS sensors
+ */
 enum class CAM_SENS_POS {
-    LEFT = 0,
-    RIGHT = 1,
+    LEFT = 0,   //!< The left sensor
+    RIGHT = 1,  //!< The right sensor
     LAST = 3
 };
 
-typedef struct _video_params
+/*!
+ * \brief The camera configuration parameters
+ */
+typedef struct VideoParams
 {
-    _video_params() {
+    /*!
+     * \brief Default constructor setting the default parameter values
+     */
+    VideoParams() {
         res = RESOLUTION::HD2K;
         fps = FPS::FPS_15;
         verbose=false;
     }
 
-    RESOLUTION res;
-    FPS fps;
-    bool verbose;
+    RESOLUTION res; //!< Camera resolution
+    FPS fps;        //!< Frames per second
+    bool verbose;   //!< Verbose mode
 } VideoParams;
 
+/*!
+ * \brief Resolution in pixel for each frame
+ */
 struct Resolution {
-    size_t width; /**< array width in pixels  */
-    size_t height; /**< array height in pixels*/
+    size_t width; //!< array width in pixels
+    size_t height; //!< array height in pixels
 
+    /*!
+     * \brief Constructor
+     * \param w_ frame width in pixels
+     * \param h_ frame height in pixels
+     */
     Resolution(size_t w_ = 0, size_t h_ = 0) {
         width = w_;
         height = h_;
     }
 };
 
+/*! \brief Vector of the available resolutions */
 static const std::vector<sl_drv::Resolution> cameraResolution = {
     sl_drv::Resolution(2208, 1242), /**< sl::RESOLUTION::HD2K */
     sl_drv::Resolution(1920, 1080), /**< sl::RESOLUTION::HD1080 */
@@ -77,9 +104,9 @@ static const uint16_t SL_USB_PROD_ZED_2_CBS = 0xf780;   //!< CBS ZED 2 Firmware 
 /*!
  * \brief The Buffer struct used by UVC to store frame data
  */
-struct Buffer {
-    void *start;
-    size_t length;
+struct UVCBuffer {
+    void *start;    //!< Address of the first byte of the buffer
+    size_t length;  //!< Size of the buffer
 };
 
 // ----> Camera control

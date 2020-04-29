@@ -35,7 +35,7 @@ public:
      * \brief The default constructor
      *  * \param params the initialization parameters (see \ref VideoParams)
      */
-    VideoCapture( VideoParams params = _video_params() );
+    VideoCapture( VideoParams params = VideoParams() );
 
     /*!
      * \brief Destructor
@@ -95,7 +95,7 @@ public:
     int getBrightness();
 
     /*!
-     * \brief Reset the Brightness value to default
+     * \brief Reset the Brightness value to default value
      */
     void resetBrightnessSetting();
 
@@ -104,7 +104,16 @@ public:
      * \param sharpness Sharpness value in the range [0,8]
      */
     void setSharpness(int sharpness);
+
+    /*!
+     * \brief Get the Sharpness value
+     * \return the current Sharpness value
+     */
     int getSharpness();
+
+    /*!
+     * \brief Reset the Sharpness value to default value
+     */
     void resetSharpness();
 
     /*!
@@ -112,7 +121,16 @@ public:
      * \param contrast Contrast value in the range [0,8]
      */
     void setContrast(int contrast);
+
+    /*!
+     * \brief Get the Contrast value
+     * \return the current Contrast value
+     */
     int getContrast();
+
+    /*!
+     * \brief Reset the Contrast value to default value
+     */
     void resetContrast();
 
     /*!
@@ -120,22 +138,45 @@ public:
      * \param hue Hue value in the range [0,11]
      */
     void setHue(int hue);
+
+    /*!
+     * \brief Get the Hue value
+     * \return the current Hue value
+     */
     int getHue();
+
+    /*!
+     * \brief Reset the Hue value to default value
+     */
     void resetHue();
 
     /*!
      * \brief Set the Saturation value
      * \param saturation Saturation value in the range [0,8]
      */
-    void setSaturation(int saturation); // 0 -> 8
+    void setSaturation(int saturation);
+
+    /*!
+     * \brief Get the Saturation value
+     * \return the current Saturation value
+     */
     int getSaturation();
+
+    /*!
+     * \brief Reset the Saturation value to default value
+     */
     void resetSaturation();
 
     /*!
      * \brief Set the White Balance value (disable auto White Balance if active)
      * \param wb White Balance value in the range [2800,6500]
      */
-    void setWhiteBalance(int wb); // 2800 -> 6500
+    void setWhiteBalance(int wb);
+
+    /*!
+     * \brief Get the White Balance value
+     * \return the current White Balance value
+     */
     int getWhiteBalance();
 
     /*!
@@ -143,15 +184,33 @@ public:
      * \param active true to activate automatic White Balance
      */
     void setAutoWhiteBalance(bool active);
+
+    /*!
+     * \brief Get the status of the automatic White Balance control
+     * \return the status of the automatic White Balance control
+     */
     bool getAutoWhiteBalance();
+
+    /*!
+     * \brief Reset the automatic White Balance control value to default value
+     */
     void resetAutoWhiteBalance();
 
     /*!
      * \brief Set the Gamma value
      * \param gamma Gamma value in the range [1,9]
      */
-    void setGamma(int gamma); // 1 -> 9
+    void setGamma(int gamma);
+
+    /*!
+     * \brief Get the Gamma value
+     * \return the current Gamma value
+     */
     int getGamma();
+
+    /*!
+     * \brief Reset the Gamma value to default value
+     */
     void resetGamma();
 
     /*!
@@ -159,7 +218,16 @@ public:
      * \param active true to activate automatic White Balance
      */
     int setAECAGC(bool active);
+
+    /*!
+     * \brief Get the status of the automatic Exposure and Gain control
+     * \return the status of the automatic Exposure and Gain control
+     */
     bool getAECAGC();
+
+    /*!
+     * \brief Reset the automatic Exposure and Gain control value to default value
+     */
     void resetAECAGC();
 
     /*!
@@ -271,14 +339,14 @@ private:
     int mWidth = 0;             //!< Frame width
     int mHeight = 0;            //!< Frame height
     int mChannels = 0;          //!< Frame channels
-    int mFps=0;                 //!< Frame per seconds
+    int mFps=0;                 //!< Frames per seconds
 
     sl_drv::SL_DEVICE mCameraModel = sl_drv::SL_DEVICE::NONE; //!< The camera model
 
     Frame mLastFrame;           //!< Last grabbed frame
     uint8_t mBufCount = 2;      //!< UVC buffer count
     uint8_t mCurrentIndex = 0;  //!< The index of the currect UVC buffer
-    struct Buffer *mBuffers = nullptr;  //!< UVC buffers
+    struct UVCBuffer *mBuffers = nullptr;  //!< UVC buffers
 
     uint64_t mStartTs=0;        //!< Initial System Timestamp, to calculate differences [nsec]
     uint64_t mInitTs=0;         //!< Initial Device Timestamp, to calculate differences [usec]

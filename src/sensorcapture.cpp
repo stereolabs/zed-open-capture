@@ -6,11 +6,11 @@
 
 namespace sl_drv {
 
-SensorCapture::SensorCapture( SensorParams params )
+SensorCapture::SensorCapture(bool verbose )
 {
-    memcpy( &mParams, &params, sizeof(SensorParams) );
+    mVerbose = verbose;
 
-    if( mParams.verbose )
+    if( mVerbose )
     {
         std::string ver =
                 "ZED Driver - Sensors module - Version: "
@@ -46,7 +46,7 @@ int SensorCapture::enumerateDevices()
 
         mSlDevPid[sn]=pid;
 
-        if(mParams.verbose)
+        if(mVerbose)
         {
             std::ostringstream smsg;
 
@@ -125,7 +125,7 @@ bool SensorCapture::init( int sn )
         return false;
     }
 
-    if(mParams.verbose)
+    if(mVerbose)
     {
         std::string msg = "Connected to device with sn ";
         msg += sn_str;
@@ -147,7 +147,7 @@ bool SensorCapture::enableDataStream(bool enable) {
 
     int res = hid_send_feature_report(mDevHandle, buf, 2);
     if (res < 0) {
-        if(mParams.verbose)
+        if(mVerbose)
         {
             std::string msg = "Unable to set a feature report [SensStreamStatus] - ";
             msg += wstr2str(hid_error(mDevHandle));
@@ -225,7 +225,7 @@ void SensorCapture::reset()
         mDevHandle = nullptr;
     }
 
-    if( mParams.verbose && mInitialized)
+    if( mVerbose && mInitialized)
     {
         std::string msg = "Device closed";
         INFO_OUT( msg );
@@ -275,7 +275,7 @@ void SensorCapture::grabThreadFunc()
 
         if( buf[0] != REP_ID_SENSOR_DATA )
         {
-            if(mParams.verbose)
+            if(mVerbose)
             {
                 WARNING_OUT( std::string("REP_ID_SENSOR_DATA - Sensor Data type mismatch") );
             }
@@ -306,10 +306,10 @@ void SensorCapture::grabThreadFunc()
         // <---- IMU data
 
         // ----> Magnetometer data
-        if(data->mag_valid == MAG::NEW_VAL)
+        if(data->mag_valid == SensMagData::NEW_VAL)
         {
             mMagMutex.lock();
-            mLastMagData.valid = MAG::NEW_VAL;
+            mLastMagData.valid = SensMagData::NEW_VAL;
             mLastMagData.timestamp = data->timestamp*TS_SCALE;
             mLastMagData.mY = data->mY*MAG_SCALE;
             mLastMagData.mZ = data->mZ*MAG_SCALE;
@@ -322,15 +322,15 @@ void SensorCapture::grabThreadFunc()
         }
         else
         {
-            mLastIMUData.valid = static_cast<MAG::MagStatus>(data->mag_valid);
+            mLastIMUData.valid = static_cast<SensMagData::MagStatus>(data->mag_valid);
         }
         // <---- Magnetometer data
 
         // ----> Environmental data
-        if(data->env_valid == ENV::NEW_VAL)
+        if(data->env_valid == SensEnvData::NEW_VAL)
         {
             mEnvMutex.lock();
-            mLastEnvData.valid = ENV::NEW_VAL;
+            mLastEnvData.valid = SensEnvData::NEW_VAL;
             mLastEnvData.timestamp = data->timestamp*TS_SCALE;
             mLastEnvData.temp = data->temp*TEMP_SCALE;
             mLastEnvData.press = data->press*PRESS_SCALE_NEW; //TODO add check on FW version to choose the right scale factor!
@@ -343,14 +343,14 @@ void SensorCapture::grabThreadFunc()
         }
         else
         {
-            mLastIMUData.valid = static_cast<MAG::MagStatus>(data->mag_valid);
+            mLastIMUData.valid = static_cast<SensMagData::MagStatus>(data->mag_valid);
         }
         // <---- Environmental data
 
         // ----> Camera sensors temperature data
         if(data->temp_cam_left != TEMP_NOT_VALID &&
            data->temp_cam_left != TEMP_NOT_VALID &&
-                data->env_valid == ENV::NEW_VAL ) // Sensor temperature is linked to Environmental data acquisition at FW level
+                data->env_valid == SensEnvData::NEW_VAL ) // Sensor temperature is linked to Environmental data acquisition at FW level
         {
             mCamTempMutex.lock();
             mLastCamTempData.valid = true;
@@ -397,7 +397,7 @@ bool SensorCapture::sendPing() {
     return true;
 }
 
-const IMU* SensorCapture::getLastIMUData(uint64_t timeout_msec)
+const SensImuData* SensorCapture::getLastIMUData(uint64_t timeout_msec)
 {
     // ----> Wait for a new frame
     uint64_t time_count = timeout_msec*10;
@@ -418,7 +418,7 @@ const IMU* SensorCapture::getLastIMUData(uint64_t timeout_msec)
     return &mLastIMUData;
 }
 
-const MAG* SensorCapture::getLastMagData(uint64_t timeout_msec)
+const SensMagData* SensorCapture::getLastMagData(uint64_t timeout_msec)
 {
     // ----> Wait for a new frame
     uint64_t time_count = timeout_msec*10;
@@ -439,7 +439,7 @@ const MAG* SensorCapture::getLastMagData(uint64_t timeout_msec)
     return &mLastMagData;
 }
 
-const ENV* SensorCapture::getLastEnvData(uint64_t timeout_msec)
+const SensEnvData* SensorCapture::getLastEnvData(uint64_t timeout_msec)
 {
     // ----> Wait for a new frame
     uint64_t time_count = timeout_msec*10;
@@ -460,7 +460,7 @@ const ENV* SensorCapture::getLastEnvData(uint64_t timeout_msec)
     return &mLastEnvData;
 }
 
-const CAM_TEMP* SensorCapture::getLastCamTempData(uint64_t timeout_msec)
+const SensCamTempData* SensorCapture::getLastCamTempData(uint64_t timeout_msec)
 {
     // ----> Wait for a new frame
     uint64_t time_count = timeout_msec*10;

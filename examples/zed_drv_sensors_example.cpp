@@ -5,12 +5,8 @@
 
 int main(int argc, char *argv[])
 {
-    sl_drv::SensorParams params;
-    params.verbose = true;
-    params.freq = 400.f;
-
     // Create Sensor Capture
-    sl_drv::SensorCapture sens(params);
+    sl_drv::SensorCapture sens(true);
 
     std::vector<int> devs = sens.getDeviceList();
 
@@ -26,7 +22,7 @@ int main(int argc, char *argv[])
 
     while(1)
     {
-        const sl_drv::IMU* imuData = sens.getLastIMUData(10);
+        const sl_drv::SensImuData* imuData = sens.getLastIMUData(10);
         if( imuData && imuData->valid )
         {
             std::cout << "**** New IMU data ****" << std::endl;
@@ -40,8 +36,8 @@ int main(int argc, char *argv[])
             std::cout << " * Angular Velocities [°/s]: " << imuData->gX << " " << imuData->gY << " " << imuData->gZ << std::endl;
         }
 
-        const sl_drv::MAG* magData = sens.getLastMagData(1);
-        if( magData && magData->valid == sl_drv::MAG::NEW_VAL )
+        const sl_drv::SensMagData* magData = sens.getLastMagData(1);
+        if( magData && magData->valid == sl_drv::SensMagData::NEW_VAL )
         {
             std::cout << "**** New Magnetometer data ****" << std::endl;
             std::cout << " * Timestamp: " << magData->timestamp << " nsec" << std::endl;
@@ -53,8 +49,8 @@ int main(int argc, char *argv[])
             std::cout << " * Magnetic field [uT]: " << magData->mX << " " << magData->mY << " " << magData->mZ << std::endl;
         }
 
-        const sl_drv::ENV* envData = sens.getLastEnvData(1);
-        if( envData && envData->valid == sl_drv::ENV::NEW_VAL )
+        const sl_drv::SensEnvData* envData = sens.getLastEnvData(1);
+        if( envData && envData->valid == sl_drv::SensEnvData::NEW_VAL )
         {
             std::cout << "**** New Environment data ****" << std::endl;
             std::cout << " * Timestamp: " << envData->timestamp << " nsec" << std::endl;
@@ -68,7 +64,7 @@ int main(int argc, char *argv[])
             std::cout << " * Relative Humidity [%rH]: " << envData->humid << std::endl;
         }
 
-        const sl_drv::CAM_TEMP* tempData = sens.getLastCamTempData(1);
+        const sl_drv::SensCamTempData* tempData = sens.getLastCamTempData(1);
         if( tempData && tempData->valid )
         {
             std::cout << "**** New Camera Sensors Temperature data ****" << std::endl;

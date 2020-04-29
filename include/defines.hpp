@@ -33,7 +33,9 @@
 #define WARNING_OUT(msg) { int status_dem_0; std::cerr << "[" << abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status_dem_0) << "] WARNING: " << msg << std::endl; }
 #define ERROR_OUT(msg) { int status_dem_0; std::cerr << "[" << abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status_dem_0) << "] ERROR: " << msg << std::endl; }
 
-// Convert a wchar array to std::string
+/*!
+ * \brief Convert a wchar array to std::string
+ */
 inline std::string wstr2str( const wchar_t* wstr)
 {
     std::wstring ws( wstr );

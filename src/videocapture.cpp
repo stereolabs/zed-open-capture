@@ -396,7 +396,7 @@ bool VideoCapture::openCamera( uint8_t devId )
     }
 
     // Create buffers
-    mBuffers = (Buffer*) calloc(req.count, sizeof(*mBuffers));
+    mBuffers = (UVCBuffer*) calloc(req.count, sizeof(*mBuffers));
 
     for(mBufCount = 0; mBufCount < req.count; ++mBufCount)
     {
