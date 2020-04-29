@@ -353,7 +353,7 @@ void SensorCapture::grabThreadFunc()
             mLastEnvData.valid = SensEnvData::NEW_VAL;
             mLastEnvData.timestamp = data->timestamp*TS_SCALE;
             mLastEnvData.temp = data->temp*TEMP_SCALE;
-            if( atLeast(mDevFwVer, FW_ZED_2_3_9))
+            if( atLeast(mDevFwVer, ZED_2_FW::FW_2_3_9))
             {
                 mLastEnvData.press = data->press*PRESS_SCALE_NEW;
                 mLastEnvData.humid = data->humid*HUMID_SCALE_NEW;
