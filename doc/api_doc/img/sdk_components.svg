@@ -1,0 +1,1823 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 672.54754 541.53569"
+   height="152.8334mm"
+   width="189.80786mm"
+   sodipodi:docname="sdk_components.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     id="namedview307"
+     showgrid="false"
+     inkscape:zoom="0.80012931"
+     inkscape:cx="61.415723"
+     inkscape:cy="438.17043"
+     inkscape:window-x="2552"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <defs
+     id="defs4">
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="scale(-0.6,-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#00ace6;fill-opacity:1;fill-rule:evenodd;stroke:#00ace6;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path5289" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#00ace6;fill-opacity:1;fill-rule:evenodd;stroke:#00ace6;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path5283" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#00ace6;fill-opacity:1;fill-rule:evenodd;stroke:#00ace6;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         id="path5271" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-4"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="scale(-0.6,-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#00ace6;fill-opacity:1;fill-rule:evenodd;stroke:#00ace6;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path5289-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="scale(-0.6,-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#00ace6;fill-opacity:1;fill-rule:evenodd;stroke:#00ace6;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path5289-3" />
+    </marker>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter5141">
+      <feComposite
+         in2="SourceGraphic"
+         operator="arithmetic"
+         k1="0.2"
+         k2="0.2"
+         result="composite1"
+         id="feComposite5143"
+         k3="0"
+         k4="0" />
+      <feColorMatrix
+         in="composite1"
+         values="1"
+         type="saturate"
+         result="colormatrix1"
+         id="feColorMatrix5145" />
+      <feFlood
+         flood-opacity="1"
+         flood-color="rgb(30,119,189)"
+         result="flood1"
+         id="feFlood5147" />
+      <feBlend
+         in="flood1"
+         in2="colormatrix1"
+         mode="multiply"
+         result="blend1"
+         id="feBlend5149" />
+      <feBlend
+         in2="blend1"
+         mode="screen"
+         result="blend2"
+         id="feBlend5151" />
+      <feColorMatrix
+         in="blend2"
+         values="1"
+         type="saturate"
+         result="colormatrix2"
+         id="feColorMatrix5153" />
+      <feComposite
+         in="colormatrix2"
+         in2="SourceGraphic"
+         operator="in"
+         result="fbSourceGraphic"
+         id="feComposite5155" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix5157" />
+      <feComposite
+         id="feComposite5159"
+         in2="fbSourceGraphic"
+         operator="arithmetic"
+         k1="0.2"
+         k2="0.2"
+         result="composite1"
+         in="fbSourceGraphic"
+         k3="0"
+         k4="0" />
+      <feColorMatrix
+         id="feColorMatrix5161"
+         in="composite1"
+         values="1"
+         type="saturate"
+         result="colormatrix1" />
+      <feFlood
+         id="feFlood5163"
+         flood-opacity="1"
+         flood-color="rgb(30,119,189)"
+         result="flood1" />
+      <feBlend
+         id="feBlend5165"
+         in2="colormatrix1"
+         in="flood1"
+         mode="multiply"
+         result="blend1" />
+      <feBlend
+         id="feBlend5167"
+         in2="blend1"
+         mode="screen"
+         result="blend2" />
+      <feColorMatrix
+         id="feColorMatrix5169"
+         in="blend2"
+         values="1"
+         type="saturate"
+         result="colormatrix2" />
+      <feComposite
+         id="feComposite5171"
+         in2="fbSourceGraphic"
+         in="colormatrix2"
+         operator="in"
+         result="composite2" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter5141-8">
+      <feComposite
+         k4="0"
+         k3="0"
+         in2="SourceGraphic"
+         operator="arithmetic"
+         k1="0.2"
+         k2="0.2"
+         result="composite1"
+         id="feComposite5143-7" />
+      <feColorMatrix
+         in="composite1"
+         values="1"
+         type="saturate"
+         result="colormatrix1"
+         id="feColorMatrix5145-5" />
+      <feFlood
+         flood-opacity="1"
+         flood-color="rgb(30,119,189)"
+         result="flood1"
+         id="feFlood5147-7" />
+      <feBlend
+         in="flood1"
+         in2="colormatrix1"
+         mode="multiply"
+         result="blend1"
+         id="feBlend5149-4" />
+      <feBlend
+         in2="blend1"
+         mode="screen"
+         result="blend2"
+         id="feBlend5151-2" />
+      <feColorMatrix
+         in="blend2"
+         values="1"
+         type="saturate"
+         result="colormatrix2"
+         id="feColorMatrix5153-4" />
+      <feComposite
+         in="colormatrix2"
+         in2="SourceGraphic"
+         operator="in"
+         result="fbSourceGraphic"
+         id="feComposite5155-9" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix5157-1" />
+      <feComposite
+         k4="0"
+         k3="0"
+         id="feComposite5159-4"
+         in2="fbSourceGraphic"
+         operator="arithmetic"
+         k1="0.2"
+         k2="0.2"
+         result="composite1"
+         in="fbSourceGraphic" />
+      <feColorMatrix
+         id="feColorMatrix5161-2"
+         in="composite1"
+         values="1"
+         type="saturate"
+         result="colormatrix1" />
+      <feFlood
+         id="feFlood5163-9"
+         flood-opacity="1"
+         flood-color="rgb(30,119,189)"
+         result="flood1" />
+      <feBlend
+         id="feBlend5165-1"
+         in2="colormatrix1"
+         in="flood1"
+         mode="multiply"
+         result="blend1" />
+      <feBlend
+         id="feBlend5167-2"
+         in2="blend1"
+         mode="screen"
+         result="blend2" />
+      <feColorMatrix
+         id="feColorMatrix5169-9"
+         in="blend2"
+         values="1"
+         type="saturate"
+         result="colormatrix2" />
+      <feComposite
+         id="feComposite5171-4"
+         in2="fbSourceGraphic"
+         in="colormatrix2"
+         operator="in"
+         result="composite2" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter5141-8-5">
+      <feComposite
+         k4="0"
+         k3="0"
+         in2="SourceGraphic"
+         operator="arithmetic"
+         k1="0.2"
+         k2="0.2"
+         result="composite1"
+         id="feComposite5143-7-0" />
+      <feColorMatrix
+         in="composite1"
+         values="1"
+         type="saturate"
+         result="colormatrix1"
+         id="feColorMatrix5145-5-6" />
+      <feFlood
+         flood-opacity="1"
+         flood-color="rgb(30,119,189)"
+         result="flood1"
+         id="feFlood5147-7-7" />
+      <feBlend
+         in="flood1"
+         in2="colormatrix1"
+         mode="multiply"
+         result="blend1"
+         id="feBlend5149-4-7" />
+      <feBlend
+         in2="blend1"
+         mode="screen"
+         result="blend2"
+         id="feBlend5151-2-3" />
+      <feColorMatrix
+         in="blend2"
+         values="1"
+         type="saturate"
+         result="colormatrix2"
+         id="feColorMatrix5153-4-3" />
+      <feComposite
+         in="colormatrix2"
+         in2="SourceGraphic"
+         operator="in"
+         result="fbSourceGraphic"
+         id="feComposite5155-9-0" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix5157-1-3" />
+      <feComposite
+         k4="0"
+         k3="0"
+         id="feComposite5159-4-5"
+         in2="fbSourceGraphic"
+         operator="arithmetic"
+         k1="0.2"
+         k2="0.2"
+         result="composite1"
+         in="fbSourceGraphic" />
+      <feColorMatrix
+         id="feColorMatrix5161-2-9"
+         in="composite1"
+         values="1"
+         type="saturate"
+         result="colormatrix1" />
+      <feFlood
+         id="feFlood5163-9-1"
+         flood-opacity="1"
+         flood-color="rgb(30,119,189)"
+         result="flood1" />
+      <feBlend
+         id="feBlend5165-1-1"
+         in2="colormatrix1"
+         in="flood1"
+         mode="multiply"
+         result="blend1" />
+      <feBlend
+         id="feBlend5167-2-1"
+         in2="blend1"
+         mode="screen"
+         result="blend2" />
+      <feColorMatrix
+         id="feColorMatrix5169-9-6"
+         in="blend2"
+         values="1"
+         type="saturate"
+         result="colormatrix2" />
+      <feComposite
+         id="feComposite5171-4-0"
+         in2="fbSourceGraphic"
+         in="colormatrix2"
+         operator="in"
+         result="composite2" />
+    </filter>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-10.897684,-13.973808)"
+     style="display:inline"
+     id="layer1">
+    <g
+       id="g4250"
+       transform="translate(207.56305,303.51004)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:12.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="158.06195"
+         y="68.977173"
+         id="text4749"><tspan
+           id="tspan4751"
+           x="158.06195"
+           y="68.977173" /></text>
+      <g
+         id="g5181"
+         onclick=""
+         transform="translate(-98.908113,-241.6739)">
+        <rect
+           y="-14.973869"
+           x="-94.585007"
+           height="62.77153"
+           width="667.22321"
+           id="rect4136-1-6-1"
+           style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:3.21500015;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <g
+           id="g5176"
+           cursor="pointer"
+           transform="translate(0,66)"
+           onclick="window.open(&quot;https://www.stereolabs.com/documentation/overview/getting-started/introduction.html&quot;);">
+          <rect
+             style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:2.53289175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4142-9-4-0"
+             width="194.88249"
+             height="31.312275"
+             x="-94.926025"
+             y="-112.59589" />
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             x="-1.140268"
+             y="-89.0933"
+             id="text4138-6-8-9"><tspan
+               id="tspan4140-8-0-6"
+               x="-1.140268"
+               y="-89.0933"
+               style="font-size:21.10743141px;fill:#ffffff;fill-opacity:1">ZED SDK</tspan></text>
+        </g>
+      </g>
+      <g
+         transform="translate(91.628142,-0.36360374)"
+         id="g4862"
+         onclick="window.open(&quot;https://www.stereolabs.com/documentation/overview/spatial-mapping/introduction.html&quot;);"
+         cursor="pointer">
+        <rect
+           y="-243.29796"
+           x="118.09773"
+           height="36.47216"
+           width="124.17047"
+           id="rect4136-5-3-2-7"
+           style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783918;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="162.9744"
+           y="-220.03043"
+           id="text4191-6-8-4-6-3-4-0"><tspan
+             id="tspan4193-6-9-1-6-7-1-9"
+             x="162.9744"
+             y="-220.03043"
+             style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1">Mapping</tspan></text>
+        <g
+           transform="translate(-2,0)"
+           id="g4446">
+          <path
+             style="display:inline;fill:#0084b1;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m 150.87029,-225.34584 0,-6.88957 -9.58238,3.13163 0.51106,7.82905 z"
+             id="path6135-2" />
+          <path
+             style="display:inline;fill:#006f95;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m 141.28791,-229.04116 -9.83084,-4.28352 1.78165,10.92256 8.56025,1.19002 z"
+             id="path6137-7" />
+          <path
+             style="display:inline;fill:#00ace6;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m 141.6712,-221.33737 8.17696,6.51377 -25.58302,-3.93954 8.9097,-3.63898 z"
+             id="path6139-3" />
+          <path
+             style="display:inline;fill:#00ace6;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m 141.86285,-221.2121 8.94356,-4.13374 12.00682,3.47311 -12.83729,7.04913 z"
+             id="path6141-7" />
+          <path
+             style="display:inline;fill:#0084b1;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m 133.24861,-222.40656 -1.75682,-10.81191 c -2.15483,3.82706 -5.10264,10.51403 -7.06934,14.44318 z"
+             id="path6145-8" />
+          <path
+             style="display:inline;fill:#009cd1;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m 131.33039,-233.2839 10.61654,-1.66304 8.98028,2.76677 -9.71229,3.17413 z"
+             id="path6141-0-3" />
+        </g>
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:2.53146791;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-4"
+           width="10.066998"
+           height="13.850946"
+           x="231.47585"
+           y="-242.1398" />
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-1"
+           width="6.7814293"
+           height="13.404245"
+           x="235.024"
+           y="-242.23215" />
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-1-8"
+           width="5.3839345"
+           height="3.7319863"
+           x="231.87965"
+           y="-240.38559" />
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-1-8-6"
+           width="5.3839345"
+           height="3.7319863"
+           x="231.9308"
+           y="-234.32242" />
+      </g>
+      <g
+         transform="translate(-190.04356,-0.96961339)"
+         id="g4885"
+         onclick="window.open(&quot;https://www.stereolabs.com/documentation/overview/video/introduction.html&quot;);"
+         cursor="pointer">
+        <rect
+           y="-242.83257"
+           x="267.70749"
+           height="36.47216"
+           width="123.77879"
+           id="rect4136-5-3-2-7-4"
+           style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783895;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="304.58414"
+           y="-220.2175"
+           id="text4191-6-8-4-6-3-4-0-0"><tspan
+             id="tspan4193-6-9-1-6-7-1-9-8"
+             x="304.58414"
+             y="-220.2175"
+             style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1">Recording</tspan></text>
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:2.53146791;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-4-34"
+           width="10.066998"
+           height="13.850946"
+           x="380.39999"
+           y="-242.32693" />
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-1-3"
+           width="6.7814293"
+           height="13.404245"
+           x="383.94815"
+           y="-242.41922" />
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-1-8-5"
+           width="5.3839345"
+           height="3.7319863"
+           x="380.8038"
+           y="-240.57266" />
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-1-8-6-1"
+           width="5.3839345"
+           height="3.7319863"
+           x="380.85495"
+           y="-234.50949" />
+        <path
+           style="display:inline;fill:#00ace6;fill-opacity:1"
+           d="m 287.73506,-229.95633 c 0.32631,0 0.59114,0.26484 0.59114,0.59115 l 0,8.27604 c 0,0.32631 -0.26483,0.59115 -0.59114,0.59115 l -13.00521,0 c -0.32631,0 -0.59115,-0.26484 -0.59115,-0.59115 l 0,-8.27604 c 0,-0.32631 0.26484,-0.59115 0.59115,-0.59115 l 13.00521,0 z m 2.95573,0 c 0,-1.30525 -1.05934,-2.36458 -2.36459,-2.36458 l -14.1875,0 c -1.30525,0 -2.36458,1.05933 -2.36458,2.36458 l 0,9.45834 c 0,1.30525 1.05933,2.36458 2.36458,2.36458 l 14.1875,0 c 1.30525,0 2.36459,-1.05933 2.36459,-2.36458 l 0,-9.45834 z m 7.09375,2.19197 0,5.07558 -2.36459,-1.66467 0,-1.74743 2.36459,-1.66348 z m 2.36458,-4.55655 -7.09375,4.99282 0,4.20186 7.09375,4.99282 0,-14.1875 z"
+           id="path6164-4" />
+      </g>
+      <g
+         transform="translate(-21.21273,-0.72720744)"
+         id="g4841"
+         onclick="window.open(&quot;https://www.stereolabs.com/documentation/overview/positional-tracking/introduction.html&quot;);"
+         cursor="pointer">
+        <rect
+           y="-243.2731"
+           x="-31.636263"
+           height="36.47216"
+           width="123.94308"
+           id="rect4136-5-3-2-7-4-8"
+           style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783895;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="9.2404385"
+           y="-220.22305"
+           id="text4191-6-8-4-6-3-4-0-0-8"><tspan
+             id="tspan4193-6-9-1-6-7-1-9-8-0"
+             x="9.2404385"
+             y="-220.22305"
+             style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1">Tracking</tspan></text>
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:2.53146791;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-4-34-2"
+           width="10.066998"
+           height="13.850946"
+           x="81.141983"
+           y="-242.33243" />
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-1-3-9"
+           width="6.7814293"
+           height="13.404245"
+           x="84.690147"
+           y="-242.42477" />
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-1-8-5-5"
+           width="5.3839345"
+           height="3.7319863"
+           x="81.545799"
+           y="-240.57828" />
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-1-8-6-1-8"
+           width="5.3839345"
+           height="3.7319863"
+           x="81.596947"
+           y="-234.51505" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:10.55371571px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="142.50616"
+           y="-178.78726"
+           id="text4599-2-5-5"
+           transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)"><tspan
+             id="tspan4601-1-4-8"
+             x="142.50616"
+             y="-178.78726">+</tspan></text>
+        <path
+           style="display:inline;fill:none;fill-rule:evenodd;stroke:#00ace6;stroke-width:0.84429717;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.8442972, 0.8442972;stroke-dashoffset:0;stroke-opacity:1"
+           d="m -24.750833,-232.6707 c 0,0 19.0251402,-1.85855 19.0251402,4.76107 0,9.25167 -15.7110602,-1.49997 -15.7110602,5.39921 0,8.76291 22.6837436,3.54438 22.6837436,3.54438"
+           id="path4603-0-9-2" />
+        <path
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:1.29999995;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m -6.4009528,-233.02981 -8.3549702,8.56376 -3.91355,-3.70995 -2.74971,2.75118 6.66326,6.46187 11.1054002,-11.31642 z"
+           id="path4407-9-9" />
+      </g>
+      <g
+         transform="translate(-2.787626,-0.72721368)"
+         id="g4814"
+         onclick="window.open(&quot;https://www.stereolabs.com/documentation/overview/depth-sensing/introduction.html&quot;);">
+        <rect
+           y="-243.11148"
+           x="-180.97852"
+           height="36.47216"
+           width="123.79679"
+           id="rect4136-5-3-2-7-4-4"
+           style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783871;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           cursor="pointer" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="-132.10187"
+           y="-220.40012"
+           id="text4191-6-8-4-6-3-4-0-0-0"
+           cursor="pointer"><tspan
+             id="tspan4193-6-9-1-6-7-1-9-8-5"
+             x="-132.10187"
+             y="-220.40012"
+             style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1">Depth</tspan></text>
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:2.53146791;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-4-34-3"
+           width="10.066998"
+           height="13.850946"
+           x="-68.480362"
+           y="-242.50949" />
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-1-3-5"
+           width="6.7814293"
+           height="13.404245"
+           x="-64.932205"
+           y="-242.60184" />
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-1-8-5-0"
+           width="5.3839345"
+           height="3.7319863"
+           x="-68.076553"
+           y="-240.75534" />
+        <rect
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4537-2-1-1-8-6-1-3"
+           width="5.3839345"
+           height="3.7319863"
+           x="-68.025406"
+           y="-234.69211" />
+        <g
+           id="g4719-3-5"
+           transform="matrix(0.84382263,0,0,0.84382263,-267.71406,-394.36109)"
+           style="display:inline">
+          <path
+             id="path4371-8-1-2-7"
+             d="m 126.59835,202.58196 -10.974,6.33584"
+             style="display:inline;fill:none;fill-rule:evenodd;stroke:#00ace6;stroke-width:1.44852281;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path
+             id="path4371-4-0"
+             d="m 115.38367,189.73375 0,20.30231"
+             style="display:inline;fill:none;fill-rule:evenodd;stroke:#00ace6;stroke-width:1.44852281;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path
+             id="path4371-8-4-9"
+             d="m 134.94611,209.32883 -20.30226,0"
+             style="display:inline;fill:none;fill-rule:evenodd;stroke:#00ace6;stroke-width:1.44852281;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-weight:normal;font-size:12.5px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:0.30000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             x="109.37276"
+             y="195.37033"
+             id="text4686-34-7"><tspan
+               id="tspan4688-2-6"
+               x="109.37276"
+               y="195.37033"
+               style="font-size:7.5px;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:0.30000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">Y</tspan></text>
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-weight:normal;font-size:12.5px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:0.30000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             x="123.95578"
+             y="201.39711"
+             id="text4686-3-4-5"><tspan
+               id="tspan4688-1-8-8"
+               x="123.95578"
+               y="201.39711"
+               style="font-size:7.5px;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:0.30000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">Z</tspan></text>
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-weight:normal;font-size:12.5px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:0.30000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             x="135.79984"
+             y="209.8824"
+             id="text4686-2-5-3"><tspan
+               id="tspan4688-9-5-3"
+               x="135.79984"
+               y="209.8824"
+               style="font-size:7.5px;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:0.30000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">X</tspan></text>
+        </g>
+      </g>
+      <g
+         transform="translate(339.70586,136.66896)"
+         style="display:inline"
+         id="g5181-3"
+         onclick="">
+        <rect
+           y="-100.97388"
+           x="-75.585022"
+           height="214.80861"
+           width="209.12686"
+           id="rect4136-1-6-1-6"
+           style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:3.21500039;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <rect
+           y="-132.59589"
+           x="-75.926025"
+           height="31.312275"
+           width="194.88249"
+           id="rect4142-9-4-0-8"
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:2.53289175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <text
+           id="text4138-6-8-9-9"
+           y="-109.0933"
+           x="17.859732"
+           style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           xml:space="preserve"><tspan
+             style="font-size:21.10743141px;fill:#ffffff;fill-opacity:1"
+             y="-109.0933"
+             x="17.859732"
+             id="tspan4140-8-0-6-7">App and tools</tspan></text>
+        <text
+           id="text5309"
+           y="-198.47467"
+           x="86.842995"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           xml:space="preserve"><tspan
+             y="-198.47467"
+             x="86.842995"
+             id="tspan5311" /></text>
+        <g
+           id="g4562"
+           onclick="window.open(&quot;https://www.stereolabs.com/documentation/overview/spatial-mapping/introduction.html&quot;);"
+           transform="translate(0,-23.499999)"
+           cursor="pointer">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783918;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9"
+             width="177.47215"
+             height="35.322807"
+             x="-61.626549"
+             y="41.96846" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8"
+             y="64.657272"
+             x="-17.467388"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="64.657272"
+               x="-17.467388"
+               id="tspan4193-6-9-1-6-7-1-9-6-2">ZedFu</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1"
+             y="66.386581"
+             x="-48.677391"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="66.386581"
+               x="-48.677391"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5">Fu</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1"
+             width="25.986374"
+             height="25.824442"
+             x="-51.727043"
+             y="46.918228"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           id="g4550"
+           onclick="window.open(&quot;https://www.stereolabs.com/documentation/overview/getting-started/getting-started.html#run-the-zed-depth-viewer&quot;);"
+           transform="translate(0,-12.249999)"
+           cursor="pointer">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783942;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18"
+             width="177.47217"
+             height="36.47216"
+             x="-60.927933"
+             y="-21.868032" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9"
+             y="1.2201328"
+             x="-16.051262"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="1.2201328"
+               x="-16.051262"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4">Depth Viewer</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4"
+             y="2.9494419"
+             x="-50.276863"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="2.9494419"
+               x="-50.276863"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8">Dv</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4"
+             width="25.986374"
+             height="25.824442"
+             x="-51.028427"
+             y="-16.518927"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           id="g4538"
+           onclick="window.open(&quot;https://www.stereolabs.com/documentation/overview/getting-started/getting-started.html#run-the-zed-explorer&quot;);"
+           cursor="pointer">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783942;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-6"
+             width="177.47217"
+             height="36.47216"
+             x="-61.33448"
+             y="-85.167427" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-8"
+             y="-62.329258"
+             x="-16.457825"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="-62.329258"
+               x="-16.457825"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-6">ZED Explorer</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-9"
+             y="-60.599949"
+             x="-49.870918"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="-60.599949"
+               x="-49.870918"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-1">Ex</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-2"
+             width="25.986374"
+             height="25.824442"
+             x="-51.43499"
+             y="-80.068321"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+      </g>
+      <g
+         transform="translate(-780.19231,-433.07788)"
+         style="display:inline"
+         id="g5181-3-5"
+         onclick="">
+        <rect
+           y="297.22986"
+           x="585.24109"
+           height="117.80733"
+           width="669.22589"
+           id="rect4136-1-6-1-6-4"
+           style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:3.21500015;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <rect
+           y="265.60782"
+           x="584.90002"
+           height="31.312275"
+           width="261.86887"
+           id="rect4142-9-4-0-8-3"
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:2.53289175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <text
+           id="text4138-6-8-9-9-5"
+           y="289.11041"
+           x="716.68579"
+           style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           xml:space="preserve"><tspan
+             style="font-size:21.10743141px;fill:#ffffff;fill-opacity:1"
+             y="289.11041"
+             x="716.68579"
+             id="tspan4140-8-0-6-7-4">Plugins and Integrations</tspan></text>
+        <text
+           id="text5309-7"
+           y="-164.60461"
+           x="763.9325"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           xml:space="preserve"><tspan
+             y="-164.60461"
+             x="763.9325"
+             id="tspan5311-6" /></text>
+        <g
+           id="g4776"
+           onclick="window.open(&quot;https://www.stereolabs.com/documentation/guides/using-zed-with-ros/introduction.html&quot;);"
+           cursor="pointer"
+           transform="translate(-26,-27.403517)">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783918;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-5"
+             width="106.69977"
+             height="36.47216"
+             x="897.00665"
+             y="338.79498" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-6"
+             y="361.84503"
+             x="941.16583"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="361.84503"
+               x="941.16583"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-1">ROS</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-0"
+             y="363.57434"
+             x="908.45587"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="363.57434"
+               x="908.45587"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-6">Rs</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-2"
+             width="25.986374"
+             height="25.824442"
+             x="906.90619"
+             y="344.10596"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           id="g4791"
+           onclick="window.open(&quot;https://www.stereolabs.com/documentation/guides/interfaces/matlab.html&quot;);"
+           cursor="pointer"
+           transform="translate(-52,-27.403517)">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783942;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-7"
+             width="117.46196"
+             height="36.47216"
+             x="1045.7738"
+             y="338.3494" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-6"
+             y="361.18192"
+             x="1090.6505"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="361.18192"
+               x="1090.6505"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-4">Matlab</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-6"
+             y="362.91122"
+             x="1055.541"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="362.91122"
+               x="1055.541"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-8">Ma</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-7"
+             width="25.986374"
+             height="25.824442"
+             x="1055.6733"
+             y="343.44287"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           id="g4802"
+           onclick="window.open(&quot;https://www.stereolabs.com/documentation/guides/using-zed-with-unity/introduction.html&quot;);"
+           cursor="pointer"
+           transform="translate(0,-27.403517)">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783942;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-6-3"
+             width="115.77217"
+             height="36.47216"
+             x="597.69928"
+             y="339.42487" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-8-9"
+             y="362.03992"
+             x="642.57593"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="362.03992"
+               x="642.57593"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-6-0">Unity</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-9-1"
+             y="363.76923"
+             x="609.16284"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="363.76923"
+               x="609.16284"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-1-6">Uy</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-2-0"
+             width="25.986374"
+             height="25.824442"
+             x="607.59875"
+             y="344.30084"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           id="g4764"
+           onclick="window.open(&quot;https://www.stereolabs.com/documentation/guides/interfaces/opencv.html&quot;);"
+           cursor="pointer"
+           transform="translate(-16,-27.403517)">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783966;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-7-5"
+             width="125.10483"
+             height="36.47216"
+             x="747.6073"
+             y="339.38712" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-6-0"
+             y="362.00214"
+             x="792.48395"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="362.00214"
+               x="792.48395"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-4-7">OpenCV</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-6-7"
+             y="363.73145"
+             x="758.08154"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="363.73145"
+               x="758.08154"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-8-7">CV</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-7-3"
+             width="25.986374"
+             height="25.824442"
+             x="757.50677"
+             y="344.26312"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           style="display:inline"
+           id="g4791-1"
+           onclick="window.open(&quot;https://docs.stereolabs.com/mixed-reality/unreal/getting-started/&quot;);"
+           cursor="pointer"
+           transform="translate(79.8275,-27.363006)">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783942;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-7-9"
+             width="117.46196"
+             height="36.47216"
+             x="1045.7738"
+             y="338.3494" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-6-7"
+             y="361.18192"
+             x="1090.6505"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="361.18192"
+               x="1090.6505"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-4-5">Unreal</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-6-9"
+             y="362.91122"
+             x="1055.541"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="362.91122"
+               x="1055.541"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-8-9">UE</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-7-4"
+             width="25.986374"
+             height="25.824442"
+             x="1055.6733"
+             y="343.44287"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           style="display:inline"
+           id="g4802-9"
+           onclick="window.open(&quot;https://github.com/stereolabs/zed-yolo&quot;);"
+           cursor="pointer"
+           transform="translate(0.0408308,25.880973)">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783942;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-6-3-4"
+             width="115.28736"
+             height="36.47216"
+             x="597.69928"
+             y="339.42487" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-8-9-6"
+             y="362.03992"
+             x="642.57593"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="362.03992"
+               x="642.57593"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-6-0-4">Yolo</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-9-1-8"
+             y="363.76923"
+             x="611.16284"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="363.76923"
+               x="611.16284"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-1-6-8">Yo</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-2-0-7"
+             width="25.986374"
+             height="25.824442"
+             x="607.59875"
+             y="344.30084"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           style="display:inline"
+           id="g4776-3"
+           onclick="window.open(&quot;https://github.com/stereolabs/zed-tensorflow&quot;);"
+           cursor="pointer"
+           transform="translate(-26.531048,25.219505)">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783918;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-5-2"
+             width="106.69977"
+             height="36.47216"
+             x="897.00665"
+             y="338.79498" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-6-8"
+             y="354.77667"
+             x="940.94836"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="354.77667"
+               x="940.94836"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-1-5">Tensor</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-0-1"
+             y="363.54715"
+             x="909.86957"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="363.54715"
+               x="909.86957"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-6-3">TF</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-2-3"
+             width="25.986374"
+             height="25.824442"
+             x="906.90619"
+             y="344.10596"
+             ry="5.3033071"
+             rx="5.8336296" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-6-8-2"
+             y="369.11676"
+             x="946.47662"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="369.11676"
+               x="946.47662"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-1-5-1">Flow</tspan></text>
+        </g>
+        <g
+           style="display:inline"
+           id="g4791-5"
+           onclick="window.open(&quot;https://github.com/stereolabs/zed-opengl&quot;);"
+           cursor="pointer"
+           transform="translate(-52.531048,25.219505)">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783942;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-7-6"
+             width="118.43157"
+             height="36.47216"
+             x="1045.7738"
+             y="338.3494" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-6-1"
+             y="361.18192"
+             x="1090.6505"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="361.18192"
+               x="1090.6505"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-4-0">OpenGL</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-6-3"
+             y="363.04715"
+             x="1056.5079"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="363.04715"
+               x="1056.5079"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-8-2">GL</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-7-5"
+             width="25.986374"
+             height="25.824442"
+             x="1055.6733"
+             y="343.44287"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           style="display:inline"
+           id="g4764-2"
+           onclick="window.open(&quot;https://github.com/stereolabs/zed-python&quot;);"
+           cursor="pointer"
+           transform="translate(-16.531048,25.219505)">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783966;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-7-5-1"
+             width="124.62002"
+             height="36.47216"
+             x="747.6073"
+             y="339.38712" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-6-0-1"
+             y="362.00214"
+             x="792.48395"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="362.00214"
+               x="792.48395"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-4-7-3">Python</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-6-7-9"
+             y="363.73145"
+             x="760.08154"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="363.73145"
+               x="760.08154"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-8-7-7">Py</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-7-3-5"
+             width="25.986374"
+             height="25.824442"
+             x="757.50677"
+             y="344.26312"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           style="display:inline"
+           id="g4791-1-5"
+           onclick="window.open(&quot;https://github.com/stereolabs/zed-docker&quot;);"
+           cursor="pointer"
+           transform="translate(79.296452,25.260015)">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783942;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-7-9-7"
+             width="117.46196"
+             height="36.47216"
+             x="1045.7738"
+             y="338.3494" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-6-7-3"
+             y="361.18192"
+             x="1090.6505"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="361.18192"
+               x="1090.6505"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-4-5-6">Docker</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-6-9-3"
+             y="362.99277"
+             x="1056.2904"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="362.99277"
+               x="1056.2904"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-8-9-5">Do</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-7-4-6"
+             width="25.986374"
+             height="25.824442"
+             x="1055.6733"
+             y="343.44287"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+      </g>
+      <g
+         transform="translate(-11.673863,-44.26503)"
+         style="display:inline"
+         id="g5181-3-8"
+         onclick="">
+        <rect
+           y="81.388611"
+           x="-183.384"
+           height="213.26839"
+           width="440.68597"
+           id="rect4136-1-6-1-6-0"
+           style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:3.21500039;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <rect
+           y="49.76659"
+           x="-183.72501"
+           height="31.312275"
+           width="233.38248"
+           id="rect4142-9-4-0-8-6"
+           style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:2.53289175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <text
+           id="text4138-6-8-9-9-58"
+           y="73.26918"
+           x="-66.689255"
+           style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           xml:space="preserve"><tspan
+             style="font-size:21.10743141px;fill:#ffffff;fill-opacity:1"
+             y="73.26918"
+             x="-66.689255"
+             id="tspan4140-8-0-6-7-6">Tutorials and samples</tspan></text>
+        <text
+           id="text5309-77"
+           y="-191.47467"
+           x="-1.1570033"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           xml:space="preserve"><tspan
+             y="-191.47467"
+             x="-1.1570033"
+             id="tspan5311-0" /></text>
+        <g
+           id="g4695"
+           onclick="window.open(&quot;https://github.com/stereolabs/zed-examples/tree/master/camera%20control&quot;);"
+           transform="translate(-3.7677669,-192.98776)"
+           cursor="pointer">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783918;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-6-7"
+             width="197.47217"
+             height="36.47216"
+             x="-164.83447"
+             y="340.47687" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-8-8"
+             y="363.40909"
+             x="-119.95782"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="363.40909"
+               x="-119.95782"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-6-4">Camera Control</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-9-7"
+             y="365.1384"
+             x="-153.37091"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="365.1384"
+               x="-153.37091"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-1-1">Ca</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-2-9"
+             width="25.986374"
+             height="25.824442"
+             x="-154.93498"
+             y="345.67001"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           id="g4683"
+           onclick="window.open(&quot;https://github.com/stereolabs/zed-examples/tree/master/depth%20sensing&quot;);"
+           transform="translate(-3.7677669,-80.950234)"
+           cursor="pointer">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783942;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-1"
+             width="197.47217"
+             height="36.47216"
+             x="-164.92792"
+             y="280.13455" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-3"
+             y="302.80161"
+             x="-120.05126"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="302.80161"
+               x="-120.05126"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-2">Depth Sensing</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-5"
+             y="304.53091"
+             x="-154.27686"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="304.53091"
+               x="-154.27686"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-2">De</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-70"
+             width="25.986374"
+             height="25.824442"
+             x="-155.02843"
+             y="285.06256"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           id="g4659"
+           onclick="window.open(&quot;https://github.com/stereolabs/zed-examples/tree/master/spatial%20mapping&quot;);"
+           transform="translate(207.97189,-61.226389)"
+           cursor="pointer">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783918;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-8"
+             width="197.87712"
+             height="36.472164"
+             x="-164.91942"
+             y="157.99588" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-5"
+             y="180.70016"
+             x="-120.76027"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="180.70016"
+               x="-120.76027"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-41">Spatial Mapping</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-8"
+             y="182.16432"
+             x="-152.589"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="182.16432"
+               x="-152.589"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-9">Sp</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-8"
+             width="25.986374"
+             height="25.824442"
+             x="-155.01993"
+             y="162.96112"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           id="g4647"
+           onclick="window.open(&quot;https://github.com/stereolabs/zed-examples/tree/master/positional%20tracking&quot;);"
+           transform="translate(-3.7677669,150.85162)"
+           cursor="pointer">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783966;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-1-5"
+             width="198.00214"
+             height="36.47216"
+             x="-164.8718"
+             y="97.014626" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-3-0"
+             y="120.1028"
+             x="-119.99509"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="120.1028"
+               x="-119.99509"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-2-4">Positional Tracking</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-5-2"
+             y="121.89461"
+             x="-152.34573"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="121.89461"
+               x="-152.34573"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-2-6">Po</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-70-0"
+             width="25.986374"
+             height="25.824442"
+             x="-154.97226"
+             y="102.36373"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           id="g4671"
+           onclick="window.open(&quot;https://github.com/stereolabs/zed-examples/tree/master/svo%20recording&quot;);"
+           transform="translate(207.97189,-71.768029)"
+           cursor="pointer">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783942;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-1-5-9"
+             width="197.47215"
+             height="36.47216"
+             x="-164.5551"
+             y="218.62286" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-3-0-7"
+             y="241.90863"
+             x="-119.6784"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="241.90863"
+               x="-119.6784"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-2-4-2">SVO Recording</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-5-2-8"
+             y="243.70044"
+             x="-154.23874"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="243.70044"
+               x="-154.23874"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-2-6-1">SV</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-70-0-9"
+             width="25.986374"
+             height="25.824442"
+             x="-154.65556"
+             y="224.16956"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+        <g
+           id="g4707"
+           onclick="window.open(&quot;https://github.com/stereolabs/zed-examples/tree/master/tutorials&quot;);"
+           transform="translate(-3.7677669,-304.75318)"
+           cursor="pointer">
+          <rect
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783942;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-18-1-5-9-4"
+             width="197.47215"
+             height="36.47216"
+             x="-165.17671"
+             y="401.04318" />
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-9-3-0-7-6"
+             y="423.97537"
+             x="-120.3"
+             style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1"
+               y="423.97537"
+               x="-120.3"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-4-2-4-2-5">Tutorials</tspan></text>
+          <text
+             id="text4191-6-8-4-6-3-4-0-8-8-1-4-5-2-8-4"
+             y="425.76718"
+             x="-152.12032"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00ace6;fill-opacity:1"
+               y="425.76718"
+               x="-152.12032"
+               id="tspan4193-6-9-1-6-7-1-9-6-2-5-8-2-6-1-3">Tu</tspan></text>
+          <rect
+             style="display:inline;fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="rect4136-5-3-2-7-7-9-1-4-70-0-9-9"
+             width="25.986374"
+             height="25.824442"
+             x="-155.27718"
+             y="406.2363"
+             ry="5.3033071"
+             rx="5.8336296" />
+        </g>
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:12.5px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="417.69083"
+       y="202.83516"
+       id="text4425-7"><tspan
+         id="tspan4427-6"
+         x="417.69083"
+         y="202.83516" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:12.5px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="417.81583"
+       y="205.08516"
+       id="text4429-1"><tspan
+         id="tspan4431-5"
+         x="417.81583"
+         y="205.08516" /></text>
+    <text
+       id="text4927"
+       y="157.87213"
+       x="628.61792"
+       style="font-style:normal;font-weight:normal;font-size:12.5px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         y="157.87213"
+         x="628.61792"
+         id="tspan4929" /></text>
+  </g>
+  <g
+     onclick="window.open(&quot;https://www.stereolabs.com/docs/getting-started/&quot;);"
+     id="g4624"
+     transform="translate(1.875)">
+    <g
+       style="display:inline"
+       onclick=""
+       id="g4814-7"
+       transform="translate(718.2991,289.12059)">
+      <rect
+         cursor="pointer"
+         style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#00ace6;stroke-width:2.52783871;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect4136-5-3-2-7-4-4-0"
+         width="123.79679"
+         height="36.47216"
+         x="-180.97852"
+         y="-243.11148" />
+      <rect
+         y="-242.50949"
+         x="-68.480362"
+         height="13.850946"
+         width="10.066998"
+         id="rect4537-2-1-4-34-3-8"
+         style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:2.53146791;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="-242.60184"
+         x="-64.932205"
+         height="13.404245"
+         width="6.7814293"
+         id="rect4537-2-1-1-3-5-0"
+         style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="-240.75534"
+         x="-68.076553"
+         height="3.7319863"
+         width="5.3839345"
+         id="rect4537-2-1-1-8-5-0-8"
+         style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="-234.69211"
+         x="-68.025406"
+         height="3.7319863"
+         width="5.3839345"
+         id="rect4537-2-1-1-8-6-1-3-8"
+         style="display:inline;fill:#00ace6;fill-opacity:1;stroke:#ffffff;stroke-width:0.53100002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    </g>
+    <g
+       id="g4619">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:33.77188873px;line-height:125%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#00ace6;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-143.25238"
+         y="-219.67291"
+         id="text4191-6-8-4-6-3-4-0-0-0-2"
+         cursor="pointer"
+         transform="translate(718.2991,289.12059)"><tspan
+           id="tspan4193-6-9-1-6-7-1-9-8-5-8"
+           x="-143.25238"
+           y="-219.67291"
+           style="font-size:14.7752018px;fill:#00ace6;fill-opacity:1">Streaming</tspan></text>
+      <path
+         style="fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.40625;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 550.66927,57.972839 v 1.87949 l -4.1792,0.02589 0.004,10.501065 15.64222,0.02589 -10e-6,-10.637879 -4.24939,-2e-6 -10e-6,-1.826948 -1.98525,0.0019 -0.0117,-1.353764 -2.93974,-0.01729 -0.026,1.399151 z"
+         id="path4023"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccccccccc" />
+      <rect
+         style="fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:0.9375;stroke-opacity:1"
+         id="rect4860"
+         width="1.2083007"
+         height="2.3433712"
+         x="548.45868"
+         y="66.151611" />
+      <rect
+         style="fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:0.9375;stroke-opacity:1"
+         id="rect4860-3"
+         width="1.2083007"
+         height="2.3433712"
+         x="551.18652"
+         y="66.151611" />
+      <rect
+         style="fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:0.9375;stroke-opacity:1"
+         id="rect4860-2"
+         width="1.2083007"
+         height="2.3433712"
+         x="553.78619"
+         y="66.114998" />
+      <rect
+         style="fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:0.9375;stroke-opacity:1"
+         id="rect4860-9"
+         width="1.2083007"
+         height="2.3433712"
+         x="556.42249"
+         y="66.114998" />
+      <rect
+         style="fill:#00ace6;fill-opacity:1;stroke:#00ace6;stroke-width:0.9375;stroke-opacity:1"
+         id="rect4860-1"
+         width="1.2083007"
+         height="2.3433712"
+         x="559.13202"
+         y="66.151611" />
+    </g>
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#00ace6;stroke-width:1.59375;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4895"
+       width="23.433714"
+       height="23.433714"
+       x="542.49048"
+       y="51.917561"
+       ry="5.4190459" />
+  </g>
+</svg>

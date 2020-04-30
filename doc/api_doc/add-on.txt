@@ -1,0 +1,25 @@
+﻿
+/*! \mainpage API Documentation
+
+![](img/ZED-2-front.jpg)
+
+
+<br>
+
+<h2 style="text-align: left;">Modules</h2>
+<br>
+
+The ZED Driver allows the low level control of ZED, ZED Mini and ZED 2 camera.
+
+The driver is composed of two modules:
+
+ - <a href="group__Video__group.html">Video Capture</a>
+ - <a href="group__Depth__group.html">Sensor Capture</a>
+<br>
+
+
+\latexonly
+ \vfill
+ \pagebreak
+\endlatexonly
+*/

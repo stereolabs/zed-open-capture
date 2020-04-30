@@ -84,18 +84,20 @@ typedef struct SensStreamStatus {
 
 // ----> FW versions
 enum class ZED_M_FW {
-    FW_ORIGINAL = 514, //!< First official version for ZED - M(Data rate = 500Hz)
-    FW_IMPROVED = 515, //!< Second official version for ZED-M with data rate up to 800Hz
+    FW_2_2 = 514, //!< ZED Mini v2.2
+    FW_2_3 = 515, //!< ZED Mini v2.3
+    FW_2_4 = 516, //!< ZED Mini v2.4 (not released)
+    FW_2_5 = 517, //!< ZED Mini v2.5
     LAST
 };
 
 enum class ZED_2_FW {
-    FW_2_3_4 = 772,  //!< ZED2 v3.4
-    FW_2_3_5 = 773,  //!< ZED2 v3.5
-    FW_2_3_6 = 774,  //!< ZED2 v3.6
-    FW_2_3_7 = 775,  //!< ZED2 v3.7
-    FW_2_3_8 = 776,  //!< ZED2 v3.8
-    FW_2_3_9 = 777   //!< ZED2 v3.9
+    FW_3_4 = 772,  //!< ZED2 v3.4
+    FW_3_5 = 773,  //!< ZED2 v3.5
+    FW_3_6 = 774,  //!< ZED2 v3.6
+    FW_3_7 = 775,  //!< ZED2 v3.7
+    FW_3_8 = 776,  //!< ZED2 v3.8
+    FW_3_9 = 777   //!< ZED2 v3.9
 };
 
 /*!
