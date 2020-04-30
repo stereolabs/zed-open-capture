@@ -1,7 +1,0 @@
-- name: Doxygen Action
-  uses: mattnotmitt/doxygen-action@v1.1.0
-  with:
-    # Path to Doxyfile
-    doxyfile-path: ./doc/api_doc
-    # Working directory
-    working-directory: ./doc
