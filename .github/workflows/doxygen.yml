@@ -4,9 +4,10 @@ name: Documentation generation
 on: push
 
 jobs:
-  job_id:
+  generate_doc:
     runs-on: ubuntu-18.04
     steps:
+      - run: pwd
       - name: Doxygen Action    
         uses: mattnotmitt/doxygen-action@v1.1.0
         with:
