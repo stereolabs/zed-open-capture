@@ -10,6 +10,10 @@
 
 namespace sl_drv {
 
+#ifdef SENSORS_MOD_AVAILABLE
+class SensorCapture;
+#endif
+
 /*!
  * \brief The Frame struct containing the acquired video frames
  */
@@ -265,6 +269,15 @@ public:
      */
     int getSerialNumber();
 
+#ifdef SENSORS_MOD_AVAILABLE
+    /*!
+     * \brief Enable synchronizations between Camera frame and Sensors timestamps
+     * \param sensCap pointer to \ref SensorCapture object
+     * \return true if synchronization has been correctly started
+     */
+    bool enableSensorSync( SensorCapture* sensCap=nullptr );
+#endif
+
 private:
     /*!
      * \brief grabThreadFunc The frame grabbing thread function
@@ -290,6 +303,8 @@ private:
     int ll_isp_set_gain(unsigned char ucGainH, unsigned char ucGainM, unsigned char ucGainL, int sensorID);
     int ll_isp_get_exposure(unsigned char *val, unsigned char sensorID);
     int ll_isp_set_exposure(unsigned char ucExpH, unsigned char ucExpM, unsigned char ucExpL, int sensorID);
+
+    void ll_activate_sync(); // Activate low level sync signal between Camera and MCU
     // <---- Low level functions
 
     // ----> Mid level functions
@@ -315,10 +330,10 @@ private:
     // <---- Connection control functions
 
     /*!
-     * \brief getCurrentTs get the current system clock as steady clock, so with no jumps even if the system time changes
+     * \brief Get the current system clock as steady clock, so with no jumps even if the system time changes
      * \return the current system clock in nanoseconds
      */
-    static uint64_t getCurrentTs() {return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();}
+    static uint64_t getSysTs() {return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();}
 
 private:
     // Flags
@@ -355,6 +370,11 @@ private:
     int mExpoureRawMax;         //!< Maximum value of the raw exposure to be used for conversion
 
     std::thread mGrabThread;    //!< The video grabbing thread
+
+#ifdef SENSORS_MOD_AVAILABLE
+    friend class sl_drv::SensorCapture;
+#endif
 };
+
 }
 #endif // VIDEOCAPTURE_HPP

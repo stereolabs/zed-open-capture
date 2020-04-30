@@ -13,6 +13,10 @@
 
 namespace sl_drv {
 
+#ifdef VIDEO_MOD_AVAILABLE
+class VideoCapture;
+#endif
+
 /*!
  * \brief The struct containing the acquired IMU data
  */
@@ -200,6 +204,10 @@ private:
     std::mutex mMagMutex;       //!< Mutex for safe access to MAG data buffer
     std::mutex mEnvMutex;       //!< Mutex for safe access to ENV data buffer
     std::mutex mCamTempMutex;   //!< Mutex for safe access to CAM_TEMP data buffer
+
+#ifdef VIDEO_MOD_AVAILABLE
+    friend class SensorCapture;
+#endif
 
 };
 

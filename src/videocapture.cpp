@@ -36,8 +36,10 @@ VideoCapture::VideoCapture(VideoParams params)
     // Check that FPS is coherent with user resolution
     checkResFps( );
 
+    // Calculate gain zones (required because the raw gain control is not continuous in the range of values)
     mGainSegMax = (GAIN_ZONE4_MAX-GAIN_ZONE4_MIN)+(GAIN_ZONE3_MAX-GAIN_ZONE3_MIN)+(GAIN_ZONE2_MAX-GAIN_ZONE2_MIN)+(GAIN_ZONE1_MAX-GAIN_ZONE1_MIN);
 
+    // FPS mapping
     if( mFps <= 15 )
         mExpoureRawMax = EXP_RAW_MAX_15FPS;
     else if( mFps <= 30 )
@@ -374,7 +376,7 @@ bool VideoCapture::openCamera( uint8_t devId )
     memset(&req, 0, sizeof (v4l2_requestbuffers));
 
     req.count = mBufCount;
-    mStartTs = getCurrentTs(); // Starting system timestamp
+    mStartTs = getSysTs(); // Starting system timestamp
 
     struct timespec now = {0};
     clock_gettime(CLOCK_MONOTONIC, &now);
@@ -1212,6 +1214,16 @@ int VideoCapture::ll_isp_set_exposure(unsigned char ucExpH, unsigned char ucExpM
     return hr;
 }
 
+void VideoCapture::ll_activate_sync()
+{
+    uint8_t sync_val = 0x0;
+    if (ll_read_sensor_register(0, 1, 0x3002, &sync_val) == 0)
+    {
+        sync_val = sync_val | 0x80;
+        ll_write_sensor_register(0, 1, 0x3002, sync_val);
+    }
+}
+
 int VideoCapture::setLEDstatus(bool status)
 {
     int hr = 0;
@@ -1663,6 +1675,21 @@ int VideoCapture::calcGainValue(int rawGain)
 
     return gain;
 }
+
+#ifdef SENSORS_MOD_AVAILABLE
+bool VideoCapture::enableSensorSync( SensorCapture* sensCap )
+{
+    if(!sensCap)
+        return false;
+
+    // Activate low level sync mechanism
+    ll_activate_sync();
+
+    // TODO SYNC TIMESTAMPS
+
+    return true;
+}
+#endif
 
 
 } // namespace sl

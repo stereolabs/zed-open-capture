@@ -82,6 +82,8 @@ include_directories(${HIDAPI_INCLUDE_DIRS})
 ############################################################################
 # Generate libraries
 if(${PROJECT_NAME}_BUILD_VIDEO)
+    add_definitions(-DVIDEO_MOD_AVAILABLE)
+
     add_library(${PROJECT_NAME}_video SHARED ${SRC_VIDEO} )
     target_link_libraries( ${PROJECT_NAME}_video
         ${LibUSB_LIBRARIES}
@@ -89,6 +91,8 @@ if(${PROJECT_NAME}_BUILD_VIDEO)
 endif()
 
 if(${PROJECT_NAME}_BUILD_SENSORS)
+    add_definitions(-DSENSORS_MOD_AVAILABLE)
+
     add_library(${PROJECT_NAME}_sensors SHARED ${SRC_SENSORS} )
     target_link_libraries(${PROJECT_NAME}_sensors
         ${LibUSB_LIBRARIES}
