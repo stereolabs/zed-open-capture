@@ -9,11 +9,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: pwd
-      - run: ls -la
-      - run: ls -la ..
       - name: Doxygen Action    
         uses: mattnotmitt/doxygen-action@v1.1.0
         with:
           working-directory: 'doc/api_doc'
           doxyfile-path: './doxyfile' 
+      - run: ls -la
+      - run: ls -la ..
