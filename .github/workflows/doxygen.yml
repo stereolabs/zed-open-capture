@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - run: pwd
-      - run: ls
-      - run: ls ..
+      - run: ls -la
+      - run: ls -la ..
       - name: Doxygen Action    
         uses: mattnotmitt/doxygen-action@v1.1.0
         with:
