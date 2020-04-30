@@ -1,0 +1,18 @@
+
+name: Documentation generation
+
+on: push
+
+jobs:
+  generate_doc:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Doxygen Action    
+        uses: mattnotmitt/doxygen-action@v1.1.0
+        with:
+          working-directory: 'doc/api_doc'
+          doxyfile-path: './doxyfile' 
+      - run: ls -la doc
+      - run: ls -la doc/api_doc
