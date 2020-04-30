@@ -1,0 +1,14 @@
+
+name: Documentation generation
+
+on: push
+
+jobs:
+  job_id:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Doxygen Action    
+        uses: mattnotmitt/doxygen-action@v1.1.0
+        with:
+          working-directory: 'doc/api_doc'
+          doxyfile-path: 'doc' 
