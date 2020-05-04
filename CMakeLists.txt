@@ -127,4 +127,15 @@ if(${PROJECT_NAME}_BUILD_EXAMPLES)
         )
     endif()
 
+    if(${PROJECT_NAME}_BUILD_VIDEO AND  ${PROJECT_NAME}_BUILD_SENSORS)
+        ##### Synchronization Example
+        add_executable(${PROJECT_NAME}_sync_example "examples/zed_drv_sync_example.cpp")
+        target_link_libraries(${PROJECT_NAME}_sync_example
+          PUBLIC
+          ${PROJECT_NAME}_sensors
+          ${PROJECT_NAME}_video
+          ${OpenCV_LIBS}
+        )
+    endif()
+
 endif()

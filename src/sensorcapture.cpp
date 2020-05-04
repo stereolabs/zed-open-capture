@@ -1,7 +1,7 @@
 ﻿#include "sensorcapture.hpp"
 
 #include <sstream>
-
+#include <cmath>              // for round
 #include <unistd.h>           // for usleep, close
 
 namespace sl_drv {
@@ -88,6 +88,11 @@ std::vector<int> SensorCapture::getDeviceList()
 
 bool SensorCapture::init( int sn )
 {
+    if(mSlDevPid.size()==0)
+    {
+        enumerateDevices();
+    }
+
     std::string sn_str;
 
     if(sn!=-1)
@@ -158,6 +163,14 @@ void SensorCapture::getFwVersion( uint16_t& fw_major, uint16_t& fw_minor )
     fw_minor = release&0x00FF;
 }
 
+int SensorCapture::getSerialNumber()
+{
+    if(mDevSerial==-1)
+        return -1;
+
+    return mDevSerial;
+}
+
 bool SensorCapture::enableDataStream(bool enable) {
     if( !mDevHandle )
         return false;
@@ -219,6 +232,10 @@ bool SensorCapture::isDataStreamEnabled() {
 
 bool SensorCapture::startCapture()
 {
+    mStartTs = getSysTs(); // Starting system timestamp
+
+    std::cout << "SensorCapture: " << mStartTs << std::endl;
+
     if( !enableDataStream(true) )
     {
         return false;
@@ -269,6 +286,7 @@ void SensorCapture::grabThreadFunc()
 
     int ping_data_count = 0;
 
+    mFirstImuData = true;
 
     while (!mStopCapture)
     {
@@ -306,10 +324,25 @@ void SensorCapture::grabThreadFunc()
 
         SensData* data = (SensData*)buf;
 
+        // ----> Timestamp update
+        uint64_t rescaled_ts = static_cast<uint64_t>(std::round(static_cast<float>(data->timestamp)*TS_SCALE));
+
+        if(mFirstImuData && data->imu_not_valid!=1)
+        {
+            mInitTs = rescaled_ts;
+            mFirstImuData = false;
+        }
+        uint64_t rel_ts = rescaled_ts - mInitTs;
+        uint64_t current_ts = mStartTs + rel_ts;
+
+        std::cout << "Sensors:\t" << current_ts << std::endl;
+        // <---- Timestamp update
+
         // ----> IMU data
         mIMUMutex.lock();
+        mLastIMUData.sync = data->frame_sync;
         mLastIMUData.valid = data->imu_not_valid!=1;
-        mLastIMUData.timestamp = data->timestamp*TS_SCALE;
+        mLastIMUData.timestamp = current_ts;
         mLastIMUData.aX = data->aX*ACC_SCALE;
         mLastIMUData.aY = data->aY*ACC_SCALE;
         mLastIMUData.aZ = data->aZ*ACC_SCALE;
@@ -322,7 +355,6 @@ void SensorCapture::grabThreadFunc()
 
         //std::string msg = std::to_string(mLastMAGData.timestamp);
         //INFO_OUT(msg);
-
         // <---- IMU data
 
         // ----> Magnetometer data
@@ -330,7 +362,7 @@ void SensorCapture::grabThreadFunc()
         {
             mMagMutex.lock();
             mLastMagData.valid = SensMagData::NEW_VAL;
-            mLastMagData.timestamp = data->timestamp*TS_SCALE;
+            mLastMagData.timestamp = current_ts;
             mLastMagData.mY = data->mY*MAG_SCALE;
             mLastMagData.mZ = data->mZ*MAG_SCALE;
             mLastMagData.mX = data->mX*MAG_SCALE;
@@ -351,7 +383,7 @@ void SensorCapture::grabThreadFunc()
         {
             mEnvMutex.lock();
             mLastEnvData.valid = SensEnvData::NEW_VAL;
-            mLastEnvData.timestamp = data->timestamp*TS_SCALE;
+            mLastEnvData.timestamp = current_ts;
             mLastEnvData.temp = data->temp*TEMP_SCALE;
             if( atLeast(mDevFwVer, ZED_2_FW::FW_3_9))
             {
@@ -382,7 +414,7 @@ void SensorCapture::grabThreadFunc()
         {
             mCamTempMutex.lock();
             mLastCamTempData.valid = true;
-            mLastCamTempData.timestamp = data->timestamp*TS_SCALE;
+            mLastCamTempData.timestamp = current_ts;
             mLastCamTempData.temp_left = data->temp_cam_left*TEMP_SCALE;
             mLastCamTempData.temp_right = data->temp_cam_right*TEMP_SCALE;
             mNewCamTempData=true;

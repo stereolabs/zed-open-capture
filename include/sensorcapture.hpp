@@ -31,6 +31,7 @@ struct SL_DRV_EXPORT SensImuData
     float gY;               //!< Angular velocity around Y axis in °/s
     float gZ;               //!< Angular velocity around > axis in °/s
     float temp;             //!< Sensor temperature in °C
+    bool sync;              //!< Indicates in IMU data are synchronized with a video frame
 };
 
 /*!
@@ -122,6 +123,12 @@ public:
     void getFwVersion( uint16_t& fw_major, uint16_t& fw_minor );
 
     /*!
+     * \brief Retrieve the serial number of the connected camera
+     * \return the serial number of the connected camera
+     */
+    int getSerialNumber();
+
+    /*!
      * \brief Get the last received IMU data
      * \param timeout_msec data grabbing timeout in milliseconds.
      * \return returns the last received data as pointer.
@@ -205,8 +212,13 @@ private:
     std::mutex mEnvMutex;       //!< Mutex for safe access to ENV data buffer
     std::mutex mCamTempMutex;   //!< Mutex for safe access to CAM_TEMP data buffer
 
+    uint64_t mStartTs=0;        //!< Initial System Timestamp, to calculate differences [nsec]
+    uint64_t mInitTs=0;         //!< Initial Device Timestamp, to calculate differences [usec]
+
+    bool mFirstImuData=true;    //!< Used to initialize the sensor timestamp start point
+
 #ifdef VIDEO_MOD_AVAILABLE
-    friend class SensorCapture;
+    friend class VideoCapture;
 #endif
 
 };

@@ -22,6 +22,8 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
+    std::cout << "Video Capture connected to camera sn: " << sens.getSerialNumber() << std::endl;
+
     uint16_t fw_maior;
     uint16_t fw_minor;
 

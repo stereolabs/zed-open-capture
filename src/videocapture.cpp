@@ -26,7 +26,7 @@ VideoCapture::VideoCapture(VideoParams params)
     if( mParams.verbose )
     {
         std::string ver =
-                "ZED Driver - Sensors module - Version: "
+                "ZED Driver - Camera module - Version: "
                 + std::to_string(mDrvMajorVer) + "."
                 + std::to_string(mDrvMinorVer) + "."
                 + std::to_string(mDrvPatchVer);
@@ -235,16 +235,22 @@ bool VideoCapture::openCamera( uint8_t devId )
 
     if( mCameraModel==sl_drv::SL_DEVICE::NONE )
     {
-        std::string msg = "The device '" + mDevName + "' is not a Stereolabs camera";
-        INFO_OUT( msg );
+        if(mParams.verbose)
+        {
+            std::string msg = "The device '" + mDevName + "' is not a Stereolabs camera";
+            WARNING_OUT( msg );
+        }
         return false;
     }
 
     if( mCameraModel==sl_drv::SL_DEVICE::ZED ||
             mCameraModel==sl_drv::SL_DEVICE::ZED_M )
     {
-        std::string msg = "The FW of the device '" + mDevName + "' is not supported. Please update it.";
-        INFO_OUT( msg );
+        if(mParams.verbose)
+        {
+            std::string msg = "The FW of the device '" + mDevName + "' is not supported. Please update it.";
+            ERROR_OUT( msg );
+        }
         return false;
     }
 
@@ -376,12 +382,9 @@ bool VideoCapture::openCamera( uint8_t devId )
     memset(&req, 0, sizeof (v4l2_requestbuffers));
 
     req.count = mBufCount;
-    mStartTs = getSysTs(); // Starting system timestamp
+    mStartTs = getSysTs(); // Starting system timestamp    
 
-    struct timespec now = {0};
-    clock_gettime(CLOCK_MONOTONIC, &now);
-
-    mInitTs = ((uint64_t) now.tv_sec * NSEC_PER_SEC + (uint64_t) now.tv_nsec) / 1000;
+    std::cout << "VideoCapture: " << mStartTs << std::endl;
 
     req.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     req.memory = V4L2_MEMORY_MMAP;
@@ -670,8 +673,10 @@ void VideoCapture::grabThreadFunc()
     buf.bytesused = -1;
     buf.length = 0;
 
-    uint64_t current_ts = 0;
+    uint64_t rel_ts = 0;
     int capture_frame_count = 0;
+
+    mFirstFrame=true;
 
     while (!mStopCapture)
     {
@@ -685,19 +690,28 @@ void VideoCapture::grabThreadFunc()
         {
             mCurrentIndex = buf.index;
             // get buffer timestamp in us
-            current_ts = ((uint64_t) buf.timestamp.tv_sec * (1000 * 1000) + (uint64_t) buf.timestamp.tv_usec) - mInitTs;
+
+            uint64_t ts_uvc = ((uint64_t) buf.timestamp.tv_sec) * (1000 * 1000) + ((uint64_t) buf.timestamp.tv_usec);
+
+            if(mFirstFrame)
+            {
+                mFirstFrame = false;
+                mInitTs = ts_uvc;
+            }
+
+            rel_ts = ts_uvc - mInitTs;
             // cvt to ns
-            current_ts *= 1000;
+            rel_ts *= 1000;
 
-            //if(!grabClass->vflip)
             mBufMutex.lock();
-            mLastFrame.timestamp = mStartTs + current_ts;
-
             if (mLastFrame.data != nullptr && mWidth != 0 && mHeight != 0 && mBuffers[mCurrentIndex].start != nullptr)
             {
-                mLastFrame.frame_id++;
-                mLastFrame.timestamp = current_ts;
+                mLastFrame.frame_id++;                
                 memcpy(mLastFrame.data, (unsigned char*) mBuffers[mCurrentIndex].start, mBuffers[mCurrentIndex].length);
+                mLastFrame.timestamp = mStartTs + rel_ts;
+
+                std::cout << "Video:\t" << mLastFrame.timestamp << std::endl;
+
                 mNewFrame=true;
             }
             mBufMutex.unlock();
@@ -1685,7 +1699,7 @@ bool VideoCapture::enableSensorSync( SensorCapture* sensCap )
     // Activate low level sync mechanism
     ll_activate_sync();
 
-    // TODO SYNC TIMESTAMPS
+    //sensCap->mStartTs = mStartTs;
 
     return true;
 }

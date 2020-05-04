@@ -7,6 +7,7 @@
 #include <cxxabi.h>
 #include <iostream>
 #include <vector>
+#include <chrono>
 
 #if defined _WIN32
 #if defined(SL_SDK_COMPIL)
@@ -42,6 +43,18 @@ inline std::string wstr2str( const wchar_t* wstr)
     std::string str( ws.begin(), ws.end() );
     return str;
 }
+
+/*!
+ * \brief Get the current system clock as steady clock, so with no jumps even if the system time changes
+ * \return the current system clock in nanoseconds
+ */
+inline uint64_t getSteadyTs() {return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();}
+
+/*!
+ * \brief Get the current system clock (it can have jumps if the system clock is updated by a sync service)
+ * \return the current system clock in nanoseconds
+ */
+inline uint64_t getSysTs() {return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();}
 
 namespace sl_drv {
 

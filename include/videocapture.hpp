@@ -4,15 +4,16 @@
 #include "defines.hpp"
 #include "videocapture_def.hpp"
 
-#include <chrono>
 #include <thread>
 #include <mutex>
 
+#ifdef SENSORS_MOD_AVAILABLE
+#include "sensorcapture.hpp"
+#endif
+
 namespace sl_drv {
 
-#ifdef SENSORS_MOD_AVAILABLE
-class SensorCapture;
-#endif
+
 
 /*!
  * \brief The Frame struct containing the acquired video frames
@@ -21,7 +22,7 @@ struct SL_DRV_EXPORT Frame
 {
     uint64_t frame_id = 0;          //!< Increasing index of frames
     uint64_t timestamp = 0;         //!< Timestamp in nanoseconds
-    uint8_t* data = nullptr;  //!< Frame data in YUV 4:2:2 format
+    uint8_t* data = nullptr;        //!< Frame data in YUV 4:2:2 format
     uint16_t width = 0;             //!< Frame width
     uint16_t height = 0;            //!< Frame height
     uint8_t channels = 0;           //!< Number of channels per pixel
@@ -61,6 +62,13 @@ public:
      * \note Do not delete the received frame
      */
     const Frame* getLastFrame(uint64_t timeout_msec=10);
+
+    /*!
+     * \brief Get the size of the camera frame
+     * \param width the frame width
+     * \param height the frame height
+     */
+    inline void getFrameSize( int& width, int& height ){width=mWidth;height=mHeight;}
 
     // ----> Led Control
     /*!
@@ -329,12 +337,6 @@ private:
     sl_drv::SL_DEVICE getCameraModel(std::string dev_name); //!< Get the connected camera model
     // <---- Connection control functions
 
-    /*!
-     * \brief Get the current system clock as steady clock, so with no jumps even if the system time changes
-     * \return the current system clock in nanoseconds
-     */
-    static uint64_t getSysTs() {return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();}
-
 private:
     // Flags
     bool mNewFrame=false;       //!< Indicates if a new frame is available
@@ -371,8 +373,10 @@ private:
 
     std::thread mGrabThread;    //!< The video grabbing thread
 
+    bool mFirstFrame=true;    //!< Used to initialize the timestamp start point
+
 #ifdef SENSORS_MOD_AVAILABLE
-    friend class sl_drv::SensorCapture;
+    //friend class sl_drv::SensorCapture;
 #endif
 };
 
