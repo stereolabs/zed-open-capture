@@ -121,6 +121,9 @@ inline bool atLeast(const int &version_current, const ZED_M_FW &version_required
 }
 // <---- FW versions
 
+
+#define NTP_ADJUST_CT 1
+
 }
 
 #endif // SENSORCAPTURE_DEF_HPP

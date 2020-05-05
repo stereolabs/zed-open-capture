@@ -710,7 +710,7 @@ void VideoCapture::grabThreadFunc()
                 memcpy(mLastFrame.data, (unsigned char*) mBuffers[mCurrentIndex].start, mBuffers[mCurrentIndex].length);
                 mLastFrame.timestamp = mStartTs + rel_ts;
 
-                std::cout << "Video:\t" << mLastFrame.timestamp << std::endl;
+                //std::cout << "Video:\t" << mLastFrame.timestamp << std::endl;
 
                 mNewFrame=true;
             }
@@ -1699,7 +1699,8 @@ bool VideoCapture::enableSensorSync( SensorCapture* sensCap )
     // Activate low level sync mechanism
     ll_activate_sync();
 
-    //sensCap->mStartTs = mStartTs;
+    // Synchronize reference timestamp
+    sensCap->mStartSysTs = mStartTs;
 
     return true;
 }

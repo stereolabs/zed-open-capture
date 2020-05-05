@@ -80,7 +80,7 @@ std::vector<int> SensorCapture::getDeviceList()
     std::vector<int> sn_vec;
 
     for(std::map<int,uint16_t>::iterator it = mSlDevPid.begin(); it != mSlDevPid.end(); ++it) {
-      sn_vec.push_back(it->first);
+        sn_vec.push_back(it->first);
     }
 
     return sn_vec;
@@ -232,10 +232,6 @@ bool SensorCapture::isDataStreamEnabled() {
 
 bool SensorCapture::startCapture()
 {
-    mStartTs = getSysTs(); // Starting system timestamp
-
-    std::cout << "SensorCapture: " << mStartTs << std::endl;
-
     if( !enableDataStream(true) )
     {
         return false;
@@ -282,16 +278,19 @@ void SensorCapture::grabThreadFunc()
     mNewCamTempData=false;
 
     // Read sensor data
-    unsigned char buf[65];
+    unsigned char usbBuf[65];
 
     int ping_data_count = 0;
 
     mFirstImuData = true;
 
+    uint64_t rel_mcu_ts = 0;
+
     while (!mStopCapture)
     {
         // ----> Keep data stream alive
-        // sending a ping once per second
+        // sending a ping aboutonce per second
+        // to keep the streaming alive
         if(ping_data_count>=400) {
             ping_data_count=0;
             sendPing();
@@ -301,17 +300,19 @@ void SensorCapture::grabThreadFunc()
 
         mGrabRunning=true;
 
-        buf[1]=1;
-        int res = hid_read_timeout( mDevHandle, buf, 64, 500 );
+        // Sensor data request
+        usbBuf[1]=REP_ID_SENSOR_DATA;
+        int res = hid_read_timeout( mDevHandle, usbBuf, 64, 500 );
 
-        // TODO count timeout and stop thread
-
+        // ----> Data received?
         if( res < static_cast<int>(sizeof(SensData)) )  {
             hid_set_nonblocking( mDevHandle, 0 );
             continue;
         }
+        // <---- Data received?
 
-        if( buf[0] != REP_ID_SENSOR_DATA )
+        // ----> Received data are correct?
+        if( usbBuf[0] != REP_ID_SENSOR_DATA )
         {
             if(mVerbose)
             {
@@ -321,28 +322,107 @@ void SensorCapture::grabThreadFunc()
             hid_set_nonblocking( mDevHandle, 0 );
             continue;
         }
+        // <---- Received data are correct?
 
-        SensData* data = (SensData*)buf;
+        // Data structure static conversion
+        SensData* data = (SensData*)usbBuf;
 
         // ----> Timestamp update
-        uint64_t rescaled_ts = static_cast<uint64_t>(std::round(static_cast<float>(data->timestamp)*TS_SCALE));
+        uint64_t mcu_ts_nsec = static_cast<uint64_t>(std::round(static_cast<float>(data->timestamp)*TS_SCALE));
 
         if(mFirstImuData && data->imu_not_valid!=1)
         {
-            mInitTs = rescaled_ts;
+            mStartSysTs = getSysTs(); // Starting system timestamp
+            std::cout << "SensorCapture: " << mStartSysTs << std::endl;
+            mLastMcuTs = mcu_ts_nsec;
             mFirstImuData = false;
+            continue;
         }
-        uint64_t rel_ts = rescaled_ts - mInitTs;
-        uint64_t current_ts = mStartTs + rel_ts;
 
-        std::cout << "Sensors:\t" << current_ts << std::endl;
+        uint64_t delta_mcu_ts_raw = mcu_ts_nsec - mLastMcuTs;
+        mLastMcuTs = mcu_ts_nsec;
         // <---- Timestamp update
+
+        rel_mcu_ts +=  static_cast<uint64_t>(static_cast<double>(delta_mcu_ts_raw)*mNTPTsScaling);
+
+        // mStartSysTs is synchronized to Video TS when sync is enabled using \ref VideoCapture::enableSensorSync
+        uint64_t current_data_ts = mStartSysTs + rel_mcu_ts;
+
+        // ----> Camera/Sensors Synchronization
+        if( data->sync_capabilities != 0 ) // Synchronization active
+        {
+            if(mLastFrameSyncCount!=0 && (data->frame_sync!=0 || data->frame_sync_count>mLastFrameSyncCount))
+            {
+#if 1 // Timestamp sync debug info
+                std::cout << "MCU sync information: " << std::endl;
+                std::cout << " * data->frame_sync: " << (int)data->frame_sync << std::endl;
+                std::cout << " * data->frame_sync_count: " << data->frame_sync_count << std::endl;
+                std::cout << " * mLastFrameSyncCount: " << mLastFrameSyncCount << std::endl;
+                std::cout << " * Sys timestamp: " << getSteadyTs() << std::endl;
+                std::cout << " * MCU timestamp: " << mcu_ts_nsec << std::endl;
+                std::cout << " * MCU timestamp scaling: " << mNTPTsScaling << std::endl;
+#endif
+                mLastSysSyncTs = getSteadyTs();
+                mLastMcuSyncTs = mcu_ts_nsec;
+
+                mSysTsQueue.push_back( getSteadyTs() ); // Steady host timestamp
+                mMcuTsQueue.push_back( current_data_ts );   // MCU timestamp
+
+                int size_max = 100;
+                // Once we have enough data, calculate the drift scaling factor to appy to ntp_scaling.
+                if (mSysTsQueue.size()==size_max && mMcuTsQueue.size() == size_max)
+                {
+                    //First and last ts
+                    int first_index = 5;
+                    if (mNTPAdjustedCount <= NTP_ADJUST_CT) {
+                        first_index = size_max/2;
+                    }
+
+                    uint64_t first_ts_imu = mMcuTsQueue.at(first_index);
+                    uint64_t last_ts_imu = mMcuTsQueue.at(mMcuTsQueue.size()-1);
+                    uint64_t first_ts_cam = mSysTsQueue.at(first_index);
+                    uint64_t last_ts_cam = mSysTsQueue.at(mSysTsQueue.size()-1);
+                    double scale = double(last_ts_cam-first_ts_cam) / double(last_ts_imu-first_ts_imu);
+                    //CLAMP
+                    if (scale > 1.2) scale = 1.2;
+                    if (scale < 0.8) scale = 0.8;
+
+                    //Adjust scaling continuoulsy. No jump so that ts(n) - ts(n-1) == 800Hz
+                    mNTPTsScaling*=scale;
+                    //scale will be apply to the next values, so clear the vector and wait until we have enough data again
+                    mMcuTsQueue.clear();
+                    mSysTsQueue.clear();
+
+                    // We have a scale more close to reality. Start again the incremental ts with epoch.
+                    // Now Diff (IMU/IMAGE) should be quite stable and negative (ex : -40ms)
+                    /*if (mNTPAdjustedCount <= NTP_ADJUST_CT)
+                        current_sl_imu_ts = current_ts;*/
+
+                    // The image grabber has calculated the offset and it's now applied on the incremental ts
+                    // Reset to epoch - offset and restart incrementation.
+                   /*if (has_to_set_offset)  {
+                        current_sl_imu_ts = current_ts -  (int64_t)ts_offset;
+                        has_to_set_offset = false;
+                        can_use_rectified_ts = true;
+                    }*/
+
+                    mNTPAdjustedCount++;
+
+                    //Security if no offset applied :
+                    /*if (mNTPAdjustedCount>=NTP_ADJUST_CT +5)
+                        can_use_rectified_ts = true;*/
+
+                }
+            }
+        }
+        mLastFrameSyncCount = data->frame_sync_count;
+        // <---- Camera/Sensors Synchronization
 
         // ----> IMU data
         mIMUMutex.lock();
         mLastIMUData.sync = data->frame_sync;
         mLastIMUData.valid = data->imu_not_valid!=1;
-        mLastIMUData.timestamp = current_ts;
+        mLastIMUData.timestamp = current_data_ts;
         mLastIMUData.aX = data->aX*ACC_SCALE;
         mLastIMUData.aY = data->aY*ACC_SCALE;
         mLastIMUData.aZ = data->aZ*ACC_SCALE;
@@ -362,7 +442,7 @@ void SensorCapture::grabThreadFunc()
         {
             mMagMutex.lock();
             mLastMagData.valid = SensMagData::NEW_VAL;
-            mLastMagData.timestamp = current_ts;
+            mLastMagData.timestamp = current_data_ts;
             mLastMagData.mY = data->mY*MAG_SCALE;
             mLastMagData.mZ = data->mZ*MAG_SCALE;
             mLastMagData.mX = data->mX*MAG_SCALE;
@@ -383,7 +463,7 @@ void SensorCapture::grabThreadFunc()
         {
             mEnvMutex.lock();
             mLastEnvData.valid = SensEnvData::NEW_VAL;
-            mLastEnvData.timestamp = current_ts;
+            mLastEnvData.timestamp = current_data_ts;
             mLastEnvData.temp = data->temp*TEMP_SCALE;
             if( atLeast(mDevFwVer, ZED_2_FW::FW_3_9))
             {
@@ -409,12 +489,12 @@ void SensorCapture::grabThreadFunc()
 
         // ----> Camera sensors temperature data
         if(data->temp_cam_left != TEMP_NOT_VALID &&
-           data->temp_cam_left != TEMP_NOT_VALID &&
+                data->temp_cam_left != TEMP_NOT_VALID &&
                 data->env_valid == SensEnvData::NEW_VAL ) // Sensor temperature is linked to Environmental data acquisition at FW level
         {
             mCamTempMutex.lock();
             mLastCamTempData.valid = true;
-            mLastCamTempData.timestamp = current_ts;
+            mLastCamTempData.timestamp = current_data_ts;
             mLastCamTempData.temp_left = data->temp_cam_left*TEMP_SCALE;
             mLastCamTempData.temp_right = data->temp_cam_right*TEMP_SCALE;
             mNewCamTempData=true;
@@ -428,8 +508,6 @@ void SensorCapture::grabThreadFunc()
             mLastCamTempData.valid = false;
         }
         // <---- Camera sensors temperature data
-
-
     }
 
     mGrabRunning = false;

@@ -24,6 +24,7 @@ std::string imuAccelStr;
 std::string imuGyroStr;
 std::string imuSyncStr;
 bool sensThreadStop=false;
+uint64_t mcu_sync_ts=0;
 // <---- Shared data
 
 int main(int argc, char *argv[])
@@ -104,22 +105,28 @@ int main(int argc, char *argv[])
         // <---- Get Video frame
 
         // ----> Display frame with info
+        if(frame != nullptr)
+        {
+            int font = cv::FONT_HERSHEY_COMPLEX;
 
-        int font = cv::FONT_HERSHEY_COMPLEX;
+            // Video info
+            cv::putText( frameBGR, videoTs.str(), cv::Point(10,35), font, 1, cv::Scalar(150,150,150), 2 );
 
-        // Video info
-        cv::putText( frameBGR, videoTs.str(), cv::Point(10,35), font, 1, cv::Scalar(150,150,150), 2 );
+            // IMU info
+            imuMutex.lock();
+            cv::putText( frameBGR, imuTsStr, cv::Point(10,70), font, 1, cv::Scalar(150,150,150), 2 );
+            cv::putText( frameBGR, imuAccelStr, cv::Point(10,105), font, 1, cv::Scalar(150,150,150), 2 );
+            cv::putText( frameBGR, imuGyroStr, cv::Point(10,140), font, 1, cv::Scalar(150,150,150), 2 );
+            cv::putText( frameBGR, imuSyncStr, cv::Point(10,175), font, 1, cv::Scalar(150,150,150), 2 );
 
-        // IMU info
-        imuMutex.lock();
-        cv::putText( frameBGR, imuTsStr, cv::Point(10,70), font, 1, cv::Scalar(150,150,150), 2 );
-        cv::putText( frameBGR, imuAccelStr, cv::Point(10,105), font, 1, cv::Scalar(150,150,150), 2 );
-        cv::putText( frameBGR, imuGyroStr, cv::Point(10,140), font, 1, cv::Scalar(150,150,150), 2 );
-        cv::putText( frameBGR, imuSyncStr, cv::Point(10,175), font, 1, cv::Scalar(150,150,150), 2 );
-        imuMutex.unlock();
+            std::stringstream offsetStr;
+            offsetStr << std::fixed << std::setprecision(9) << "--- TS offset (video-mcu): " << (static_cast<double>(frame->timestamp)-static_cast<double>(mcu_sync_ts))/1e9 << " sec ---";
+            cv::putText( frameBGR, offsetStr.str().c_str(), cv::Point(10,210), font, 1, cv::Scalar(150,150,150), 2 );
+            imuMutex.unlock();
 
-        // Show frame
-        showImage( "Stream RGB", frameBGR, params.res );
+            // Show frame
+            showImage( "Stream RGB", frameBGR, params.res );
+        }
         // <---- Display frame with info
 
         // ----> Keyboard handling
@@ -175,7 +182,7 @@ void getSensorThreadFunc(sl_drv::SensorCapture* sensCap)
         // ----> Get IMU data
         const sl_drv::SensImuData* imuData = sensCap->getLastIMUData(1);
 
-        if(imuData && imuData->valid)
+        if(imuData && imuData->valid && imuData->sync)
         {
             std::stringstream timestamp;
             std::stringstream accel;
@@ -198,7 +205,14 @@ void getSensorThreadFunc(sl_drv::SensorCapture* sensCap)
             imuAccelStr = accel.str();
             imuGyroStr = gyro.str();
             imuSyncStr = sync.str();
+
+            if(imuData->sync)
+            {
+                mcu_sync_ts = imuData->timestamp;
+            }
             imuMutex.unlock();
+
+
         }
         // <---- Get IMU data
     }

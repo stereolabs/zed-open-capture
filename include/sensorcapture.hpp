@@ -212,10 +212,25 @@ private:
     std::mutex mEnvMutex;       //!< Mutex for safe access to ENV data buffer
     std::mutex mCamTempMutex;   //!< Mutex for safe access to CAM_TEMP data buffer
 
-    uint64_t mStartTs=0;        //!< Initial System Timestamp, to calculate differences [nsec]
-    uint64_t mInitTs=0;         //!< Initial Device Timestamp, to calculate differences [usec]
+    uint64_t mStartSysTs=0;        //!< Initial System Timestamp, to calculate differences [nsec]
+    uint64_t mLastMcuTs=0;         //!< MCU Timestamp of the previous data, to calculate relative timestamps [nsec]
+    //uint64_t mInitTs=0;         //!< Initial Device Timestamp, to calculate differences [usec]
 
     bool mFirstImuData=true;    //!< Used to initialize the sensor timestamp start point
+
+    // ----> Timestamp synchronization
+    uint64_t mLastMcuSyncTs=0;  //!< The MCU timestamp of the last sync signal
+    uint64_t mLastFrameSyncCount=0;   //!< Used to estimate sync signal in case we lost the MCU data containing the sync signal
+    uint64_t mLastSysSyncTs=0;  //!< The System (steday) timestamp of the last syncsignal
+
+    std::vector<uint64_t> mMcuTsQueue;
+    std::vector<uint64_t> mSysTsQueue;
+    int mNTPTsAdjusted = 0;
+    double mNTPTsScaling=1.0;
+
+    int mNTPAdjustedCount = 0;
+    // <---- imestamp synchronization
+
 
 #ifdef VIDEO_MOD_AVAILABLE
     friend class VideoCapture;
