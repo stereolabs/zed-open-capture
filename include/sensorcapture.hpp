@@ -228,6 +228,8 @@ private:
     int mNTPTsAdjusted = 0;
     double mNTPTsScaling=1.0;
 
+    int64_t mSyncOffset=0;
+
     int mNTPAdjustedCount = 0;
     // <---- imestamp synchronization
 

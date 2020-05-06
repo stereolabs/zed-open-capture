@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     // ----> Video parameters
     sl_drv::VideoParams params;
     params.res = sl_drv::RESOLUTION::HD720;
-    params.fps = sl_drv::FPS::FPS_60;
+    params.fps = sl_drv::FPS::FPS_30;
     params.verbose = verbose;
     // <---- Video parameters
 

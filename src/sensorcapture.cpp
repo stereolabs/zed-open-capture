@@ -353,7 +353,7 @@ void SensorCapture::grabThreadFunc()
         rel_mcu_ts +=  static_cast<uint64_t>(static_cast<double>(delta_mcu_ts_raw)*mNTPTsScaling);
 
         // mStartSysTs is synchronized to Video TS when sync is enabled using \ref VideoCapture::enableSensorSync
-        uint64_t current_data_ts = mStartSysTs + rel_mcu_ts;
+        uint64_t current_data_ts = (mStartSysTs-mSyncOffset) + rel_mcu_ts;
 
         // ----> Camera/Sensors Synchronization
         if( data->sync_capabilities != 0 ) // Synchronization active
@@ -407,9 +407,13 @@ void SensorCapture::grabThreadFunc()
                     if(count==3)
                     {
                         int64_t offset = offset_sum/count;
-                        mStartSysTs -= offset;
+                        mSyncOffset += offset;
 
                         std::cout << "Offset: " << offset << std::endl;
+                        std::cout << "mSyncOffset: " << mSyncOffset << std::endl;
+
+                        offset_sum = 0;
+                        count=0;
                     }
                 }
             }
