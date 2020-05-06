@@ -16,6 +16,10 @@
 
 #include <cmath>              // for round
 
+#ifdef SENSORS_MOD_AVAILABLE
+#include "sensorcapture.hpp"
+#endif
+
 namespace sl_drv
 {
 
@@ -382,9 +386,6 @@ bool VideoCapture::openCamera( uint8_t devId )
     memset(&req, 0, sizeof (v4l2_requestbuffers));
 
     req.count = mBufCount;
-    mStartTs = getSysTs(); // Starting system timestamp    
-
-    std::cout << "VideoCapture: " << mStartTs << std::endl;
 
     req.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     req.memory = V4L2_MEMORY_MMAP;
@@ -695,6 +696,17 @@ void VideoCapture::grabThreadFunc()
 
             if(mFirstFrame)
             {
+                mStartTs = getSysTs();
+                std::cout << "VideoCapture: " << mStartTs << std::endl;
+
+#ifdef SENSORS_MOD_AVAILABLE
+                if(mSyncEnabled && mSensPtr)
+                {
+                    // Synchronize reference timestamp
+                    mSensPtr->mStartSysTs = mStartTs;
+                }
+#endif
+
                 mFirstFrame = false;
                 mInitTs = ts_uvc;
             }
@@ -1699,8 +1711,10 @@ bool VideoCapture::enableSensorSync( SensorCapture* sensCap )
     // Activate low level sync mechanism
     ll_activate_sync();
 
-    // Synchronize reference timestamp
-    sensCap->mStartSysTs = mStartTs;
+    mSyncEnabled = true;
+    mSensPtr = sensCap;
+
+    mSensPtr->mVideoPtr = this;
 
     return true;
 }

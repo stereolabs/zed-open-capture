@@ -11,11 +11,11 @@
 
 #include "hidapi.h"
 
-namespace sl_drv {
-
 #ifdef VIDEO_MOD_AVAILABLE
-class VideoCapture;
+#include "videocapture.hpp"
 #endif
+
+namespace sl_drv {
 
 /*!
  * \brief The struct containing the acquired IMU data
@@ -135,7 +135,7 @@ public:
      *
      * \note Do not delete the received data
      */
-    const SensImuData* getLastIMUData(uint64_t timeout_msec=5);
+    const SensImuData* getLastIMUData(uint64_t timeout_usec=1500);
 
     /*!
      * \brief Get the last received Magnetometer data
@@ -144,7 +144,7 @@ public:
      *
      * \note Do not delete the received data
      */
-    const SensMagData* getLastMagData(uint64_t timeout_msec=1);
+    const SensMagData* getLastMagData(uint64_t timeout_usec=100);
 
     /*!
      * \brief Get the last received Environment data
@@ -153,7 +153,7 @@ public:
      *
      * \note Do not delete the received data
      */
-    const SensEnvData* getLastEnvData(uint64_t timeout_msec=1);
+    const SensEnvData* getLastEnvData(uint64_t timeout_usec=100);
 
     /*!
      * \brief Get the last received camera sensors temperature data
@@ -162,7 +162,7 @@ public:
      *
      * \note Do not delete the received data
      */
-    const SensCamTempData* getLastCamTempData(uint64_t timeout_msec=1);
+    const SensCamTempData* getLastCamTempData(uint64_t timeout_usec=100);
 
 private:
     /*!
@@ -170,10 +170,10 @@ private:
      */
     void grabThreadFunc();
 
-    bool startCapture();            //!< Start data capture thread
-    void reset();                   //!< Reset  connection
+    bool startCapture();                //!< Start data capture thread
+    void reset();                       //!< Reset  connection
 
-    int enumerateDevices();         //!< Populates the \ref mSlDevPid map with serial number and PID of the available devices
+    int enumerateDevices();             //!< Populates the \ref mSlDevPid map with serial number and PID of the available devices
 
     // ----> USB commands to MCU
     bool enableDataStream(bool enable); //!< Enable/Disable the data stream
@@ -183,15 +183,15 @@ private:
 
 private:
     // Flags
-    bool mVerbose=false;            //!< Verbose status
-    bool mNewIMUData=false;         //!< Indicates if new \ref IMU data are available
-    bool mNewMagData=false;         //!< Indicates if new \ref MAG data are available
-    bool mNewEnvData=false;         //!< Indicates if new \ref ENV data are available
-    bool mNewCamTempData=false;     //!< Indicates if new \ref CAM_TEMP data are available
+    bool mVerbose=false;                //!< Verbose status
+    bool mNewIMUData=false;             //!< Indicates if new \ref IMU data are available
+    bool mNewMagData=false;             //!< Indicates if new \ref MAG data are available
+    bool mNewEnvData=false;             //!< Indicates if new \ref ENV data are available
+    bool mNewCamTempData=false;         //!< Indicates if new \ref CAM_TEMP data are available
 
-    bool mInitialized = false;  //!< Inficates if the MCU has been initialized
-    bool mStopCapture = false;  //!< Indicates if the grabbing thread must be stopped
-    bool mGrabRunning = false;  //!< Indicates if the grabbing thread is running
+    bool mInitialized = false;          //!< Inficates if the MCU has been initialized
+    bool mStopCapture = false;          //!< Indicates if the grabbing thread must be stopped
+    bool mGrabRunning = false;          //!< Indicates if the grabbing thread is running
 
     std::map<int,uint16_t> mSlDevPid;   //!< All the available Stereolabs MCU (ZED-M and ZED2) product IDs associated to their serial number
     std::map<int,uint16_t> mSlDevFwVer; //!< All the available Stereolabs MCU (ZED-M and ZED2) product IDs associated to their firmware version
@@ -203,28 +203,28 @@ private:
     SensImuData mLastIMUData;           //!< Contains the last received IMU data
     SensMagData mLastMagData;           //!< Contains the last received Magnetometer data
     SensEnvData mLastEnvData;           //!< Contains the last received Environmental data
-    SensCamTempData mLastCamTempData;  //!< Contains the last received camera sensors temperature data
+    SensCamTempData mLastCamTempData;   //!< Contains the last received camera sensors temperature data
 
-    std::thread mGrabThread;    //!< The grabbing thread
+    std::thread mGrabThread;            //!< The grabbing thread
 
-    std::mutex mIMUMutex;       //!< Mutex for safe access to IMU data buffer
-    std::mutex mMagMutex;       //!< Mutex for safe access to MAG data buffer
-    std::mutex mEnvMutex;       //!< Mutex for safe access to ENV data buffer
-    std::mutex mCamTempMutex;   //!< Mutex for safe access to CAM_TEMP data buffer
+    std::mutex mIMUMutex;               //!< Mutex for safe access to IMU data buffer
+    std::mutex mMagMutex;               //!< Mutex for safe access to MAG data buffer
+    std::mutex mEnvMutex;               //!< Mutex for safe access to ENV data buffer
+    std::mutex mCamTempMutex;           //!< Mutex for safe access to CAM_TEMP data buffer
 
-    uint64_t mStartSysTs=0;        //!< Initial System Timestamp, to calculate differences [nsec]
-    uint64_t mLastMcuTs=0;         //!< MCU Timestamp of the previous data, to calculate relative timestamps [nsec]
-    //uint64_t mInitTs=0;         //!< Initial Device Timestamp, to calculate differences [usec]
+    uint64_t mStartSysTs=0;             //!< Initial System Timestamp, to calculate differences [nsec]
+    uint64_t mLastMcuTs=0;              //!< MCU Timestamp of the previous data, to calculate relative timestamps [nsec]
 
-    bool mFirstImuData=true;    //!< Used to initialize the sensor timestamp start point
+    bool mFirstImuData=true;            //!< Used to initialize the sensor timestamp start point
 
     // ----> Timestamp synchronization
-    uint64_t mLastMcuSyncTs=0;  //!< The MCU timestamp of the last sync signal
-    uint64_t mLastFrameSyncCount=0;   //!< Used to estimate sync signal in case we lost the MCU data containing the sync signal
-    uint64_t mLastSysSyncTs=0;  //!< The System (steday) timestamp of the last syncsignal
+    uint64_t mLastMcuSyncTs=0;          //!< The MCU timestamp of the last sync signal
+    uint64_t mLastFrameSyncCount=0;     //!< Used to estimate sync signal in case we lost the MCU data containing the sync signal
+    uint64_t mLastSysSyncTs=0;          //!< The System (steday) timestamp of the last syncsignal
 
     std::vector<uint64_t> mMcuTsQueue;
     std::vector<uint64_t> mSysTsQueue;
+
     int mNTPTsAdjusted = 0;
     double mNTPTsScaling=1.0;
 
@@ -233,6 +233,8 @@ private:
 
 
 #ifdef VIDEO_MOD_AVAILABLE
+    VideoCapture* mVideoPtr=nullptr;    //!< Pointer to the synchronized \ref SensorCapture object
+
     friend class VideoCapture;
 #endif
 

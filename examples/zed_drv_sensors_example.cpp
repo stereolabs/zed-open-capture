@@ -1,5 +1,6 @@
 #include "sensorcapture.hpp"
 
+#include <unistd.h> // for usleep
 #include <iostream>
 #include <iomanip>
 
@@ -38,7 +39,7 @@ int main(int argc, char *argv[])
 
     while(1)
     {
-        const sl_drv::SensImuData* imuData = sens.getLastIMUData(10);
+        const sl_drv::SensImuData* imuData = sens.getLastIMUData(5000);
         if( imuData && imuData->valid )
         {
             std::cout << "**** New IMU data ****" << std::endl;
@@ -52,7 +53,7 @@ int main(int argc, char *argv[])
             std::cout << " * Angular Velocities [°/s]: " << imuData->gX << " " << imuData->gY << " " << imuData->gZ << std::endl;
         }
 
-        const sl_drv::SensMagData* magData = sens.getLastMagData(1);
+        const sl_drv::SensMagData* magData = sens.getLastMagData(100);
         if( magData && magData->valid == sl_drv::SensMagData::NEW_VAL )
         {
             std::cout << "**** New Magnetometer data ****" << std::endl;
@@ -65,7 +66,7 @@ int main(int argc, char *argv[])
             std::cout << " * Magnetic field [uT]: " << magData->mX << " " << magData->mY << " " << magData->mZ << std::endl;
         }
 
-        const sl_drv::SensEnvData* envData = sens.getLastEnvData(1);
+        const sl_drv::SensEnvData* envData = sens.getLastEnvData(100);
         if( envData && envData->valid == sl_drv::SensEnvData::NEW_VAL )
         {
             std::cout << "**** New Environment data ****" << std::endl;
@@ -80,7 +81,7 @@ int main(int argc, char *argv[])
             std::cout << " * Relative Humidity [%rH]: " << envData->humid << std::endl;
         }
 
-        const sl_drv::SensCamTempData* tempData = sens.getLastCamTempData(1);
+        const sl_drv::SensCamTempData* tempData = sens.getLastCamTempData(100);
         if( tempData && tempData->valid )
         {
             std::cout << "**** New Camera Sensors Temperature data ****" << std::endl;

@@ -7,13 +7,11 @@
 #include <thread>
 #include <mutex>
 
-#ifdef SENSORS_MOD_AVAILABLE
-#include "sensorcapture.hpp"
-#endif
-
 namespace sl_drv {
 
-
+#ifdef SENSORS_MOD_AVAILABLE
+class SensorCapture;
+#endif
 
 /*!
  * \brief The Frame struct containing the acquired video frames
@@ -373,10 +371,13 @@ private:
 
     std::thread mGrabThread;    //!< The video grabbing thread
 
-    bool mFirstFrame=true;    //!< Used to initialize the timestamp start point
+    bool mFirstFrame=true;      //!< Used to initialize the timestamp start point
 
 #ifdef SENSORS_MOD_AVAILABLE
-    //friend class sl_drv::SensorCapture;
+    bool mSyncEnabled=false;    //!< Indicates if a \ref SensorCapture object is synchronized
+    SensorCapture* mSensPtr;    //!< Pointer to the synchronized \ref SensorCapture object
+
+    friend class SensorCapture;
 #endif
 };
 

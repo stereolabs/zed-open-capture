@@ -22,7 +22,7 @@ std::mutex imuMutex;
 std::string imuTsStr;
 std::string imuAccelStr;
 std::string imuGyroStr;
-std::string imuSyncStr;
+
 bool sensThreadStop=false;
 uint64_t mcu_sync_ts=0;
 // <---- Shared data
@@ -110,18 +110,32 @@ int main(int argc, char *argv[])
             int font = cv::FONT_HERSHEY_COMPLEX;
 
             // Video info
-            cv::putText( frameBGR, videoTs.str(), cv::Point(10,35), font, 1, cv::Scalar(150,150,150), 2 );
+            cv::putText( frameBGR, videoTs.str(), cv::Point(10,35), font, 1, cv::Scalar(200,150,150), 2 );
 
             // IMU info
             imuMutex.lock();
-            cv::putText( frameBGR, imuTsStr, cv::Point(10,70), font, 1, cv::Scalar(150,150,150), 2 );
-            cv::putText( frameBGR, imuAccelStr, cv::Point(10,105), font, 1, cv::Scalar(150,150,150), 2 );
-            cv::putText( frameBGR, imuGyroStr, cv::Point(10,140), font, 1, cv::Scalar(150,150,150), 2 );
-            cv::putText( frameBGR, imuSyncStr, cv::Point(10,175), font, 1, cv::Scalar(150,150,150), 2 );
+            cv::putText( frameBGR, imuTsStr, cv::Point(10,70), font, 1, cv::Scalar(150,150,200), 2 );
 
             std::stringstream offsetStr;
-            offsetStr << std::fixed << std::setprecision(9) << "--- TS offset (video-mcu): " << (static_cast<double>(frame->timestamp)-static_cast<double>(mcu_sync_ts))/1e9 << " sec ---";
-            cv::putText( frameBGR, offsetStr.str().c_str(), cv::Point(10,210), font, 1, cv::Scalar(150,150,150), 2 );
+            double offset = (static_cast<double>(frame->timestamp)-static_cast<double>(mcu_sync_ts))/1e9;
+            offsetStr << std::fixed << std::setprecision(9) << std::showpos << "Timestamp offset: " << offset << " sec [video-sensors]";
+            cv::putText( frameBGR, offsetStr.str().c_str(), cv::Point(10,105), font, 1, cv::Scalar(200,200,150), 2 );
+
+            if( frame->frame_id>200 )
+            {
+                static double sum=0;
+                static int count=0;
+
+                sum += offset;
+                double avg_offset=sum/(++count);
+
+                std::stringstream avgOffsetStr;
+                avgOffsetStr << std::fixed << std::setprecision(9) << std::showpos << "Avg timestamp offset: " << avg_offset << " sec";
+                cv::putText( frameBGR, avgOffsetStr.str().c_str(), cv::Point(10,140), font, 1, cv::Scalar(200,200,150), 2 );
+            }
+
+            cv::putText( frameBGR, imuAccelStr, cv::Point(10,185), font, 1, cv::Scalar(150,150,150), 2 );
+            cv::putText( frameBGR, imuGyroStr, cv::Point(10,220), font, 1, cv::Scalar(150,150,150), 2 );
             imuMutex.unlock();
 
             // Show frame
@@ -180,14 +194,13 @@ void getSensorThreadFunc(sl_drv::SensorCapture* sensCap)
     while(!sensThreadStop)
     {
         // ----> Get IMU data
-        const sl_drv::SensImuData* imuData = sensCap->getLastIMUData(1);
+        const sl_drv::SensImuData* imuData = sensCap->getLastIMUData(2000);
 
-        if(imuData && imuData->valid && imuData->sync)
+        if(imuData && imuData->valid /*&& imuData->sync*/)
         {
             std::stringstream timestamp;
             std::stringstream accel;
             std::stringstream gyro;
-            std::stringstream sync;
 
             timestamp << std::fixed << std::setprecision(9) << "IMU timestamp:   " << static_cast<double>(imuData->timestamp)/1e9<< " sec" ;
             if(last_imu_ts!=0)
@@ -198,13 +211,11 @@ void getSensorThreadFunc(sl_drv::SensorCapture* sensCap)
 
             accel << std::fixed << std::showpos << std::setprecision(4) << " * Accel: " << imuData->aX << " " << imuData->aY << " " << imuData->aZ << " [m/s^2]";
             gyro << std::fixed << std::showpos << std::setprecision(4) << " * Gyro: " << imuData->gX << " " << imuData->gY << " " << imuData->gZ << " [deg/s]";
-            sync << " * Frame sync: " << (imuData->sync?"YES":"NO");
 
             imuMutex.lock();
             imuTsStr = timestamp.str();
             imuAccelStr = accel.str();
             imuGyroStr = gyro.str();
-            imuSyncStr = sync.str();
 
             if(imuData->sync)
             {
