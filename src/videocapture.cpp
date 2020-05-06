@@ -1,5 +1,9 @@
 #include "videocapture.hpp"
 
+#ifdef SENSORS_MOD_AVAILABLE
+#include "sensorcapture.hpp"
+#endif
+
 #include <sys/stat.h>         // for stat, S_ISCHR
 #include <errno.h>            // for errno, EBADRQC, EINVAL, ENOBUFS, ENOENT
 #include <fcntl.h>            // for open, O_NONBLOCK, O_RDONLY, O_RDWR
@@ -15,10 +19,6 @@
 #include <fstream>            // for char_traits, basic_istream::operator>>
 
 #include <cmath>              // for round
-
-#ifdef SENSORS_MOD_AVAILABLE
-#include "sensorcapture.hpp"
-#endif
 
 namespace sl_drv
 {
@@ -697,13 +697,13 @@ void VideoCapture::grabThreadFunc()
             if(mFirstFrame)
             {
                 mStartTs = getSysTs();
-                std::cout << "VideoCapture: " << mStartTs << std::endl;
+                //std::cout << "VideoCapture: " << mStartTs << std::endl;
 
 #ifdef SENSORS_MOD_AVAILABLE
                 if(mSyncEnabled && mSensPtr)
                 {
                     // Synchronize reference timestamp
-                    mSensPtr->mStartSysTs = mStartTs;
+                    mSensPtr->setStartTs(mStartTs);
                 }
 #endif
 
@@ -718,11 +718,19 @@ void VideoCapture::grabThreadFunc()
             mBufMutex.lock();
             if (mLastFrame.data != nullptr && mWidth != 0 && mHeight != 0 && mBuffers[mCurrentIndex].start != nullptr)
             {
-                mLastFrame.frame_id++;                
+                mLastFrame.frame_id++;
                 memcpy(mLastFrame.data, (unsigned char*) mBuffers[mCurrentIndex].start, mBuffers[mCurrentIndex].length);
                 mLastFrame.timestamp = mStartTs + rel_ts;
 
                 //std::cout << "Video:\t" << mLastFrame.timestamp << std::endl;
+
+#ifdef SENSORS_MOD_AVAILABLE
+                if(mSensReadyToSync)
+                {
+                    mSensReadyToSync = false;
+                    mSensPtr->updateTsOffset(mLastFrame.timestamp);
+                }
+#endif
 
                 mNewFrame=true;
             }
@@ -1714,7 +1722,7 @@ bool VideoCapture::enableSensorSync( SensorCapture* sensCap )
     mSyncEnabled = true;
     mSensPtr = sensCap;
 
-    mSensPtr->mVideoPtr = this;
+    mSensPtr->setVideoPtr(this);
 
     return true;
 }

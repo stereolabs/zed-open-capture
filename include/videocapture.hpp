@@ -377,6 +377,9 @@ private:
     bool mSyncEnabled=false;    //!< Indicates if a \ref SensorCapture object is synchronized
     SensorCapture* mSensPtr;    //!< Pointer to the synchronized \ref SensorCapture object
 
+    bool mSensReadyToSync=false; //!< Indicates if the MCU received a HW sync signal
+
+public:
     friend class SensorCapture;
 #endif
 };

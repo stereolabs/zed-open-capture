@@ -17,18 +17,17 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
-    message("Debug mode")
+    message("* Debug mode")
     SET(CMAKE_DEBUG_POSTFIX  "d")
 else()
-    message("Release mode")
+    message("* Release mode")
 endif()
 
 ############################################################################
 # Options
-option(${PROJECT_NAME}_BUILD_VIDEO      "Build the ZED Driver Video Modules (only for Linux)"   ON)
-option(${PROJECT_NAME}_BUILD_SENSORS    "Build the ZED Driver Sensors Modules"                  ON)
-option(${PROJECT_NAME}_BUILD_EXAMPLES   "Build the ZED Driver examples"                         ON)
-
+option(BUILD_VIDEO      "Build the ZED Driver Video Modules (only for Linux)"   ON)
+option(BUILD_SENSORS    "Build the ZED Driver Sensors Modules"                  ON)
+option(BUILD_EXAMPLES   "Build the ZED Driver examples"                         ON)
 
 ############################################################################
 # Sources
@@ -81,16 +80,8 @@ include_directories(${HIDAPI_INCLUDE_DIRS})
 
 ############################################################################
 # Generate libraries
-if(${PROJECT_NAME}_BUILD_VIDEO)
-    add_definitions(-DVIDEO_MOD_AVAILABLE)
-
-    add_library(${PROJECT_NAME}_video SHARED ${SRC_VIDEO} )
-    target_link_libraries( ${PROJECT_NAME}_video
-        ${LibUSB_LIBRARIES}
-    )
-endif()
-
-if(${PROJECT_NAME}_BUILD_SENSORS)
+if(BUILD_SENSORS)
+    message("* Sensors module available")
     add_definitions(-DSENSORS_MOD_AVAILABLE)
 
     add_library(${PROJECT_NAME}_sensors SHARED ${SRC_SENSORS} )
@@ -101,11 +92,30 @@ if(${PROJECT_NAME}_BUILD_SENSORS)
     )
 endif()
 
+if(BUILD_VIDEO)
+    message("* Video module available")
+    add_definitions(-DVIDEO_MOD_AVAILABLE)
+
+    add_library(${PROJECT_NAME}_video SHARED ${SRC_VIDEO} )
+    if(BUILD_SENSORS)
+        target_link_libraries( ${PROJECT_NAME}_video
+            ${PROJECT_NAME}_sensors
+            ${LibUSB_LIBRARIES}
+        )
+    else()
+        target_link_libraries( ${PROJECT_NAME}_video
+            ${LibUSB_LIBRARIES}
+        )
+    endif()
+endif()
+
 ############################################################################
 # Generate examples
-if(${PROJECT_NAME}_BUILD_EXAMPLES)
+if(BUILD_EXAMPLES)
 
-    if(${PROJECT_NAME}_BUILD_VIDEO)
+    if(BUILD_VIDEO)
+        message("* Video example available")
+
         ##### Video Example
         find_package(OpenCV REQUIRED)
         include_directories(${OpenCV_INCLUDE_DIRS})
@@ -118,7 +128,9 @@ if(${PROJECT_NAME}_BUILD_EXAMPLES)
         )
     endif()
 
-    if(${PROJECT_NAME}_BUILD_SENSORS)
+    if(BUILD_SENSORS)
+        message("* Sensors example available")
+
         ##### Sensors Example
         add_executable(${PROJECT_NAME}_sensors_example "examples/zed_drv_sensors_example.cpp")
         target_link_libraries(${PROJECT_NAME}_sensors_example
@@ -127,7 +139,9 @@ if(${PROJECT_NAME}_BUILD_EXAMPLES)
         )
     endif()
 
-    if(${PROJECT_NAME}_BUILD_VIDEO AND  ${PROJECT_NAME}_BUILD_SENSORS)
+    if(BUILD_VIDEO AND  BUILD_SENSORS)
+        message("* Video/Sensors sync example available")
+
         ##### Synchronization Example
         add_executable(${PROJECT_NAME}_sync_example "examples/zed_drv_sync_example.cpp")
         target_link_libraries(${PROJECT_NAME}_sync_example

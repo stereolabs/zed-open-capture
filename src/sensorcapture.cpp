@@ -1,5 +1,9 @@
 ﻿#include "sensorcapture.hpp"
 
+#ifdef VIDEO_MOD_AVAILABLE
+#include "videocapture.hpp"
+#endif
+
 #include <sstream>
 #include <cmath>              // for round
 #include <unistd.h>           // for usleep, close
@@ -286,9 +290,8 @@ void SensorCapture::grabThreadFunc()
 
     uint64_t rel_mcu_ts = 0;
 
-    size_t size_max = 50;
-    mSysTsQueue.reserve(size_max);
-    mMcuTsQueue.reserve(size_max);
+    mSysTsQueue.reserve(TS_SHIFT_VAL_COUNT);
+    mMcuTsQueue.reserve(TS_SHIFT_VAL_COUNT);
 
     while (!mStopCapture)
     {
@@ -337,7 +340,8 @@ void SensorCapture::grabThreadFunc()
         if(mFirstImuData && data->imu_not_valid!=1)
         {
             mStartSysTs = getSysTs(); // Starting system timestamp
-            std::cout << "SensorCapture: " << mStartSysTs << std::endl;
+            //std::cout << "SensorCapture: " << mStartSysTs << std::endl;
+
             mLastMcuTs = mcu_ts_nsec;
             mFirstImuData = false;
             continue;
@@ -350,6 +354,7 @@ void SensorCapture::grabThreadFunc()
         mLastMcuTs = mcu_ts_nsec;
         // <---- Timestamp update
 
+        // Apply timestamp drift scaling factor
         rel_mcu_ts +=  static_cast<uint64_t>(static_cast<double>(delta_mcu_ts_raw)*mNTPTsScaling);
 
         // mStartSysTs is synchronized to Video TS when sync is enabled using \ref VideoCapture::enableSensorSync
@@ -367,19 +372,16 @@ void SensorCapture::grabThreadFunc()
                 std::cout << " * mLastFrameSyncCount: " << mLastFrameSyncCount << std::endl;
                 std::cout << " * MCU timestamp scaling: " << mNTPTsScaling << std::endl;
 #endif
-                mLastSysSyncTs = getSteadyTs();
-                mLastMcuSyncTs = mcu_ts_nsec;
-
                 mSysTsQueue.push_back( getSteadyTs() );     // Steady host timestamp
                 mMcuTsQueue.push_back( current_data_ts );   // MCU timestamp
 
-                // Once we have enough data, calculate the drift scaling factor to appy to ntp_scaling.
-                if (mSysTsQueue.size()==size_max && mMcuTsQueue.size() == size_max)
+                // Once we have enough data, calculate the drift scaling factor
+                if (mSysTsQueue.size()==TS_SHIFT_VAL_COUNT && mMcuTsQueue.size() == TS_SHIFT_VAL_COUNT)
                 {
                     //First and last ts
                     int first_index = 5;
                     if (mNTPAdjustedCount <= NTP_ADJUST_CT) {
-                        first_index = size_max/2;
+                        first_index = TS_SHIFT_VAL_COUNT/2;
                     }
 
                     uint64_t first_ts_imu = mMcuTsQueue.at(first_index);
@@ -391,30 +393,24 @@ void SensorCapture::grabThreadFunc()
                     if (scale > 1.2) scale = 1.2;
                     if (scale < 0.8) scale = 0.8;
 
-                    //Adjust scaling continuoulsy. No jump so that ts(n) - ts(n-1) == 800Hz
+                    //Adjust scaling continuoulsy. No jump so that ts(n) - ts(n-1) == 400Hz
                     mNTPTsScaling*=scale;
-                    //scale will be apply to the next values, so clear the vector and wait until we have enough data again
+
+                    //scale will be applied to the next values, so clear the vector and wait until we have enough data again
                     mMcuTsQueue.clear();
                     mSysTsQueue.clear();
 
                     mNTPAdjustedCount++;
 
-                    static int64_t offset_sum = 0;
-                    static int count = 0;
-                    offset_sum += (static_cast<int64_t>(current_data_ts) - static_cast<int64_t>(mVideoPtr->mLastFrame.timestamp));
-                    count++;
-
-                    if(count==3)
+#ifdef VIDEO_MOD_AVAILABLE
+                    // ----> Signal update offset to VideoCapture
+                    if(mVideoPtr)
                     {
-                        int64_t offset = offset_sum/count;
-                        mSyncOffset += offset;
-
-                        std::cout << "Offset: " << offset << std::endl;
-                        std::cout << "mSyncOffset: " << mSyncOffset << std::endl;
-
-                        offset_sum = 0;
-                        count=0;
+                        mSyncTs = current_data_ts;
+                        mVideoPtr->mSensReadyToSync = true;
                     }
+                    // <---- Update offset
+#endif //VIDEO_MOD_AVAILABLE
                 }
             }
         }
@@ -515,6 +511,29 @@ void SensorCapture::grabThreadFunc()
 
     mGrabRunning = false;
 }
+
+#ifdef VIDEO_MOD_AVAILABLE
+void SensorCapture::updateTsOffset( uint64_t frame_ts)
+{
+    static int64_t offset_sum = 0;
+    static int count = 0;
+    offset_sum += (static_cast<int64_t>(mSyncTs) - static_cast<int64_t>(frame_ts));
+    count++;
+
+    if(count==3)
+    {
+        int64_t offset = offset_sum/count;
+        mSyncOffset += offset;
+#if 0
+        std::cout << "Offset: " << offset << std::endl;
+        std::cout << "mSyncOffset: " << mSyncOffset << std::endl;
+#endif
+
+        offset_sum = 0;
+        count=0;
+    }
+}
+#endif
 
 bool SensorCapture::sendPing() {
     if( !mDevHandle )

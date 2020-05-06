@@ -123,6 +123,7 @@ inline bool atLeast(const int &version_current, const ZED_M_FW &version_required
 
 
 #define NTP_ADJUST_CT 1
+const size_t TS_SHIFT_VAL_COUNT = 50; //!< Number of sensor data to use to update timestamp scaling
 
 }
 

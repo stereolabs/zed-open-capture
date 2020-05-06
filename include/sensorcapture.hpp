@@ -11,11 +11,11 @@
 
 #include "hidapi.h"
 
-#ifdef VIDEO_MOD_AVAILABLE
-#include "videocapture.hpp"
-#endif
-
 namespace sl_drv {
+
+#ifdef VIDEO_MOD_AVAILABLE
+class VideoCapture;
+#endif
 
 /*!
  * \brief The struct containing the acquired IMU data
@@ -90,11 +90,11 @@ class SL_DRV_EXPORT SensorCapture
 {
     ZED_DRV_VERSION_ATTRIBUTE
 
-public:    
-    /*!
-     * \brief SensorCapture is the default constructor
-     */
-    SensorCapture( bool verbose=false );
+    public:
+        /*!
+         * \brief SensorCapture is the default constructor
+         */
+        SensorCapture( bool verbose=false );
 
     /*!
      * \brief ~SensorCapture  destructor
@@ -164,6 +164,12 @@ public:
      */
     const SensCamTempData* getLastCamTempData(uint64_t timeout_usec=100);
 
+#ifdef VIDEO_MOD_AVAILABLE
+    void updateTsOffset(uint64_t frame_ts);                                 //!< Called by \ref VideoCapture to update timestamp offset
+    inline void setStartTs(uint64_t start_ts){mStartSysTs=start_ts;}        //!< Called by \ref VideoCapture to sync timestamps reference point
+    inline void setVideoPtr(VideoCapture* videoPtr){mVideoPtr=videoPtr;}    //!< Called by \ref VideoCapture to set the pointer to it
+#endif
+
 private:
     /*!
      * \brief grabThreadFunc The sensor data grabbing thread function
@@ -180,6 +186,8 @@ private:
     bool isDataStreamEnabled();         //!< Check if the data stream is enabled
     bool sendPing();                    //!< Send a ping  each second (before 6 seconds) to keep data streaming alive
     // ----> USB commands to MCU
+
+
 
 private:
     // Flags
@@ -218,26 +226,20 @@ private:
     bool mFirstImuData=true;            //!< Used to initialize the sensor timestamp start point
 
     // ----> Timestamp synchronization
-    uint64_t mLastMcuSyncTs=0;          //!< The MCU timestamp of the last sync signal
     uint64_t mLastFrameSyncCount=0;     //!< Used to estimate sync signal in case we lost the MCU data containing the sync signal
-    uint64_t mLastSysSyncTs=0;          //!< The System (steday) timestamp of the last syncsignal
 
-    std::vector<uint64_t> mMcuTsQueue;
-    std::vector<uint64_t> mSysTsQueue;
+    std::vector<uint64_t> mMcuTsQueue;  //!< Queue to keep the latest MCU timestamps to be used to calculate the shift scaling factor
+    std::vector<uint64_t> mSysTsQueue;  //!< Queue to keep the latest UVC timestamps to be used to calculate the shift scaling factor
 
-    int mNTPTsAdjusted = 0;
-    double mNTPTsScaling=1.0;
+    double mNTPTsScaling=1.0;           //!< Timestamp shift scaling factor
+    int mNTPAdjustedCount = 0;          //!< Counter for timestamp shift scaling
 
-    int64_t mSyncOffset=0;
-
-    int mNTPAdjustedCount = 0;
-    // <---- imestamp synchronization
-
+    int64_t mSyncOffset=0;              //!< Timestamp offset respect to synchronized camera
+    // <---- Timestamp synchronization
 
 #ifdef VIDEO_MOD_AVAILABLE
     VideoCapture* mVideoPtr=nullptr;    //!< Pointer to the synchronized \ref SensorCapture object
-
-    friend class VideoCapture;
+    uint64_t mSyncTs=0;                 //!< Timestamp of the latest received HW sync signal
 #endif
 
 };
