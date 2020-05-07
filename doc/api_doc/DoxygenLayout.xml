@@ -6,16 +6,16 @@
         <tab type="files" visible="no" title="">
             <tab type="filelist" visible="no" title="" intro=""/>
             <tab type="globals" visible="no" title="" intro=""/>
-        </tab>
-
-        <tab type="user" url="md_installation.html" visible="yes" title="Installation"/>
+        </tab>        
 
         <tab type="namespaces" visible="no" title="">
             <tab type="namespacelist" visible="no" title="" intro=""/>
             <tab type="namespacemembers" visible="no" title="" intro=""/>
         </tab>
 
-        <tab type="mainpage" visible="yes" title="Get Started"/> 
+        <tab type="mainpage" visible="yes" title="Get Started"/>
+
+        <tab type="user" url="md_installation.html" visible="yes" title="Installation"/>         
         
         <tab type="usergroup" url="md_modules.html" visible="yes" title="Modules">
             <tab type="user" url="classsl__drv_1_1VideoCapture.html" visible="yes" title="Video Capture and Control"/>
