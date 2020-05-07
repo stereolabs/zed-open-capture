@@ -110,9 +110,29 @@ if(BUILD_VIDEO)
 endif()
 
 ############################################################################
+# Install rules
+if(BUILD_VIDEO)
+    set_target_properties(${PROJECT_NAME}_video PROPERTIES
+        PUBLIC_HEADER "${HEADERS_VIDEO}"
+    )
+    install(TARGETS ${PROJECT_NAME}_video
+        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include
+    )
+endif()
+
+if(BUILD_SENSORS)
+    set_target_properties(${PROJECT_NAME}_sensors PROPERTIES
+        PUBLIC_HEADER "${HEADERS_SENSORS}"
+    )
+    install(TARGETS ${PROJECT_NAME}_sensors
+        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include/zed-driver)
+endif()
+
+############################################################################
 # Generate examples
 if(BUILD_EXAMPLES)
-
     if(BUILD_VIDEO)
         message("* Video example available")
 
@@ -121,10 +141,13 @@ if(BUILD_EXAMPLES)
         include_directories(${OpenCV_INCLUDE_DIRS})
 
         add_executable(${PROJECT_NAME}_video_example "examples/zed_drv_video_example.cpp")
-        target_link_libraries(${PROJECT_NAME}_video_example
-          PUBLIC
+        set_target_properties(${PROJECT_NAME}_video_example PROPERTIES PREFIX "")
+        target_link_libraries(${PROJECT_NAME}_video_example          
           ${PROJECT_NAME}_video
           ${OpenCV_LIBS}
+        )
+        install(TARGETS ${PROJECT_NAME}_video_example
+            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
     endif()
 
@@ -133,9 +156,12 @@ if(BUILD_EXAMPLES)
 
         ##### Sensors Example
         add_executable(${PROJECT_NAME}_sensors_example "examples/zed_drv_sensors_example.cpp")
-        target_link_libraries(${PROJECT_NAME}_sensors_example
-          PUBLIC
+        set_target_properties(${PROJECT_NAME}_sensors_example PROPERTIES PREFIX "")
+        target_link_libraries(${PROJECT_NAME}_sensors_example          
           ${PROJECT_NAME}_sensors
+        )
+        install(TARGETS ${PROJECT_NAME}_sensors_example
+            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
     endif()
 
@@ -144,12 +170,14 @@ if(BUILD_EXAMPLES)
 
         ##### Synchronization Example
         add_executable(${PROJECT_NAME}_sync_example "examples/zed_drv_sync_example.cpp")
-        target_link_libraries(${PROJECT_NAME}_sync_example
-          PUBLIC
+        set_target_properties(${PROJECT_NAME}_sync_example PROPERTIES PREFIX "")
+        target_link_libraries(${PROJECT_NAME}_sync_example          
           ${PROJECT_NAME}_sensors
           ${PROJECT_NAME}_video
           ${OpenCV_LIBS}
         )
+        install(TARGETS ${PROJECT_NAME}_sync_example
+            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+        )
     endif()
-
 endif()
