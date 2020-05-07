@@ -84,20 +84,21 @@ struct SL_DRV_EXPORT SensCamTempData
 };
 
 /*!
- * \brief The SensorCapture class provides sensor grabbing functions
+ * \brief The SensorCapture class provides sensor grabbing functions for the Stereolabs ZED Mini and ZED2 camera models
  */
 class SL_DRV_EXPORT SensorCapture
 {
-    ZED_DRV_VERSION_ATTRIBUTE
+    ZED_DRV_VERSION_ATTRIBUTE;
 
-    public:
-        /*!
-         * \brief SensorCapture is the default constructor
-         */
-        SensorCapture( bool verbose=false );
+public:
+    /*!
+     * \brief The default constructor
+     * \param verbose enable useful information to debug the class behaviours while running
+     */
+    SensorCapture( bool verbose=false );
 
     /*!
-     * \brief ~SensorCapture  destructor
+     * \brief The class destructor
      */
     virtual ~SensorCapture();
 
@@ -113,14 +114,14 @@ class SL_DRV_EXPORT SensorCapture
      * \param sn Serial Number of the camera. Use `-1` to open connect to the first available device
      * \return returns true if the connection is correctly estabilished
      */
-    bool init( int sn=-1 );
+    bool initializeSensors( int sn=-1 );
 
     /*!
      * \brief Get the MCU firmware version in form `<fw_major>.<fw_minor>
      * \param fw_major the major firmware version number
      * \param fw_minor the minor firmware version number
      */
-    void getFwVersion( uint16_t& fw_major, uint16_t& fw_minor );
+    void getFirmwareVersion( uint16_t& fw_major, uint16_t& fw_minor );
 
     /*!
      * \brief Retrieve the serial number of the connected camera
@@ -144,7 +145,7 @@ class SL_DRV_EXPORT SensorCapture
      *
      * \note Do not delete the received data
      */
-    const SensMagData* getLastMagData(uint64_t timeout_usec=100);
+    const SensMagData* getLastMagnetometerData(uint64_t timeout_usec=100);
 
     /*!
      * \brief Get the last received Environment data
@@ -153,7 +154,7 @@ class SL_DRV_EXPORT SensorCapture
      *
      * \note Do not delete the received data
      */
-    const SensEnvData* getLastEnvData(uint64_t timeout_usec=100);
+    const SensEnvData* getLastEnvironmentData(uint64_t timeout_usec=100);
 
     /*!
      * \brief Get the last received camera sensors temperature data
@@ -162,19 +163,16 @@ class SL_DRV_EXPORT SensorCapture
      *
      * \note Do not delete the received data
      */
-    const SensCamTempData* getLastCamTempData(uint64_t timeout_usec=100);
+    const SensCamTempData* getLastCameraTemperatureData(uint64_t timeout_usec=100);
 
 #ifdef VIDEO_MOD_AVAILABLE
-    void updateTsOffset(uint64_t frame_ts);                                 //!< Called by \ref VideoCapture to update timestamp offset
-    inline void setStartTs(uint64_t start_ts){mStartSysTs=start_ts;}        //!< Called by \ref VideoCapture to sync timestamps reference point
-    inline void setVideoPtr(VideoCapture* videoPtr){mVideoPtr=videoPtr;}    //!< Called by \ref VideoCapture to set the pointer to it
+    void updateTimestampOffset(uint64_t frame_ts);                                 //!< Called by \ref VideoCapture to update timestamp offset
+    inline void setStartTimestamp(uint64_t start_ts){mStartSysTs=start_ts;}        //!< Called by \ref VideoCapture to sync timestamps reference point
+    inline void setVideoPtr(VideoCapture* videoPtr){mVideoPtr=videoPtr;}           //!< Called by \ref VideoCapture to set the pointer to it
 #endif
 
 private:
-    /*!
-     * \brief grabThreadFunc The sensor data grabbing thread function
-     */
-    void grabThreadFunc();
+    void grabThreadFunc();              //!< The sensor data grabbing thread function
 
     bool startCapture();                //!< Start data capture thread
     void reset();                       //!< Reset  connection
@@ -186,8 +184,6 @@ private:
     bool isDataStreamEnabled();         //!< Check if the data stream is enabled
     bool sendPing();                    //!< Send a ping  each second (before 6 seconds) to keep data streaming alive
     // ----> USB commands to MCU
-
-
 
 private:
     // Flags
@@ -244,5 +240,14 @@ private:
 
 };
 
+/** \example zed_drv_sensors_example.cpp
+ * This is an example of how to use the \ref SensorCapture class to get the raw sensors data at the maximum available
+ * frequency.
+ */
+
+/** \example zed_drv_sync_example.cpp
+ * This is an example of how to get synchronized video and sensors data from
+ * the \ref VideoCapture class and the \ref SensorCapture class.
+ */
 }
 #endif // SENSORCAPTURE_HPP

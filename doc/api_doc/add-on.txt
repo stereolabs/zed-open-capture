@@ -1,21 +1,24 @@
 ﻿
-/*! \mainpage API Documentation
+/*! \mainpage ZED Driver Documentation
 
 ![](img/ZED-2-front.jpg)
 
+The ZED Driver allows the low level control of ZED, ZED Mini and ZED 2 camera. 
+The driver provides methods to access video frames, to control the video parameters and to acquire data from the internal sensors.
+A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
 
 <br>
 
 <h2 style="text-align: left;">Modules</h2>
-<br>
-
-The ZED Driver allows the low level control of ZED, ZED Mini and ZED 2 camera.
-
 The driver is composed of two modules:
 
- - <a href="group__Video__group.html">Video Capture</a>
- - <a href="group__Depth__group.html">Sensor Capture</a>
+ - <a href="group__Video__group.html">Video Capture</a>: video frame grabbing and camera control
+ - <a href="group__Depth__group.html">Sensor Capture</a>: camera sensors data grabbing
+
 <br>
+
+<h2 style="text-align: left;">Examples</h2>
+A <a href="md_examples.html">set of examples</a> is provided to better understand how to use the ZED Driver and how to exploit all the available features.
 
 
 \latexonly

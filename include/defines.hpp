@@ -27,7 +27,7 @@
 #define ZED_DRV_MINOR_VERSION 1
 #define ZED_DRV_PATCH_VERSION 0
 
-#define ZED_DRV_VERSION_ATTRIBUTE private: uint32_t mDrvMajorVer = ZED_DRV_MAJOR_VERSION, mDrvMinorVer = ZED_DRV_MINOR_VERSION, mDrvPatchVer = ZED_DRV_PATCH_VERSION;
+#define ZED_DRV_VERSION_ATTRIBUTE private: uint32_t mDrvMajorVer = ZED_DRV_MAJOR_VERSION, mDrvMinorVer = ZED_DRV_MINOR_VERSION, mDrvPatchVer = ZED_DRV_PATCH_VERSION
 
 // Debug output
 #define INFO_OUT(msg) { int status_dem_0; std::cout << "[" << abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status_dem_0) << "] INFO: " << msg << std::endl; }
@@ -35,26 +35,16 @@
 #define ERROR_OUT(msg) { int status_dem_0; std::cerr << "[" << abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status_dem_0) << "] ERROR: " << msg << std::endl; }
 
 /*!
- * \brief Convert a wchar array to std::string
- */
-inline std::string wstr2str( const wchar_t* wstr)
-{
-    std::wstring ws( wstr );
-    std::string str( ws.begin(), ws.end() );
-    return str;
-}
-
-/*!
  * \brief Get the current system clock as steady clock, so with no jumps even if the system time changes
- * \return the current system clock in nanoseconds
+ * \return the current steady system clock in nanoseconds
  */
-inline uint64_t getSteadyTs() {return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();}
+inline uint64_t getSteadyTimestamp() {return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();}
 
 /*!
- * \brief Get the current system clock (it can have jumps if the system clock is updated by a sync service)
- * \return the current system clock in nanoseconds
+ * \brief Get the current system clock as wall clock (it can have jumps if the system clock is updated by a sync service)
+ * \return the current wall system clock in nanoseconds
  */
-inline uint64_t getSysTs() {return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();}
+inline uint64_t getWallTimestamp() {return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();}
 
 namespace sl_drv {
 

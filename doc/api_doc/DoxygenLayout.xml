@@ -8,42 +8,38 @@
             <tab type="globals" visible="no" title="" intro=""/>
         </tab>
 
+        <tab type="user" url="md_installation.html" visible="yes" title="Installation"/>
 
         <tab type="namespaces" visible="no" title="">
             <tab type="namespacelist" visible="no" title="" intro=""/>
             <tab type="namespacemembers" visible="no" title="" intro=""/>
         </tab>
 
-        <tab type="mainpage" visible="yes" title=""/> 
-        <!--<tab type="user" url="classsl_1_1Camera.html" visible="yes" title="Main class : Camera"/>-->
+        <tab type="mainpage" visible="yes" title="Get Started"/> 
         
-        <tab type="user" url="classsl__drv_1_1VideoCapture.html" visible="yes" title="Video Capture and Control"/>
-        <tab type="user" url="classsl__drv_1_1SensorCapture.html" visible="yes" title="Sensors Capture"/>
-        
-
-        <!--
-        <tab type="classes" visible="yes" title="Modules" > 
-            <tab type="user" url="@ref Video_group" visible="yes" title="Video"/>
-            <tab type="user" url="@ref Depth_group" visible="yes" title="Depth Sensing"/>
-            <tab type="user" url="@ref PositionalTracking_group" visible="yes" title="Positional Tracking"/>
-            <tab type="user" url="@ref SpatialMapping_group" visible="yes" title="Spatial Mapping"/>
-            <tab type="user" url="@ref Object_group" visible="yes" title="Object Detection"/>
-            <tab type="user" url="@ref Core_group" visible="yes" title="Core"/>
+        <tab type="usergroup" url="md_modules.html" visible="yes" title="Modules">
+            <tab type="user" url="classsl__drv_1_1VideoCapture.html" visible="yes" title="Video Capture and Control"/>
+            <tab type="user" url="classsl__drv_1_1SensorCapture.html" visible="yes" title="Sensors Data Capture"/>
         </tab>
-        -->
-        <tab type="modules" visible="yes" title="" intro=""/>
+
+        <tab type="modules" visible="no" title="" intro=""/>
 
         <tab type="classlist" visible="yes" title="All Classes" intro=""/>
         <tab type="classindex" visible="no" title=""/>
         <tab type="hierarchy" visible="no" title="" intro=""/>
         <tab type="classmembers" visible="no" title="" intro=""/>
 
-        <tab type="examples" visible="no" title="" intro=""/>
+        <tab type="examples" visible="no" title="" intro="" />
+        
         <tab type="pages" visible="no" title="" intro=""/>
-        <!--<tab type="user" url="http://www.stereolabs.com/documentation/" title="Documentation Overview"/>-->
-        <tab type="user" url="md_release-notes.html" visible="yes" title="Changelog"/>
-        <!--<tab type="user" url="https://www.stereolabs.com/developers/release/3.0/migration-guide/" visible="yes" title="Migration Guide to 3.0"/> -->
-        <!--<tab type="user" url="https://www.stereolabs.com/docs/api_2.X/index.html" visible="yes" title="ZED SDK 2 legacy API"/> -->
+        
+        <tab type="usergroup" url="md_examples.html" visible="yes" title="Examples">
+            <tab type="user" url="zed_drv_video_example_8cpp-example.html" visible="yes" title="Video Capture and Control" />
+            <tab type="user" url="zed_drv_sensors_example_8cpp-example.html" visible="yes" title="Sensors Data Capture" />
+            <tab type="user" url="zed_drv_sync_example_8cpp-example.html" visible="yes" title="Video/Sensors sync" />
+        </tab>        
+
+        <tab type="user" url="md_release-notes.html" visible="yes" title="Release Notes"/>
 
     </navindex>
 

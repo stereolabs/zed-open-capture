@@ -90,7 +90,7 @@ std::vector<int> SensorCapture::getDeviceList()
     return sn_vec;
 }
 
-bool SensorCapture::init( int sn )
+bool SensorCapture::initializeSensors( int sn )
 {
     if(mSlDevPid.size()==0)
     {
@@ -156,7 +156,7 @@ bool SensorCapture::init( int sn )
     return true;
 }
 
-void SensorCapture::getFwVersion( uint16_t& fw_major, uint16_t& fw_minor )
+void SensorCapture::getFirmwareVersion( uint16_t& fw_major, uint16_t& fw_minor )
 {
     if(mDevSerial==-1)
         return;
@@ -339,7 +339,7 @@ void SensorCapture::grabThreadFunc()
 
         if(mFirstImuData && data->imu_not_valid!=1)
         {
-            mStartSysTs = getSysTs(); // Starting system timestamp
+            mStartSysTs = getWallTimestamp(); // Starting system timestamp
             //std::cout << "SensorCapture: " << mStartSysTs << std::endl;
 
             mLastMcuTs = mcu_ts_nsec;
@@ -372,7 +372,7 @@ void SensorCapture::grabThreadFunc()
                 std::cout << " * mLastFrameSyncCount: " << mLastFrameSyncCount << std::endl;
                 std::cout << " * MCU timestamp scaling: " << mNTPTsScaling << std::endl;
 #endif
-                mSysTsQueue.push_back( getSteadyTs() );     // Steady host timestamp
+                mSysTsQueue.push_back( getSteadyTimestamp() );     // Steady host timestamp
                 mMcuTsQueue.push_back( current_data_ts );   // MCU timestamp
 
                 // Once we have enough data, calculate the drift scaling factor
@@ -400,6 +400,7 @@ void SensorCapture::grabThreadFunc()
                     mMcuTsQueue.clear();
                     mSysTsQueue.clear();
 
+                    // Count the number of completed time shift factor estimations
                     mNTPAdjustedCount++;
 
 #ifdef VIDEO_MOD_AVAILABLE
@@ -407,7 +408,7 @@ void SensorCapture::grabThreadFunc()
                     if(mVideoPtr)
                     {
                         mSyncTs = current_data_ts;
-                        mVideoPtr->mSensReadyToSync = true;
+                        mVideoPtr->setReadyToSync();
                     }
                     // <---- Update offset
 #endif //VIDEO_MOD_AVAILABLE
@@ -513,7 +514,7 @@ void SensorCapture::grabThreadFunc()
 }
 
 #ifdef VIDEO_MOD_AVAILABLE
-void SensorCapture::updateTsOffset( uint64_t frame_ts)
+void SensorCapture::updateTimestampOffset( uint64_t frame_ts)
 {
     static int64_t offset_sum = 0;
     static int count = 0;
@@ -578,7 +579,7 @@ const SensImuData* SensorCapture::getLastIMUData(uint64_t timeout_usec)
     return &mLastIMUData;
 }
 
-const SensMagData* SensorCapture::getLastMagData(uint64_t timeout_usec)
+const SensMagData* SensorCapture::getLastMagnetometerData(uint64_t timeout_usec)
 {
     // ----> Wait for a new frame
     uint64_t time_count = (timeout_usec<100?100:timeout_usec)/10;
@@ -599,7 +600,7 @@ const SensMagData* SensorCapture::getLastMagData(uint64_t timeout_usec)
     return &mLastMagData;
 }
 
-const SensEnvData* SensorCapture::getLastEnvData(uint64_t timeout_usec)
+const SensEnvData* SensorCapture::getLastEnvironmentData(uint64_t timeout_usec)
 {
     // ----> Wait for a new frame
     uint64_t time_count = (timeout_usec<100?100:timeout_usec)/10;
@@ -620,7 +621,7 @@ const SensEnvData* SensorCapture::getLastEnvData(uint64_t timeout_usec)
     return &mLastEnvData;
 }
 
-const SensCamTempData* SensorCapture::getLastCamTempData(uint64_t timeout_usec)
+const SensCamTempData* SensorCapture::getLastCameraTemperatureData(uint64_t timeout_usec)
 {
     // ----> Wait for a new frame
     uint64_t time_count = (timeout_usec<100?100:timeout_usec)/10;

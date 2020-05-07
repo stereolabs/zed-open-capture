@@ -1,3 +1,4 @@
+// ----> Includes
 #include "videocapture.hpp"
 
 #include <iostream>
@@ -6,8 +7,9 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+// <---- Includes
 
-// Camera settings control
+// ----> Camera settings control
 typedef enum _cam_control
 {
     Brightness,
@@ -22,7 +24,9 @@ typedef enum _cam_control
 } CamControl;
 
 CamControl activeControl = Brightness;
+// <---- Camera settings control
 
+// ----> Global functions to control settings
 // Rescale the images according to the selected resolution to better display them on screen
 void showImage( std::string name, cv::Mat& img, sl_drv::RESOLUTION res );
 
@@ -31,48 +35,53 @@ void handleKeyboard( sl_drv::VideoCapture &cap, int key );
 
 // Change active control
 void setActiveControl( CamControl control );
+
 // Set new value for the active control
 void setControlValue( sl_drv::VideoCapture &cap, int value );
+
 // '+' or '-' pressed
 void changeControlValue( sl_drv::VideoCapture &cap, bool increase );
+
 // 'a' or 'A' pressed to enable automatic WhiteBalanse or Gain/Exposure
 void toggleAutomaticControl( sl_drv::VideoCapture &cap );
+// <---- Global functions to control settings
 
+// The main function
 int main(int argc, char *argv[])
 {
-    // ----> Set parameters
+    // ----> 1) Set Video parameters
     sl_drv::VideoParams params;
     params.res = sl_drv::RESOLUTION::HD720;
     params.fps = sl_drv::FPS::FPS_60;
     params.verbose = true;
-    // <---- Set parameters
+    // <---- Set Video parameters
 
-    // ----> Create Video Capture
+    // ----> 2) Create Video Capture
     sl_drv::VideoCapture cap(params);
-    if( !cap.init(-1) )
+    if( !cap.initializeVideo(-1) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
         std::cerr << "Try to enable verbose to get more info" << std::endl;
 
         return EXIT_FAILURE;
-    }
+    }    
+    std::cout << "Connected to camera sn: " << cap.getSerialNumber() << std::endl;
     // <---- Create Video Capture
 
-    std::cout << "Connected to camera sn: " << cap.getSerialNumber() << std::endl;
-
-    // Default camera control setting
+    // Set the default camera control setting
     setActiveControl( Brightness );
 
+    // Infinite video grabbing loop
     while (1)
     {
-        // Get last available frame
+        // 3) Get last available frame
         const sl_drv::Frame* frame = cap.getLastFrame();
 
-        // If the frame is valid we can display it
+        // ----> 4) If the frame is valid we can display it
         if(frame != nullptr)
         {
 #if 0
-            // ----> Video Debug information
+            // ----> 4.a) Video Debug information
             static uint64_t last_ts=0;
             std::cout << std::setprecision(9) << "[" << frame->frame_id << "] Ts: " <<  static_cast<double>(frame->timestamp)/1e9 << " sec" << std::endl;
             if( last_ts!=0 )
@@ -84,23 +93,22 @@ int main(int argc, char *argv[])
             // <---- Video Debug information
 #endif
 
-            // ----> Conversion from YUV 4:2:2 to BGR for visualization
+            // ----> 4.b)Conversion from YUV 4:2:2 to BGR for visualization
             cv::Mat frameYUV = cv::Mat( frame->height, frame->width, CV_8UC2, frame->data );
             cv::Mat frameBGR;
             cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
 
-            // Show frame
+            // 4.c) Show frame
             showImage( "Stream RGB", frameBGR, params.res );
         }
+        // <---- If the frame is valid we can display it
 
-        // ----> Keyboard handling
+        // ----> 5) Keyboard handling
         int key = cv::waitKey( 5 );
 
         if( key != -1 )
         {
-            //std::cout << key << std::endl;
-
             if(key=='q' || key=='Q') // Quit
                 break;
             else
@@ -112,6 +120,7 @@ int main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
+// Handle Keyboard
 void handleKeyboard( sl_drv::VideoCapture &cap, int key )
 {
     if(key >= '0' && key <= '9')
@@ -218,29 +227,7 @@ void handleKeyboard( sl_drv::VideoCapture &cap, int key )
     }
 }
 
-void showImage( std::string name, cv::Mat& img, sl_drv::RESOLUTION res )
-{
-    cv::Mat resized;
-    switch(res)
-    {
-    default:
-    case sl_drv::RESOLUTION::VGA:
-        resized = img;
-        break;
-    case sl_drv::RESOLUTION::HD720:
-        cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
-        break;
-    case sl_drv::RESOLUTION::HD1080:
-        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
-        break;
-    case sl_drv::RESOLUTION::HD2K:
-        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
-        break;
-    }
-
-    cv::imshow( name, resized );
-}
-
+// Change active control
 void setActiveControl( CamControl control )
 {
     activeControl = control;
@@ -281,6 +268,7 @@ void setActiveControl( CamControl control )
     std::cout << "Active camera control: " << ctrlStr << std::endl;
 }
 
+// Set new value for the active control
 void setControlValue(sl_drv::VideoCapture &cap, int value )
 {
     int newValue;
@@ -345,6 +333,7 @@ void setControlValue(sl_drv::VideoCapture &cap, int value )
     std::cout << newValue << std::endl;
 }
 
+// '+' or '-' pressed
 void changeControlValue( sl_drv::VideoCapture &cap, bool increase )
 {
     int curValue=0;
@@ -445,6 +434,7 @@ void changeControlValue( sl_drv::VideoCapture &cap, bool increase )
     }
 }
 
+// 'a' or 'A' pressed to enable automatic WhiteBalanse or Gain/Exposure
 void toggleAutomaticControl( sl_drv::VideoCapture &cap )
 {
     if(activeControl == WhiteBalance)
@@ -462,4 +452,28 @@ void toggleAutomaticControl( sl_drv::VideoCapture &cap )
 
         std::cout << "Automatic Exposure and Gain control: " << ((!curValue)?"ENABLED":"DISABLED") << std::endl;
     }
+}
+
+// Rescale the images according to the selected resolution to better display them on screen
+void showImage( std::string name, cv::Mat& img, sl_drv::RESOLUTION res )
+{
+    cv::Mat resized;
+    switch(res)
+    {
+    default:
+    case sl_drv::RESOLUTION::VGA:
+        resized = img;
+        break;
+    case sl_drv::RESOLUTION::HD720:
+        cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
+        break;
+    case sl_drv::RESOLUTION::HD1080:
+        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
+        break;
+    case sl_drv::RESOLUTION::HD2K:
+        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
+        break;
+    }
+
+    cv::imshow( name, resized );
 }

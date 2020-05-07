@@ -27,13 +27,13 @@ struct SL_DRV_EXPORT Frame
 };
 
 /*!
- * \brief The VideoCapture class provides image grabbing functions for Stereolabs cameras
+ * \brief The VideoCapture class provides image grabbing functions and settings control for all the Stereolabs camera models
  */
 class SL_DRV_EXPORT VideoCapture
 {
-    ZED_DRV_VERSION_ATTRIBUTE
+    ZED_DRV_VERSION_ATTRIBUTE;
 
-public:    
+public:
     /*!
      * \brief The default constructor
      *  * \param params the initialization parameters (see \ref VideoParams)
@@ -41,16 +41,16 @@ public:
     VideoCapture( VideoParams params = VideoParams() );
 
     /*!
-     * \brief Destructor
+     * \brief The class destructor
      */
     virtual ~VideoCapture();
 
     /*!
      * \brief Open a ZED camera using the specified ID or searching for the first available
-     * \param devId Id of the camera (see `/dev/video*`). Use `-1` to open the first available ZED camera
+     * \param devId Id of the camera (see `/dev/video*`). Use `-1` to open the first available camera
      * \return returns true if the camera is correctly opened
      */
-    bool init( int devId=-1 );
+    bool initializeVideo( int devId=-1 );
 
     /*!
      * \brief Get the last received camera image
@@ -282,13 +282,16 @@ public:
      * \return true if synchronization has been correctly started
      */
     bool enableSensorSync( SensorCapture* sensCap=nullptr );
+
+    /*!
+     * \brief Indicates that the \ref SensorCapture object received the HW sync signal and a frame must
+     *        be synchronized to the last Sensor Data
+     */
+    inline void setReadyToSync(){ mSensReadyToSync=true; }
 #endif
 
 private:
-    /*!
-     * \brief grabThreadFunc The frame grabbing thread function
-     */
-    void grabThreadFunc();
+    void grabThreadFunc();  //!< The frame grabbing thread function
 
     // ----> Low level functions
     int ll_VendorControl(uint8_t *buf, int len, int readMode, bool safe = false);
@@ -325,64 +328,73 @@ private:
     // <---- Mid level functions
 
     // ----> Connection control functions
-    bool openCamera( uint8_t devId );                   //!< Open camera
-    bool startCapture();                                //!< Start video capture thread
-    void reset();                                       //!< Reset camera connection
-    inline void stopCapture(){mStopCapture=true;}       //!< Stop video cpture thread
-    int input_set_framerate(int fps);                   //!< Set UVC framerate
-    int xioctl(int fd, uint64_t IOCTL_X, void *arg);    //!< Send ioctl command
-    void checkResFps();                                 //!< Check if the Framerate is correct for the selected resolution
-    sl_drv::SL_DEVICE getCameraModel(std::string dev_name); //!< Get the connected camera model
+    bool openCamera( uint8_t devId );                           //!< Open camera
+    bool startCapture();                                        //!< Start video capture thread
+    void reset();                                               //!< Reset camera connection
+    inline void stopCapture(){mStopCapture=true;}               //!< Stop video capture thread
+    int input_set_framerate(int fps);                           //!< Set UVC framerate
+    int xioctl(int fd, uint64_t IOCTL_X, void *arg);            //!< Send ioctl command
+    void checkResFps();                                         //!< Check if the Framerate is correct for the selected resolution
+    sl_drv::SL_DEVICE getCameraModel(std::string dev_name);     //!< Get the connected camera model
     // <---- Connection control functions
 
 private:
     // Flags
-    bool mNewFrame=false;       //!< Indicates if a new frame is available
-    bool mInitialized=false;    //!< Inficates if the camera has been initialized
-    bool mStopCapture=true;     //!< Indicates if the grabbing thread must be stopped
-    bool mGrabRunning=false;    //!< Indicates if the grabbing thread is running
+    bool mNewFrame=false;               //!< Indicates if a new frame is available
+    bool mInitialized=false;            //!< Inficates if the camera has been initialized
+    bool mStopCapture=true;             //!< Indicates if the grabbing thread must be stopped
+    bool mGrabRunning=false;            //!< Indicates if the grabbing thread is running
 
-    VideoParams mParams;        //!< Grabbing parameters
+    VideoParams mParams;                //!< Grabbing parameters
 
-    int mDevId = 0;             //!< ID of the camera device
-    std::string mDevName;       //!< The file descriptor path name (e.g. /dev/video0)
-    int mFileDesc=-1;           //!< The file descriptor handler
+    int mDevId = 0;                     //!< ID of the camera device
+    std::string mDevName;               //!< The file descriptor path name (e.g. /dev/video0)
+    int mFileDesc=-1;                   //!< The file descriptor handler
 
-    std::mutex mBufMutex;       //!< Mutex for safe access to data buffer
-    std::mutex mComMutex;       //!< Mutex for safe access to UVC communication
+    std::mutex mBufMutex;               //!< Mutex for safe access to data buffer
+    std::mutex mComMutex;               //!< Mutex for safe access to UVC communication
 
-    int mWidth = 0;             //!< Frame width
-    int mHeight = 0;            //!< Frame height
-    int mChannels = 0;          //!< Frame channels
-    int mFps=0;                 //!< Frames per seconds
+    int mWidth = 0;                     //!< Frame width
+    int mHeight = 0;                    //!< Frame height
+    int mChannels = 0;                  //!< Frame channels
+    int mFps=0;                          //!< Frames per seconds
 
     sl_drv::SL_DEVICE mCameraModel = sl_drv::SL_DEVICE::NONE; //!< The camera model
 
-    Frame mLastFrame;           //!< Last grabbed frame
-    uint8_t mBufCount = 2;      //!< UVC buffer count
-    uint8_t mCurrentIndex = 0;  //!< The index of the currect UVC buffer
+    Frame mLastFrame;                   //!< Last grabbed frame
+    uint8_t mBufCount = 2;              //!< UVC buffer count
+    uint8_t mCurrentIndex = 0;          //!< The index of the currect UVC buffer
     struct UVCBuffer *mBuffers = nullptr;  //!< UVC buffers
 
-    uint64_t mStartTs=0;        //!< Initial System Timestamp, to calculate differences [nsec]
-    uint64_t mInitTs=0;         //!< Initial Device Timestamp, to calculate differences [usec]
+    uint64_t mStartTs=0;                //!< Initial System Timestamp, to calculate differences [nsec]
+    uint64_t mInitTs=0;                 //!< Initial Device Timestamp, to calculate differences [usec]
 
-    int mGainSegMax=0;          //!< Maximum value of the raw gain to be used for conversion
-    int mExpoureRawMax;         //!< Maximum value of the raw exposure to be used for conversion
+    int mGainSegMax=0;                  //!< Maximum value of the raw gain to be used for conversion
+    int mExpoureRawMax;                 //!< Maximum value of the raw exposure to be used for conversion
 
-    std::thread mGrabThread;    //!< The video grabbing thread
+    std::thread mGrabThread;            //!< The video grabbing thread
 
-    bool mFirstFrame=true;      //!< Used to initialize the timestamp start point
+    bool mFirstFrame=true;              //!< Used to initialize the timestamp start point
 
 #ifdef SENSORS_MOD_AVAILABLE
-    bool mSyncEnabled=false;    //!< Indicates if a \ref SensorCapture object is synchronized
-    SensorCapture* mSensPtr;    //!< Pointer to the synchronized \ref SensorCapture object
+    bool mSyncEnabled=false;            //!< Indicates if a \ref SensorCapture object is synchronized
+    SensorCapture* mSensPtr;            //!< Pointer to the synchronized \ref SensorCapture object
 
-    bool mSensReadyToSync=false; //!< Indicates if the MCU received a HW sync signal
-
-public:
-    friend class SensorCapture;
+    bool mSensReadyToSync=false;        //!< Indicates if the MCU received a HW sync signal
 #endif
 };
 
 }
+
+/** \example zed_drv_video_example.cpp
+ * This is an example of how to use the \ref VideoCapture class to get raw video frames and control the camera
+ * parameters.
+ */
+
+/** \example zed_drv_sync_example.cpp
+ * This is an example of how to get synchronized video and sensors data from
+ * the \ref VideoCapture class and the \ref SensorCapture class.
+ */
+
 #endif // VIDEOCAPTURE_HPP
+

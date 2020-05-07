@@ -184,7 +184,7 @@ void VideoCapture::checkResFps()
     }
 }
 
-bool VideoCapture::init( int devId/*=-1*/ )
+bool VideoCapture::initializeVideo( int devId/*=-1*/ )
 {
     reset();
 
@@ -696,14 +696,14 @@ void VideoCapture::grabThreadFunc()
 
             if(mFirstFrame)
             {
-                mStartTs = getSysTs();
+                mStartTs = getWallTimestamp();
                 //std::cout << "VideoCapture: " << mStartTs << std::endl;
 
 #ifdef SENSORS_MOD_AVAILABLE
                 if(mSyncEnabled && mSensPtr)
                 {
                     // Synchronize reference timestamp
-                    mSensPtr->setStartTs(mStartTs);
+                    mSensPtr->setStartTimestamp(mStartTs);
                 }
 #endif
 
@@ -728,7 +728,7 @@ void VideoCapture::grabThreadFunc()
                 if(mSensReadyToSync)
                 {
                     mSensReadyToSync = false;
-                    mSensPtr->updateTsOffset(mLastFrame.timestamp);
+                    mSensPtr->updateTimestampOffset(mLastFrame.timestamp);
                 }
 #endif
 

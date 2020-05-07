@@ -127,4 +127,16 @@ const size_t TS_SHIFT_VAL_COUNT = 50; //!< Number of sensor data to use to updat
 
 }
 
+/*!
+ * \brief Convert a wchar array to std::string
+ * \param wstr the wchar array to be converted
+ * \return
+ */
+inline std::string wstr2str( const wchar_t* wstr)
+{
+    std::wstring ws( wstr );
+    std::string str( ws.begin(), ws.end() );
+    return str;
+}
+
 #endif // SENSORCAPTURE_DEF_HPP
