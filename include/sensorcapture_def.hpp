@@ -134,9 +134,19 @@ const size_t TS_SHIFT_VAL_COUNT = 50; //!< Number of sensor data to use to updat
  */
 inline std::string wstr2str( const wchar_t* wstr)
 {
-    std::wstring ws( wstr );
-    std::string str( ws.begin(), ws.end() );
-    return str;
+    try
+    {
+        std::wstring ws( wstr );
+        std::string str( ws.begin(), ws.end() );
+        return str;
+    }
+    catch(...)
+    {
+        std::cerr << "Failure reading USB data. Please install the udev rules available in the `udev` folder" << std::endl;
+        exit(-1);
+    }
+
+    return std::string();
 }
 
 #endif // SENSORCAPTURE_DEF_HPP
