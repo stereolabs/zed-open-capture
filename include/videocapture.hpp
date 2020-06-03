@@ -59,6 +59,8 @@ public:
      * \return returns the last received frame as pointer.
      *
      * \note Do not delete the received frame
+     * \note Frame received will contains the RAW buffer from the camera, in YUV4:2:2 color format and in side by side mode.
+     * Images must then be converted to RGB for proper display and will not be rectified.
      */
     const Frame* getLastFrame(uint64_t timeout_msec=10);
 

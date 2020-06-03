@@ -17,6 +17,14 @@ The driver is composed of two modules:
 
 <br>
 
+<h2 style="text-align: left;">Coordinates system</h2>
+
+The coordinate system is only used for sensors data. (especially for IMU)
+The given IMU data are expressed in the RAW/IMU coordinate system as show below
+
+![](img/imu_axis.jpg)
+
+
 <h2 style="text-align: left;">Examples</h2>
 A <a href="md_examples.html">set of examples</a> is provided to better understand how to use the ZED Driver and how to exploit all the available features.
 
