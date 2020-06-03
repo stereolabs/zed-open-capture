@@ -10,9 +10,9 @@
 
 namespace sl_drv {
 
-SensorCapture::SensorCapture(bool verbose )
+SensorCapture::SensorCapture(VERBOSITY verbose_lvl )
 {
-    mVerbose = verbose;
+    mVerbose = verbose_lvl;
 
     if( mVerbose )
     {
@@ -21,7 +21,7 @@ SensorCapture::SensorCapture(bool verbose )
                 + std::to_string(mDrvMajorVer) + "."
                 + std::to_string(mDrvMinorVer) + "."
                 + std::to_string(mDrvPatchVer);
-        INFO_OUT( ver );
+        INFO_OUT(mVerbose,ver );
     }
 }
 
@@ -65,7 +65,7 @@ int SensorCapture::enumerateDevices()
             smsg << "  Release number:   v" << fw_major << "." << fw_minor << std::endl;
             smsg << "***" << std::endl;
 
-            INFO_OUT(smsg.str());
+            INFO_OUT(mVerbose,smsg.str());
         }
 
         cur_dev = cur_dev->next;
@@ -110,7 +110,7 @@ bool SensorCapture::initializeSensors( int sn )
 
         if(mSlDevPid.size()==0)
         {
-            ERROR_OUT("No available ZED Mini or ZED2 cameras");
+            ERROR_OUT(mVerbose,"No available ZED Mini or ZED2 cameras");
             return false;
         }
 
@@ -133,7 +133,7 @@ bool SensorCapture::initializeSensors( int sn )
         msg += sn_str;
         msg += " failed";
 
-        ERROR_OUT(msg);
+        ERROR_OUT(mVerbose,msg);
 
         mDevFwVer = -1;
         mDevSerial = -1;
@@ -146,11 +146,11 @@ bool SensorCapture::initializeSensors( int sn )
         std::string msg = "Connected to device with sn ";
         msg += sn_str;
 
-        INFO_OUT(msg);
+        INFO_OUT(mVerbose,msg);
     }
 
     mDevFwVer = mSlDevFwVer[sn];
-
+    mDevPid = pid;
     mInitialized = startCapture();
 
     return true;
@@ -189,7 +189,7 @@ bool SensorCapture::enableDataStream(bool enable) {
             std::string msg = "Unable to set a feature report [SensStreamStatus] - ";
             msg += wstr2str(hid_error(mDevHandle));
 
-            WARNING_OUT(msg);
+            WARNING_OUT( mVerbose, msg);
         }
 
         return false;
@@ -211,20 +211,20 @@ bool SensorCapture::isDataStreamEnabled() {
         std::string msg = "Unable to get a feature report [SensStreamStatus] - ";
         msg += wstr2str(hid_error(mDevHandle));
 
-        WARNING_OUT( msg );
+        WARNING_OUT( mVerbose,msg );
 
         return false;
     }
 
     if( res < static_cast<int>(sizeof(SensStreamStatus)) )
     {
-        WARNING_OUT( std::string("SensStreamStatus size mismatch [REP_ID_SENSOR_STREAM_STATUS]"));
+        WARNING_OUT(mVerbose,std::string("SensStreamStatus size mismatch [REP_ID_SENSOR_STREAM_STATUS]"));
         return false;
     }
 
     if( buf[0] != REP_ID_SENSOR_STREAM_STATUS )
     {
-        WARNING_OUT( std::string("SensStreamStatus type mismatch [REP_ID_SENSOR_STREAM_STATUS]") );
+        WARNING_OUT(mVerbose,std::string("SensStreamStatus type mismatch [REP_ID_SENSOR_STREAM_STATUS]") );
 
         return false;
     }
@@ -265,7 +265,7 @@ void SensorCapture::reset()
     if( mVerbose && mInitialized)
     {
         std::string msg = "Device closed";
-        INFO_OUT( msg );
+        INFO_OUT(mVerbose,msg );
     }
 
     mInitialized=false;
@@ -309,7 +309,7 @@ void SensorCapture::grabThreadFunc()
 
         // Sensor data request
         usbBuf[1]=REP_ID_SENSOR_DATA;
-        int res = hid_read_timeout( mDevHandle, usbBuf, 64, 500 );
+        int res = hid_read_timeout( mDevHandle, usbBuf, 64, 2000 );
 
         // ----> Data received?
         if( res < static_cast<int>(sizeof(SensData)) )  {
@@ -319,11 +319,15 @@ void SensorCapture::grabThreadFunc()
         // <---- Data received?
 
         // ----> Received data are correct?
-        if( usbBuf[0] != REP_ID_SENSOR_DATA )
+        int target_struct_id = 0;
+        if (mDevPid==SL_USB_PROD_MCU_ZED2_REVA)
+            target_struct_id = REP_ID_SENSOR_DATA;
+
+        if( usbBuf[0] != target_struct_id)
         {
             if(mVerbose)
             {
-                WARNING_OUT( std::string("REP_ID_SENSOR_DATA - Sensor Data type mismatch") );
+                WARNING_OUT(mVerbose,std::string("REP_ID_SENSOR_DATA - Sensor Data type mismatch") );
             }
 
             hid_set_nonblocking( mDevHandle, 0 );
@@ -550,7 +554,7 @@ bool SensorCapture::sendPing() {
         std::string msg = "Unable to send ping [REP_ID_REQUEST_SET-RQ_CMD_PING] - ";
         msg += wstr2str(hid_error(mDevHandle));
 
-        WARNING_OUT(msg);
+        WARNING_OUT(mVerbose,msg);
 
         return false;
     }

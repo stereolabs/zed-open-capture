@@ -49,11 +49,12 @@ void toggleAutomaticControl( sl_drv::VideoCapture &cap );
 // The main function
 int main(int argc, char *argv[])
 {
+    sl_drv::VERBOSITY verbose = sl_drv::VERBOSITY::INFO;
     // ----> 1) Set Video parameters
     sl_drv::VideoParams params;
     params.res = sl_drv::RESOLUTION::HD720;
     params.fps = sl_drv::FPS::FPS_60;
-    params.verbose = true;
+    params.verbose = verbose;
     // <---- Set Video parameters
 
     // ----> 2) Create Video Capture
@@ -61,7 +62,7 @@ int main(int argc, char *argv[])
     if( !cap.initializeVideo(-1) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
-        std::cerr << "Try to enable verbose to get more info" << std::endl;
+        std::cerr << "See verbosity level for more details." << std::endl;
 
         return EXIT_FAILURE;
     }    

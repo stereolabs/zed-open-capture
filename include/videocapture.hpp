@@ -2,10 +2,11 @@
 #define VIDEOCAPTURE_HPP
 
 #include "defines.hpp"
-#include "videocapture_def.hpp"
-
 #include <thread>
 #include <mutex>
+
+#ifdef VIDEO_MOD_AVAILABLE
+#include "videocapture_def.hpp"
 
 namespace sl_drv {
 
@@ -385,6 +386,8 @@ private:
 };
 
 }
+#endif
+
 
 /** \example zed_drv_video_example.cpp
  * This is an example of how to use the \ref VideoCapture class to get raw video frames and control the camera

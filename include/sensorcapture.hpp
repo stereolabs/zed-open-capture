@@ -2,15 +2,16 @@
 #define SENSORCAPTURE_HPP
 
 #include "defines.hpp"
-#include "sensorcapture_def.hpp"
 
 #include <thread>
 #include <vector>
 #include <map>
 #include <mutex>
 
-#include "hidapi.h"
 
+#ifdef SENSORS_MOD_AVAILABLE
+#include "sensorcapture_def.hpp"
+#include "hidapi.h"
 namespace sl_drv {
 
 #ifdef VIDEO_MOD_AVAILABLE
@@ -95,7 +96,7 @@ public:
      * \brief The default constructor
      * \param verbose enable useful information to debug the class behaviours while running
      */
-    SensorCapture( bool verbose=false );
+    SensorCapture( sl_drv::VERBOSITY verbose_lvl=sl_drv::VERBOSITY::ERROR );
 
     /*!
      * \brief The class destructor
@@ -187,7 +188,7 @@ private:
 
 private:
     // Flags
-    bool mVerbose=false;                //!< Verbose status
+    int mVerbose=0;                //!< Verbose status
     bool mNewIMUData=false;             //!< Indicates if new \ref IMU data are available
     bool mNewMagData=false;             //!< Indicates if new \ref MAG data are available
     bool mNewEnvData=false;             //!< Indicates if new \ref ENV data are available
@@ -203,6 +204,7 @@ private:
     hid_device* mDevHandle = nullptr;   //!< Hidapi device handler
     int mDevSerial = -1;                //!< Serial number of the connected device
     int mDevFwVer = -1;                 //!< FW version of the connected device
+    unsigned short mDevPid = 0;         //!< Product ID of the connected device
 
     SensImuData mLastIMUData;           //!< Contains the last received IMU data
     SensMagData mLastMagData;           //!< Contains the last received Magnetometer data
@@ -250,4 +252,6 @@ private:
  * the \ref VideoCapture class and the \ref SensorCapture class.
  */
 }
+#endif
+
 #endif // SENSORCAPTURE_HPP

@@ -10,7 +10,7 @@
 int main(int argc, char *argv[])
 {
     // Set the verbose level
-    bool verbose = false;
+    sl_drv::VERBOSITY verbose = sl_drv::VERBOSITY::INFO;
 
     // 1) Create a SensorCapture object
     sl_drv::SensorCapture sens(verbose);
