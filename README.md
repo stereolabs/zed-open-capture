@@ -59,7 +59,7 @@ Compile the library and the examples
     $ mkdir build
     $ cd build
     $ cmake ..
-    $ make -j4
+    $ make -j$(nproc)
 
 #### Option 2
 
@@ -68,7 +68,7 @@ Compile only the library
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_EXAMPLES=OFF 
-    $ make -j4
+    $ make -j$(nproc)
 
 #### Option 3
 
@@ -77,7 +77,7 @@ Compile only the video library with the video example
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_SENSORS=OFF
-    $ make -j4 
+    $ make -j$(nproc)
 
 #### Option 4
 
@@ -86,7 +86,7 @@ Compile only the video library
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_SENSORS=OFF -DBUILD_EXAMPLES=OFF
-    $ make -j4
+    $ make -j$(nproc)
 
 #### Option 5
 
@@ -95,7 +95,7 @@ Compile only the sensors library with the sensors example
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_VIDEO=OFF
-    $ make -j4
+    $ make -j$(nproc)
 
 #### Option 6
 
@@ -104,9 +104,9 @@ Compile only the sensors library
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_VIDEO=OFF -DBUILD_EXAMPLES=OFF
-    $ make -j4
+    $ make -j$(nproc)
     
-## Installation
+### Install
 
 After compiling it is possible to install the library and the examples.
 From inside the `build` folder:
