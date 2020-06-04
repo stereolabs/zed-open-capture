@@ -14,9 +14,6 @@
 // <---- Includes
 
 // ----> Functions
-// Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_drv::RESOLUTION res );
-
 // Sensor acquisition runs at 400Hz, so it must be executed in a different thread
 void getSensorThreadFunc(sl_drv::SensorCapture* sensCap);
 // <---- Functions
@@ -49,7 +46,7 @@ int main(int argc, char *argv[])
     if( !videoCap.initializeVideo(-1) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
-        std::cerr << "See verbosity level for more details." << std::endl;
+        std::cerr << "Try to enable verbose to get more info" << std::endl;
 
         return EXIT_FAILURE;
     }
@@ -83,7 +80,33 @@ int main(int argc, char *argv[])
     // ----> 6) Init OpenCV RGB frame
     int w,h;
     videoCap.getFrameSize(w,h);
-    cv::Mat frameBGR = cv::Mat::zeros( w, h, CV_8UC3 );
+
+    cv::Size display_resolution(1024, 576);
+
+    switch(params.res)
+    {
+    default:
+    case sl_drv::RESOLUTION::VGA:
+        display_resolution.width = w;
+        display_resolution.height = h;
+        break;
+    case sl_drv::RESOLUTION::HD720:
+        display_resolution.width = w*0.6;
+        display_resolution.height = h*0.6;
+        break;
+    case sl_drv::RESOLUTION::HD1080:
+    case sl_drv::RESOLUTION::HD2K:
+        display_resolution.width = w*0.4;
+        display_resolution.height = h*0.4;
+        break;
+    }
+
+    int h_data = 70;
+    cv::Mat frameDisplay(display_resolution.height + h_data, display_resolution.width,CV_8UC3, cv::Scalar(0,0,0));
+    cv::Mat frameData = frameDisplay(cv::Rect(0,0, display_resolution.width, h_data));
+    cv::Mat frameBGRDisplay = frameDisplay(cv::Rect(0,h_data, display_resolution.width, display_resolution.height));
+    cv::Mat frameBGR(h, w, CV_8UC3, cv::Scalar(0,0,0));
+
     // <---- Init OpenCV RGB frame
 
     // Infinite grabbing loop
@@ -102,15 +125,13 @@ int main(int argc, char *argv[])
 
             videoTs << std::fixed << std::setprecision(9) << "Video timestamp: " << static_cast<double>(frame->timestamp)/1e9<< " sec" ;
             if( last_ts!=0 )
-            {
                 videoTs << std::fixed << std::setprecision(1)  << " [" << 1e9/static_cast<float>(frame->timestamp-last_ts) << " Hz]";
-            }
             last_ts = frame->timestamp;
             // <---- Video Debug information
 
             // ----> 7.b) Conversion from YUV 4:2:2 to BGR for visualization
-            cv::Mat frameYUV = cv::Mat( frame->height, frame->width, CV_8UC2, frame->data );
-            cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
+            cv::Mat frameYUV( frame->height, frame->width, CV_8UC2, frame->data);
+            cv::cvtColor(frameYUV,frameBGR, cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
         }
         // <---- Get Video frame
@@ -118,22 +139,22 @@ int main(int argc, char *argv[])
         // ----> 8) Display frame with info
         if(frame != nullptr)
         {
-            int font = cv::FONT_HERSHEY_COMPLEX;
+            frameData.setTo(0);
 
             // Video info
-            cv::putText( frameBGR, videoTs.str(), cv::Point(10,35), font, 1, cv::Scalar(200,150,150), 2 );
+            cv::putText( frameData, videoTs.str(), cv::Point(10,20),cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(241,240,236));
 
             // IMU info
             imuMutex.lock();
-            cv::putText( frameBGR, imuTsStr, cv::Point(10,70), font, 1, cv::Scalar(150,150,200), 2 );
+            cv::putText( frameData, imuTsStr, cv::Point(10, 35),cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(241,240,236));
 
             // Timestamp offset info
             std::stringstream offsetStr;
             double offset = (static_cast<double>(frame->timestamp)-static_cast<double>(mcu_sync_ts))/1e9;
             offsetStr << std::fixed << std::setprecision(9) << std::showpos << "Timestamp offset: " << offset << " sec [video-sensors]";
-            cv::putText( frameBGR, offsetStr.str().c_str(), cv::Point(10,105), font, 1, cv::Scalar(200,200,150), 2 );
+            cv::putText( frameData, offsetStr.str().c_str(), cv::Point(10, 50),cv::FONT_HERSHEY_SIMPLEX, 0.35, cv::Scalar(241,240,236));
 
-            // Average timestamp ofset info (we wait at least 200 frames to be sure that offset is stable)
+            // Average timestamp offset info (we wait at least 200 frames to be sure that offset is stable)
             if( frame->frame_id>200 )
             {
                 static double sum=0;
@@ -144,26 +165,29 @@ int main(int argc, char *argv[])
 
                 std::stringstream avgOffsetStr;
                 avgOffsetStr << std::fixed << std::setprecision(9) << std::showpos << "Avg timestamp offset: " << avg_offset << " sec";
-                cv::putText( frameBGR, avgOffsetStr.str().c_str(), cv::Point(10,140), font, 1, cv::Scalar(200,200,150), 2 );
+                cv::putText( frameData, avgOffsetStr.str().c_str(), cv::Point(10,62),cv::FONT_HERSHEY_SIMPLEX,0.35, cv::Scalar(241, 240,236));
             }
 
             // IMU values
-            cv::putText( frameBGR, imuAccelStr, cv::Point(10,185), font, 1, cv::Scalar(150,150,150), 2 );
-            cv::putText( frameBGR, imuGyroStr, cv::Point(10,220), font, 1, cv::Scalar(150,150,150), 2 );
+            cv::putText( frameData, "Inertial sensor data:", cv::Point(display_resolution.width/2,20),cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(241, 240,236));
+            cv::putText( frameData, imuAccelStr, cv::Point(display_resolution.width/2+15,42),cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(241, 240,236));
+            cv::putText( frameData, imuGyroStr, cv::Point(display_resolution.width/2+15, 62),cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(241, 240,236));
             imuMutex.unlock();
 
-            // Show frame
-            showImage( "Stream RGB", frameBGR, params.res );
+            // Resize Image for display
+            cv::resize(frameBGR, frameBGRDisplay, display_resolution);
+            // Display image
+            cv::imshow( "Stream RGB", frameDisplay );
         }
         // <---- Display frame with info
 
         // ----> 9) Keyboard handling
-        int key = cv::waitKey( 1 );
+        int key = cv::waitKey(1);
 
         if( key != -1 )
         {
             // Quit
-            if(key=='q' || key=='Q')
+            if(key=='q' || key=='Q'|| key==27)
             {
                 sensThreadStop=true;
                 sensThread.join();
@@ -201,9 +225,7 @@ void getSensorThreadFunc(sl_drv::SensorCapture* sensCap)
 
             timestamp << std::fixed << std::setprecision(9) << "IMU timestamp:   " << static_cast<double>(imuData->timestamp)/1e9<< " sec" ;
             if(last_imu_ts!=0)
-            {
                 timestamp << std::fixed << std::setprecision(1)  << " [" << 1e9/static_cast<float>(imuData->timestamp-last_imu_ts) << " Hz]";
-            }
             last_imu_ts = imuData->timestamp;
 
             accel << std::fixed << std::showpos << std::setprecision(4) << " * Accel: " << imuData->aX << " " << imuData->aY << " " << imuData->aZ << " [m/s^2]";
@@ -228,31 +250,4 @@ void getSensorThreadFunc(sl_drv::SensorCapture* sensCap)
         }
         // <---- Get IMU data
     }
-}
-
-// Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_drv::RESOLUTION res )
-{
-    // ----> Image escaling using OpenCV
-    cv::Mat resized;
-    switch(res)
-    {
-    default:
-    case sl_drv::RESOLUTION::VGA:
-        resized = img;
-        break;
-    case sl_drv::RESOLUTION::HD720:
-        cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
-        break;
-    case sl_drv::RESOLUTION::HD1080:
-        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
-        break;
-    case sl_drv::RESOLUTION::HD2K:
-        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
-        break;
-    }
-    // <---- Image rescaling using OpenCV
-
-    // Display image
-    cv::imshow( name, resized );
 }
