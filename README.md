@@ -1,6 +1,6 @@
 # ZED Driver
 
-The ZED Driver allows the low level control of ZED, ZED Mini and ZED 2 camera. The driver provides methods to access video frames, to control the video parameters and to acquire data from the internal sensors. A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
+The ZED Driver allows the low level control of ZED, ZED Mini and ZED 2 camera. The driver provides methods to access video frames, to control the video parameters and to acquire data from the internal sensors (only ZED Mini and ZED2). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
 
 ## Installation
 
@@ -10,7 +10,7 @@ The ZED Driver allows the low level control of ZED, ZED Mini and ZED 2 camera. T
  * Linux OS [Tested on Ubuntu 18.04 and Ubuntu 20.04]
  * GCC compiler [at least v7.5]
  * CMake build system [at least v3.1] 
- * HIDAPI and LBIUSB Libraries for USB communication
+ * HIDAPI and LIBUSB Libraries for USB communication
  * OpenCV [at least v3.4. Required only by examples]
  * git [if installing from source]
 
