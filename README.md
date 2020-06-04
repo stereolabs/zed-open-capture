@@ -105,6 +105,13 @@ Compile only the sensors library
     $ cd build
     $ cmake .. -DBUILD_VIDEO=OFF -DBUILD_EXAMPLES=OFF
     $ make -j4
+    
+## Installation
+
+After compiling it is possible to install the library and the examples
+
+    $ sudo make install
+    $ sudo ldconfig
 
 ## Documentation
 
