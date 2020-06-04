@@ -108,7 +108,8 @@ Compile only the sensors library
     
 ## Installation
 
-After compiling it is possible to install the library and the examples
+After compiling it is possible to install the library and the examples.
+From inside the `build` folder:
 
     $ sudo make install
     $ sudo ldconfig
