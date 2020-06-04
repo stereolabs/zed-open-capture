@@ -104,3 +104,12 @@ Compile only the sensors library
     $ cmake .. -DBUILD_VIDEO=OFF -DBUILD_EXAMPLES=OFF
     $ make -j4
 
+## Documentation
+
+HTML Documentation can be locally generated using Doxygen
+
+    $ sudo apt-get install -y doxygen # if not previously installed
+    $ cd doc
+    $ ./generate_doc.sh
+    
+The documentation will be available opening the file `doc/html/index.html` with a standard web browser.
