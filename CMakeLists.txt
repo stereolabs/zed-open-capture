@@ -68,15 +68,9 @@ include_directories(
 
 list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_SOURCE_DIR}/cmake")
 
-find_package(LIBUSB 1 REQUIRED)
-message(STATUS "libusb: include dir at ${LibUSB_INCLUDE_DIRS}")
-message(STATUS "libusb: libraries at ${LibUSB_LIBRARIES}")
-include_directories(${LibUSB_INCLUDE_DIRS})
 
-find_package(HIDAPI REQUIRED)
-message(STATUS "libhidapi: include dir at ${HIDAPI_INCLUDE_DIRS}")
-message(STATUS "libhidapi: libraries at ${HIDAPI_LIBRARIES}")
-include_directories(${HIDAPI_INCLUDE_DIRS})
+
+
 
 ############################################################################
 # Generate libraries
@@ -84,51 +78,47 @@ if(BUILD_SENSORS)
     message("* Sensors module available")
     add_definitions(-DSENSORS_MOD_AVAILABLE)
 
-    add_library(${PROJECT_NAME}_sensors SHARED ${SRC_SENSORS} )
-    target_link_libraries(${PROJECT_NAME}_sensors
+    find_package(HIDAPI REQUIRED)
+    message(STATUS "libhidapi: include dir at ${HIDAPI_INCLUDE_DIRS}")
+    message(STATUS "libhidapi: libraries at ${HIDAPI_LIBRARIES}")
+    include_directories(${HIDAPI_INCLUDE_DIRS})
+
+    set(SRC_FULL ${SRC_FULL} ${SRC_SENSORS})
+    set(HDR_FULL ${HDR_FULL} ${HEADERS_SENSORS})
+    set(DEP_LIBS ${DEP_LIBS}
         ${LibUSB_LIBRARIES}
         ${HIDAPI_LIBRARIES}
-        -lpthread
-    )
+        pthread )
 endif()
 
 if(BUILD_VIDEO)
     message("* Video module available")
     add_definitions(-DVIDEO_MOD_AVAILABLE)
 
-    add_library(${PROJECT_NAME}_video SHARED ${SRC_VIDEO} )
-    if(BUILD_SENSORS)
-        target_link_libraries( ${PROJECT_NAME}_video
-            ${PROJECT_NAME}_sensors
-            ${LibUSB_LIBRARIES}
-        )
-    else()
-        target_link_libraries( ${PROJECT_NAME}_video
-            ${LibUSB_LIBRARIES}
-        )
-    endif()
+    find_package(LIBUSB 1 REQUIRED)
+    message(STATUS "libusb: include dir at ${LibUSB_INCLUDE_DIRS}")
+    message(STATUS "libusb: libraries at ${LibUSB_LIBRARIES}")
+    include_directories(${LibUSB_INCLUDE_DIRS})
+    set(SRC_FULL ${SRC_FULL} ${SRC_VIDEO})
+    set(HDR_FULL ${HDR_FULL} ${HEADERS_VIDEO})
+    set(DEP_LIBS ${DEP_LIBS}
+         ${LibUSB_LIBRARIES}
+         )
+
 endif()
+
+add_library(${PROJECT_NAME} SHARED ${SRC_FULL} )
+target_link_libraries( ${PROJECT_NAME}  ${DEP_LIBS})
 
 ############################################################################
 # Install rules
-if(BUILD_VIDEO)
-    set_target_properties(${PROJECT_NAME}_video PROPERTIES
-        PUBLIC_HEADER "${HEADERS_VIDEO}"
-    )
-    install(TARGETS ${PROJECT_NAME}_video
-        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include/zed-driver
-    )
-endif()
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    PUBLIC_HEADER "${HDR_FULL}"
+)
+install(TARGETS ${PROJECT_NAME}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include/zed-driver)
 
-if(BUILD_SENSORS)
-    set_target_properties(${PROJECT_NAME}_sensors PROPERTIES
-        PUBLIC_HEADER "${HEADERS_SENSORS}"
-    )
-    install(TARGETS ${PROJECT_NAME}_sensors
-        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include/zed-driver)
-endif()
 
 ############################################################################
 # Generate examples
@@ -143,7 +133,7 @@ if(BUILD_EXAMPLES)
         add_executable(${PROJECT_NAME}_video_example "examples/zed_drv_video_example.cpp")
         set_target_properties(${PROJECT_NAME}_video_example PROPERTIES PREFIX "")
         target_link_libraries(${PROJECT_NAME}_video_example          
-          ${PROJECT_NAME}_video
+          ${PROJECT_NAME}
           ${OpenCV_LIBS}
         )
         install(TARGETS ${PROJECT_NAME}_video_example
@@ -158,22 +148,22 @@ if(BUILD_EXAMPLES)
         add_executable(${PROJECT_NAME}_sensors_example "examples/zed_drv_sensors_example.cpp")
         set_target_properties(${PROJECT_NAME}_sensors_example PROPERTIES PREFIX "")
         target_link_libraries(${PROJECT_NAME}_sensors_example          
-          ${PROJECT_NAME}_sensors
+          ${PROJECT_NAME}
         )
         install(TARGETS ${PROJECT_NAME}_sensors_example
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
     endif()
 
-    if(BUILD_VIDEO AND  BUILD_SENSORS)
+    if(BUILD_VIDEO AND BUILD_SENSORS)
         message("* Video/Sensors sync example available")
 
         ##### Synchronization Example
         add_executable(${PROJECT_NAME}_sync_example "examples/zed_drv_sync_example.cpp")
         set_target_properties(${PROJECT_NAME}_sync_example PROPERTIES PREFIX "")
         target_link_libraries(${PROJECT_NAME}_sync_example          
-          ${PROJECT_NAME}_sensors
-          ${PROJECT_NAME}_video
+          ${PROJECT_NAME}
+          ${PROJECT_NAME}
           ${OpenCV_LIBS}
         )
         install(TARGETS ${PROJECT_NAME}_sync_example

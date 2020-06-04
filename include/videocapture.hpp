@@ -2,10 +2,11 @@
 #define VIDEOCAPTURE_HPP
 
 #include "defines.hpp"
-#include "videocapture_def.hpp"
-
 #include <thread>
 #include <mutex>
+
+#ifdef VIDEO_MOD_AVAILABLE
+#include "videocapture_def.hpp"
 
 namespace sl_drv {
 
@@ -58,6 +59,8 @@ public:
      * \return returns the last received frame as pointer.
      *
      * \note Do not delete the received frame
+     * \note Frame received will contains the RAW buffer from the camera, in YUV4:2:2 color format and in side by side mode.
+     * Images must then be converted to RGB for proper display and will not be rectified.
      */
     const Frame* getLastFrame(uint64_t timeout_msec=10);
 
@@ -385,6 +388,8 @@ private:
 };
 
 }
+#endif
+
 
 /** \example zed_drv_video_example.cpp
  * This is an example of how to use the \ref VideoCapture class to get raw video frames and control the camera

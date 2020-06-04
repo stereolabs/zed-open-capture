@@ -14,6 +14,8 @@
 #define TS_SCALE        (39062.5f)
 #define TEMP_NOT_VALID  (-27315)
 
+#include "defines.hpp"
+
 namespace sl_drv {
 
 // ----> Command to be used with the REPORT ID "REP_ID_REQUEST_SET"

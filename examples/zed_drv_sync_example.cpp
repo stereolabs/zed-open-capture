@@ -35,7 +35,7 @@ uint64_t mcu_sync_ts=0;
 int main(int argc, char *argv[])
 {
     // Set the verbose level
-    bool verbose = false;
+    sl_drv::VERBOSITY verbose = sl_drv::VERBOSITY::ERROR;
 
     // ----> 1) Set the video parameters
     sl_drv::VideoParams params;
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     if( !videoCap.initializeVideo(-1) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
-        std::cerr << "Try to enable verbose to get more info" << std::endl;
+        std::cerr << "See verbosity level for more details." << std::endl;
 
         return EXIT_FAILURE;
     }
