@@ -12,7 +12,7 @@ Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/
 ### Prerequisites
 
  * A Stereolabs camera: [ZED](https://www.stereolabs.com/zed/), [ZED Mini](https://www.stereolabs.com/zed-mini/), [ZED2](https://www.stereolabs.com/zed-2/)
- * Linux OS [Tested on Ubuntu 18.04 and Ubuntu 20.04]
+ * Linux OS [Tested on Ubuntu 16.04, 18.04 and 20.04]
  * GCC compiler [at least v7.5]
  * CMake build system [at least v3.1] 
  * HIDAPI and LIBUSB Libraries for USB communication
