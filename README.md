@@ -2,6 +2,9 @@
 
 The ZED Driver allows the low level control of ZED, ZED Mini and ZED 2 camera. The driver provides methods to access video frames, to control the video parameters and to acquire data from the internal sensors (only ZED Mini and ZED2). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
 
+*Note:* The provided data are not calibrated, images are not rectified in a stereoscopic way, IMU data may drift or be misaligned.
+Calibration data can be access using the [ZED SDK](https://www.stereolabs.com/developers/release/).
+
 ## Installation
 
 ### Prerequisites
