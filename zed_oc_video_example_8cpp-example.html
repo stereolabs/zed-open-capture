@@ -9,10 +9,10 @@
         <title>zed_oc_video_example.cpp | ZED Open Capture API Reference | Stereolabs</title><!--END PROJECT_NAME (ZED Open Capture)-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700,800">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,600,700">
-        <link href="tabs.css?t=Fri Jun 5 2020 14:12:14" rel="stylesheet" type="text/css"/>
-        <script type="text/javascript" src="jquery.js?t=Fri Jun 5 2020 14:12:14"></script>
-        <script type="text/javascript" src="custom.js?t=Fri Jun 5 2020 14:12:14"></script>
-        <script type="text/javascript" src="dynsections.js?t=Fri Jun 5 2020 14:12:14"></script>
+        <link href="tabs.css?t=Fri Jun 5 2020 14:38:12" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery.js?t=Fri Jun 5 2020 14:38:12"></script>
+        <script type="text/javascript" src="custom.js?t=Fri Jun 5 2020 14:38:12"></script>
+        <script type="text/javascript" src="dynsections.js?t=Fri Jun 5 2020 14:38:12"></script>
         <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -25,7 +25,7 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
-        <link href="stylesheet.css?t=Fri Jun 5 2020 14:12:14" rel="stylesheet" type="text/css" />
+        <link href="stylesheet.css?t=Fri Jun 5 2020 14:38:12" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -163,526 +163,59 @@ $(document).ready(function(){initNavTree('zed_oc_video_example_8cpp-example.html
 <div class="line"><span class="preprocessor">#include &lt;opencv2/highgui/highgui.hpp&gt;</span></div>
 <div class="line"><span class="comment">// &lt;---- Includes</span></div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// ----&gt; Camera settings control</span></div>
-<div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> _cam_control</div>
-<div class="line">{</div>
-<div class="line">    Brightness,</div>
-<div class="line">    Contrast,</div>
-<div class="line">    Hue,</div>
-<div class="line">    Saturation,</div>
-<div class="line">    Gain,</div>
-<div class="line">    Exposure,</div>
-<div class="line">    WhiteBalance,</div>
-<div class="line">    Sharpness,</div>
-<div class="line">    Gamma</div>
-<div class="line">} CamControl;</div>
-<div class="line"> </div>
-<div class="line">CamControl activeControl = Brightness;</div>
-<div class="line"><span class="comment">// &lt;---- Camera settings control</span></div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// ----&gt; Global functions to control settings</span></div>
-<div class="line"><span class="comment">// Rescale the images according to the selected resolution to better display them on screen</span></div>
-<div class="line"><span class="keywordtype">void</span> showImage( std::string name, cv::Mat&amp; img, <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828">sl_oc::RESOLUTION</a> res );</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Handle Keyboard</span></div>
-<div class="line"><span class="keywordtype">void</span> handleKeyboard( <a name="_a0"></a><a class="code" href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a> &amp;cap, <span class="keywordtype">int</span> key );</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Change active control</span></div>
-<div class="line"><span class="keywordtype">void</span> setActiveControl( CamControl control );</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Set new value for the active control</span></div>
-<div class="line"><span class="keywordtype">void</span> setControlValue( <a class="code" href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a> &amp;cap, <span class="keywordtype">int</span> value );</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// &#39;+&#39; or &#39;-&#39; pressed</span></div>
-<div class="line"><span class="keywordtype">void</span> changeControlValue( <a class="code" href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a> &amp;cap, <span class="keywordtype">bool</span> increase );</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// &#39;a&#39; or &#39;A&#39; pressed to enable automatic WhiteBalanse or Gain/Exposure</span></div>
-<div class="line"><span class="keywordtype">void</span> toggleAutomaticControl( <a class="code" href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a> &amp;cap );</div>
-<div class="line"><span class="comment">// &lt;---- Global functions to control settings</span></div>
-<div class="line"> </div>
 <div class="line"><span class="comment">// The main function</span></div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
 <div class="line">{</div>
-<div class="line">    <a class="code" href="namespacesl__oc.html#ab16e0dc2a4f7533119f355cdb8b42a84">sl_oc::VERBOSITY</a> verbose = sl_oc::VERBOSITY::INFO;</div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// ----&gt; 1) Set Video parameters</span></div>
-<div class="line">    <a name="_a1"></a><a class="code" href="structsl__oc_1_1VideoParams.html">sl_oc::VideoParams</a> params;</div>
-<div class="line">    params.<a name="a2"></a><a class="code" href="structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50">res</a> = <a name="a3"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">sl_oc::RESOLUTION::HD720</a>;</div>
-<div class="line">    params.<a name="a4"></a><a class="code" href="structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2">fps</a> = <a name="a5"></a><a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a97ca268671aa69223171bb0b4aa1461d">sl_oc::FPS::FPS_60</a>;</div>
-<div class="line">    params.<a name="a6"></a><a class="code" href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">verbose</a> = verbose;</div>
-<div class="line">    <span class="comment">// &lt;---- Set Video parameters</span></div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// ----&gt; 2) Create Video Capture</span></div>
-<div class="line">    <a class="code" href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a> cap(params);</div>
-<div class="line">    <span class="keywordflow">if</span>( !cap.initializeVideo(-1) )</div>
+<div class="line">    <span class="comment">// ----&gt; 1) Create Video Capture</span></div>
+<div class="line">    <a name="_a0"></a><a class="code" href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a> cap;</div>
+<div class="line">    <span class="keywordflow">if</span>( !cap.<a name="a1"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">initializeVideo</a>() )</div>
 <div class="line">    {</div>
 <div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Cannot open camera video capture&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;See verbosity level for more details.&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">return</span> EXIT_FAILURE;</div>
 <div class="line">    }</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Connected to camera sn: &quot;</span> &lt;&lt; cap.getSerialNumber() &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Connected to camera sn: &quot;</span> &lt;&lt; cap.<a name="a2"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a8914d08d225a8f7092ab5d528bc3882c">getSerialNumber</a>() &lt;&lt; std::endl;</div>
 <div class="line">    <span class="comment">// &lt;---- Create Video Capture</span></div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// Set the default camera control setting</span></div>
-<div class="line">    setActiveControl( Brightness );</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Infinite video grabbing loop</span></div>
 <div class="line">    <span class="keywordflow">while</span> (1)</div>
 <div class="line">    {</div>
-<div class="line">        <span class="comment">// 3) Get last available frame</span></div>
-<div class="line">        <span class="keyword">const</span> <a name="_a7"></a><a class="code" href="structsl__oc_1_1Frame.html">sl_oc::Frame</a>* frame = cap.getLastFrame();</div>
+<div class="line">        <span class="comment">// 2) Get last available frame</span></div>
+<div class="line">        <span class="keyword">const</span> <a name="_a3"></a><a class="code" href="structsl__oc_1_1Frame.html">sl_oc::Frame</a>* frame = cap.<a name="a4"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#acd1e11b436d1f4162d38cc1042f5232a">getLastFrame</a>();</div>
 <div class="line"> </div>
-<div class="line">        <span class="comment">// ----&gt; 4) If the frame is valid we can display it</span></div>
+<div class="line">        <span class="comment">// ----&gt; 3) If the frame is valid we can display it</span></div>
 <div class="line">        <span class="keywordflow">if</span>(frame != <span class="keyword">nullptr</span>)</div>
 <div class="line">        {</div>
-<div class="line"><span class="preprocessor">#if 0</span></div>
-<div class="line">            <span class="comment">// ----&gt; 4.a) Video Debug information</span></div>
-<div class="line">            <span class="keyword">static</span> uint64_t last_ts=0;</div>
-<div class="line">            std::cout &lt;&lt; std::setprecision(9) &lt;&lt; <span class="stringliteral">&quot;[&quot;</span> &lt;&lt; frame-&gt;<a name="a8"></a><a class="code" href="structsl__oc_1_1Frame.html#a0e8ca486cc6ee69a735e7c55af0c2df0">frame_id</a> &lt;&lt; <span class="stringliteral">&quot;] Ts: &quot;</span> &lt;&lt;  <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(frame-&gt;<a name="a9"></a><a class="code" href="structsl__oc_1_1Frame.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a>)/1e9 &lt;&lt; <span class="stringliteral">&quot; sec&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">            <span class="keywordflow">if</span>( last_ts!=0 )</div>
-<div class="line">            {</div>
-<div class="line">                <span class="keywordtype">double</span> dt = (frame-&gt;<a class="code" href="structsl__oc_1_1Frame.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a> - last_ts)/1e9;</div>
-<div class="line">                std::cout &lt;&lt; std::setprecision(9) &lt;&lt; <span class="stringliteral">&quot; * dT: &quot;</span> &lt;&lt; dt &lt;&lt; <span class="stringliteral">&quot; sec - FPS: &quot;</span> &lt;&lt; 1./dt &lt;&lt;  std::endl;</div>
-<div class="line">            }</div>
-<div class="line">            last_ts = frame-&gt;<a class="code" href="structsl__oc_1_1Frame.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a>;</div>
-<div class="line">            <span class="comment">// &lt;---- Video Debug information</span></div>
-<div class="line"><span class="preprocessor">#endif</span></div>
-<div class="line"> </div>
-<div class="line">            <span class="comment">// ----&gt; 4.b)Conversion from YUV 4:2:2 to BGR for visualization</span></div>
-<div class="line">            cv::Mat frameYUV = cv::Mat( frame-&gt;<a name="a10"></a><a class="code" href="structsl__oc_1_1Frame.html#a81c9f8d0b8c3b49d770be14dbe9f0d37">height</a>, frame-&gt;<a name="a11"></a><a class="code" href="structsl__oc_1_1Frame.html#ad0eab1042455a2067c812ab8071d5376">width</a>, CV_8UC2, frame-&gt;<a name="a12"></a><a class="code" href="structsl__oc_1_1Frame.html#abe222f6d3581e7920dcad5306cc906a8">data</a> );</div>
+<div class="line">            <span class="comment">// ----&gt; 3.a)Conversion from YUV 4:2:2 to BGR for visualization</span></div>
+<div class="line">            cv::Mat frameYUV = cv::Mat( frame-&gt;<a name="a5"></a><a class="code" href="structsl__oc_1_1Frame.html#a81c9f8d0b8c3b49d770be14dbe9f0d37">height</a>, frame-&gt;<a name="a6"></a><a class="code" href="structsl__oc_1_1Frame.html#ad0eab1042455a2067c812ab8071d5376">width</a>, CV_8UC2, frame-&gt;<a name="a7"></a><a class="code" href="structsl__oc_1_1Frame.html#abe222f6d3581e7920dcad5306cc906a8">data</a> );</div>
 <div class="line">            cv::Mat frameBGR;</div>
 <div class="line">            cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);</div>
 <div class="line">            <span class="comment">// &lt;---- Conversion from YUV 4:2:2 to BGR for visualization</span></div>
 <div class="line"> </div>
-<div class="line">            <span class="comment">// 4.c) Show frame</span></div>
-<div class="line">            showImage( <span class="stringliteral">&quot;Stream RGB&quot;</span>, frameBGR, params.<a class="code" href="structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50">res</a> );</div>
+<div class="line">            <span class="comment">// 3.b) Show frame</span></div>
+<div class="line">            cv::imshow( <span class="stringliteral">&quot;Stream RGB&quot;</span>, frameBGR );</div>
 <div class="line">        }</div>
 <div class="line">        <span class="comment">// &lt;---- If the frame is valid we can display it</span></div>
 <div class="line"> </div>
-<div class="line">        <span class="comment">// ----&gt; 5) Keyboard handling</span></div>
+<div class="line">        <span class="comment">// ----&gt; 4) Keyboard handling</span></div>
 <div class="line">        <span class="keywordtype">int</span> key = cv::waitKey( 5 );</div>
-<div class="line"> </div>
-<div class="line">        <span class="keywordflow">if</span>( key != -1 )</div>
-<div class="line">        {</div>
-<div class="line">            <span class="keywordflow">if</span>(key==<span class="charliteral">&#39;q&#39;</span> || key==<span class="charliteral">&#39;Q&#39;</span>) <span class="comment">// Quit</span></div>
-<div class="line">                <span class="keywordflow">break</span>;</div>
-<div class="line">            <span class="keywordflow">else</span></div>
-<div class="line">                handleKeyboard( cap, key );</div>
-<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">if</span>(key==<span class="charliteral">&#39;q&#39;</span> || key==<span class="charliteral">&#39;Q&#39;</span>) <span class="comment">// Quit</span></div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
 <div class="line">        <span class="comment">// &lt;---- Keyboard handling</span></div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Handle Keyboard</span></div>
-<div class="line"><span class="keywordtype">void</span> handleKeyboard( <a class="code" href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a> &amp;cap, <span class="keywordtype">int</span> key )</div>
-<div class="line">{</div>
-<div class="line">    <span class="keywordflow">if</span>(key &gt;= <span class="charliteral">&#39;0&#39;</span> &amp;&amp; key &lt;= <span class="charliteral">&#39;9&#39;</span>)</div>
-<div class="line">    {</div>
-<div class="line">        <span class="keywordtype">int</span> value = key - <span class="charliteral">&#39;0&#39;</span>;</div>
-<div class="line">        setControlValue( cap, value );</div>
-<div class="line">        <span class="keywordflow">return</span>;</div>
-<div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordflow">switch</span>(key)</div>
-<div class="line">    {</div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;l&#39;</span>:</div>
-<div class="line">    {</div>
-<div class="line">        <span class="keywordtype">bool</span> led;</div>
-<div class="line">        cap.<a name="a13"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a2e392695ab5815eaacd465f5fa4dca3c">toggleLED</a>( &amp;led );</div>
-<div class="line">        std::cout &lt;&lt; std::string(<span class="stringliteral">&quot; * LED STATUS: &quot;</span>) &lt;&lt; (led?std::string(<span class="stringliteral">&quot;ON&quot;</span>):std::string(<span class="stringliteral">&quot;OFF&quot;</span>)) &lt;&lt; std::endl;</div>
-<div class="line">    }</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;b&#39;</span>:</div>
-<div class="line">        setActiveControl( Brightness );</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;S&#39;</span>:</div>
-<div class="line">        setActiveControl( Sharpness );</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;c&#39;</span>:</div>
-<div class="line">        setActiveControl( Contrast );</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;H&#39;</span>:</div>
-<div class="line">        setActiveControl( Hue );</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;s&#39;</span>:</div>
-<div class="line">        setActiveControl( Saturation );</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;w&#39;</span>:</div>
-<div class="line">        setActiveControl( WhiteBalance );</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;g&#39;</span>:</div>
-<div class="line">        setActiveControl( Gamma );</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;e&#39;</span>:</div>
-<div class="line">        setActiveControl( Exposure );</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;G&#39;</span>:</div>
-<div class="line">        setActiveControl( Gain );</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;a&#39;</span>:</div>
-<div class="line">        toggleAutomaticControl( cap );</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;r&#39;</span>:</div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;R&#39;</span>:</div>
-<div class="line">        cap.<a name="a14"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a052fc41640dddce60e0889c417bda3dd">resetBrightness</a>();</div>
-<div class="line">        cap.<a name="a15"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a2ff8d9153da156cc4b42ac4850daeeb6">resetSharpness</a>();</div>
-<div class="line">        cap.<a name="a16"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#ab10b504747a2891bc7d3b3450ecfa1f4">resetContrast</a>();</div>
-<div class="line">        cap.<a name="a17"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a92b62cf676fffd4845ab564b9731c910">resetHue</a>();</div>
-<div class="line">        cap.<a name="a18"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#ad7931cb00ff39ae79a32736273985e52">resetSaturation</a>();</div>
-<div class="line">        cap.<a name="a19"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a4fcbbe7de8a31bbd0e37ef472167b728">resetGamma</a>();</div>
-<div class="line">        cap.<a name="a20"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#acabb31fc74ac978fca972c6592632105">resetAECAGC</a>();</div>
-<div class="line">        cap.<a name="a21"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a68c0278cb190aed28282129aa6b24c8b">resetAutoWhiteBalance</a>();</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;All control settings are reset to default values&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;+&#39;</span>:</div>
-<div class="line">    <span class="keywordflow">case</span> 171:</div>
-<div class="line">        changeControlValue(cap,<span class="keyword">true</span>);</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;-&#39;</span>:</div>
-<div class="line">    <span class="keywordflow">case</span> 173:</div>
-<div class="line">        changeControlValue(cap,<span class="keyword">false</span>);</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;h&#39;</span>:</div>
-<div class="line">    <span class="keywordflow">case</span> <span class="charliteral">&#39;?&#39;</span>:</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;COMMANDS HELP&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;q&#39; or &#39;Q&#39; -&gt; Quit the example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;h&#39; or &#39;?&#39; -&gt; This help menu&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;l&#39; -&gt; Toggle camera led&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;b&#39; -&gt; Brightness control&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;s&#39; -&gt; Saturation control&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;c&#39; -&gt; Contrast control&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;h&#39; -&gt; Hue control&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;S&#39; -&gt; Sharpness control&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;w&#39; -&gt; White Balance control&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;g&#39; -&gt; Gamma control&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;e&#39; -&gt; Exposure control&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;G&#39; -&gt; Gain control&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;a&#39; -&gt; Toggle automatic for White Balance or Exposure and Gain&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;r&#39; or &#39;R&#39; -&gt; Reset to default configuration&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;+&#39; -&gt; Increase the current control value&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;-&#39; -&gt; Decrease the current control value&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot; * &#39;0&#39; .. &#39;9&#39; -&gt; Set the current control value&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Change active control</span></div>
-<div class="line"><span class="keywordtype">void</span> setActiveControl( CamControl control )</div>
-<div class="line">{</div>
-<div class="line">    activeControl = control;</div>
-<div class="line"> </div>
-<div class="line">    std::string ctrlStr;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">switch</span>( activeControl )</div>
-<div class="line">    {</div>
-<div class="line">    <span class="keywordflow">case</span> Brightness:</div>
-<div class="line">        ctrlStr = <span class="stringliteral">&quot;Brightness&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> Contrast:</div>
-<div class="line">        ctrlStr = <span class="stringliteral">&quot;Contrast&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> Hue:</div>
-<div class="line">        ctrlStr = <span class="stringliteral">&quot;Hue&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> Saturation:</div>
-<div class="line">        ctrlStr = <span class="stringliteral">&quot;Saturation&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> Gain:</div>
-<div class="line">        ctrlStr = <span class="stringliteral">&quot;Gain&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> WhiteBalance:</div>
-<div class="line">        ctrlStr = <span class="stringliteral">&quot;White Balance&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> Sharpness:</div>
-<div class="line">        ctrlStr = <span class="stringliteral">&quot;Sharpness&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> Gamma:</div>
-<div class="line">        ctrlStr = <span class="stringliteral">&quot;Gamma&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> Exposure:</div>
-<div class="line">        ctrlStr = <span class="stringliteral">&quot;Exposure&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Active camera control: &quot;</span> &lt;&lt; ctrlStr &lt;&lt; std::endl;</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Set new value for the active control</span></div>
-<div class="line"><span class="keywordtype">void</span> setControlValue(<a class="code" href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a> &amp;cap, <span class="keywordtype">int</span> value )</div>
-<div class="line">{</div>
-<div class="line">    <span class="keywordtype">int</span> newValue;</div>
-<div class="line">    <span class="keywordflow">switch</span>( activeControl )</div>
-<div class="line">    {</div>
-<div class="line">    <span class="keywordflow">case</span> Brightness:</div>
-<div class="line">        cap.<a name="a22"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a0006ebfdca6db81f835f5d0d6a6aee3b">setBrightness</a>( value );</div>
-<div class="line">        newValue = cap.<a name="a23"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a6731c29ae7def1e712128f43778923d9">getBrightness</a>();</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New Brightness value: &quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Contrast:</div>
-<div class="line">        cap.<a name="a24"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a32bcdbb1ac23149a2135ed19feed4983">setContrast</a>( value );</div>
-<div class="line">        newValue = cap.<a name="a25"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#aa23aee53856ff3c45b5ad76138d673bd">getContrast</a>();</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New Contrast value: &quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Hue:</div>
-<div class="line">        cap.<a name="a26"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#ae8a6f32fb7e84930cd98d7b37a2d4b01">setHue</a>( value );</div>
-<div class="line">        newValue = cap.<a name="a27"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a7a87b6173fdc5665ead93cf80ae92ec4">getHue</a>();</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New Hue value: &quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Saturation:</div>
-<div class="line">        cap.<a name="a28"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a96d67e6e0436b10c135e47e23c27e17a">setSaturation</a>( value );</div>
-<div class="line">        newValue = cap.<a name="a29"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a0d6977bedff07af1aad0b1ee2b591f73">getSaturation</a>();</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New Saturation value: &quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> WhiteBalance:</div>
-<div class="line">        cap.<a name="a30"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a3064c103cebdc6522ac5a902eecb92d7">setWhiteBalance</a>( 2800+value*411 );</div>
-<div class="line">        newValue = cap.<a name="a31"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a79925bac6d072e320d4c61d742d5d49e">getWhiteBalance</a>();</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New White Balance value: &quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Sharpness:</div>
-<div class="line">        cap.<a name="a32"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a3e7e1a6baafec413f10ef0754e33b497">setSharpness</a>( value );</div>
-<div class="line">        newValue = cap.<a name="a33"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a9c6cea95108831a8ed3d1c99d0a39665">getSharpness</a>();</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New Sharpness value: &quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Gamma:</div>
-<div class="line">        cap.<a name="a34"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a8e5997616d719d9ddd14d77c00b120f2">setGamma</a>( value);</div>
-<div class="line">        newValue = cap.<a name="a35"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a71eef67b24d5f981b9c19bd9bbacf42e">getGamma</a>();</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New Gamma value: &quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Gain:</div>
-<div class="line">    <span class="keywordflow">case</span> Exposure:</div>
-<div class="line">    <span class="keywordflow">default</span>:</div>
-<div class="line">        <span class="comment">// Nothing to do here</span></div>
-<div class="line">        <span class="keywordflow">return</span>;</div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    std::cout &lt;&lt; newValue &lt;&lt; std::endl;</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// &#39;+&#39; or &#39;-&#39; pressed</span></div>
-<div class="line"><span class="keywordtype">void</span> changeControlValue( <a class="code" href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a> &amp;cap, <span class="keywordtype">bool</span> increase )</div>
-<div class="line">{</div>
-<div class="line">    <span class="keywordtype">int</span> curValue=0;</div>
-<div class="line">    <span class="keywordflow">switch</span>( activeControl )</div>
-<div class="line">    {</div>
-<div class="line">    <span class="keywordflow">case</span> Brightness:</div>
-<div class="line">        curValue = cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a6731c29ae7def1e712128f43778923d9">getBrightness</a>();</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Contrast:</div>
-<div class="line">        curValue = cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#aa23aee53856ff3c45b5ad76138d673bd">getContrast</a>();</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Hue:</div>
-<div class="line">        curValue = cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a7a87b6173fdc5665ead93cf80ae92ec4">getHue</a>();</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New Hue value: &quot;</span>;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Saturation:</div>
-<div class="line">        curValue = cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a0d6977bedff07af1aad0b1ee2b591f73">getSaturation</a>();</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Gain:</div>
-<div class="line">    {</div>
-<div class="line">        <span class="keywordtype">int</span> curValueLeft = cap.<a name="a36"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a877f2438c7d719dc08e804dde933bf04">getGain</a>(<a name="a37"></a><a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758">sl_oc::CAM_SENS_POS::LEFT</a>);</div>
-<div class="line">        <span class="keywordtype">int</span> curValueRight = cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a877f2438c7d719dc08e804dde933bf04">getGain</a>(<a name="a38"></a><a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403">sl_oc::CAM_SENS_POS::RIGHT</a>);</div>
-<div class="line"> </div>
-<div class="line">        <span class="keywordflow">if</span>(increase)</div>
-<div class="line">        {</div>
-<div class="line">            cap.<a name="a39"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a258d34700af1c17538810633e938866d">setGain</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758">sl_oc::CAM_SENS_POS::LEFT</a>,++curValueLeft);</div>
-<div class="line">            cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a258d34700af1c17538810633e938866d">setGain</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403">sl_oc::CAM_SENS_POS::RIGHT</a>,++curValueRight);</div>
-<div class="line">        }</div>
-<div class="line">        <span class="keywordflow">else</span></div>
-<div class="line">        {</div>
-<div class="line">            cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a258d34700af1c17538810633e938866d">setGain</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758">sl_oc::CAM_SENS_POS::LEFT</a>,--curValueLeft);</div>
-<div class="line">            cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a258d34700af1c17538810633e938866d">setGain</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403">sl_oc::CAM_SENS_POS::RIGHT</a>,--curValueRight);;</div>
-<div class="line">        }</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New Left Gain value: &quot;</span> &lt;&lt; cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a877f2438c7d719dc08e804dde933bf04">getGain</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758">sl_oc::CAM_SENS_POS::LEFT</a>) &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New Right Gain value: &quot;</span> &lt;&lt; cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a877f2438c7d719dc08e804dde933bf04">getGain</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403">sl_oc::CAM_SENS_POS::RIGHT</a>) &lt;&lt; std::endl;</div>
-<div class="line">    }</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Exposure:</div>
-<div class="line">    {</div>
-<div class="line">        <span class="keywordtype">int</span> curValueLeft = cap.<a name="a40"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#af7a3f14944a9a8ce77916760cf5c5f04">getExposure</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758">sl_oc::CAM_SENS_POS::LEFT</a>);</div>
-<div class="line">        <span class="keywordtype">int</span> curValueRight = cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#af7a3f14944a9a8ce77916760cf5c5f04">getExposure</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403">sl_oc::CAM_SENS_POS::RIGHT</a>);</div>
-<div class="line"> </div>
-<div class="line">        <span class="keywordflow">if</span>(increase)</div>
-<div class="line">        {</div>
-<div class="line">            cap.<a name="a41"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#acb7121aeba2ad96a9f08159969f44902">setExposure</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758">sl_oc::CAM_SENS_POS::LEFT</a>,++curValueLeft);</div>
-<div class="line">            cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#acb7121aeba2ad96a9f08159969f44902">setExposure</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403">sl_oc::CAM_SENS_POS::RIGHT</a>,++curValueRight);</div>
-<div class="line">        }</div>
-<div class="line">        <span class="keywordflow">else</span></div>
-<div class="line">        {</div>
-<div class="line">            cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#acb7121aeba2ad96a9f08159969f44902">setExposure</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758">sl_oc::CAM_SENS_POS::LEFT</a>,--curValueLeft);</div>
-<div class="line">            cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#acb7121aeba2ad96a9f08159969f44902">setExposure</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403">sl_oc::CAM_SENS_POS::RIGHT</a>,--curValueRight);;</div>
-<div class="line">        }</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New Left Exposure value: &quot;</span> &lt;&lt; cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#af7a3f14944a9a8ce77916760cf5c5f04">getExposure</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758">sl_oc::CAM_SENS_POS::LEFT</a>) &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New Right Exposure value: &quot;</span> &lt;&lt; cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#af7a3f14944a9a8ce77916760cf5c5f04">getExposure</a>(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403">sl_oc::CAM_SENS_POS::RIGHT</a>) &lt;&lt; std::endl;</div>
-<div class="line">    }</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> WhiteBalance:</div>
-<div class="line">        cap.<a name="a42"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a86684a2622c450d1796530e12547ba3c">setAutoWhiteBalance</a>(<span class="keyword">false</span>);</div>
-<div class="line">        curValue = cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a79925bac6d072e320d4c61d742d5d49e">getWhiteBalance</a>();</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Sharpness:</div>
-<div class="line">        curValue = cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a9c6cea95108831a8ed3d1c99d0a39665">getSharpness</a>();</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">case</span> Gamma:</div>
-<div class="line">        curValue = cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a71eef67b24d5f981b9c19bd9bbacf42e">getGamma</a>();</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span>(activeControl==WhiteBalance)</div>
-<div class="line">    {</div>
-<div class="line">        <span class="keywordflow">if</span>(increase)</div>
-<div class="line">            curValue += 100;</div>
-<div class="line">        <span class="keywordflow">else</span></div>
-<div class="line">            curValue -= 100;</div>
-<div class="line"> </div>
-<div class="line">        cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a3064c103cebdc6522ac5a902eecb92d7">setWhiteBalance</a>( curValue );</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;New White Balance value: &quot;</span> &lt;&lt; cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a79925bac6d072e320d4c61d742d5d49e">getWhiteBalance</a>() &lt;&lt; std::endl;</div>
-<div class="line"> </div>
-<div class="line">    }</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span>(activeControl != Gain &amp;&amp; activeControl != Exposure)</div>
-<div class="line">    {</div>
-<div class="line">        <span class="keywordflow">if</span>(increase)</div>
-<div class="line">            setControlValue( cap, ++curValue);</div>
-<div class="line">        <span class="keywordflow">else</span></div>
-<div class="line">            setControlValue( cap, --curValue);</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// &#39;a&#39; or &#39;A&#39; pressed to enable automatic WhiteBalanse or Gain/Exposure</span></div>
-<div class="line"><span class="keywordtype">void</span> toggleAutomaticControl( <a class="code" href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a> &amp;cap )</div>
-<div class="line">{</div>
-<div class="line">    <span class="keywordflow">if</span>(activeControl == WhiteBalance)</div>
-<div class="line">    {</div>
-<div class="line">        <span class="keywordtype">bool</span> curValue = cap.<a name="a43"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a8291a62ce6f46ffad33674b313077609">getAutoWhiteBalance</a>();</div>
-<div class="line">        cap.<a class="code" href="classsl__oc_1_1VideoCapture.html#a86684a2622c450d1796530e12547ba3c">setAutoWhiteBalance</a>( !curValue );</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Automatic White Balance control: &quot;</span> &lt;&lt; ((!curValue)?<span class="stringliteral">&quot;ENABLED&quot;</span>:<span class="stringliteral">&quot;DISABLED&quot;</span>) &lt;&lt; std::endl;</div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span>(activeControl == Exposure || activeControl == Gain )</div>
-<div class="line">    {</div>
-<div class="line">        <span class="keywordtype">bool</span> curValue = cap.<a name="a44"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#a0ac44b3b5c1f8dc61bd127346274f636">getAECAGC</a>();</div>
-<div class="line">        cap.<a name="a45"></a><a class="code" href="classsl__oc_1_1VideoCapture.html#ae566a625e36c44681ba5da6d1044cdbe">setAECAGC</a>( !curValue );</div>
-<div class="line"> </div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Automatic Exposure and Gain control: &quot;</span> &lt;&lt; ((!curValue)?<span class="stringliteral">&quot;ENABLED&quot;</span>:<span class="stringliteral">&quot;DISABLED&quot;</span>) &lt;&lt; std::endl;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Rescale the images according to the selected resolution to better display them on screen</span></div>
-<div class="line"><span class="keywordtype">void</span> showImage( std::string name, cv::Mat&amp; img, <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828">sl_oc::RESOLUTION</a> res )</div>
-<div class="line">{</div>
-<div class="line">    cv::Mat resized;</div>
-<div class="line">    <span class="keywordflow">switch</span>(res)</div>
-<div class="line">    {</div>
-<div class="line">    <span class="keywordflow">default</span>:</div>
-<div class="line">    <span class="keywordflow">case</span> <a name="a46"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828adb4371197d1f58c7d4edb7dcd0565ad1">sl_oc::RESOLUTION::VGA</a>:</div>
-<div class="line">        resized = img;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">sl_oc::RESOLUTION::HD720</a>:</div>
-<div class="line">        name += <span class="stringliteral">&quot; [Resize factor 0.6]&quot;</span>;</div>
-<div class="line">        cv::resize( img, resized, cv::Size(), 0.6, 0.6 );</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> <a name="a47"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b">sl_oc::RESOLUTION::HD1080</a>:</div>
-<div class="line">    <span class="keywordflow">case</span> <a name="a48"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c">sl_oc::RESOLUTION::HD2K</a>:</div>
-<div class="line">        name += <span class="stringliteral">&quot; [Resize factor 0.4]&quot;</span>;</div>
-<div class="line">        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    cv::imshow( name, resized );</div>
-<div class="line">}</div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a0ac44b3b5c1f8dc61bd127346274f636"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a0ac44b3b5c1f8dc61bd127346274f636">sl_oc::VideoCapture::getAECAGC</a></div><div class="ttdeci">bool getAECAGC()</div><div class="ttdoc">Get the status of the automatic Exposure and Gain control.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01662">videocapture.cpp:1662</a></div></div>
-<div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828adb4371197d1f58c7d4edb7dcd0565ad1"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828adb4371197d1f58c7d4edb7dcd0565ad1">sl_oc::RESOLUTION::VGA</a></div><div class="ttdeci">@ VGA</div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a92b62cf676fffd4845ab564b9731c910"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a92b62cf676fffd4845ab564b9731c910">sl_oc::VideoCapture::resetHue</a></div><div class="ttdeci">void resetHue()</div><div class="ttdoc">Reset the Hue value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01576">videocapture.cpp:1576</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_ab10b504747a2891bc7d3b3450ecfa1f4"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#ab10b504747a2891bc7d3b3450ecfa1f4">sl_oc::VideoCapture::resetContrast</a></div><div class="ttdeci">void resetContrast()</div><div class="ttdoc">Reset the Contrast value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01561">videocapture.cpp:1561</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_acd1e11b436d1f4162d38cc1042f5232a"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#acd1e11b436d1f4162d38cc1042f5232a">sl_oc::VideoCapture::getLastFrame</a></div><div class="ttdeci">const Frame * getLastFrame(uint64_t timeout_msec=10)</div><div class="ttdoc">Get the last received camera image.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l00858">videocapture.cpp:858</a></div></div>
 <div class="ttc" id="astructsl__oc_1_1Frame_html_abe222f6d3581e7920dcad5306cc906a8"><div class="ttname"><a href="structsl__oc_1_1Frame.html#abe222f6d3581e7920dcad5306cc906a8">sl_oc::Frame::data</a></div><div class="ttdeci">uint8_t * data</div><div class="ttdoc">Frame data in YUV 4:2:2 format.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00044">videocapture.hpp:44</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_acb7121aeba2ad96a9f08159969f44902"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#acb7121aeba2ad96a9f08159969f44902">sl_oc::VideoCapture::setExposure</a></div><div class="ttdeci">void setExposure(CAM_SENS_POS cam, int exposure)</div><div class="ttdoc">Set the Exposure value (disable Exposure and Gain control if active)</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01712">videocapture.cpp:1712</a></div></div>
-<div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c">sl_oc::RESOLUTION::HD2K</a></div><div class="ttdeci">@ HD2K</div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a8914d08d225a8f7092ab5d528bc3882c"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a8914d08d225a8f7092ab5d528bc3882c">sl_oc::VideoCapture::getSerialNumber</a></div><div class="ttdeci">int getSerialNumber()</div><div class="ttdoc">Retrieve the serial number of the connected camera.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l00539">videocapture.cpp:539</a></div></div>
 <div class="ttc" id="astructsl__oc_1_1Frame_html_a81c9f8d0b8c3b49d770be14dbe9f0d37"><div class="ttname"><a href="structsl__oc_1_1Frame.html#a81c9f8d0b8c3b49d770be14dbe9f0d37">sl_oc::Frame::height</a></div><div class="ttdeci">uint16_t height</div><div class="ttdoc">Frame height.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00046">videocapture.hpp:46</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a32bcdbb1ac23149a2135ed19feed4983"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a32bcdbb1ac23149a2135ed19feed4983">sl_oc::VideoCapture::setContrast</a></div><div class="ttdeci">void setContrast(int contrast)</div><div class="ttdoc">Set the Contrast value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01556">videocapture.cpp:1556</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a052fc41640dddce60e0889c417bda3dd"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a052fc41640dddce60e0889c417bda3dd">sl_oc::VideoCapture::resetBrightness</a></div><div class="ttdeci">void resetBrightness()</div><div class="ttdoc">Reset the Brightness value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01531">videocapture.cpp:1531</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a3064c103cebdc6522ac5a902eecb92d7"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a3064c103cebdc6522ac5a902eecb92d7">sl_oc::VideoCapture::setWhiteBalance</a></div><div class="ttdeci">void setWhiteBalance(int wb)</div><div class="ttdoc">Set the White Balance value (disable auto White Balance if active)</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01606">videocapture.cpp:1606</a></div></div>
-<div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">sl_oc::RESOLUTION::HD720</a></div><div class="ttdeci">@ HD720</div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a7a87b6173fdc5665ead93cf80ae92ec4"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a7a87b6173fdc5665ead93cf80ae92ec4">sl_oc::VideoCapture::getHue</a></div><div class="ttdeci">int getHue()</div><div class="ttdoc">Get the Hue value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01581">videocapture.cpp:1581</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a877f2438c7d719dc08e804dde933bf04"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a877f2438c7d719dc08e804dde933bf04">sl_oc::VideoCapture::getGain</a></div><div class="ttdeci">int getGain(CAM_SENS_POS cam)</div><div class="ttdoc">Get the current Gain value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01696">videocapture.cpp:1696</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1VideoParams_html"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html">sl_oc::VideoParams</a></div><div class="ttdoc">The camera configuration parameters.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00078">videocapture_def.hpp:79</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1Frame_html_a465bef81f6478756e5443025b1f2ddfa"><div class="ttname"><a href="structsl__oc_1_1Frame.html#a465bef81f6478756e5443025b1f2ddfa">sl_oc::Frame::timestamp</a></div><div class="ttdeci">uint64_t timestamp</div><div class="ttdoc">Timestamp in nanoseconds.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00043">videocapture.hpp:43</a></div></div>
-<div class="ttc" id="anamespacesl__oc_html_ab16e0dc2a4f7533119f355cdb8b42a84"><div class="ttname"><a href="namespacesl__oc.html#ab16e0dc2a4f7533119f355cdb8b42a84">sl_oc::VERBOSITY</a></div><div class="ttdeci">VERBOSITY</div><div class="ttdef"><b>Definition:</b> <a href="defines_8hpp_source.html#l00083">defines.hpp:83</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a4fcbbe7de8a31bbd0e37ef472167b728"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a4fcbbe7de8a31bbd0e37ef472167b728">sl_oc::VideoCapture::resetGamma</a></div><div class="ttdeci">void resetGamma()</div><div class="ttdoc">Reset the Gamma value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01642">videocapture.cpp:1642</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a86684a2622c450d1796530e12547ba3c"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a86684a2622c450d1796530e12547ba3c">sl_oc::VideoCapture::setAutoWhiteBalance</a></div><div class="ttdeci">void setAutoWhiteBalance(bool active)</div><div class="ttdoc">Enable/Disable the automatic White Balance control.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01620">videocapture.cpp:1620</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1VideoParams_html_a0b2caeb4b6f130be43e5a2f0267dd453"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">sl_oc::VideoParams::verbose</a></div><div class="ttdeci">int verbose</div><div class="ttdoc">Verbose mode.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00091">videocapture_def.hpp:91</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a96d67e6e0436b10c135e47e23c27e17a"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a96d67e6e0436b10c135e47e23c27e17a">sl_oc::VideoCapture::setSaturation</a></div><div class="ttdeci">void setSaturation(int saturation)</div><div class="ttdoc">Set the Saturation value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01586">videocapture.cpp:1586</a></div></div>
 <div class="ttc" id="astructsl__oc_1_1Frame_html_ad0eab1042455a2067c812ab8071d5376"><div class="ttname"><a href="structsl__oc_1_1Frame.html#ad0eab1042455a2067c812ab8071d5376">sl_oc::Frame::width</a></div><div class="ttdeci">uint16_t width</div><div class="ttdoc">Frame width.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00045">videocapture.hpp:45</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a79925bac6d072e320d4c61d742d5d49e"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a79925bac6d072e320d4c61d742d5d49e">sl_oc::VideoCapture::getWhiteBalance</a></div><div class="ttdeci">int getWhiteBalance()</div><div class="ttdoc">Get the White Balance value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01601">videocapture.cpp:1601</a></div></div>
-<div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828">sl_oc::RESOLUTION</a></div><div class="ttdeci">RESOLUTION</div><div class="ttdoc">Available resolutions.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00047">videocapture_def.hpp:47</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a8291a62ce6f46ffad33674b313077609"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a8291a62ce6f46ffad33674b313077609">sl_oc::VideoCapture::getAutoWhiteBalance</a></div><div class="ttdeci">bool getAutoWhiteBalance()</div><div class="ttdoc">Get the status of the automatic White Balance control.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01615">videocapture.cpp:1615</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_ad7931cb00ff39ae79a32736273985e52"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#ad7931cb00ff39ae79a32736273985e52">sl_oc::VideoCapture::resetSaturation</a></div><div class="ttdeci">void resetSaturation()</div><div class="ttdoc">Reset the Saturation value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01591">videocapture.cpp:1591</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a2e392695ab5815eaacd465f5fa4dca3c"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a2e392695ab5815eaacd465f5fa4dca3c">sl_oc::VideoCapture::toggleLED</a></div><div class="ttdeci">int toggleLED(bool *value)</div><div class="ttdoc">Toggle the status of the camera led.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01386">videocapture.cpp:1386</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a0006ebfdca6db81f835f5d0d6a6aee3b"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a0006ebfdca6db81f835f5d0d6a6aee3b">sl_oc::VideoCapture::setBrightness</a></div><div class="ttdeci">void setBrightness(int brightness)</div><div class="ttdoc">Set the Brightness value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01526">videocapture.cpp:1526</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a0d6977bedff07af1aad0b1ee2b591f73"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a0d6977bedff07af1aad0b1ee2b591f73">sl_oc::VideoCapture::getSaturation</a></div><div class="ttdeci">int getSaturation()</div><div class="ttdoc">Get the Saturation value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01596">videocapture.cpp:1596</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a258d34700af1c17538810633e938866d"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a258d34700af1c17538810633e938866d">sl_oc::VideoCapture::setGain</a></div><div class="ttdeci">void setGain(CAM_SENS_POS cam, int gain)</div><div class="ttdoc">Set the Gain value (disable Exposure and Gain control if active)</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01674">videocapture.cpp:1674</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a2ff8d9153da156cc4b42ac4850daeeb6"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a2ff8d9153da156cc4b42ac4850daeeb6">sl_oc::VideoCapture::resetSharpness</a></div><div class="ttdeci">void resetSharpness()</div><div class="ttdoc">Reset the Sharpness value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01546">videocapture.cpp:1546</a></div></div>
-<div class="ttc" id="anamespacesl__oc_html_a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758"><div class="ttname"><a href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758">sl_oc::CAM_SENS_POS::LEFT</a></div><div class="ttdeci">@ LEFT</div><div class="ttdoc">The left sensor.</div></div>
-<div class="ttc" id="astructsl__oc_1_1VideoParams_html_af11815e3fc76bef0ebf32bff8fe0bdd2"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2">sl_oc::VideoParams::fps</a></div><div class="ttdeci">FPS fps</div><div class="ttdoc">Frames per second.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00090">videocapture_def.hpp:90</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_ae566a625e36c44681ba5da6d1044cdbe"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#ae566a625e36c44681ba5da6d1044cdbe">sl_oc::VideoCapture::setAECAGC</a></div><div class="ttdeci">int setAECAGC(bool active)</div><div class="ttdoc">Enable/Disable the automatic Exposure and Gain control.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01654">videocapture.cpp:1654</a></div></div>
-<div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b">sl_oc::RESOLUTION::HD1080</a></div><div class="ttdeci">@ HD1080</div></div>
-<div class="ttc" id="anamespacesl__oc_html_af2be5e41610afb58aeec369e8bb9a524a97ca268671aa69223171bb0b4aa1461d"><div class="ttname"><a href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a97ca268671aa69223171bb0b4aa1461d">sl_oc::FPS::FPS_60</a></div><div class="ttdeci">@ FPS_60</div><div class="ttdoc">60 Frames per second. Not available for RESOLUTION::HD2K and RESOLUTION::HD1080.</div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_af7a3f14944a9a8ce77916760cf5c5f04"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#af7a3f14944a9a8ce77916760cf5c5f04">sl_oc::VideoCapture::getExposure</a></div><div class="ttdeci">int getExposure(CAM_SENS_POS cam)</div><div class="ttdoc">Get the current Exposure value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01738">videocapture.cpp:1738</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_ae8a6f32fb7e84930cd98d7b37a2d4b01"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#ae8a6f32fb7e84930cd98d7b37a2d4b01">sl_oc::VideoCapture::setHue</a></div><div class="ttdeci">void setHue(int hue)</div><div class="ttdoc">Set the Hue value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01571">videocapture.cpp:1571</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a446d2a6b9440ef43cfed9fc97e102415"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">sl_oc::VideoCapture::initializeVideo</a></div><div class="ttdeci">bool initializeVideo(int devId=-1)</div><div class="ttdoc">Open a ZED camera using the specified ID or searching for the first available.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l00274">videocapture.cpp:274</a></div></div>
 <div class="ttc" id="astructsl__oc_1_1Frame_html"><div class="ttname"><a href="structsl__oc_1_1Frame.html">sl_oc::Frame</a></div><div class="ttdoc">The Frame struct containing the acquired video frames.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00040">videocapture.hpp:41</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1Frame_html_a0e8ca486cc6ee69a735e7c55af0c2df0"><div class="ttname"><a href="structsl__oc_1_1Frame.html#a0e8ca486cc6ee69a735e7c55af0c2df0">sl_oc::Frame::frame_id</a></div><div class="ttdeci">uint64_t frame_id</div><div class="ttdoc">Increasing index of frames.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00042">videocapture.hpp:42</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_acabb31fc74ac978fca972c6592632105"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#acabb31fc74ac978fca972c6592632105">sl_oc::VideoCapture::resetAECAGC</a></div><div class="ttdeci">void resetAECAGC()</div><div class="ttdoc">Reset the automatic Exposure and Gain control value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01669">videocapture.cpp:1669</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1VideoCapture_html"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a></div><div class="ttdoc">The VideoCapture class provides image grabbing functions and settings control for all the Stereolabs ...</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00053">videocapture.hpp:54</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_aa23aee53856ff3c45b5ad76138d673bd"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#aa23aee53856ff3c45b5ad76138d673bd">sl_oc::VideoCapture::getContrast</a></div><div class="ttdeci">int getContrast()</div><div class="ttdoc">Get the Contrast value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01566">videocapture.cpp:1566</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a6731c29ae7def1e712128f43778923d9"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a6731c29ae7def1e712128f43778923d9">sl_oc::VideoCapture::getBrightness</a></div><div class="ttdeci">int getBrightness()</div><div class="ttdoc">Get the Brightness value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01536">videocapture.cpp:1536</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a71eef67b24d5f981b9c19bd9bbacf42e"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a71eef67b24d5f981b9c19bd9bbacf42e">sl_oc::VideoCapture::getGamma</a></div><div class="ttdeci">int getGamma()</div><div class="ttdoc">Get the Gamma value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01650">videocapture.cpp:1650</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a9c6cea95108831a8ed3d1c99d0a39665"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a9c6cea95108831a8ed3d1c99d0a39665">sl_oc::VideoCapture::getSharpness</a></div><div class="ttdeci">int getSharpness()</div><div class="ttdoc">Get the Sharpness value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01551">videocapture.cpp:1551</a></div></div>
-<div class="ttc" id="anamespacesl__oc_html_a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403"><div class="ttname"><a href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403">sl_oc::CAM_SENS_POS::RIGHT</a></div><div class="ttdeci">@ RIGHT</div><div class="ttdoc">The right sensor.</div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a8e5997616d719d9ddd14d77c00b120f2"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a8e5997616d719d9ddd14d77c00b120f2">sl_oc::VideoCapture::setGamma</a></div><div class="ttdeci">void setGamma(int gamma)</div><div class="ttdoc">Set the Gamma value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01630">videocapture.cpp:1630</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a68c0278cb190aed28282129aa6b24c8b"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a68c0278cb190aed28282129aa6b24c8b">sl_oc::VideoCapture::resetAutoWhiteBalance</a></div><div class="ttdeci">void resetAutoWhiteBalance()</div><div class="ttdoc">Reset the automatic White Balance control value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01625">videocapture.cpp:1625</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1VideoParams_html_aace2ea0b4bc2f335f22e3d019afa3d50"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50">sl_oc::VideoParams::res</a></div><div class="ttdeci">RESOLUTION res</div><div class="ttdoc">Camera resolution.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00089">videocapture_def.hpp:89</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a3e7e1a6baafec413f10ef0754e33b497"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a3e7e1a6baafec413f10ef0754e33b497">sl_oc::VideoCapture::setSharpness</a></div><div class="ttdeci">void setSharpness(int sharpness)</div><div class="ttdoc">Set the Sharpness value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01541">videocapture.cpp:1541</a></div></div>

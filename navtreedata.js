@@ -32,10 +32,11 @@ var NAVTREE =
     ] ],
     [ "All Classes", "annotated.html", "annotated" ],
     [ "Examples", "md_examples.html", [
-      [ "Video Capture and Control", "zed_oc_video_example_8cpp-example.html", null ],
-      [ "Video Rectification", "zed_oc_rectify_example_8cpp-example.html", null ],
+      [ "Video Capture", "zed_oc_video_example_8cpp-example.html", null ],
+      [ "Video Capture and Control", "zed_oc_control_example_8cpp-example.html", null ],
       [ "Sensors Data Capture", "zed_oc_sensors_example_8cpp-example.html", null ],
-      [ "Video/Sensors sync", "zed_oc_sync_example_8cpp-example.html", null ]
+      [ "Video/Sensors sync", "zed_oc_sync_example_8cpp-example.html", null ],
+      [ "Video Rectification", "zed_oc_rectify_example_8cpp-example.html", null ]
     ] ],
     [ "Release Notes", "md_release-notes.html", null ]
   ] ]

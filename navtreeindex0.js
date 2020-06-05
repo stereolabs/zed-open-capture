@@ -154,7 +154,8 @@ var NAVTREEINDEX0 =
 "structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50":[2,0,11,1],
 "structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2":[2,0,11,2],
 "structsl__oc_1_1VideoParams.html#afe2dfbfaa5a24edd444e50a48461a7a1":[2,0,11,0],
-"zed_oc_rectify_example_8cpp-example.html":[3,1],
+"zed_oc_control_example_8cpp-example.html":[3,1],
+"zed_oc_rectify_example_8cpp-example.html":[3,4],
 "zed_oc_sensors_example_8cpp-example.html":[3,2],
 "zed_oc_sync_example_8cpp-example.html":[3,3],
 "zed_oc_video_example_8cpp-example.html":[3,0]

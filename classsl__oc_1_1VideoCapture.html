@@ -9,10 +9,10 @@
         <title>VideoCapture Class Reference | ZED Open Capture API Reference | Stereolabs</title><!--END PROJECT_NAME (ZED Open Capture)-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700,800">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,600,700">
-        <link href="tabs.css?t=Fri Jun 5 2020 14:12:15" rel="stylesheet" type="text/css"/>
-        <script type="text/javascript" src="jquery.js?t=Fri Jun 5 2020 14:12:15"></script>
-        <script type="text/javascript" src="custom.js?t=Fri Jun 5 2020 14:12:15"></script>
-        <script type="text/javascript" src="dynsections.js?t=Fri Jun 5 2020 14:12:15"></script>
+        <link href="tabs.css?t=Fri Jun 5 2020 14:38:12" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery.js?t=Fri Jun 5 2020 14:38:12"></script>
+        <script type="text/javascript" src="custom.js?t=Fri Jun 5 2020 14:38:12"></script>
+        <script type="text/javascript" src="dynsections.js?t=Fri Jun 5 2020 14:38:12"></script>
         <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -25,7 +25,7 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
-        <link href="stylesheet.css?t=Fri Jun 5 2020 14:12:15" rel="stylesheet" type="text/css" />
+        <link href="stylesheet.css?t=Fri Jun 5 2020 14:38:12" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -392,6 +392,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns true if the camera is correctly opened </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a1">zed_oc_video_example.cpp</a>.</dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l00274">274</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;{</div>
@@ -471,6 +473,8 @@ Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>Do not delete the received frame </dd>
 <dd>
 <a class="el" href="structsl__oc_1_1Frame.html" title="The Frame struct containing the acquired video frames.">Frame</a> received will contains the RAW buffer from the camera, in YUV4:2:2 color format and in side by side mode. Images must then be converted to RGB for proper display and will not be rectified. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a4">zed_oc_video_example.cpp</a>.</dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l00858">858</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;{</div>
@@ -654,8 +658,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns a negative value if an error occurred </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a13">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01386">1386</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;{</div>
@@ -704,8 +706,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a22">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01526">1526</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01527"></a><span class="lineno"> 1527</span>&#160;{</div>
@@ -731,8 +731,6 @@ Functions</h2></td></tr>
 
 <p>Get the Brightness value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current Brightness value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a23">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01536">1536</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01537"></a><span class="lineno"> 1537</span>&#160;{</div>
@@ -757,8 +755,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the Brightness value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a14">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01531">1531</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01532"></a><span class="lineno"> 1532</span>&#160;{</div>
@@ -792,8 +788,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a32">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01541">1541</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01542"></a><span class="lineno"> 1542</span>&#160;{</div>
@@ -819,8 +813,6 @@ Functions</h2></td></tr>
 
 <p>Get the Sharpness value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current Sharpness value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a33">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01551">1551</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01552"></a><span class="lineno"> 1552</span>&#160;{</div>
@@ -845,8 +837,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the Sharpness value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a15">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01546">1546</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01547"></a><span class="lineno"> 1547</span>&#160;{</div>
@@ -880,8 +870,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a24">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01556">1556</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01557"></a><span class="lineno"> 1557</span>&#160;{</div>
@@ -907,8 +895,6 @@ Functions</h2></td></tr>
 
 <p>Get the Contrast value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current Contrast value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a25">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01566">1566</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01567"></a><span class="lineno"> 1567</span>&#160;{</div>
@@ -933,8 +919,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the Contrast value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a16">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01561">1561</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01562"></a><span class="lineno"> 1562</span>&#160;{</div>
@@ -968,8 +952,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a26">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01571">1571</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01572"></a><span class="lineno"> 1572</span>&#160;{</div>
@@ -995,8 +977,6 @@ Functions</h2></td></tr>
 
 <p>Get the Hue value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current Hue value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a27">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01581">1581</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01582"></a><span class="lineno"> 1582</span>&#160;{</div>
@@ -1021,8 +1001,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the Hue value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a17">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01576">1576</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01577"></a><span class="lineno"> 1577</span>&#160;{</div>
@@ -1056,8 +1034,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a28">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01586">1586</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01587"></a><span class="lineno"> 1587</span>&#160;{</div>
@@ -1083,8 +1059,6 @@ Functions</h2></td></tr>
 
 <p>Get the Saturation value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current Saturation value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a29">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01596">1596</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01597"></a><span class="lineno"> 1597</span>&#160;{</div>
@@ -1109,8 +1083,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the Saturation value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a18">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01591">1591</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01592"></a><span class="lineno"> 1592</span>&#160;{</div>
@@ -1144,8 +1116,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a30">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01606">1606</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01607"></a><span class="lineno"> 1607</span>&#160;{</div>
@@ -1177,8 +1147,6 @@ Functions</h2></td></tr>
 
 <p>Get the White Balance value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current White Balance value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a31">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01601">1601</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01602"></a><span class="lineno"> 1602</span>&#160;{</div>
@@ -1210,8 +1178,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a42">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01620">1620</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01621"></a><span class="lineno"> 1621</span>&#160;{</div>
@@ -1239,8 +1205,6 @@ Functions</h2></td></tr>
 
 <p>Get the status of the automatic White Balance control. </p>
 <dl class="section return"><dt>Returns</dt><dd>the status of the automatic White Balance control </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a43">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01615">1615</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01616"></a><span class="lineno"> 1616</span>&#160;{</div>
@@ -1267,8 +1231,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the automatic White Balance control value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a21">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01625">1625</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01626"></a><span class="lineno"> 1626</span>&#160;{</div>
@@ -1304,8 +1266,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a34">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01630">1630</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01631"></a><span class="lineno"> 1631</span>&#160;{</div>
@@ -1338,8 +1298,6 @@ Functions</h2></td></tr>
 
 <p>Get the Gamma value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current Gamma value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a35">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01650">1650</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01650"></a><span class="lineno"> 1650</span>&#160;                           {</div>
@@ -1364,8 +1322,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the Gamma value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a19">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01642">1642</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01643"></a><span class="lineno"> 1643</span>&#160;{</div>
@@ -1402,8 +1358,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a45">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01654">1654</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01655"></a><span class="lineno"> 1655</span>&#160;{</div>
@@ -1434,8 +1388,6 @@ Functions</h2></td></tr>
 
 <p>Get the status of the automatic Exposure and Gain control. </p>
 <dl class="section return"><dt>Returns</dt><dd>the status of the automatic Exposure and Gain control </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a44">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01662">1662</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01663"></a><span class="lineno"> 1663</span>&#160;{</div>
@@ -1464,8 +1416,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the automatic Exposure and Gain control value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a20">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01669">1669</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01670"></a><span class="lineno"> 1670</span>&#160;{</div>
@@ -1511,8 +1461,6 @@ Functions</h2></td></tr>
     <tr><td class="paramname">gain</td><td>Gain value in the range [0,100] </td></tr>
   </table>
   </dd>
-</dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a39">zed_oc_video_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01674">1674</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1565,8 +1513,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the current Gain value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a36">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01696">1696</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160;{</div>
@@ -1619,8 +1565,6 @@ Functions</h2></td></tr>
     <tr><td class="paramname">exposure</td><td>Exposure value in the range [0,100] </td></tr>
   </table>
   </dd>
-</dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a41">zed_oc_video_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01712">1712</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1677,8 +1621,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the current Exposure value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a40">zed_oc_video_example.cpp</a>.</dd>
-</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01738">1738</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l01739"></a><span class="lineno"> 1739</span>&#160;{</div>
@@ -1719,6 +1661,8 @@ Functions</h2></td></tr>
 
 <p>Retrieve the serial number of the connected camera. </p>
 <dl class="section return"><dt>Returns</dt><dd>the serial number of the connected camera </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a2">zed_oc_video_example.cpp</a>.</dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l00539">539</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;{</div>
