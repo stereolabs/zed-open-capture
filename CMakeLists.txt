@@ -129,11 +129,22 @@ if(BUILD_EXAMPLES)
         ##### Video Example
         add_executable(${PROJECT_NAME}_video_example "${CMAKE_HOME_DIRECTORY}/examples/zed_oc_video_example.cpp")
         set_target_properties(${PROJECT_NAME}_video_example PROPERTIES PREFIX "")
-        target_link_libraries(${PROJECT_NAME}_video_example          
+        target_link_libraries(${PROJECT_NAME}_video_example
           ${PROJECT_NAME}
           ${OpenCV_LIBS}
         )
         install(TARGETS ${PROJECT_NAME}_video_example
+            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+        )
+
+        ##### Control Example
+        add_executable(${PROJECT_NAME}_control_example "${CMAKE_HOME_DIRECTORY}/examples/zed_oc_control_example.cpp")
+        set_target_properties(${PROJECT_NAME}_control_example PROPERTIES PREFIX "")
+        target_link_libraries(${PROJECT_NAME}_control_example
+          ${PROJECT_NAME}
+          ${OpenCV_LIBS}
+        )
+        install(TARGETS ${PROJECT_NAME}_control_example
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
 
