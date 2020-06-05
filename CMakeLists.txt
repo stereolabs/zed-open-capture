@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-set(PROJECT_NAME zed_driver)
+set(PROJECT_NAME zed_open_capture)
 
 project(${PROJECT_NAME} CXX)
 
@@ -68,10 +68,6 @@ include_directories(
 
 list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_SOURCE_DIR}/cmake")
 
-
-
-
-
 ############################################################################
 # Generate libraries
 if(BUILD_SENSORS)
@@ -126,11 +122,12 @@ if(BUILD_EXAMPLES)
     if(BUILD_VIDEO)
         message("* Video example available")
 
-        ##### Video Example
+        ##### OpenCV is required
         find_package(OpenCV REQUIRED)
         include_directories(${OpenCV_INCLUDE_DIRS})
 
-        add_executable(${PROJECT_NAME}_video_example "examples/zed_drv_video_example.cpp")
+        ##### Video Example
+        add_executable(${PROJECT_NAME}_video_example "${CMAKE_HOME_DIRECTORY}/examples/zed_oc_video_example.cpp")
         set_target_properties(${PROJECT_NAME}_video_example PROPERTIES PREFIX "")
         target_link_libraries(${PROJECT_NAME}_video_example          
           ${PROJECT_NAME}
@@ -139,13 +136,25 @@ if(BUILD_EXAMPLES)
         install(TARGETS ${PROJECT_NAME}_video_example
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
+
+        ##### Rectify Example
+        include_directories( ${CMAKE_HOME_DIRECTORY}/examples/include)
+        add_executable(${PROJECT_NAME}_rectify_example "${CMAKE_HOME_DIRECTORY}/examples/zed_oc_rectify_example.cpp")
+        set_target_properties(${PROJECT_NAME}_rectify_example PROPERTIES PREFIX "")
+        target_link_libraries(${PROJECT_NAME}_rectify_example
+          ${PROJECT_NAME}
+          ${OpenCV_LIBS}
+        )
+        install(TARGETS ${PROJECT_NAME}_rectify_example
+            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+        )
     endif()
 
     if(BUILD_SENSORS)
         message("* Sensors example available")
 
         ##### Sensors Example
-        add_executable(${PROJECT_NAME}_sensors_example "examples/zed_drv_sensors_example.cpp")
+        add_executable(${PROJECT_NAME}_sensors_example "${CMAKE_HOME_DIRECTORY}/examples/zed_oc_sensors_example.cpp")
         set_target_properties(${PROJECT_NAME}_sensors_example PROPERTIES PREFIX "")
         target_link_libraries(${PROJECT_NAME}_sensors_example          
           ${PROJECT_NAME}
@@ -159,7 +168,7 @@ if(BUILD_EXAMPLES)
         message("* Video/Sensors sync example available")
 
         ##### Synchronization Example
-        add_executable(${PROJECT_NAME}_sync_example "examples/zed_drv_sync_example.cpp")
+        add_executable(${PROJECT_NAME}_sync_example "${CMAKE_HOME_DIRECTORY}/examples/zed_oc_sync_example.cpp")
         set_target_properties(${PROJECT_NAME}_sync_example PROPERTIES PREFIX "")
         target_link_libraries(${PROJECT_NAME}_sync_example          
           ${PROJECT_NAME}

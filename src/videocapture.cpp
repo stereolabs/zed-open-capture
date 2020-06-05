@@ -1,3 +1,23 @@
+///////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2020, STEREOLABS.
+//
+// All rights reserved.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+///////////////////////////////////////////////////////////////////////////
+
 #include "videocapture.hpp"
 
 #ifdef SENSORS_MOD_AVAILABLE
@@ -87,7 +107,7 @@
 // <---- Camera Control
 
 
-namespace sl_drv
+namespace sl_oc
 {
 
 VideoCapture::VideoCapture(VideoParams params)
@@ -304,7 +324,7 @@ bool VideoCapture::openCamera( uint8_t devId )
     // Check camera model
     mCameraModel = getCameraModel(mDevName);
 
-    if( mCameraModel==sl_drv::SL_DEVICE::NONE )
+    if( mCameraModel==sl_oc::SL_DEVICE::NONE )
     {
         if(mParams.verbose)
         {
@@ -314,8 +334,8 @@ bool VideoCapture::openCamera( uint8_t devId )
         return false;
     }
 
-    if( mCameraModel==sl_drv::SL_DEVICE::ZED ||
-            mCameraModel==sl_drv::SL_DEVICE::ZED_M )
+    if( mCameraModel==sl_oc::SL_DEVICE::ZED ||
+            mCameraModel==sl_oc::SL_DEVICE::ZED_M )
     {
         if(mParams.verbose)
         {
@@ -650,15 +670,15 @@ int VideoCapture::xioctl(int fd, uint64_t IOCTL_X, void *arg)
     return (ret);
 }
 
-sl_drv::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
+sl_oc::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
 {
-    sl_drv::SL_DEVICE camera_device = sl_drv::SL_DEVICE::NONE;
+    sl_oc::SL_DEVICE camera_device = sl_oc::SL_DEVICE::NONE;
     int vid = 0, pid = 0;
     std::string modalias = "";
     std::string name = dev_name.erase(0, 5); //remove /dev/
     if (!(std::ifstream("/sys/class/video4linux/" + name + "/device/modalias") >> modalias))
     {
-        if(mParams.verbose>sl_drv::VERBOSITY::ERROR)
+        if(mParams.verbose>sl_oc::VERBOSITY::ERROR)
         {
             std::string msg =
                     std::string(" Not a modalias : /sys/class/video4linux/")
@@ -703,15 +723,15 @@ sl_drv::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
 
     // check PID VID
     if (pid == SL_USB_PROD_ZED_REVA && vid == SL_USB_VENDOR)
-        camera_device = sl_drv::SL_DEVICE::ZED;
+        camera_device = sl_oc::SL_DEVICE::ZED;
     else if (pid == SL_USB_PROD_ZED_M_REVA && vid == SL_USB_VENDOR)
-        camera_device = sl_drv::SL_DEVICE::ZED_M;
+        camera_device = sl_oc::SL_DEVICE::ZED_M;
     else if (pid == SL_USB_PROD_ZED_REVB && vid == SL_USB_VENDOR)
-        camera_device = sl_drv::SL_DEVICE::ZED_CBS;
+        camera_device = sl_oc::SL_DEVICE::ZED_CBS;
     else if (pid == SL_USB_PROD_ZED_M_REVB && vid == SL_USB_VENDOR)
-        camera_device = sl_drv::SL_DEVICE::ZED_M_CBS;
+        camera_device = sl_oc::SL_DEVICE::ZED_M_CBS;
     else if (pid == SL_USB_PROD_ZED_2_REVB && vid == SL_USB_VENDOR)
-        camera_device = sl_drv::SL_DEVICE::ZED_2;
+        camera_device = sl_oc::SL_DEVICE::ZED_2;
 
     return camera_device;
 }

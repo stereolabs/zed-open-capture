@@ -1,3 +1,23 @@
+///////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2020, STEREOLABS.
+//
+// All rights reserved.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+///////////////////////////////////////////////////////////////////////////
+
 // ----> Includes
 #include "videocapture.hpp"
 
@@ -28,44 +48,45 @@ CamControl activeControl = Brightness;
 
 // ----> Global functions to control settings
 // Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_drv::RESOLUTION res );
+void showImage( std::string name, cv::Mat& img, sl_oc::RESOLUTION res );
 
 // Handle Keyboard
-void handleKeyboard( sl_drv::VideoCapture &cap, int key );
+void handleKeyboard( sl_oc::VideoCapture &cap, int key );
 
 // Change active control
 void setActiveControl( CamControl control );
 
 // Set new value for the active control
-void setControlValue( sl_drv::VideoCapture &cap, int value );
+void setControlValue( sl_oc::VideoCapture &cap, int value );
 
 // '+' or '-' pressed
-void changeControlValue( sl_drv::VideoCapture &cap, bool increase );
+void changeControlValue( sl_oc::VideoCapture &cap, bool increase );
 
 // 'a' or 'A' pressed to enable automatic WhiteBalanse or Gain/Exposure
-void toggleAutomaticControl( sl_drv::VideoCapture &cap );
+void toggleAutomaticControl( sl_oc::VideoCapture &cap );
 // <---- Global functions to control settings
 
 // The main function
 int main(int argc, char *argv[])
 {
-    sl_drv::VERBOSITY verbose = sl_drv::VERBOSITY::INFO;
+    sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
+
     // ----> 1) Set Video parameters
-    sl_drv::VideoParams params;
-    params.res = sl_drv::RESOLUTION::HD720;
-    params.fps = sl_drv::FPS::FPS_60;
+    sl_oc::VideoParams params;
+    params.res = sl_oc::RESOLUTION::HD720;
+    params.fps = sl_oc::FPS::FPS_60;
     params.verbose = verbose;
     // <---- Set Video parameters
 
     // ----> 2) Create Video Capture
-    sl_drv::VideoCapture cap(params);
+    sl_oc::VideoCapture cap(params);
     if( !cap.initializeVideo(-1) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
         std::cerr << "See verbosity level for more details." << std::endl;
 
         return EXIT_FAILURE;
-    }    
+    }
     std::cout << "Connected to camera sn: " << cap.getSerialNumber() << std::endl;
     // <---- Create Video Capture
 
@@ -76,7 +97,7 @@ int main(int argc, char *argv[])
     while (1)
     {
         // 3) Get last available frame
-        const sl_drv::Frame* frame = cap.getLastFrame();
+        const sl_oc::Frame* frame = cap.getLastFrame();
 
         // ----> 4) If the frame is valid we can display it
         if(frame != nullptr)
@@ -122,7 +143,7 @@ int main(int argc, char *argv[])
 }
 
 // Handle Keyboard
-void handleKeyboard( sl_drv::VideoCapture &cap, int key )
+void handleKeyboard( sl_oc::VideoCapture &cap, int key )
 {
     if(key >= '0' && key <= '9')
     {
@@ -270,7 +291,7 @@ void setActiveControl( CamControl control )
 }
 
 // Set new value for the active control
-void setControlValue(sl_drv::VideoCapture &cap, int value )
+void setControlValue(sl_oc::VideoCapture &cap, int value )
 {
     int newValue;
     switch( activeControl )
@@ -335,7 +356,7 @@ void setControlValue(sl_drv::VideoCapture &cap, int value )
 }
 
 // '+' or '-' pressed
-void changeControlValue( sl_drv::VideoCapture &cap, bool increase )
+void changeControlValue( sl_oc::VideoCapture &cap, bool increase )
 {
     int curValue=0;
     switch( activeControl )
@@ -360,43 +381,43 @@ void changeControlValue( sl_drv::VideoCapture &cap, bool increase )
 
     case Gain:
     {
-        int curValueLeft = cap.getGain(sl_drv::CAM_SENS_POS::LEFT);
-        int curValueRight = cap.getGain(sl_drv::CAM_SENS_POS::RIGHT);
+        int curValueLeft = cap.getGain(sl_oc::CAM_SENS_POS::LEFT);
+        int curValueRight = cap.getGain(sl_oc::CAM_SENS_POS::RIGHT);
 
         if(increase)
         {
-            cap.setGain(sl_drv::CAM_SENS_POS::LEFT,++curValueLeft);
-            cap.setGain(sl_drv::CAM_SENS_POS::RIGHT,++curValueRight);
+            cap.setGain(sl_oc::CAM_SENS_POS::LEFT,++curValueLeft);
+            cap.setGain(sl_oc::CAM_SENS_POS::RIGHT,++curValueRight);
         }
         else
         {
-            cap.setGain(sl_drv::CAM_SENS_POS::LEFT,--curValueLeft);
-            cap.setGain(sl_drv::CAM_SENS_POS::RIGHT,--curValueRight);;
+            cap.setGain(sl_oc::CAM_SENS_POS::LEFT,--curValueLeft);
+            cap.setGain(sl_oc::CAM_SENS_POS::RIGHT,--curValueRight);;
         }
 
-        std::cout << "New Left Gain value: " << cap.getGain(sl_drv::CAM_SENS_POS::LEFT) << std::endl;
-        std::cout << "New Right Gain value: " << cap.getGain(sl_drv::CAM_SENS_POS::RIGHT) << std::endl;
+        std::cout << "New Left Gain value: " << cap.getGain(sl_oc::CAM_SENS_POS::LEFT) << std::endl;
+        std::cout << "New Right Gain value: " << cap.getGain(sl_oc::CAM_SENS_POS::RIGHT) << std::endl;
     }
         break;
 
     case Exposure:
     {
-        int curValueLeft = cap.getExposure(sl_drv::CAM_SENS_POS::LEFT);
-        int curValueRight = cap.getExposure(sl_drv::CAM_SENS_POS::RIGHT);
+        int curValueLeft = cap.getExposure(sl_oc::CAM_SENS_POS::LEFT);
+        int curValueRight = cap.getExposure(sl_oc::CAM_SENS_POS::RIGHT);
 
         if(increase)
         {
-            cap.setExposure(sl_drv::CAM_SENS_POS::LEFT,++curValueLeft);
-            cap.setExposure(sl_drv::CAM_SENS_POS::RIGHT,++curValueRight);
+            cap.setExposure(sl_oc::CAM_SENS_POS::LEFT,++curValueLeft);
+            cap.setExposure(sl_oc::CAM_SENS_POS::RIGHT,++curValueRight);
         }
         else
         {
-            cap.setExposure(sl_drv::CAM_SENS_POS::LEFT,--curValueLeft);
-            cap.setExposure(sl_drv::CAM_SENS_POS::RIGHT,--curValueRight);;
+            cap.setExposure(sl_oc::CAM_SENS_POS::LEFT,--curValueLeft);
+            cap.setExposure(sl_oc::CAM_SENS_POS::RIGHT,--curValueRight);;
         }
 
-        std::cout << "New Left Exposure value: " << cap.getExposure(sl_drv::CAM_SENS_POS::LEFT) << std::endl;
-        std::cout << "New Right Exposure value: " << cap.getExposure(sl_drv::CAM_SENS_POS::RIGHT) << std::endl;
+        std::cout << "New Left Exposure value: " << cap.getExposure(sl_oc::CAM_SENS_POS::LEFT) << std::endl;
+        std::cout << "New Right Exposure value: " << cap.getExposure(sl_oc::CAM_SENS_POS::RIGHT) << std::endl;
     }
         break;
 
@@ -436,7 +457,7 @@ void changeControlValue( sl_drv::VideoCapture &cap, bool increase )
 }
 
 // 'a' or 'A' pressed to enable automatic WhiteBalanse or Gain/Exposure
-void toggleAutomaticControl( sl_drv::VideoCapture &cap )
+void toggleAutomaticControl( sl_oc::VideoCapture &cap )
 {
     if(activeControl == WhiteBalance)
     {
@@ -456,22 +477,22 @@ void toggleAutomaticControl( sl_drv::VideoCapture &cap )
 }
 
 // Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_drv::RESOLUTION res )
+void showImage( std::string name, cv::Mat& img, sl_oc::RESOLUTION res )
 {
     cv::Mat resized;
     switch(res)
     {
     default:
-    case sl_drv::RESOLUTION::VGA:
+    case sl_oc::RESOLUTION::VGA:
         resized = img;
         break;
-    case sl_drv::RESOLUTION::HD720:
+    case sl_oc::RESOLUTION::HD720:
+        name += " [Resize factor 0.6]";
         cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
         break;
-    case sl_drv::RESOLUTION::HD1080:
-        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
-        break;
-    case sl_drv::RESOLUTION::HD2K:
+    case sl_oc::RESOLUTION::HD1080:
+    case sl_oc::RESOLUTION::HD2K:
+        name += " [Resize factor 0.4]";
         cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
         break;
     }

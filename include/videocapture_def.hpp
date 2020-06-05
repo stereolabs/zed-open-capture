@@ -1,3 +1,23 @@
+///////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2020, STEREOLABS.
+//
+// All rights reserved.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+///////////////////////////////////////////////////////////////////////////
+
 #ifndef VIDEOCAPTURE_DEF_HPP
 #define VIDEOCAPTURE_DEF_HPP
 
@@ -7,7 +27,7 @@
 
 #include "defines.hpp"
 
-namespace sl_drv {
+namespace sl_oc {
 
 /*!
  * \brief Camera models
@@ -63,7 +83,7 @@ typedef struct VideoParams
     VideoParams() {
         res = RESOLUTION::HD2K;
         fps = FPS::FPS_15;
-        verbose= sl_drv::VERBOSITY::ERROR;
+        verbose= sl_oc::VERBOSITY::ERROR;
     }
 
     RESOLUTION res; //!< Camera resolution
@@ -90,11 +110,11 @@ struct Resolution {
 };
 
 /*! \brief Vector of the available resolutions */
-static const std::vector<sl_drv::Resolution> cameraResolution = {
-    sl_drv::Resolution(2208, 1242), /**< sl::RESOLUTION::HD2K */
-    sl_drv::Resolution(1920, 1080), /**< sl::RESOLUTION::HD1080 */
-    sl_drv::Resolution(1280, 720), /**< sl::RESOLUTION::HD720 */
-    sl_drv::Resolution(672, 376) /**< sl::RESOLUTION::VGA */
+static const std::vector<sl_oc::Resolution> cameraResolution = {
+    sl_oc::Resolution(2208, 1242), /**< sl::RESOLUTION::HD2K */
+    sl_oc::Resolution(1920, 1080), /**< sl::RESOLUTION::HD1080 */
+    sl_oc::Resolution(1280, 720), /**< sl::RESOLUTION::HD720 */
+    sl_oc::Resolution(672, 376) /**< sl::RESOLUTION::VGA */
 };
 
 

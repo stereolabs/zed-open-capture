@@ -1,4 +1,24 @@
-﻿#ifndef VIDEOCAPTURE_HPP
+﻿///////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2020, STEREOLABS.
+//
+// All rights reserved.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+///////////////////////////////////////////////////////////////////////////
+
+#ifndef VIDEOCAPTURE_HPP
 #define VIDEOCAPTURE_HPP
 
 #include "defines.hpp"
@@ -8,7 +28,7 @@
 #ifdef VIDEO_MOD_AVAILABLE
 #include "videocapture_def.hpp"
 
-namespace sl_drv {
+namespace sl_oc {
 
 #ifdef SENSORS_MOD_AVAILABLE
 class SensorCapture;
@@ -338,7 +358,7 @@ private:
     int input_set_framerate(int fps);                           //!< Set UVC framerate
     int xioctl(int fd, uint64_t IOCTL_X, void *arg);            //!< Send ioctl command
     void checkResFps();                                         //!< Check if the Framerate is correct for the selected resolution
-    sl_drv::SL_DEVICE getCameraModel(std::string dev_name);     //!< Get the connected camera model
+    sl_oc::SL_DEVICE getCameraModel(std::string dev_name);     //!< Get the connected camera model
     // <---- Connection control functions
 
 private:
@@ -362,7 +382,7 @@ private:
     int mChannels = 0;                  //!< Frame channels
     int mFps=0;                          //!< Frames per seconds
 
-    sl_drv::SL_DEVICE mCameraModel = sl_drv::SL_DEVICE::NONE; //!< The camera model
+    sl_oc::SL_DEVICE mCameraModel = sl_oc::SL_DEVICE::NONE; //!< The camera model
 
     Frame mLastFrame;                   //!< Last grabbed frame
     uint8_t mBufCount = 2;              //!< UVC buffer count

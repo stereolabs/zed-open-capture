@@ -1,3 +1,23 @@
+///////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2020, STEREOLABS.
+//
+// All rights reserved.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+///////////////////////////////////////////////////////////////////////////
+
 // ----> Includes
 #include "videocapture.hpp"
 #include "sensorcapture.hpp"
@@ -15,7 +35,7 @@
 
 // ----> Functions
 // Sensor acquisition runs at 400Hz, so it must be executed in a different thread
-void getSensorThreadFunc(sl_drv::SensorCapture* sensCap);
+void getSensorThreadFunc(sl_oc::SensorCapture* sensCap);
 // <---- Functions
 
 // ----> Global variables
@@ -32,17 +52,17 @@ uint64_t mcu_sync_ts=0;
 int main(int argc, char *argv[])
 {
     // Set the verbose level
-    sl_drv::VERBOSITY verbose = sl_drv::VERBOSITY::ERROR;
+    sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::ERROR;
 
     // ----> 1) Set the video parameters
-    sl_drv::VideoParams params;
-    params.res = sl_drv::RESOLUTION::HD720;
-    params.fps = sl_drv::FPS::FPS_60;
+    sl_oc::VideoParams params;
+    params.res = sl_oc::RESOLUTION::HD720;
+    params.fps = sl_oc::FPS::FPS_60;
     params.verbose = verbose;
     // <---- Video parameters
 
     // ----> 2) Create a Video Capture object
-    sl_drv::VideoCapture videoCap(params);
+    sl_oc::VideoCapture videoCap(params);
     if( !videoCap.initializeVideo(-1) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
@@ -58,7 +78,7 @@ int main(int argc, char *argv[])
     // <---- Create a Video Capture object
 
     // ----> 4) Create a Sensors Capture object
-    sl_drv::SensorCapture sensCap(verbose);
+    sl_oc::SensorCapture sensCap(verbose);
     if( !sensCap.initializeSensors(camSn) ) // Note: we use the serial number acquired by the VideoCapture object
     {
         std::cerr << "Cannot open sensors capture" << std::endl;
@@ -86,16 +106,16 @@ int main(int argc, char *argv[])
     switch(params.res)
     {
     default:
-    case sl_drv::RESOLUTION::VGA:
+    case sl_oc::RESOLUTION::VGA:
         display_resolution.width = w;
         display_resolution.height = h;
         break;
-    case sl_drv::RESOLUTION::HD720:
+    case sl_oc::RESOLUTION::HD720:
         display_resolution.width = w*0.6;
         display_resolution.height = h*0.6;
         break;
-    case sl_drv::RESOLUTION::HD1080:
-    case sl_drv::RESOLUTION::HD2K:
+    case sl_oc::RESOLUTION::HD1080:
+    case sl_oc::RESOLUTION::HD2K:
         display_resolution.width = w*0.4;
         display_resolution.height = h*0.4;
         break;
@@ -114,7 +134,7 @@ int main(int argc, char *argv[])
     {
         // ----> 7) Get Video frame
         // Get last available frame
-        const sl_drv::Frame* frame = videoCap.getLastFrame(1);
+        const sl_oc::Frame* frame = videoCap.getLastFrame(1);
 
         // If the frame is valid we can update it
         std::stringstream videoTs;
@@ -201,7 +221,7 @@ int main(int argc, char *argv[])
 }
 
 // Sensor acquisition runs at 400Hz, so it must be executed in a different thread
-void getSensorThreadFunc(sl_drv::SensorCapture* sensCap)
+void getSensorThreadFunc(sl_oc::SensorCapture* sensCap)
 {
     // Flag to stop the thread
     sensThreadStop = false;
@@ -213,7 +233,7 @@ void getSensorThreadFunc(sl_drv::SensorCapture* sensCap)
     while(!sensThreadStop)
     {
         // ----> Get IMU data
-        const sl_drv::SensImuData* imuData = sensCap->getLastIMUData(2000);
+        const sl_oc::SensImuData* imuData = sensCap->getLastIMUData(2000);
 
         // Process data only if valid
         if(imuData && imuData->valid /*&& imuData->sync*/) // Uncomment to use only data syncronized with the video frames

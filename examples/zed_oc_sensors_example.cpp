@@ -1,3 +1,23 @@
+///////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2020, STEREOLABS.
+//
+// All rights reserved.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+///////////////////////////////////////////////////////////////////////////
+
 // ----> Includes
 #include "sensorcapture.hpp"
 
@@ -10,10 +30,10 @@
 int main(int argc, char *argv[])
 {
     // Set the verbose level
-    sl_drv::VERBOSITY verbose = sl_drv::VERBOSITY::INFO;
+    sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
     // 1) Create a SensorCapture object
-    sl_drv::SensorCapture sens(verbose);
+    sl_oc::SensorCapture sens(verbose);
 
     // ----> 2) Get a list of available camera with sensor
     std::vector<int> devs = sens.getDeviceList();
@@ -56,7 +76,7 @@ int main(int argc, char *argv[])
     while(++count<4000)
     {
         // ----> 5) Get IMU data with a timeout of 5 millisecods
-        const sl_drv::SensImuData* imuData = sens.getLastIMUData(5000);
+        const sl_oc::SensImuData* imuData = sens.getLastIMUData(5000);
         if( imuData && imuData->valid )
         {
             std::cout << "**** New IMU data ****" << std::endl;
@@ -72,8 +92,8 @@ int main(int argc, char *argv[])
         // <---- Get IMU data with a timeout of 5 millisecods
 
         // ----> 6) Get Magnetometer data with a timeout of 100 microseconds to not slow down fastest data (IMU)
-        const sl_drv::SensMagData* magData = sens.getLastMagnetometerData(100);
-        if( magData && magData->valid == sl_drv::SensMagData::NEW_VAL )
+        const sl_oc::SensMagData* magData = sens.getLastMagnetometerData(100);
+        if( magData && magData->valid == sl_oc::SensMagData::NEW_VAL )
         {
             std::cout << "**** New Magnetometer data ****" << std::endl;
             std::cout << " * Timestamp: " << magData->timestamp << " nsec" << std::endl;
@@ -87,8 +107,8 @@ int main(int argc, char *argv[])
         // <---- Get Magnetometer data with a timeout of 100 microseconds to not slow down fastest data (IMU)
 
         // ----> 7) Get Environment data with a timeout of 100 microseconds to not slow down fastest data (IMU)
-        const sl_drv::SensEnvData* envData = sens.getLastEnvironmentData(100);
-        if( envData && envData->valid == sl_drv::SensEnvData::NEW_VAL )
+        const sl_oc::SensEnvData* envData = sens.getLastEnvironmentData(100);
+        if( envData && envData->valid == sl_oc::SensEnvData::NEW_VAL )
         {
             std::cout << "**** New Environment data ****" << std::endl;
             std::cout << " * Timestamp: " << envData->timestamp << " nsec" << std::endl;
@@ -104,7 +124,7 @@ int main(int argc, char *argv[])
         // <---- Get Environment data with a timeout of 100 microseconds to not slow down fastest data (IMU)
 
         // ----> 8) Get Temperature data with a timeout of 100 microseconds to not slow down fastest data (IMU)
-        const sl_drv::SensCamTempData* tempData = sens.getLastCameraTemperatureData(100);
+        const sl_oc::SensCamTempData* tempData = sens.getLastCameraTemperatureData(100);
         if( tempData && tempData->valid )
         {
             std::cout << "**** New Camera Sensors Temperature data ****" << std::endl;

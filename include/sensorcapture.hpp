@@ -1,3 +1,23 @@
+///////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2020, STEREOLABS.
+//
+// All rights reserved.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+///////////////////////////////////////////////////////////////////////////
+
 #ifndef SENSORCAPTURE_HPP
 #define SENSORCAPTURE_HPP
 
@@ -12,7 +32,7 @@
 #ifdef SENSORS_MOD_AVAILABLE
 #include "sensorcapture_def.hpp"
 #include "hidapi.h"
-namespace sl_drv {
+namespace sl_oc {
 
 #ifdef VIDEO_MOD_AVAILABLE
 class VideoCapture;
@@ -96,7 +116,7 @@ public:
      * \brief The default constructor
      * \param verbose enable useful information to debug the class behaviours while running
      */
-    SensorCapture( sl_drv::VERBOSITY verbose_lvl=sl_drv::VERBOSITY::ERROR );
+    SensorCapture( sl_oc::VERBOSITY verbose_lvl=sl_oc::VERBOSITY::ERROR );
 
     /*!
      * \brief The class destructor
