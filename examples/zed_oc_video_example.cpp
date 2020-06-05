@@ -204,7 +204,7 @@ void handleKeyboard( sl_oc::VideoCapture &cap, int key )
 
     case 'r':
     case 'R':
-        cap.resetBrightnessSetting();
+        cap.resetBrightness();
         cap.resetSharpness();
         cap.resetContrast();
         cap.resetHue();

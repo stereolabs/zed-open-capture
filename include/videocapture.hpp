@@ -130,7 +130,7 @@ public:
     /*!
      * \brief Reset the Brightness value to default value
      */
-    void resetBrightnessSetting();
+    void resetBrightness();
 
     /*!
      * \brief Set the Sharpness value

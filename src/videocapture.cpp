@@ -306,6 +306,15 @@ bool VideoCapture::initializeVideo( int devId/*=-1*/ )
 
     setLEDstatus( true );
 
+    resetAECAGC();
+    resetAutoWhiteBalance();
+    resetBrightness();
+    resetContrast();
+    resetGamma();
+    resetHue();
+    resetSaturation();
+    resetSharpness();
+
     return mInitialized;
 }
 
@@ -1519,7 +1528,7 @@ void VideoCapture::setBrightness(int brightness)
     setCameraControlSettings(LINUX_CTRL_BRIGHTNESS, brightness);
 }
 
-void VideoCapture::resetBrightnessSetting()
+void VideoCapture::resetBrightness()
 {
     resetCameraControlSettings(LINUX_CTRL_BRIGHTNESS);
 }
