@@ -1,0 +1,382 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+		<meta name="robots" content="noindex, follow"/>
+        <meta name="generator" content="Doxygen 1.8.18"/>
+        <title>SensImuData Struct Reference | ZED Open Capture API Reference | Stereolabs</title><!--END PROJECT_NAME (ZED Open Capture)-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700,800">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,600,700">
+        <link href="tabs.css?t=Fri Jun 5 2020 14:12:15" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery.js?t=Fri Jun 5 2020 14:12:15"></script>
+        <script type="text/javascript" src="custom.js?t=Fri Jun 5 2020 14:12:15"></script>
+        <script type="text/javascript" src="dynsections.js?t=Fri Jun 5 2020 14:12:15"></script>
+        <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+        <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+        <link href="stylesheet.css?t=Fri Jun 5 2020 14:12:15" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+            <div id="titlearea">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr style="height: 58px;">
+                            <td class="headerSpacer"></td>
+                            <td id="projectlogo">
+                                <a href="https://www.stereolabs.com"><img src="https://www.stereolabs.com/img/logo_stereolabs.svg" alt="Stereolabs logo" id="logo"></a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://github.com/stereolabs/zed-open-capture" >SOURCE CODE</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://support.stereolabs.com/hc/en-us" >SUPPORT</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://www.stereolabs.com/developers/release/latest/" >DOWNLOADS</a>
+                            </td>
+                            <td><i class="mobile-navigation"></i></td>
+                            <!--<td id="projectlogo" >
+                                <a href="https://www.stereolabs.com/"> <img alt="Logo" src="logo_stereolabs.png" height="27"/> </a>
+                            </td>-->
+                            <!--<td style="padding-left: 0.4cm;">-->
+                                <!--<div id="projectname">--><!--ZED Open Capture-->
+                                    <!--<span id="projectnumber"> | ZED SDK 0.1</span>-->
+                                <!--</div>-->
+                                <!--BEGIN PROJECT_BRIEF<div id="projectbrief"></div><!--END PROJECT_BRIEF-->
+                            <!--</td>-->
+                            <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--<div id="subtitlearea">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr style="height: 28px;">
+                            <td class="headerSpacer"></td>
+                            <td id="subMenuCpp" class="nav-links nav-links-header nav-links-selected">
+                                <a href="https://www.stereolabs.com/docs/api/"  >C++</a>
+                            </td>
+                            <td id="subMenuPython" class="nav-links nav-links-header">
+                                <a href="https://www.stereolabs.com/docs/api/python/" >Python</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+            <!-- end header part -->
+<!-- Generated by Doxygen 1.8.18 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('structsl__oc_1_1SensImuData.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Attributes</a> &#124;
+<a href="structsl__oc_1_1SensImuData-members.html">List of all members</a>  </div>
+  <div class="headertitle">
+<div class="title">SensImuData Struct Reference</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>The struct containing the acquired IMU data.  
+ <a href="structsl__oc_1_1SensImuData.html#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Attributes</h2></td></tr>
+<tr class="memitem:a28e3c179a86f337095088b3ca02a2b2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsl__oc_1_1SensImuData.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> = false</td></tr>
+<tr class="memdesc:a28e3c179a86f337095088b3ca02a2b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if IMU data are valid.  <a href="structsl__oc_1_1SensImuData.html#a28e3c179a86f337095088b3ca02a2b2a">More...</a><br /></td></tr>
+<tr class="separator:a28e3c179a86f337095088b3ca02a2b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a465bef81f6478756e5443025b1f2ddfa"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsl__oc_1_1SensImuData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a> = 0</td></tr>
+<tr class="memdesc:a465bef81f6478756e5443025b1f2ddfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timestamp in nanoseconds.  <a href="structsl__oc_1_1SensImuData.html#a465bef81f6478756e5443025b1f2ddfa">More...</a><br /></td></tr>
+<tr class="separator:a465bef81f6478756e5443025b1f2ddfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9f27499fb09c5c31ec7281bc79cf972"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsl__oc_1_1SensImuData.html#aa9f27499fb09c5c31ec7281bc79cf972">aX</a></td></tr>
+<tr class="memdesc:aa9f27499fb09c5c31ec7281bc79cf972"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acceleration along X axis in m/s²  <a href="structsl__oc_1_1SensImuData.html#aa9f27499fb09c5c31ec7281bc79cf972">More...</a><br /></td></tr>
+<tr class="separator:aa9f27499fb09c5c31ec7281bc79cf972"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b573a84378f78cbf2bfee9ca304f2d0"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsl__oc_1_1SensImuData.html#a7b573a84378f78cbf2bfee9ca304f2d0">aY</a></td></tr>
+<tr class="memdesc:a7b573a84378f78cbf2bfee9ca304f2d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acceleration along Y axis in m/s²  <a href="structsl__oc_1_1SensImuData.html#a7b573a84378f78cbf2bfee9ca304f2d0">More...</a><br /></td></tr>
+<tr class="separator:a7b573a84378f78cbf2bfee9ca304f2d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e0dee32de8773dd38898016117686ee"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsl__oc_1_1SensImuData.html#a7e0dee32de8773dd38898016117686ee">aZ</a></td></tr>
+<tr class="memdesc:a7e0dee32de8773dd38898016117686ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acceleration along Z axis in m/s²  <a href="structsl__oc_1_1SensImuData.html#a7e0dee32de8773dd38898016117686ee">More...</a><br /></td></tr>
+<tr class="separator:a7e0dee32de8773dd38898016117686ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7924dddbfb2c0f4c5974d78fd919f4c5"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsl__oc_1_1SensImuData.html#a7924dddbfb2c0f4c5974d78fd919f4c5">gX</a></td></tr>
+<tr class="memdesc:a7924dddbfb2c0f4c5974d78fd919f4c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angular velocity around X axis in °/s.  <a href="structsl__oc_1_1SensImuData.html#a7924dddbfb2c0f4c5974d78fd919f4c5">More...</a><br /></td></tr>
+<tr class="separator:a7924dddbfb2c0f4c5974d78fd919f4c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab857a2882123103c01a787c041f23e66"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsl__oc_1_1SensImuData.html#ab857a2882123103c01a787c041f23e66">gY</a></td></tr>
+<tr class="memdesc:ab857a2882123103c01a787c041f23e66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angular velocity around Y axis in °/s.  <a href="structsl__oc_1_1SensImuData.html#ab857a2882123103c01a787c041f23e66">More...</a><br /></td></tr>
+<tr class="separator:ab857a2882123103c01a787c041f23e66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8eaf0dab9163e9e69478f9c29038728"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsl__oc_1_1SensImuData.html#aa8eaf0dab9163e9e69478f9c29038728">gZ</a></td></tr>
+<tr class="memdesc:aa8eaf0dab9163e9e69478f9c29038728"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angular velocity around &gt; axis in °/s.  <a href="structsl__oc_1_1SensImuData.html#aa8eaf0dab9163e9e69478f9c29038728">More...</a><br /></td></tr>
+<tr class="separator:aa8eaf0dab9163e9e69478f9c29038728"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24d61a35b72d7299eb6b5f48e71a571b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsl__oc_1_1SensImuData.html#a24d61a35b72d7299eb6b5f48e71a571b">temp</a></td></tr>
+<tr class="memdesc:a24d61a35b72d7299eb6b5f48e71a571b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sensor temperature in °C.  <a href="structsl__oc_1_1SensImuData.html#a24d61a35b72d7299eb6b5f48e71a571b">More...</a><br /></td></tr>
+<tr class="separator:a24d61a35b72d7299eb6b5f48e71a571b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5bad216eac9aefc703a450d3163e542"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsl__oc_1_1SensImuData.html#af5bad216eac9aefc703a450d3163e542">sync</a></td></tr>
+<tr class="memdesc:af5bad216eac9aefc703a450d3163e542"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates in IMU data are synchronized with a video frame.  <a href="structsl__oc_1_1SensImuData.html#af5bad216eac9aefc703a450d3163e542">More...</a><br /></td></tr>
+<tr class="separator:af5bad216eac9aefc703a450d3163e542"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The struct containing the acquired IMU data. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_sensors_example_8cpp-example.html#_a5">zed_oc_sensors_example.cpp</a>, and <a class="el" href="zed_oc_sync_example_8cpp-example.html#_a17">zed_oc_sync_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="sensorcapture_8hpp_source.html#l00044">44</a> of file <a class="el" href="sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+</div><h2 class="groupheader">Variables</h2>
+<a id="a28e3c179a86f337095088b3ca02a2b2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28e3c179a86f337095088b3ca02a2b2a">&#9670;&nbsp;</a></span>valid</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool valid = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indicates if IMU data are valid. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_sensors_example_8cpp-example.html#a7">zed_oc_sensors_example.cpp</a>, and <a class="el" href="zed_oc_sync_example_8cpp-example.html#a19">zed_oc_sync_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="sensorcapture_8hpp_source.html#l00046">46</a> of file <a class="el" href="sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a465bef81f6478756e5443025b1f2ddfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a465bef81f6478756e5443025b1f2ddfa">&#9670;&nbsp;</a></span>timestamp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t timestamp = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Timestamp in nanoseconds. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_sensors_example_8cpp-example.html#a8">zed_oc_sensors_example.cpp</a>, and <a class="el" href="zed_oc_sync_example_8cpp-example.html#a20">zed_oc_sync_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="sensorcapture_8hpp_source.html#l00047">47</a> of file <a class="el" href="sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="aa9f27499fb09c5c31ec7281bc79cf972"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9f27499fb09c5c31ec7281bc79cf972">&#9670;&nbsp;</a></span>aX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float aX</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Acceleration along X axis in m/s² </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_sensors_example_8cpp-example.html#a9">zed_oc_sensors_example.cpp</a>, and <a class="el" href="zed_oc_sync_example_8cpp-example.html#a21">zed_oc_sync_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="sensorcapture_8hpp_source.html#l00048">48</a> of file <a class="el" href="sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a7b573a84378f78cbf2bfee9ca304f2d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b573a84378f78cbf2bfee9ca304f2d0">&#9670;&nbsp;</a></span>aY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float aY</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Acceleration along Y axis in m/s² </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_sensors_example_8cpp-example.html#a10">zed_oc_sensors_example.cpp</a>, and <a class="el" href="zed_oc_sync_example_8cpp-example.html#a22">zed_oc_sync_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="sensorcapture_8hpp_source.html#l00049">49</a> of file <a class="el" href="sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a7e0dee32de8773dd38898016117686ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e0dee32de8773dd38898016117686ee">&#9670;&nbsp;</a></span>aZ</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float aZ</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Acceleration along Z axis in m/s² </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_sensors_example_8cpp-example.html#a11">zed_oc_sensors_example.cpp</a>, and <a class="el" href="zed_oc_sync_example_8cpp-example.html#a23">zed_oc_sync_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="sensorcapture_8hpp_source.html#l00050">50</a> of file <a class="el" href="sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a7924dddbfb2c0f4c5974d78fd919f4c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7924dddbfb2c0f4c5974d78fd919f4c5">&#9670;&nbsp;</a></span>gX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float gX</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Angular velocity around X axis in °/s. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_sensors_example_8cpp-example.html#a12">zed_oc_sensors_example.cpp</a>, and <a class="el" href="zed_oc_sync_example_8cpp-example.html#a24">zed_oc_sync_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="sensorcapture_8hpp_source.html#l00051">51</a> of file <a class="el" href="sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ab857a2882123103c01a787c041f23e66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab857a2882123103c01a787c041f23e66">&#9670;&nbsp;</a></span>gY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float gY</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Angular velocity around Y axis in °/s. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_sensors_example_8cpp-example.html#a13">zed_oc_sensors_example.cpp</a>, and <a class="el" href="zed_oc_sync_example_8cpp-example.html#a25">zed_oc_sync_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="sensorcapture_8hpp_source.html#l00052">52</a> of file <a class="el" href="sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="aa8eaf0dab9163e9e69478f9c29038728"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8eaf0dab9163e9e69478f9c29038728">&#9670;&nbsp;</a></span>gZ</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float gZ</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Angular velocity around &gt; axis in °/s. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_sensors_example_8cpp-example.html#a14">zed_oc_sensors_example.cpp</a>, and <a class="el" href="zed_oc_sync_example_8cpp-example.html#a26">zed_oc_sync_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="sensorcapture_8hpp_source.html#l00053">53</a> of file <a class="el" href="sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a24d61a35b72d7299eb6b5f48e71a571b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24d61a35b72d7299eb6b5f48e71a571b">&#9670;&nbsp;</a></span>temp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float temp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sensor temperature in °C. </p>
+
+<p class="definition">Definition at line <a class="el" href="sensorcapture_8hpp_source.html#l00054">54</a> of file <a class="el" href="sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="af5bad216eac9aefc703a450d3163e542"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5bad216eac9aefc703a450d3163e542">&#9670;&nbsp;</a></span>sync</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool sync</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indicates in IMU data are synchronized with a video frame. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_sync_example_8cpp-example.html#a27">zed_oc_sync_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="sensorcapture_8hpp_source.html#l00055">55</a> of file <a class="el" href="sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->

@@ -1,0 +1,291 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+		<meta name="robots" content="noindex, follow"/>
+        <meta name="generator" content="Doxygen 1.8.18"/>
+        <title>videocapture_def.hpp Source File | ZED Open Capture API Reference | Stereolabs</title><!--END PROJECT_NAME (ZED Open Capture)-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700,800">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,600,700">
+        <link href="tabs.css?t=Fri Jun 5 2020 14:12:14" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery.js?t=Fri Jun 5 2020 14:12:14"></script>
+        <script type="text/javascript" src="custom.js?t=Fri Jun 5 2020 14:12:14"></script>
+        <script type="text/javascript" src="dynsections.js?t=Fri Jun 5 2020 14:12:14"></script>
+        <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+        <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+        <link href="stylesheet.css?t=Fri Jun 5 2020 14:12:14" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+            <div id="titlearea">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr style="height: 58px;">
+                            <td class="headerSpacer"></td>
+                            <td id="projectlogo">
+                                <a href="https://www.stereolabs.com"><img src="https://www.stereolabs.com/img/logo_stereolabs.svg" alt="Stereolabs logo" id="logo"></a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://github.com/stereolabs/zed-open-capture" >SOURCE CODE</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://support.stereolabs.com/hc/en-us" >SUPPORT</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://www.stereolabs.com/developers/release/latest/" >DOWNLOADS</a>
+                            </td>
+                            <td><i class="mobile-navigation"></i></td>
+                            <!--<td id="projectlogo" >
+                                <a href="https://www.stereolabs.com/"> <img alt="Logo" src="logo_stereolabs.png" height="27"/> </a>
+                            </td>-->
+                            <!--<td style="padding-left: 0.4cm;">-->
+                                <!--<div id="projectname">--><!--ZED Open Capture-->
+                                    <!--<span id="projectnumber"> | ZED SDK 0.1</span>-->
+                                <!--</div>-->
+                                <!--BEGIN PROJECT_BRIEF<div id="projectbrief"></div><!--END PROJECT_BRIEF-->
+                            <!--</td>-->
+                            <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--<div id="subtitlearea">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr style="height: 28px;">
+                            <td class="headerSpacer"></td>
+                            <td id="subMenuCpp" class="nav-links nav-links-header nav-links-selected">
+                                <a href="https://www.stereolabs.com/docs/api/"  >C++</a>
+                            </td>
+                            <td id="subMenuPython" class="nav-links nav-links-header">
+                                <a href="https://www.stereolabs.com/docs/api/python/" >Python</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+            <!-- end header part -->
+<!-- Generated by Doxygen 1.8.18 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('videocapture__def_8hpp_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">videocapture_def.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2020, STEREOLABS.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">// All rights reserved.</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">// &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#ifndef VIDEOCAPTURE_DEF_HPP</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define VIDEOCAPTURE_DEF_HPP</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#ifndef NSEC_PER_SEC</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define NSEC_PER_SEC                   1000000000ULL</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;defines.hpp&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesl__oc.html">sl_oc</a> {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72">   35</a></span>&#160;<span class="keyword">enum class</span> <a class="code" href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72">SL_DEVICE</a> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72a70e519e34a6d0625129508391ceed654">ZED</a>,        </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72accc49115bf464e05db413e56744704b9">ZED_M</a>,      </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72a21e89914d0cc9a5af85bd7c99a847367">ZED_CBS</a>,    </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72acbb340102fa8ec2211efa8775cdc97e4">ZED_M_CBS</a>,  </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72a603368901fe048d35e42ea73a0a2bfda">ZED_2</a>,      </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72ab50339a10e1de285ac99d4c3990b8693">NONE</a></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;};</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828">   47</a></span>&#160;<span class="keyword">enum class</span> <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828">RESOLUTION</a> {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c">HD2K</a>,       </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b">HD1080</a>,     </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">HD720</a>,      </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828adb4371197d1f58c7d4edb7dcd0565ad1">VGA</a>,        </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828af447f5c03508de4d88e340390ba7c78f">LAST</a></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;};</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524">   58</a></span>&#160;<span class="keyword">enum class</span> <a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524">FPS</a> {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a2d2534a49a411d2d25a839fa52a071a6">FPS_15</a> = 15,    </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a4491b5a81b26c2d60e7d60334d658d0d">FPS_30</a> = 30,    </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a97ca268671aa69223171bb0b4aa1461d">FPS_60</a> = 60,    </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a5f5e2e56f742de174c12628f138b4a43">FPS_100</a> = 100,  </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524af447f5c03508de4d88e340390ba7c78f">LAST</a> = 101</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;};</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">   69</a></span>&#160;<span class="keyword">enum class</span> <a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a> {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758">LEFT</a> = 0,   </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403">RIGHT</a> = 1,  </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681af447f5c03508de4d88e340390ba7c78f">LAST</a> = 3</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;};</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="structsl__oc_1_1VideoParams.html">   78</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsl__oc_1_1VideoParams.html">VideoParams</a></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;{</div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="structsl__oc_1_1VideoParams.html#afe2dfbfaa5a24edd444e50a48461a7a1">   83</a></span>&#160;    <a class="code" href="structsl__oc_1_1VideoParams.html#afe2dfbfaa5a24edd444e50a48461a7a1">VideoParams</a>() {</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50">res</a> = <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c">RESOLUTION::HD2K</a>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <a class="code" href="structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2">fps</a> = <a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a2d2534a49a411d2d25a839fa52a071a6">FPS::FPS_15</a>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">verbose</a>= sl_oc::VERBOSITY::ERROR;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50">   89</a></span>&#160;    <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828">RESOLUTION</a> <a class="code" href="structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50">res</a>; </div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2">   90</a></span>&#160;    <a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524">FPS</a> <a class="code" href="structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2">fps</a>;        </div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">   91</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">verbose</a>;   </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#aa249d59737f2502dd206a052116229c0">   92</a></span>&#160;} <a class="code" href="namespacesl__oc.html#aa249d59737f2502dd206a052116229c0">VideoParams</a>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="structsl__oc_1_1Resolution.html">   97</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structsl__oc_1_1Resolution.html">Resolution</a> {</div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="structsl__oc_1_1Resolution.html#a02bed8590a9ddf520e58a060059518ec">   98</a></span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="structsl__oc_1_1Resolution.html#a02bed8590a9ddf520e58a060059518ec">width</a>; </div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="structsl__oc_1_1Resolution.html#a02afeaaf8574e7a78d6b466ff2695052">   99</a></span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="structsl__oc_1_1Resolution.html#a02afeaaf8574e7a78d6b466ff2695052">height</a>; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="structsl__oc_1_1Resolution.html#a7cae4f5be45c77a7d3561fbfc4cf452e">  106</a></span>&#160;    <a class="code" href="structsl__oc_1_1Resolution.html#a7cae4f5be45c77a7d3561fbfc4cf452e">Resolution</a>(<span class="keywordtype">size_t</span> w_ = 0, <span class="keywordtype">size_t</span> h_ = 0) {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <a class="code" href="structsl__oc_1_1Resolution.html#a02bed8590a9ddf520e58a060059518ec">width</a> = w_;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <a class="code" href="structsl__oc_1_1Resolution.html#a02afeaaf8574e7a78d6b466ff2695052">height</a> = h_;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    }</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;};</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#ae47310a2ab6d268f893daf0afa9ab6a6">  113</a></span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::vector&lt;sl_oc::Resolution&gt; <a class="code" href="namespacesl__oc.html#ae47310a2ab6d268f893daf0afa9ab6a6">cameraResolution</a> = {</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <a class="code" href="structsl__oc_1_1Resolution.html">sl_oc::Resolution</a>(2208, 1242), </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <a class="code" href="structsl__oc_1_1Resolution.html">sl_oc::Resolution</a>(1920, 1080), </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <a class="code" href="structsl__oc_1_1Resolution.html">sl_oc::Resolution</a>(1280, 720), </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <a class="code" href="structsl__oc_1_1Resolution.html">sl_oc::Resolution</a>(672, 376) </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;};</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="structsl__oc_1_1UVCBuffer.html">  125</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structsl__oc_1_1UVCBuffer.html">UVCBuffer</a> {</div>
+<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="structsl__oc_1_1UVCBuffer.html#a53255b934b07b472175fbb8e847f9b5d">  126</a></span>&#160;    <span class="keywordtype">void</span> *<a class="code" href="structsl__oc_1_1UVCBuffer.html#a53255b934b07b472175fbb8e847f9b5d">start</a>;    </div>
+<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="structsl__oc_1_1UVCBuffer.html#ae809d5359ac030c60a30a8f0b2294b82">  127</a></span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="structsl__oc_1_1UVCBuffer.html#ae809d5359ac030c60a30a8f0b2294b82">length</a>;  </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;};</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="namespacesl__oc_1_1cbs.html">  134</a></span>&#160;<span class="keyword">namespace </span>cbs {</div>
+<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="namespacesl__oc_1_1cbs.html#aaba5a84814f6ebd42548cb17bddf797f">  135</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="namespacesl__oc_1_1cbs.html#aaba5a84814f6ebd42548cb17bddf797f">PRESET_GAMMA</a>[9][16] = {</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        {7,14,29,54,66,78,89,103,114,123,139,154,183,206,228,254}, <span class="comment">// gamma min</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        {9,17,34,58,71,83,89,108,118,127,143,158,186,208,229,254},</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        {10,20,38,63,75,88,99,112,123,132,147,162,189,210,230,254},</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        {12,23,43,67,80,92,103,117,127,136,151,165,192,212,231,254},</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        {13,26,47,71,84,97,108,121,131,140,155,169,195,214,232,255}, <span class="comment">// gamma middle/default</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        {18,32,54,80,93,106,117,130,140,149,164,177,202,219,236,255},</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        {24,38,61,88,102,115,127,139,148,157,172,186,209,225,240,255},</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        {29,44,68,97,111,124,136,147,157,166,181,194,215,230,243,255},</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        {34,50,75,105,120,133,145,156,165,174,189,202,222,235,247,255} <span class="comment">// gamma strong</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    };</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;}</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="preprocessor">#endif // VIDEOCAPTURE_DEF_HPP</span></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828adb4371197d1f58c7d4edb7dcd0565ad1"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828adb4371197d1f58c7d4edb7dcd0565ad1">sl_oc::RESOLUTION::VGA</a></div><div class="ttdeci">@ VGA</div></div>
+<div class="ttc" id="anamespacesl__oc_html_af2be5e41610afb58aeec369e8bb9a524af447f5c03508de4d88e340390ba7c78f"><div class="ttname"><a href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524af447f5c03508de4d88e340390ba7c78f">sl_oc::FPS::LAST</a></div><div class="ttdeci">@ LAST</div></div>
+<div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c">sl_oc::RESOLUTION::HD2K</a></div><div class="ttdeci">@ HD2K</div></div>
+<div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">sl_oc::RESOLUTION::HD720</a></div><div class="ttdeci">@ HD720</div></div>
+<div class="ttc" id="anamespacesl__oc_html_af2be5e41610afb58aeec369e8bb9a524a2d2534a49a411d2d25a839fa52a071a6"><div class="ttname"><a href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a2d2534a49a411d2d25a839fa52a071a6">sl_oc::FPS::FPS_15</a></div><div class="ttdeci">@ FPS_15</div><div class="ttdoc">15 Frames per second. Available for all the resolutions.</div></div>
+<div class="ttc" id="astructsl__oc_1_1VideoParams_html"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html">sl_oc::VideoParams</a></div><div class="ttdoc">The camera configuration parameters.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00078">videocapture_def.hpp:79</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a2b86a6fb96d76950d0de78b1ab840681af447f5c03508de4d88e340390ba7c78f"><div class="ttname"><a href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681af447f5c03508de4d88e340390ba7c78f">sl_oc::CAM_SENS_POS::LAST</a></div><div class="ttdeci">@ LAST</div></div>
+<div class="ttc" id="anamespacesl__oc_html_aa249d59737f2502dd206a052116229c0"><div class="ttname"><a href="namespacesl__oc.html#aa249d59737f2502dd206a052116229c0">sl_oc::VideoParams</a></div><div class="ttdeci">struct sl_oc::VideoParams VideoParams</div><div class="ttdoc">The camera configuration parameters.</div></div>
+<div class="ttc" id="astructsl__oc_1_1Resolution_html_a02bed8590a9ddf520e58a060059518ec"><div class="ttname"><a href="structsl__oc_1_1Resolution.html#a02bed8590a9ddf520e58a060059518ec">sl_oc::Resolution::width</a></div><div class="ttdeci">size_t width</div><div class="ttdoc">array width in pixels</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00098">videocapture_def.hpp:98</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828af447f5c03508de4d88e340390ba7c78f"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828af447f5c03508de4d88e340390ba7c78f">sl_oc::RESOLUTION::LAST</a></div><div class="ttdeci">@ LAST</div></div>
+<div class="ttc" id="astructsl__oc_1_1VideoParams_html_a0b2caeb4b6f130be43e5a2f0267dd453"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">sl_oc::VideoParams::verbose</a></div><div class="ttdeci">int verbose</div><div class="ttdoc">Verbose mode.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00091">videocapture_def.hpp:91</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1VideoParams_html_afe2dfbfaa5a24edd444e50a48461a7a1"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html#afe2dfbfaa5a24edd444e50a48461a7a1">sl_oc::VideoParams::VideoParams</a></div><div class="ttdeci">VideoParams()</div><div class="ttdoc">Default constructor setting the default parameter values.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00083">videocapture_def.hpp:83</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1Resolution_html_a7cae4f5be45c77a7d3561fbfc4cf452e"><div class="ttname"><a href="structsl__oc_1_1Resolution.html#a7cae4f5be45c77a7d3561fbfc4cf452e">sl_oc::Resolution::Resolution</a></div><div class="ttdeci">Resolution(size_t w_=0, size_t h_=0)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00106">videocapture_def.hpp:106</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_ae3205f7c538dc3170f554909df60ee72a70e519e34a6d0625129508391ceed654"><div class="ttname"><a href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72a70e519e34a6d0625129508391ceed654">sl_oc::SL_DEVICE::ZED</a></div><div class="ttdeci">@ ZED</div><div class="ttdoc">ZED old FW.</div></div>
+<div class="ttc" id="anamespacesl__oc_html_ae3205f7c538dc3170f554909df60ee72accc49115bf464e05db413e56744704b9"><div class="ttname"><a href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72accc49115bf464e05db413e56744704b9">sl_oc::SL_DEVICE::ZED_M</a></div><div class="ttdeci">@ ZED_M</div><div class="ttdoc">ZED Mini old FW.</div></div>
+<div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828">sl_oc::RESOLUTION</a></div><div class="ttdeci">RESOLUTION</div><div class="ttdoc">Available resolutions.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00047">videocapture_def.hpp:47</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1Resolution_html"><div class="ttname"><a href="structsl__oc_1_1Resolution.html">sl_oc::Resolution</a></div><div class="ttdoc">Resolution in pixel for each frame.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00097">videocapture_def.hpp:97</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_af2be5e41610afb58aeec369e8bb9a524"><div class="ttname"><a href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524">sl_oc::FPS</a></div><div class="ttdeci">FPS</div><div class="ttdoc">Available frames per seconds.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00058">videocapture_def.hpp:58</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1UVCBuffer_html_a53255b934b07b472175fbb8e847f9b5d"><div class="ttname"><a href="structsl__oc_1_1UVCBuffer.html#a53255b934b07b472175fbb8e847f9b5d">sl_oc::UVCBuffer::start</a></div><div class="ttdeci">void * start</div><div class="ttdoc">Address of the first byte of the buffer.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00126">videocapture_def.hpp:126</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_ae3205f7c538dc3170f554909df60ee72a21e89914d0cc9a5af85bd7c99a847367"><div class="ttname"><a href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72a21e89914d0cc9a5af85bd7c99a847367">sl_oc::SL_DEVICE::ZED_CBS</a></div><div class="ttdeci">@ ZED_CBS</div><div class="ttdoc">ZED new FW.</div></div>
+<div class="ttc" id="anamespacesl__oc_html"><div class="ttname"><a href="namespacesl__oc.html">sl_oc</a></div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8cpp_source.html#l00031">sensorcapture.cpp:31</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758"><div class="ttname"><a href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758">sl_oc::CAM_SENS_POS::LEFT</a></div><div class="ttdeci">@ LEFT</div><div class="ttdoc">The left sensor.</div></div>
+<div class="ttc" id="anamespacesl__oc_html_a2b86a6fb96d76950d0de78b1ab840681"><div class="ttname"><a href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">sl_oc::CAM_SENS_POS</a></div><div class="ttdeci">CAM_SENS_POS</div><div class="ttdoc">Position of the Camera CMOS sensors.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00069">videocapture_def.hpp:69</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1VideoParams_html_af11815e3fc76bef0ebf32bff8fe0bdd2"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2">sl_oc::VideoParams::fps</a></div><div class="ttdeci">FPS fps</div><div class="ttdoc">Frames per second.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00090">videocapture_def.hpp:90</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_ae3205f7c538dc3170f554909df60ee72"><div class="ttname"><a href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72">sl_oc::SL_DEVICE</a></div><div class="ttdeci">SL_DEVICE</div><div class="ttdoc">Camera models.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00035">videocapture_def.hpp:35</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b">sl_oc::RESOLUTION::HD1080</a></div><div class="ttdeci">@ HD1080</div></div>
+<div class="ttc" id="anamespacesl__oc_html_af2be5e41610afb58aeec369e8bb9a524a5f5e2e56f742de174c12628f138b4a43"><div class="ttname"><a href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a5f5e2e56f742de174c12628f138b4a43">sl_oc::FPS::FPS_100</a></div><div class="ttdeci">@ FPS_100</div><div class="ttdoc">100 Frames per second. Only available for RESOLUTION::VGA.</div></div>
+<div class="ttc" id="anamespacesl__oc_html_af2be5e41610afb58aeec369e8bb9a524a97ca268671aa69223171bb0b4aa1461d"><div class="ttname"><a href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a97ca268671aa69223171bb0b4aa1461d">sl_oc::FPS::FPS_60</a></div><div class="ttdeci">@ FPS_60</div><div class="ttdoc">60 Frames per second. Not available for RESOLUTION::HD2K and RESOLUTION::HD1080.</div></div>
+<div class="ttc" id="anamespacesl__oc_1_1cbs_html_aaba5a84814f6ebd42548cb17bddf797f"><div class="ttname"><a href="namespacesl__oc_1_1cbs.html#aaba5a84814f6ebd42548cb17bddf797f">sl_oc::cbs::PRESET_GAMMA</a></div><div class="ttdeci">const unsigned char PRESET_GAMMA[9][16]</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00135">videocapture_def.hpp:135</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1UVCBuffer_html"><div class="ttname"><a href="structsl__oc_1_1UVCBuffer.html">sl_oc::UVCBuffer</a></div><div class="ttdoc">The Buffer struct used by UVC to store frame data.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00125">videocapture_def.hpp:125</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403"><div class="ttname"><a href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a21507b40c80068eda19865706fdc2403">sl_oc::CAM_SENS_POS::RIGHT</a></div><div class="ttdeci">@ RIGHT</div><div class="ttdoc">The right sensor.</div></div>
+<div class="ttc" id="anamespacesl__oc_html_ae3205f7c538dc3170f554909df60ee72a603368901fe048d35e42ea73a0a2bfda"><div class="ttname"><a href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72a603368901fe048d35e42ea73a0a2bfda">sl_oc::SL_DEVICE::ZED_2</a></div><div class="ttdeci">@ ZED_2</div><div class="ttdoc">ZED2.</div></div>
+<div class="ttc" id="astructsl__oc_1_1Resolution_html_a02afeaaf8574e7a78d6b466ff2695052"><div class="ttname"><a href="structsl__oc_1_1Resolution.html#a02afeaaf8574e7a78d6b466ff2695052">sl_oc::Resolution::height</a></div><div class="ttdeci">size_t height</div><div class="ttdoc">array height in pixels</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00099">videocapture_def.hpp:99</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1UVCBuffer_html_ae809d5359ac030c60a30a8f0b2294b82"><div class="ttname"><a href="structsl__oc_1_1UVCBuffer.html#ae809d5359ac030c60a30a8f0b2294b82">sl_oc::UVCBuffer::length</a></div><div class="ttdeci">size_t length</div><div class="ttdoc">Size of the buffer.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00127">videocapture_def.hpp:127</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1VideoParams_html_aace2ea0b4bc2f335f22e3d019afa3d50"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50">sl_oc::VideoParams::res</a></div><div class="ttdeci">RESOLUTION res</div><div class="ttdoc">Camera resolution.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00089">videocapture_def.hpp:89</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_ae47310a2ab6d268f893daf0afa9ab6a6"><div class="ttname"><a href="namespacesl__oc.html#ae47310a2ab6d268f893daf0afa9ab6a6">sl_oc::cameraResolution</a></div><div class="ttdeci">static const std::vector&lt; sl_oc::Resolution &gt; cameraResolution</div><div class="ttdoc">Vector of the available resolutions.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00113">videocapture_def.hpp:113</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_ae3205f7c538dc3170f554909df60ee72acbb340102fa8ec2211efa8775cdc97e4"><div class="ttname"><a href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72acbb340102fa8ec2211efa8775cdc97e4">sl_oc::SL_DEVICE::ZED_M_CBS</a></div><div class="ttdeci">@ ZED_M_CBS</div><div class="ttdoc">ZED Mini new FW.</div></div>
+<div class="ttc" id="anamespacesl__oc_html_ae3205f7c538dc3170f554909df60ee72ab50339a10e1de285ac99d4c3990b8693"><div class="ttname"><a href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72ab50339a10e1de285ac99d4c3990b8693">sl_oc::SL_DEVICE::NONE</a></div><div class="ttdeci">@ NONE</div></div>
+<div class="ttc" id="anamespacesl__oc_html_af2be5e41610afb58aeec369e8bb9a524a4491b5a81b26c2d60e7d60334d658d0d"><div class="ttname"><a href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a4491b5a81b26c2d60e7d60334d658d0d">sl_oc::FPS::FPS_30</a></div><div class="ttdeci">@ FPS_30</div><div class="ttdoc">30 Frames per second. Not available for RESOLUTION::HD2K.</div></div>
