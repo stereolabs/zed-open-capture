@@ -38,8 +38,8 @@ To be able to access the USB you must install the udev rule contained in the `ud
 
 ### Clone the repository
     
-    $ git clone https://github.com/stereolabs/zed-driver.git
-    $ cd zed-driver
+    $ git clone https://github.com/stereolabs/zed-open-capture.git
+    $ cd zed-open-capture
 
 ### Compile
 
@@ -114,8 +114,8 @@ Compile only the sensors library
 If you compiled and installed the examples you can test that everything is correctly working:
 
  1. Connect the camera to an USB3 port
- 2. Test the video functionalities: `$ zed_driver_video_example`
- 3. If you own a ZED Mini or a ZED2 you can also test the sensors: `$ zed_driver_sensors_example`
- 4. Finally, if you own a ZED Mini or a ZED2, you can test the video/sensors synchronization: `$ zed_driver_sync_example`
+ 2. Test the video functionalities: `$ zed_open_capture_video_example`
+ 3. If you own a ZED Mini or a ZED2 you can also test the sensors: `$ zed_open_capture_sensors_example`
+ 4. Finally, if you own a ZED Mini or a ZED2, you can test the video/sensors synchronization: `$ zed_open_capture_sync_example`
 
 

@@ -11,6 +11,7 @@ _____
   - Sensors Capture example
   - Video/Sensors synchronization
   - Video/Sensors synchronization example
+  - Video rectification example
 
   ### Known Issues
   - None
