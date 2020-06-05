@@ -9,10 +9,10 @@
         <title>zed_oc_rectify_example.cpp | ZED Open Capture API Reference | Stereolabs</title><!--END PROJECT_NAME (ZED Open Capture)-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700,800">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,600,700">
-        <link href="tabs.css?t=Fri Jun 5 2020 14:38:12" rel="stylesheet" type="text/css"/>
-        <script type="text/javascript" src="jquery.js?t=Fri Jun 5 2020 14:38:12"></script>
-        <script type="text/javascript" src="custom.js?t=Fri Jun 5 2020 14:38:12"></script>
-        <script type="text/javascript" src="dynsections.js?t=Fri Jun 5 2020 14:38:12"></script>
+        <link href="tabs.css?t=Fri Jun 5 2020 14:48:20" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery.js?t=Fri Jun 5 2020 14:48:20"></script>
+        <script type="text/javascript" src="custom.js?t=Fri Jun 5 2020 14:48:20"></script>
+        <script type="text/javascript" src="dynsections.js?t=Fri Jun 5 2020 14:48:20"></script>
         <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -25,7 +25,7 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
-        <link href="stylesheet.css?t=Fri Jun 5 2020 14:38:12" rel="stylesheet" type="text/css" />
+        <link href="stylesheet.css?t=Fri Jun 5 2020 14:48:20" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -176,8 +176,8 @@ $(document).ready(function(){initNavTree('zed_oc_rectify_example_8cpp-example.ht
 <div class="line"> </div>
 <div class="line">    <span class="comment">// ----&gt; 1) Set Video parameters</span></div>
 <div class="line">    <a name="_a0"></a><a class="code" href="structsl__oc_1_1VideoParams.html">sl_oc::VideoParams</a> params;</div>
-<div class="line">    params.<a name="a1"></a><a class="code" href="structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50">res</a> = <a name="a2"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">sl_oc::RESOLUTION::HD720</a>;</div>
-<div class="line">    params.<a name="a3"></a><a class="code" href="structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2">fps</a> = <a name="a4"></a><a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a97ca268671aa69223171bb0b4aa1461d">sl_oc::FPS::FPS_60</a>;</div>
+<div class="line">    params.<a name="a1"></a><a class="code" href="structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50">res</a> = <a name="a2"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c">sl_oc::RESOLUTION::HD2K</a>;</div>
+<div class="line">    params.<a name="a3"></a><a class="code" href="structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2">fps</a> = <a name="a4"></a><a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a2d2534a49a411d2d25a839fa52a071a6">sl_oc::FPS::FPS_15</a>;</div>
 <div class="line">    params.<a name="a5"></a><a class="code" href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">verbose</a> = verbose;</div>
 <div class="line">    <span class="comment">// &lt;---- Set Video parameters</span></div>
 <div class="line"> </div>
@@ -275,12 +275,12 @@ $(document).ready(function(){initNavTree('zed_oc_rectify_example_8cpp-example.ht
 <div class="line">    <span class="keywordflow">case</span> <a name="a11"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828adb4371197d1f58c7d4edb7dcd0565ad1">sl_oc::RESOLUTION::VGA</a>:</div>
 <div class="line">        resized = img;</div>
 <div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">sl_oc::RESOLUTION::HD720</a>:</div>
+<div class="line">    <span class="keywordflow">case</span> <a name="a12"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">sl_oc::RESOLUTION::HD720</a>:</div>
 <div class="line">        name += <span class="stringliteral">&quot; [Resize factor 0.6]&quot;</span>;</div>
 <div class="line">        cv::resize( img, resized, cv::Size(), 0.6, 0.6 );</div>
 <div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> <a name="a12"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b">sl_oc::RESOLUTION::HD1080</a>:</div>
-<div class="line">    <span class="keywordflow">case</span> <a name="a13"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c">sl_oc::RESOLUTION::HD2K</a>:</div>
+<div class="line">    <span class="keywordflow">case</span> <a name="a13"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b">sl_oc::RESOLUTION::HD1080</a>:</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c">sl_oc::RESOLUTION::HD2K</a>:</div>
 <div class="line">        name += <span class="stringliteral">&quot; [Resize factor 0.4]&quot;</span>;</div>
 <div class="line">        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );</div>
 <div class="line">        <span class="keywordflow">break</span>;</div>
@@ -295,6 +295,7 @@ $(document).ready(function(){initNavTree('zed_oc_rectify_example_8cpp-example.ht
 <div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c">sl_oc::RESOLUTION::HD2K</a></div><div class="ttdeci">@ HD2K</div></div>
 <div class="ttc" id="astructsl__oc_1_1Frame_html_a81c9f8d0b8c3b49d770be14dbe9f0d37"><div class="ttname"><a href="structsl__oc_1_1Frame.html#a81c9f8d0b8c3b49d770be14dbe9f0d37">sl_oc::Frame::height</a></div><div class="ttdeci">uint16_t height</div><div class="ttdoc">Frame height.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00046">videocapture.hpp:46</a></div></div>
 <div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">sl_oc::RESOLUTION::HD720</a></div><div class="ttdeci">@ HD720</div></div>
+<div class="ttc" id="anamespacesl__oc_html_af2be5e41610afb58aeec369e8bb9a524a2d2534a49a411d2d25a839fa52a071a6"><div class="ttname"><a href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a2d2534a49a411d2d25a839fa52a071a6">sl_oc::FPS::FPS_15</a></div><div class="ttdeci">@ FPS_15</div><div class="ttdoc">15 Frames per second. Available for all the resolutions.</div></div>
 <div class="ttc" id="astructsl__oc_1_1VideoParams_html"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html">sl_oc::VideoParams</a></div><div class="ttdoc">The camera configuration parameters.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00078">videocapture_def.hpp:79</a></div></div>
 <div class="ttc" id="anamespacesl__oc_html_ab16e0dc2a4f7533119f355cdb8b42a84"><div class="ttname"><a href="namespacesl__oc.html#ab16e0dc2a4f7533119f355cdb8b42a84">sl_oc::VERBOSITY</a></div><div class="ttdeci">VERBOSITY</div><div class="ttdef"><b>Definition:</b> <a href="defines_8hpp_source.html#l00083">defines.hpp:83</a></div></div>
 <div class="ttc" id="astructsl__oc_1_1VideoParams_html_a0b2caeb4b6f130be43e5a2f0267dd453"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">sl_oc::VideoParams::verbose</a></div><div class="ttdeci">int verbose</div><div class="ttdoc">Verbose mode.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00091">videocapture_def.hpp:91</a></div></div>
@@ -302,7 +303,6 @@ $(document).ready(function(){initNavTree('zed_oc_rectify_example_8cpp-example.ht
 <div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828">sl_oc::RESOLUTION</a></div><div class="ttdeci">RESOLUTION</div><div class="ttdoc">Available resolutions.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00047">videocapture_def.hpp:47</a></div></div>
 <div class="ttc" id="astructsl__oc_1_1VideoParams_html_af11815e3fc76bef0ebf32bff8fe0bdd2"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2">sl_oc::VideoParams::fps</a></div><div class="ttdeci">FPS fps</div><div class="ttdoc">Frames per second.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00090">videocapture_def.hpp:90</a></div></div>
 <div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b">sl_oc::RESOLUTION::HD1080</a></div><div class="ttdeci">@ HD1080</div></div>
-<div class="ttc" id="anamespacesl__oc_html_af2be5e41610afb58aeec369e8bb9a524a97ca268671aa69223171bb0b4aa1461d"><div class="ttname"><a href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a97ca268671aa69223171bb0b4aa1461d">sl_oc::FPS::FPS_60</a></div><div class="ttdeci">@ FPS_60</div><div class="ttdoc">60 Frames per second. Not available for RESOLUTION::HD2K and RESOLUTION::HD1080.</div></div>
 <div class="ttc" id="astructsl__oc_1_1Frame_html"><div class="ttname"><a href="structsl__oc_1_1Frame.html">sl_oc::Frame</a></div><div class="ttdoc">The Frame struct containing the acquired video frames.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00040">videocapture.hpp:41</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1VideoCapture_html"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a></div><div class="ttdoc">The VideoCapture class provides image grabbing functions and settings control for all the Stereolabs ...</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00053">videocapture.hpp:54</a></div></div>
 <div class="ttc" id="astructsl__oc_1_1VideoParams_html_aace2ea0b4bc2f335f22e3d019afa3d50"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50">sl_oc::VideoParams::res</a></div><div class="ttdeci">RESOLUTION res</div><div class="ttdoc">Camera resolution.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00089">videocapture_def.hpp:89</a></div></div>

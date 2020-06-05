@@ -9,10 +9,10 @@
         <title>zed_oc_sync_example.cpp | ZED Open Capture API Reference | Stereolabs</title><!--END PROJECT_NAME (ZED Open Capture)-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700,800">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,600,700">
-        <link href="tabs.css?t=Fri Jun 5 2020 14:38:12" rel="stylesheet" type="text/css"/>
-        <script type="text/javascript" src="jquery.js?t=Fri Jun 5 2020 14:38:12"></script>
-        <script type="text/javascript" src="custom.js?t=Fri Jun 5 2020 14:38:12"></script>
-        <script type="text/javascript" src="dynsections.js?t=Fri Jun 5 2020 14:38:12"></script>
+        <link href="tabs.css?t=Fri Jun 5 2020 14:48:20" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery.js?t=Fri Jun 5 2020 14:48:20"></script>
+        <script type="text/javascript" src="custom.js?t=Fri Jun 5 2020 14:48:20"></script>
+        <script type="text/javascript" src="dynsections.js?t=Fri Jun 5 2020 14:48:20"></script>
         <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -25,7 +25,7 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
-        <link href="stylesheet.css?t=Fri Jun 5 2020 14:38:12" rel="stylesheet" type="text/css" />
+        <link href="stylesheet.css?t=Fri Jun 5 2020 14:48:20" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -190,8 +190,8 @@ $(document).ready(function(){initNavTree('zed_oc_sync_example_8cpp-example.html'
 <div class="line"> </div>
 <div class="line">    <span class="comment">// ----&gt; 1) Set the video parameters</span></div>
 <div class="line">    <a name="_a1"></a><a class="code" href="structsl__oc_1_1VideoParams.html">sl_oc::VideoParams</a> params;</div>
-<div class="line">    params.<a name="a2"></a><a class="code" href="structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50">res</a> = <a name="a3"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">sl_oc::RESOLUTION::HD720</a>;</div>
-<div class="line">    params.<a name="a4"></a><a class="code" href="structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2">fps</a> = <a name="a5"></a><a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a97ca268671aa69223171bb0b4aa1461d">sl_oc::FPS::FPS_60</a>;</div>
+<div class="line">    params.<a name="a2"></a><a class="code" href="structsl__oc_1_1VideoParams.html#aace2ea0b4bc2f335f22e3d019afa3d50">res</a> = <a name="a3"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c">sl_oc::RESOLUTION::HD2K</a>;</div>
+<div class="line">    params.<a name="a4"></a><a class="code" href="structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2">fps</a> = <a name="a5"></a><a class="code" href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a2d2534a49a411d2d25a839fa52a071a6">sl_oc::FPS::FPS_15</a>;</div>
 <div class="line">    params.<a name="a6"></a><a class="code" href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">verbose</a> = verbose;</div>
 <div class="line">    <span class="comment">// &lt;---- Video parameters</span></div>
 <div class="line"> </div>
@@ -244,12 +244,12 @@ $(document).ready(function(){initNavTree('zed_oc_sync_example_8cpp-example.html'
 <div class="line">        display_resolution.width = w;</div>
 <div class="line">        display_resolution.height = h;</div>
 <div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">sl_oc::RESOLUTION::HD720</a>:</div>
+<div class="line">    <span class="keywordflow">case</span> <a name="a9"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">sl_oc::RESOLUTION::HD720</a>:</div>
 <div class="line">        display_resolution.width = w*0.6;</div>
 <div class="line">        display_resolution.height = h*0.6;</div>
 <div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> <a name="a9"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b">sl_oc::RESOLUTION::HD1080</a>:</div>
-<div class="line">    <span class="keywordflow">case</span> <a name="a10"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c">sl_oc::RESOLUTION::HD2K</a>:</div>
+<div class="line">    <span class="keywordflow">case</span> <a name="a10"></a><a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b">sl_oc::RESOLUTION::HD1080</a>:</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code" href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828ab5cf8bac4234790ecda4797bf325116c">sl_oc::RESOLUTION::HD2K</a>:</div>
 <div class="line">        display_resolution.width = w*0.4;</div>
 <div class="line">        display_resolution.height = h*0.4;</div>
 <div class="line">        <span class="keywordflow">break</span>;</div>
@@ -416,6 +416,7 @@ $(document).ready(function(){initNavTree('zed_oc_sync_example_8cpp-example.html'
 <div class="ttc" id="astructsl__oc_1_1SensImuData_html_a7924dddbfb2c0f4c5974d78fd919f4c5"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html#a7924dddbfb2c0f4c5974d78fd919f4c5">sl_oc::SensImuData::gX</a></div><div class="ttdeci">float gX</div><div class="ttdoc">Angular velocity around X axis in °/s.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00051">sensorcapture.hpp:51</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1SensorCapture_html"><div class="ttname"><a href="classsl__oc_1_1SensorCapture.html">sl_oc::SensorCapture</a></div><div class="ttdoc">The SensorCapture class provides sensor grabbing functions for the Stereolabs ZED Mini and ZED2 camer...</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00110">sensorcapture.hpp:111</a></div></div>
 <div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828a4cdfd6b884ead99d46d935f580246f0e">sl_oc::RESOLUTION::HD720</a></div><div class="ttdeci">@ HD720</div></div>
+<div class="ttc" id="anamespacesl__oc_html_af2be5e41610afb58aeec369e8bb9a524a2d2534a49a411d2d25a839fa52a071a6"><div class="ttname"><a href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a2d2534a49a411d2d25a839fa52a071a6">sl_oc::FPS::FPS_15</a></div><div class="ttdeci">@ FPS_15</div><div class="ttdoc">15 Frames per second. Available for all the resolutions.</div></div>
 <div class="ttc" id="astructsl__oc_1_1VideoParams_html"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html">sl_oc::VideoParams</a></div><div class="ttdoc">The camera configuration parameters.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00078">videocapture_def.hpp:79</a></div></div>
 <div class="ttc" id="astructsl__oc_1_1Frame_html_a465bef81f6478756e5443025b1f2ddfa"><div class="ttname"><a href="structsl__oc_1_1Frame.html#a465bef81f6478756e5443025b1f2ddfa">sl_oc::Frame::timestamp</a></div><div class="ttdeci">uint64_t timestamp</div><div class="ttdoc">Timestamp in nanoseconds.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00043">videocapture.hpp:43</a></div></div>
 <div class="ttc" id="astructsl__oc_1_1SensImuData_html_aa8eaf0dab9163e9e69478f9c29038728"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html#aa8eaf0dab9163e9e69478f9c29038728">sl_oc::SensImuData::gZ</a></div><div class="ttdeci">float gZ</div><div class="ttdoc">Angular velocity around &gt; axis in °/s.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00053">sensorcapture.hpp:53</a></div></div>
@@ -428,7 +429,6 @@ $(document).ready(function(){initNavTree('zed_oc_sync_example_8cpp-example.html'
 <div class="ttc" id="astructsl__oc_1_1VideoParams_html_af11815e3fc76bef0ebf32bff8fe0bdd2"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2">sl_oc::VideoParams::fps</a></div><div class="ttdeci">FPS fps</div><div class="ttdoc">Frames per second.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00090">videocapture_def.hpp:90</a></div></div>
 <div class="ttc" id="anamespacesl__oc_html_abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b"><div class="ttname"><a href="namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828aebf416754b5b57c91ce22b025015031b">sl_oc::RESOLUTION::HD1080</a></div><div class="ttdeci">@ HD1080</div></div>
 <div class="ttc" id="astructsl__oc_1_1SensImuData_html_af5bad216eac9aefc703a450d3163e542"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html#af5bad216eac9aefc703a450d3163e542">sl_oc::SensImuData::sync</a></div><div class="ttdeci">bool sync</div><div class="ttdoc">Indicates in IMU data are synchronized with a video frame.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00055">sensorcapture.hpp:55</a></div></div>
-<div class="ttc" id="anamespacesl__oc_html_af2be5e41610afb58aeec369e8bb9a524a97ca268671aa69223171bb0b4aa1461d"><div class="ttname"><a href="namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524a97ca268671aa69223171bb0b4aa1461d">sl_oc::FPS::FPS_60</a></div><div class="ttdeci">@ FPS_60</div><div class="ttdoc">60 Frames per second. Not available for RESOLUTION::HD2K and RESOLUTION::HD1080.</div></div>
 <div class="ttc" id="astructsl__oc_1_1Frame_html"><div class="ttname"><a href="structsl__oc_1_1Frame.html">sl_oc::Frame</a></div><div class="ttdoc">The Frame struct containing the acquired video frames.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00040">videocapture.hpp:41</a></div></div>
 <div class="ttc" id="astructsl__oc_1_1Frame_html_a0e8ca486cc6ee69a735e7c55af0c2df0"><div class="ttname"><a href="structsl__oc_1_1Frame.html#a0e8ca486cc6ee69a735e7c55af0c2df0">sl_oc::Frame::frame_id</a></div><div class="ttdeci">uint64_t frame_id</div><div class="ttdoc">Increasing index of frames.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00042">videocapture.hpp:42</a></div></div>
 <div class="ttc" id="astructsl__oc_1_1SensImuData_html_a465bef81f6478756e5443025b1f2ddfa"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html#a465bef81f6478756e5443025b1f2ddfa">sl_oc::SensImuData::timestamp</a></div><div class="ttdeci">uint64_t timestamp</div><div class="ttdoc">Timestamp in nanoseconds.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00047">sensorcapture.hpp:47</a></div></div>

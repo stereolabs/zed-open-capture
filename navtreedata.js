@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "ZED Open Capture", "index.html", [
+    [ "ZED Open Capture API", "index.html", null ],
     [ "Installation", "md_installation.html", null ],
     [ "Modules", "md_modules.html", [
       [ "Video Capture and Control", "classsl__oc_1_1VideoCapture.html", null ],

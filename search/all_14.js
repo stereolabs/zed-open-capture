@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['zed_20open_20capture_160',['ZED Open Capture',['../index.html',1,'']]],
+  ['zed_20open_20capture_20api_160',['ZED Open Capture API',['../index.html',1,'']]],
   ['zed_161',['ZED',['../namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72a70e519e34a6d0625129508391ceed654',1,'sl_oc']]],
   ['zed_5f2_162',['ZED_2',['../namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72a603368901fe048d35e42ea73a0a2bfda',1,'sl_oc']]],
   ['zed_5f2_5ffw_163',['ZED_2_FW',['../namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827',1,'sl_oc']]],
