@@ -1,11 +1,13 @@
 ![](./images/Picto+STEREOLABS_Black.jpg)
 
-# ZED Open Capture
+# ZED Open Capture API
 
 The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the internal sensors (only ZED Mini and ZED2). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
 
 **Note:** The provided data are not calibrated, images are not rectified in a stereoscopic way, IMU data may drift or be misaligned.
 Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/developers/release/).
+
+[Online documentation](https://stereolabs.github.io/zed-open-capture)
 
 ## Installation
 
@@ -116,7 +118,9 @@ From inside the `build` folder:
 
 ## Documentation
 
-HTML Documentation can be locally generated using Doxygen
+Full online documentation: https://stereolabs.github.io/zed-open-capture
+
+Documentation can be locally generated in HTML format using Doxygen:
 
     $ sudo apt-get install -y doxygen # if not previously installed
     $ cd doc

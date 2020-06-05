@@ -73,8 +73,8 @@ int main(int argc, char *argv[])
 
     // ----> 1) Set Video parameters
     sl_oc::VideoParams params;
-    params.res = sl_oc::RESOLUTION::HD720;
-    params.fps = sl_oc::FPS::FPS_60;
+    params.res = sl_oc::RESOLUTION::HD2K;
+    params.fps = sl_oc::FPS::FPS_15;
     params.verbose = verbose;
     // <---- Set Video parameters
 
