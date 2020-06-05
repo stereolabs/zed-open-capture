@@ -37,7 +37,7 @@ class SensorCapture;
 /*!
  * \brief The Frame struct containing the acquired video frames
  */
-struct SL_DRV_EXPORT Frame
+struct SL_OC_EXPORT Frame
 {
     uint64_t frame_id = 0;          //!< Increasing index of frames
     uint64_t timestamp = 0;         //!< Timestamp in nanoseconds
@@ -50,9 +50,9 @@ struct SL_DRV_EXPORT Frame
 /*!
  * \brief The VideoCapture class provides image grabbing functions and settings control for all the Stereolabs camera models
  */
-class SL_DRV_EXPORT VideoCapture
+class SL_OC_EXPORT VideoCapture
 {
-    ZED_DRV_VERSION_ATTRIBUTE;
+    ZED_OC_VERSION_ATTRIBUTE;
 
 public:
     /*!
@@ -411,14 +411,19 @@ private:
 #endif
 
 
-/** \example zed_drv_video_example.cpp
+/** \example zed_oc_video_example.cpp
  * This is an example of how to use the \ref VideoCapture class to get raw video frames and control the camera
  * parameters.
  */
 
-/** \example zed_drv_sync_example.cpp
+/** \example zed_oc_sync_example.cpp
  * This is an example of how to get synchronized video and sensors data from
  * the \ref VideoCapture class and the \ref SensorCapture class.
+ */
+
+/** \example zed_oc_rectify_example.cpp
+ * This is an example of how to use the \ref VideoCapture class to get and rectify raw video frames downloading
+ * calibration parameters from Stereolabs servers
  */
 
 #endif // VIDEOCAPTURE_HPP

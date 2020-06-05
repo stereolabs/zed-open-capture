@@ -37,10 +37,10 @@ SensorCapture::SensorCapture(VERBOSITY verbose_lvl )
     if( mVerbose )
     {
         std::string ver =
-                "ZED Driver - Sensors module - Version: "
-                + std::to_string(mDrvMajorVer) + "."
-                + std::to_string(mDrvMinorVer) + "."
-                + std::to_string(mDrvPatchVer);
+                "ZED Open Capture - Sensors module - Version: "
+                + std::to_string(mMajorVer) + "."
+                + std::to_string(mMinorVer) + "."
+                + std::to_string(mPatchVer);
         INFO_OUT(mVerbose,ver );
     }
 }

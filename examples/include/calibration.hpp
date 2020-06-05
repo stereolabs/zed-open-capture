@@ -4116,10 +4116,16 @@ bool downloadCalibrationFile(unsigned int serial_number, std::string &calibratio
         std::string cmd;
         cmd = "wget " + url + std::to_string(serial_number) + "' -O " + calibration_file;
         std::cout << cmd << std::endl;
-        system(cmd.c_str());
+        int res = system(cmd.c_str());
+
+        if( res == EXIT_FAILURE )
+        {
+            std::cerr << "Error downloading the calibration file" << std::endl;
+            return false;
+        }
 
         if (!checkFile(calibration_file)) {
-            std::cout << "Invalid calibration file" << std::endl;
+            std::cerr << "Invalid calibration file" << std::endl;
             return false;
         }
     }
@@ -4155,6 +4161,7 @@ bool downloadCalibrationFile(unsigned int serial_number, std::string &calibratio
         }
     }
 #endif
+
     return true;
 }
 
@@ -4175,7 +4182,6 @@ bool initCalibration(std::string calibration_file, cv::Size2i image_size, cv::Ma
         return 0;
 
     std::string resolution_str;
-    bool check_data = true;
     switch ((int) image_size.width) {
         case 2208:
             resolution_str = "2k";
@@ -4191,7 +4197,6 @@ bool initCalibration(std::string calibration_file, cv::Size2i image_size, cv::Ma
             break;
         default:
             resolution_str = "hd";
-            check_data = false;
             break;
     }
 

@@ -41,7 +41,7 @@ class VideoCapture;
 /*!
  * \brief The struct containing the acquired IMU data
  */
-struct SL_DRV_EXPORT SensImuData
+struct SL_OC_EXPORT SensImuData
 {
     bool valid = false;     //!< Indicates if IMU data are valid
     uint64_t timestamp = 0; //!< Timestamp in nanoseconds
@@ -58,7 +58,7 @@ struct SL_DRV_EXPORT SensImuData
 /*!
  * \brief The struct containing the acquired Magnetometer data
  */
-struct SL_DRV_EXPORT SensMagData
+struct SL_OC_EXPORT SensMagData
 {
     // Validity of the magnetometer sensor data
     typedef enum _mag_status {
@@ -77,7 +77,7 @@ struct SL_DRV_EXPORT SensMagData
 /*!
  * \brief The struct containing the acquired Environmental data
  */
-struct SL_DRV_EXPORT SensEnvData
+struct SL_OC_EXPORT SensEnvData
 {
     // Validity of the environmental sensor data
     typedef enum _env_status {
@@ -96,7 +96,7 @@ struct SL_DRV_EXPORT SensEnvData
 /*!
  * \brief The struct containing the acquired Environmental data
  */
-struct SL_DRV_EXPORT SensCamTempData
+struct SL_OC_EXPORT SensCamTempData
 {
     bool valid = false;     //!< Indicates if camera temperature data are valid
     uint64_t timestamp = 0; //!< Timestamp in nanoseconds
@@ -107,9 +107,9 @@ struct SL_DRV_EXPORT SensCamTempData
 /*!
  * \brief The SensorCapture class provides sensor grabbing functions for the Stereolabs ZED Mini and ZED2 camera models
  */
-class SL_DRV_EXPORT SensorCapture
+class SL_OC_EXPORT SensorCapture
 {
-    ZED_DRV_VERSION_ATTRIBUTE;
+    ZED_OC_VERSION_ATTRIBUTE;
 
 public:
     /*!
@@ -262,16 +262,18 @@ private:
 
 };
 
-/** \example zed_drv_sensors_example.cpp
+#endif
+
+/** \example zed_oc_sensors_example.cpp
  * This is an example of how to use the \ref SensorCapture class to get the raw sensors data at the maximum available
  * frequency.
  */
 
-/** \example zed_drv_sync_example.cpp
+/** \example zed_oc_sync_example.cpp
  * This is an example of how to get synchronized video and sensors data from
  * the \ref VideoCapture class and the \ref SensorCapture class.
  */
 }
-#endif
+
 
 #endif // SENSORCAPTURE_HPP

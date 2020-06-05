@@ -117,10 +117,10 @@ VideoCapture::VideoCapture(VideoParams params)
     if( mParams.verbose )
     {
         std::string ver =
-                "ZED Driver - Camera module - Version: "
-                + std::to_string(mDrvMajorVer) + "."
-                + std::to_string(mDrvMinorVer) + "."
-                + std::to_string(mDrvPatchVer);
+                "ZED Open Capture - Camera module - Version: "
+                + std::to_string(mMajorVer) + "."
+                + std::to_string(mMinorVer) + "."
+                + std::to_string(mPatchVer);
         INFO_OUT(mParams.verbose,ver);
     }
 

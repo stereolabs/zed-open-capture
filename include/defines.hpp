@@ -30,24 +30,24 @@
 #include <chrono>
 
 #if defined _WIN32
-#if defined(SL_SDK_COMPIL)
-#define SL_SDK_EXPORT __declspec(dllexport)
+#if defined(SL_OC_COMPIL)
+#define SL_OC_EXPORT __declspec(dllexport)
 #else
-#define SL_SDK_EXPORT __declspec(dllimport)
+#define SL_OC_EXPORT __declspec(dllimport)
 #endif
 #elif __GNUC__
-#define SL_DRV_EXPORT __attribute__((visibility("default")))
+#define SL_OC_EXPORT __attribute__((visibility("default")))
 #if defined(__arm__) || defined(__aarch64__)
 #define _SL_JETSON_
 #endif
 #endif
 
 //// SDK VERSION NUMBER
-#define ZED_DRV_MAJOR_VERSION 0
-#define ZED_DRV_MINOR_VERSION 1
-#define ZED_DRV_PATCH_VERSION 0
+#define ZED_OC_MAJOR_VERSION 0
+#define ZED_OC_MINOR_VERSION 1
+#define ZED_OC_PATCH_VERSION 0
 
-#define ZED_DRV_VERSION_ATTRIBUTE private: uint32_t mDrvMajorVer = ZED_DRV_MAJOR_VERSION, mDrvMinorVer = ZED_DRV_MINOR_VERSION, mDrvPatchVer = ZED_DRV_PATCH_VERSION
+#define ZED_OC_VERSION_ATTRIBUTE private: uint32_t mMajorVer = ZED_OC_MAJOR_VERSION, mMinorVer = ZED_OC_MINOR_VERSION, mPatchVer = ZED_OC_PATCH_VERSION
 
 // Debug output
 #define INFO_OUT(lvl,msg) { int status_dem_0; if (lvl>=3) std::cout << "[" << abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status_dem_0) << "] INFO: " << msg << std::endl; }

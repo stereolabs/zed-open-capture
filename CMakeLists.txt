@@ -25,9 +25,9 @@ endif()
 
 ############################################################################
 # Options
-option(BUILD_VIDEO      "Build the ZED Driver Video Modules (only for Linux)"   ON)
-option(BUILD_SENSORS    "Build the ZED Driver Sensors Modules"                  ON)
-option(BUILD_EXAMPLES   "Build the ZED Driver examples"                         ON)
+option(BUILD_VIDEO      "Build the ZED Open Capture Video Modules (only for Linux)"   ON)
+option(BUILD_SENSORS    "Build the ZED Open Capture Sensors Modules"                  ON)
+option(BUILD_EXAMPLES   "Build the ZED Open Capture examples"                         ON)
 
 ############################################################################
 # Sources
@@ -113,7 +113,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 install(TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include/zed-driver)
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include/zed-open-capture)
 
 
 ############################################################################

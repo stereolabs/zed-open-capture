@@ -12,8 +12,8 @@ A synchronization mechanism is provided to get the correct sensor data associate
 <h2 style="text-align: left;">Modules</h2>
 The library is composed of two modules:
 
- - <a href="group__Video__group.html">Video Capture</a>: video frame grabbing and camera control
- - <a href="group__Depth__group.html">Sensor Capture</a>: camera sensors data grabbing
+ - <a href="classsl__oc_1_1VideoCapture.html">Video Capture</a>: video frame grabbing and camera control
+ - <a href="classsl__oc_1_1SensorCapture.html">Sensor Capture</a>: camera sensors data grabbing
 
 <br>
 

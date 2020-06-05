@@ -18,8 +18,8 @@
         <tab type="user" url="md_installation.html" visible="yes" title="Installation"/>         
         
         <tab type="usergroup" url="md_modules.html" visible="yes" title="Modules">
-            <tab type="user" url="classsl__drv_1_1VideoCapture.html" visible="yes" title="Video Capture and Control"/>
-            <tab type="user" url="classsl__drv_1_1SensorCapture.html" visible="yes" title="Sensors Data Capture"/>
+            <tab type="user" url="classsl__oc_1_1VideoCapture.html" visible="yes" title="Video Capture and Control"/>
+            <tab type="user" url="classsl__oc_1_1SensorCapture.html" visible="yes" title="Sensors Data Capture"/>
         </tab>
 
         <tab type="modules" visible="no" title="" intro=""/>
@@ -34,9 +34,10 @@
         <tab type="pages" visible="no" title="" intro=""/>
         
         <tab type="usergroup" url="md_examples.html" visible="yes" title="Examples">
-            <tab type="user" url="zed_drv_video_example_8cpp-example.html" visible="yes" title="Video Capture and Control" />
-            <tab type="user" url="zed_drv_sensors_example_8cpp-example.html" visible="yes" title="Sensors Data Capture" />
-            <tab type="user" url="zed_drv_sync_example_8cpp-example.html" visible="yes" title="Video/Sensors sync" />
+            <tab type="user" url="zed_oc_video_example_8cpp-example.html" visible="yes" title="Video Capture and Control" />
+            <tab type="user" url="zed_oc_rectify_example_8cpp-example.html" visible="yes" title="Video Rectification" />
+            <tab type="user" url="zed_oc_sensors_example_8cpp-example.html" visible="yes" title="Sensors Data Capture" />
+            <tab type="user" url="zed_oc_sync_example_8cpp-example.html" visible="yes" title="Video/Sensors sync" />
         </tab>        
 
         <tab type="user" url="md_release-notes.html" visible="yes" title="Release Notes"/>
