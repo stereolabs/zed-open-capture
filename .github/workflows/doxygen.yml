@@ -15,4 +15,4 @@ jobs:
           working-directory: 'doc/api_doc'
           doxyfile-path: './doxyfile' 
       - run: ls -la doc
-      - run: ls -la doc/api_doc
+      - run: ls -la doc/html
