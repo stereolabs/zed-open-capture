@@ -7,6 +7,8 @@ The ZED Open Capture library allows the low level control of ZED, ZED Mini and Z
 The library provides methods to access video frames, to control the video parameters and to acquire data from the internal sensors.
 A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
 
+<b>Note:</b> The provided data are not calibrated, images are not rectified in a stereoscopic way, IMU data may drift or be misaligned. Calibration data can be accessed using the ZED SDK.
+
 <br>
 
 <h2 style="text-align: left;">Modules</h2>
@@ -26,7 +28,7 @@ The given IMU data are expressed in the RAW/IMU coordinate system as show below
 
 
 <h2 style="text-align: left;">Examples</h2>
-A <a href="md_examples.html">set of examples</a> is provided to better understand how to use the ZED Open Capture and how to exploit all the available features.
+A <a href="md_examples.html">set of examples</a> is provided to better understand how to use ZED Open Capture and how to exploit all the available features.
 
 
 \latexonly
