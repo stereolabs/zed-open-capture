@@ -40,14 +40,14 @@ int main(int argc, char** argv) {
 
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
-    // ----> 1) Set Video parameters
+    // ----> Set Video parameters
     sl_oc::VideoParams params;
     params.res = sl_oc::RESOLUTION::HD2K;
     params.fps = sl_oc::FPS::FPS_15;
     params.verbose = verbose;
     // <---- Set Video parameters
 
-    // ----> 2) Create Video Capture
+    // ----> Create Video Capture
     sl_oc::VideoCapture cap(params);
     if( !cap.initializeVideo(-1) )
     {
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
     std::cout << "Connected to camera sn: " << sn << std::endl;
     // <---- Create Video Capture
 
-    // ----> 3) Retrieve calibration file from Stereolabs server
+    // ----> Retrieve calibration file from Stereolabs server
     std::string calibration_file;
     // ZED Calibration
     unsigned int serial_number = sn;
@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
     cap.getFrameSize(w,h);
     // <---- Frame size
 
-    // ----> 4) Initialize calibration
+    // ----> Initialize calibration
     cv::Mat map_left_x, map_left_y;
     cv::Mat map_right_x, map_right_y;
     cv::Mat cameraMatrix_left, cameraMatrix_right;
@@ -96,15 +96,15 @@ int main(int argc, char** argv) {
         // 5) Get a new frame from camera
         const sl_oc::Frame* frame = cap.getLastFrame();
 
-        // ----> 6) If the frame is valid we can convert, rectify and display it
+        // ----> If the frame is valid we can convert, rectify and display it
         if(frame != nullptr)
         {
-            // ----> 6.b) Conversion from YUV 4:2:2 to BGR for visualization
+            // ----> Conversion from YUV 4:2:2 to BGR for visualization
             cv::Mat frameYUV = cv::Mat( frame->height, frame->width, CV_8UC2, frame->data );
             cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
 
-            // ----> 6.c) Extract left and right images from side-by-sideq
+            // ----> Extract left and right images from side-by-sideq
             left_raw = frameBGR(cv::Rect(0, 0, frameBGR.cols / 2, frameBGR.rows));
             right_raw = frameBGR(cv::Rect(frameBGR.cols / 2, 0, frameBGR.cols / 2, frameBGR.rows));
             // Display images
@@ -112,7 +112,7 @@ int main(int argc, char** argv) {
             showImage("right RAW", right_raw, params.res);
             // <---- Extract left and right images from side-by-side
 
-            // ----> 6.d) Apply rectification
+            // ----> Apply rectification
             cv::remap(left_raw, left_rect, map_left_x, map_left_y, cv::INTER_LINEAR );
             cv::remap(right_raw, right_rect, map_right_x, map_right_y, cv::INTER_LINEAR );
 
@@ -121,7 +121,7 @@ int main(int argc, char** argv) {
             // <---- Apply rectification
         }
 
-        // ----> 7) Keyboard handling
+        // ----> Keyboard handling
         int key = cv::waitKey( 5 );
         if(key=='q' || key=='Q') // Quit
             break;

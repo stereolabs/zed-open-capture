@@ -71,14 +71,14 @@ int main(int argc, char *argv[])
 {
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
-    // ----> 1) Set Video parameters
+    // ----> Set Video parameters
     sl_oc::VideoParams params;
     params.res = sl_oc::RESOLUTION::HD2K;
     params.fps = sl_oc::FPS::FPS_15;
     params.verbose = verbose;
     // <---- Set Video parameters
 
-    // ----> 2) Create Video Capture
+    // ----> Create Video Capture
     sl_oc::VideoCapture cap(params);
     if( !cap.initializeVideo(-1) )
     {
@@ -99,11 +99,11 @@ int main(int argc, char *argv[])
         // 3) Get last available frame
         const sl_oc::Frame* frame = cap.getLastFrame();
 
-        // ----> 4) If the frame is valid we can display it
+        // ----> If the frame is valid we can display it
         if(frame != nullptr)
         {
 #if 0
-            // ----> 4.a) Video Debug information
+            // ----> Video Debug information
             static uint64_t last_ts=0;
             std::cout << std::setprecision(9) << "[" << frame->frame_id << "] Ts: " <<  static_cast<double>(frame->timestamp)/1e9 << " sec" << std::endl;
             if( last_ts!=0 )
@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
             // <---- Video Debug information
 #endif
 
-            // ----> 4.b)Conversion from YUV 4:2:2 to BGR for visualization
+            // ----> Conversion from YUV 4:2:2 to BGR for visualization
             cv::Mat frameYUV = cv::Mat( frame->height, frame->width, CV_8UC2, frame->data );
             cv::Mat frameBGR;
             cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
         }
         // <---- If the frame is valid we can display it
 
-        // ----> 5) Keyboard handling
+        // ----> Keyboard handling
         int key = cv::waitKey( 5 );
 
         if( key != -1 )

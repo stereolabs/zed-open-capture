@@ -32,10 +32,10 @@ int main(int argc, char *argv[])
     // Set the verbose level
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
-    // 1) Create a SensorCapture object
+    // Create a SensorCapture object
     sl_oc::SensorCapture sens(verbose);
 
-    // ----> 2) Get a list of available camera with sensor
+    // ----> Get a list of available camera with sensor
     std::vector<int> devs = sens.getDeviceList();
 
     if( devs.size()==0 )
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     }
     // <---- Get a list of available camera with sensor
 
-    // ----> 3) Inizialize the sensors
+    // ----> Inizialize the sensors
     if( !sens.initializeSensors( devs[0] ) )
     {
         std::cerr << "Connection failed" << std::endl;
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     std::cout << "Video Capture connected to camera sn: " << sens.getSerialNumber() << std::endl;
     // <---- Inizialize the sensors
 
-    // ----> 4) Get FW version information
+    // ----> Get FW version information
     uint16_t fw_maior;
     uint16_t fw_minor;
 
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
     int count = 0;
     while(++count<4000)
     {
-        // ----> 5) Get IMU data with a timeout of 5 millisecods
+        // ----> Get IMU data with a timeout of 5 millisecods
         const sl_oc::SensImuData* imuData = sens.getLastIMUData(5000);
         if( imuData && imuData->valid )
         {
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
         }
         // <---- Get IMU data with a timeout of 5 millisecods
 
-        // ----> 6) Get Magnetometer data with a timeout of 100 microseconds to not slow down fastest data (IMU)
+        // ----> Get Magnetometer data with a timeout of 100 microseconds to not slow down fastest data (IMU)
         const sl_oc::SensMagData* magData = sens.getLastMagnetometerData(100);
         if( magData && magData->valid == sl_oc::SensMagData::NEW_VAL )
         {
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
         }
         // <---- Get Magnetometer data with a timeout of 100 microseconds to not slow down fastest data (IMU)
 
-        // ----> 7) Get Environment data with a timeout of 100 microseconds to not slow down fastest data (IMU)
+        // ----> Get Environment data with a timeout of 100 microseconds to not slow down fastest data (IMU)
         const sl_oc::SensEnvData* envData = sens.getLastEnvironmentData(100);
         if( envData && envData->valid == sl_oc::SensEnvData::NEW_VAL )
         {
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
         }
         // <---- Get Environment data with a timeout of 100 microseconds to not slow down fastest data (IMU)
 
-        // ----> 8) Get Temperature data with a timeout of 100 microseconds to not slow down fastest data (IMU)
+        // ----> Get Temperature data with a timeout of 100 microseconds to not slow down fastest data (IMU)
         const sl_oc::SensCamTempData* tempData = sens.getLastCameraTemperatureData(100);
         if( tempData && tempData->valid )
         {

@@ -412,17 +412,22 @@ private:
 
 
 /** \example zed_oc_video_example.cpp
- * This is an example of how to use the \ref VideoCapture class to get raw video frames and control the camera
+ * Example of how to use the \ref VideoCapture class to get raw video frames and show the stream on screen using the
+ * OpenCV library
+ */
+
+/** \example zed_oc_control_example.cpp
+ * Example of how to use the \ref VideoCapture class to get raw video frames and control the camera
  * parameters.
  */
 
 /** \example zed_oc_sync_example.cpp
- * This is an example of how to get synchronized video and sensors data from
+ * Example of how to get synchronized video and sensors data from
  * the \ref VideoCapture class and the \ref SensorCapture class.
  */
 
 /** \example zed_oc_rectify_example.cpp
- * This is an example of how to use the \ref VideoCapture class to get and rectify raw video frames downloading
+ * Example of how to use the \ref VideoCapture class to get and rectify raw video frames downloading
  * calibration parameters from Stereolabs servers
  */
 

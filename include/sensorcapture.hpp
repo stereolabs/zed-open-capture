@@ -39,7 +39,7 @@ class VideoCapture;
 #endif
 
 /*!
- * \brief The struct containing the acquired IMU data
+ * \brief Contains the acquired IMU data
  */
 struct SL_OC_EXPORT SensImuData
 {
@@ -56,7 +56,7 @@ struct SL_OC_EXPORT SensImuData
 };
 
 /*!
- * \brief The struct containing the acquired Magnetometer data
+ * \brief Contains the acquired Magnetometer data
  */
 struct SL_OC_EXPORT SensMagData
 {
@@ -75,7 +75,7 @@ struct SL_OC_EXPORT SensMagData
 };
 
 /*!
- * \brief The struct containing the acquired Environmental data
+ * \brief Contains the acquired Environmental data
  */
 struct SL_OC_EXPORT SensEnvData
 {
@@ -94,7 +94,7 @@ struct SL_OC_EXPORT SensEnvData
 };
 
 /*!
- * \brief The struct containing the acquired Environmental data
+ * \brief Contains the acquired Camera Temperature data
  */
 struct SL_OC_EXPORT SensCamTempData
 {
@@ -265,12 +265,12 @@ private:
 #endif
 
 /** \example zed_oc_sensors_example.cpp
- * This is an example of how to use the \ref SensorCapture class to get the raw sensors data at the maximum available
+ * Example of how to use the \ref SensorCapture class to get the raw sensors data at the maximum available
  * frequency.
  */
 
 /** \example zed_oc_sync_example.cpp
- * This is an example of how to get synchronized video and sensors data from
+ * Example of how to get synchronized video and sensors data from
  * the \ref VideoCapture class and the \ref SensorCapture class.
  */
 }

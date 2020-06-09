@@ -54,14 +54,14 @@ int main(int argc, char *argv[])
     // Set the verbose level
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::ERROR;
 
-    // ----> 1) Set the video parameters
+    // ----> Set the video parameters
     sl_oc::VideoParams params;
     params.res = sl_oc::RESOLUTION::HD2K;
     params.fps = sl_oc::FPS::FPS_15;
     params.verbose = verbose;
     // <---- Video parameters
 
-    // ----> 2) Create a Video Capture object
+    // ----> Create a Video Capture object
     sl_oc::VideoCapture videoCap(params);
     if( !videoCap.initializeVideo(-1) )
     {
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     std::cout << "Video Capture connected to camera sn: " << camSn << std::endl;
     // <---- Create a Video Capture object
 
-    // ----> 4) Create a Sensors Capture object
+    // ----> Create a Sensors Capture object
     sl_oc::SensorCapture sensCap(verbose);
     if( !sensCap.initializeSensors(camSn) ) // Note: we use the serial number acquired by the VideoCapture object
     {
@@ -93,11 +93,11 @@ int main(int argc, char *argv[])
     std::thread sensThread(getSensorThreadFunc,&sensCap);
     // <---- Create Sensors Capture
 
-    // ----> 5) Enable video/sensors synchronization
+    // ----> Enable video/sensors synchronization
     videoCap.enableSensorSync(&sensCap);
     // <---- Enable video/sensors synchronization
 
-    // ----> 6) Init OpenCV RGB frame
+    // ----> Init OpenCV RGB frame
     int w,h;
     videoCap.getFrameSize(w,h);
 
@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
     // Infinite grabbing loop
     while (1)
     {
-        // ----> 7) Get Video frame
+        // ----> Get Video frame
         // Get last available frame
         const sl_oc::Frame* frame = videoCap.getLastFrame(1);
 
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
         std::stringstream videoTs;
         if(frame != nullptr)
         {
-            // ----> 7.a) Video Debug information
+            // ----> Video Debug information
             static uint64_t last_ts=0;
 
             videoTs << std::fixed << std::setprecision(9) << "Video timestamp: " << static_cast<double>(frame->timestamp)/1e9<< " sec" ;
@@ -149,14 +149,14 @@ int main(int argc, char *argv[])
             last_ts = frame->timestamp;
             // <---- Video Debug information
 
-            // ----> 7.b) Conversion from YUV 4:2:2 to BGR for visualization
+            // ----> Conversion from YUV 4:2:2 to BGR for visualization
             cv::Mat frameYUV( frame->height, frame->width, CV_8UC2, frame->data);
             cv::cvtColor(frameYUV,frameBGR, cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
         }
         // <---- Get Video frame
 
-        // ----> 8) Display frame with info
+        // ----> Display frame with info
         if(frame != nullptr)
         {
             frameData.setTo(0);
@@ -201,7 +201,7 @@ int main(int argc, char *argv[])
         }
         // <---- Display frame with info
 
-        // ----> 9) Keyboard handling
+        // ----> Keyboard handling
         int key = cv::waitKey(1);
 
         if( key != -1 )

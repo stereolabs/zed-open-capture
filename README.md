@@ -1,4 +1,4 @@
-![](./images/Picto+STEREOLABS_Black.jpg)
+![](https://raw.githubusercontent.com/stereolabs/zed-open-capture/master/images/Picto+STEREOLABS_Black.jpg)
 
 # ZED Open Capture API
 
@@ -8,6 +8,12 @@ The ZED Open Capture library allows the low level control of ZED, ZED Mini and Z
 Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/developers/release/).
 
 [Online documentation](https://stereolabs.github.io/zed-open-capture)
+
+Coordinates system
+
+The coordinate system is only used for sensors data (especially for IMU). The given IMU data are expressed in the RAW/IMU coordinate system as show below
+
+![](https://raw.githubusercontent.com/stereolabs/zed-open-capture/master/images/imu_axis.jpg)
 
 ## Installation
 
@@ -54,54 +60,42 @@ To be able to access the USB you must install the udev rule contained in the `ud
 
 ### Compile
 
-#### Option 1
-
-Compile the library and the examples
+#### Compile library and examples
 
     $ mkdir build
     $ cd build
     $ cmake ..
     $ make -j$(nproc)
 
-#### Option 2
-
-Compile only the library
+#### Compile only the library
 
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_EXAMPLES=OFF 
     $ make -j$(nproc)
 
-#### Option 3
-
-Compile only the video library with the video example
+#### Compile only the video library with the video examples
 
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_SENSORS=OFF
     $ make -j$(nproc)
 
-#### Option 4
-
-Compile only the video library
+#### Compile only the video library
 
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_SENSORS=OFF -DBUILD_EXAMPLES=OFF
     $ make -j$(nproc)
 
-#### Option 5
-
-Compile only the sensors library with the sensors example
+#### Compile only the sensors library with the sensors example
     
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_VIDEO=OFF
     $ make -j$(nproc)
 
-#### Option 6
-
-Compile only the sensors library
+#### Compile only the sensors library
     
     $ mkdir build
     $ cd build
@@ -127,3 +121,46 @@ Documentation can be locally generated in HTML format using Doxygen:
     $ ./generate_doc.sh
     
 The documentation will be available opening the file `doc/html/index.html` with a standard web browser.
+
+## Usage Guide
+
+### Get video data
+
+#### Include the `VideoCapture` header
+    
+    #include "videocapture.hpp"
+
+#### Declare a `VideoCapture` object and initialize it
+
+    sl_oc::VideoCapture cap;
+    cap.initializeVideo();
+
+#### Retrieve last frame in YUV 4:2:2 format
+
+    const sl_oc::Frame* frame = cap.getLastFrame();
+
+A detailed [Video Example is available](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_video_example.cpp).
+
+### Get sensors data
+
+#### Include the `SensorCapture` header
+
+    #include "sensorcapture.hpp"
+
+#### Declare a `SensorCapture` object
+
+    sl_oc::SensorCapture sens;
+
+#### Get a list of available devices and initialize the first
+
+    std::vector<int> devs = sens.getDeviceList();
+    sens.initializeSensors( devs[0] );
+
+#### Retrieve last sensors data
+
+    const sl_oc::SensImuData* imuData = sens.getLastIMUData(5000);
+    const sl_oc::SensMagData* magData = sens.getLastMagnetometerData(100);
+    const sl_oc::SensEnvData* envData = sens.getLastEnvironmentData(100);
+    const sl_oc::SensCamTempData* tempData = sens.getLastCameraTemperatureData(100);
+
+A detailed [Sensors Example is available](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_sensors_example.cpp).
