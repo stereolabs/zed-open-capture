@@ -132,8 +132,10 @@ The documentation will be available opening the file `doc/html/index.html` with 
 
 * Declare a `VideoCapture` object and initialize it
 
-    ```sl_oc::VideoCapture cap;
-    cap.initializeVideo();```
+    ```
+    sl_oc::VideoCapture cap;
+    cap.initializeVideo();
+    ```
 
 * Retrieve last frame in YUV 4:2:2 format
 
@@ -153,14 +155,18 @@ A detailed [Video Example is available](https://github.com/stereolabs/zed-open-c
 
 * Get a list of available devices and initialize the first
 
-    ```std::vector<int> devs = sens.getDeviceList();
-    sens.initializeSensors( devs[0] );```
+    ```
+    std::vector<int> devs = sens.getDeviceList();
+    sens.initializeSensors( devs[0] );
+    ```
 
 * Retrieve last sensors data
 
-    ```const sl_oc::SensImuData* imuData = sens.getLastIMUData(5000);
+    ```
+    const sl_oc::SensImuData* imuData = sens.getLastIMUData(5000);
     const sl_oc::SensMagData* magData = sens.getLastMagnetometerData(100);
     const sl_oc::SensEnvData* envData = sens.getLastEnvironmentData(100);
-    const sl_oc::SensCamTempData* tempData = sens.getLastCameraTemperatureData(100);```
+    const sl_oc::SensCamTempData* tempData = sens.getLastCameraTemperatureData(100);
+    ```
 
 A detailed [Sensors Example is available](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_sensors_example.cpp).
