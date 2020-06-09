@@ -9,12 +9,6 @@ Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/
 
 [Online documentation](https://stereolabs.github.io/zed-open-capture)
 
-## Coordinates system
-
-The coordinate system is only used for sensors data (especially for IMU). The given IMU data are expressed in the RAW/IMU coordinate system as show below
-
-![](./images/imu_axis.jpg)
-
 ## Installation
 
 ### Prerequisites
@@ -170,3 +164,9 @@ A detailed [Video Example is available](https://github.com/stereolabs/zed-open-c
     ```
 
 A detailed [Sensors Example is available](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_sensors_example.cpp).
+
+### Coordinates system
+
+The coordinate system is only used for sensors data (especially for IMU). The given IMU data are expressed in the RAW/IMU coordinate system as show below
+
+![](./images/imu_axis.jpg)
