@@ -4087,7 +4087,8 @@ static inline std::string getRootHiddenDir() {
     filename += "\\Stereolabs\\";
 
 #else //LINUX
-    std::string filename = "/usr/local/zed/";
+    std::string homepath = getenv("HOME");
+    std::string filename = homepath + "/zed/";
 #endif
 
     return filename;
@@ -4111,12 +4112,19 @@ bool downloadCalibrationFile(unsigned int serial_number, std::string &calibratio
     sprintf(specific_name, "SN%d.conf", serial_number);
     calibration_file = path + specific_name;
     if (!checkFile(calibration_file)) {
+        std::string cmd;
+        int res;
+
+        // Create download folder
+        cmd = "mkdir -p " + path;
+        res = system(cmd.c_str());
+
         // Download the file
         std::string url("'http://calib.stereolabs.com/?SN=");
-        std::string cmd;
+
         cmd = "wget " + url + std::to_string(serial_number) + "' -O " + calibration_file;
         std::cout << cmd << std::endl;
-        int res = system(cmd.c_str());
+        res = system(cmd.c_str());
 
         if( res == EXIT_FAILURE )
         {
