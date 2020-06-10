@@ -224,9 +224,6 @@ The coordinate system is only used for sensors data. The given IMU and Magnetome
 
 ![](./images/imu_axis.jpg)
 
-## Run the examples
-
-
 ## License
 
 This library is licensed under the MIT License.
