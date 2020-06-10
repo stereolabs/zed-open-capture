@@ -202,7 +202,7 @@ bool SensorCapture::enableDataStream(bool enable) {
     if( !mDevHandle )
         return false;
     unsigned char buf[65];
-    buf[0] = REP_ID_SENSOR_STREAM_STATUS;
+    buf[0] = usb::REP_ID_SENSOR_STREAM_STATUS;
     buf[1] = enable?1:0;
 
     int res = hid_send_feature_report(mDevHandle, buf, 2);
@@ -227,7 +227,7 @@ bool SensorCapture::isDataStreamEnabled() {
     }
 
     unsigned char buf[65];
-    buf[0] = REP_ID_SENSOR_STREAM_STATUS;
+    buf[0] = usb::REP_ID_SENSOR_STREAM_STATUS;
     int res = hid_get_feature_report(mDevHandle, buf, sizeof(buf));
     if (res < 0)
     {
@@ -239,13 +239,13 @@ bool SensorCapture::isDataStreamEnabled() {
         return false;
     }
 
-    if( res < static_cast<int>(sizeof(UsbStreamStatus)) )
+    if( res < static_cast<int>(sizeof(usb::StreamStatus)) )
     {
         WARNING_OUT(mVerbose,std::string("SensStreamStatus size mismatch [REP_ID_SENSOR_STREAM_STATUS]"));
         return false;
     }
 
-    if( buf[0] != REP_ID_SENSOR_STREAM_STATUS )
+    if( buf[0] != usb::REP_ID_SENSOR_STREAM_STATUS )
     {
         WARNING_OUT(mVerbose,std::string("SensStreamStatus type mismatch [REP_ID_SENSOR_STREAM_STATUS]") );
 
@@ -331,11 +331,11 @@ void SensorCapture::grabThreadFunc()
         mGrabRunning=true;
 
         // Sensor data request
-        usbBuf[1]=REP_ID_SENSOR_DATA;
+        usbBuf[1]=usb::REP_ID_SENSOR_DATA;
         int res = hid_read_timeout( mDevHandle, usbBuf, 64, 2000 );
 
         // ----> Data received?
-        if( res < static_cast<int>(sizeof(RawData)) )  {
+        if( res < static_cast<int>(sizeof(usb::RawData)) )  {
             hid_set_nonblocking( mDevHandle, 0 );
             continue;
         }
@@ -344,7 +344,7 @@ void SensorCapture::grabThreadFunc()
         // ----> Received data are correct?
         int target_struct_id = 0;
         if (mDevPid==SL_USB_PROD_MCU_ZED2_REVA)
-            target_struct_id = REP_ID_SENSOR_DATA;
+            target_struct_id = usb::REP_ID_SENSOR_DATA;
 
         if( usbBuf[0] != target_struct_id)
         {
@@ -359,7 +359,7 @@ void SensorCapture::grabThreadFunc()
         // <---- Received data are correct?
 
         // Data structure static conversion
-        RawData* data = (RawData*)usbBuf;
+        usb::RawData* data = (usb::RawData*)usbBuf;
 
         // ----> Timestamp update
         uint64_t mcu_ts_nsec = static_cast<uint64_t>(std::round(static_cast<float>(data->timestamp)*TS_SCALE));
@@ -568,8 +568,8 @@ bool SensorCapture::sendPing() {
         return false;
 
     unsigned char buf[65];
-    buf[0] = REP_ID_REQUEST_SET;
-    buf[1] = RQ_CMD_PING;
+    buf[0] = usb::REP_ID_REQUEST_SET;
+    buf[1] = usb::RQ_CMD_PING;
 
     int res = hid_send_feature_report(mDevHandle, buf, 2);
     if (res < 0)

@@ -40,9 +40,10 @@ namespace sl_oc {
 
 namespace sensors {
 
+namespace usb {
 // ----> Command to be used with the REPORT ID "REP_ID_REQUEST_SET"
 // Command to ping the MCU to communicate that host is alive
-#define RQ_CMD_PING 0xF2
+const uint8_t RQ_CMD_PING = 0xF2;
 // <---- Command to be used with the REPORT ID "REP_ID_REQUEST_SET"
 
 /*!
@@ -66,7 +67,7 @@ typedef enum CUSTOMHID_REPORT_ID {
 /*!
  * \brief The RAW sensor data structure retrieved from camera MCU by USB
  */
-typedef struct UsbRawData {
+typedef struct RawData {
     uint8_t struct_id;		//!< Struct identifier, it matches the USB HID Report ID
     uint8_t imu_not_valid; 	//!< Indicate if IMU data are valid [0->valid, 1->not_valid
     uint64_t timestamp;		//!< Data timestamp (from IMU sensor) [usec/39]
@@ -99,12 +100,14 @@ typedef struct UsbRawData {
 /*!
  *  \brief Status of the usb data streaming
  */
-typedef struct UsbStreamStatus {
+typedef struct StreamStatus {
     uint8_t struct_id;		//!< Struct identifier, it matches the USB HID Report ID
     uint8_t stream_status;	//!< Status of the USB streaming
-} UsbStreamStatus;
+} StreamStatus;
 
 #pragma pack(pop) // Restore previous saved alignment
+
+}
 
 // ----> FW versions
 enum class ZED_M_FW {
