@@ -20,7 +20,7 @@
   <a href="#license">License</a>
 </p>
 
-The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the internal sensors (only ZED Mini and ZED2). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
+The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The C++ library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the internal sensors (only ZED Mini and ZED2). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
 
 **Note:** The provided data are not calibrated, images are not rectified in a stereoscopic way, IMU data may drift or be misaligned.
 Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/developers/release/).
@@ -28,6 +28,7 @@ Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/
 [Online documentation](https://stereolabs.github.io/zed-open-capture)
 
 ## Key Features
+ * C++ library compatible with the C++11 standard
  * Video grabbing
     - YUV 4:2:2 data format
     - Camera runtime control
@@ -75,6 +76,7 @@ Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/
     `$ sudo apt install opencv-dev`
 
 ### Install the udev rule 
+
 To be able to access the USB you must install the udev rule contained in the `udev` folder:
 
     $ cd udev
@@ -170,10 +172,6 @@ The documentation will be available opening the file `doc/html/index.html` with 
 
     `const sl_oc::video::Frame* frame = cap.getLastFrame();`
 
-A detailed [video grabbing example](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_video_example.cpp), 
-explaining how to convert from YUV 4:2:2 to RGB format, 
-[is available](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_video_example.cpp).
-
 ### Get sensors data
 
 * Include the `SensorCapture` header
@@ -199,20 +197,18 @@ explaining how to convert from YUV 4:2:2 to RGB format,
     const sl_oc::sensors::data::Environment* envData = sens.getLastEnvironmentData(100);
     const sl_oc::sensors::data::Temperature* tempData = sens.getLastCameraTemperatureData(100);
     ```
-
-A detailed [sensors data grabbing example is available](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_sensors_example.cpp).
-
+    
 ### Running the examples
 
-After installation, if you chose to build the examples, you will have the following sample application available opening a command console:
+After installation, if you built the examples, you will have the following sample applications available opening a terminal console:
 
-* zed_open_capture_video_example: this application creates a `VideoCapture` object initialized with default parameters and displays the stereo couple stream on screen.
-* zed_open_capture_control_example: this application creates a `VideoCapture` object initialized with default parameters, displays the stereo couple stream on screen and provides runtime control of video stream parameters using keyboard.
-* zed_open_capture_rectify_example: this application creates a `VideoCapture` object initialized with default parameters, download the camera rectification parameters from Stereolabs serve and performs image rectification displaying raw and calibrated images on screen.
-* zed_open_capture_sensors_example: this application creates a `SensorCapture` object and displays on the command console the values of camera sensors acquired at full rate.
-* zed_open_capture_sync_example: this application creates a `VideoCapture` and a `SensorCapture` object, initialize the camera/sensors synchronization and displays on screen the video stream with the synchronized IMU data.
+* [zed_open_capture_video_example](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_video_example.cpp): this application creates a `VideoCapture` object initialized with default parameters and displays the stereo couple stream on screen.
+* [zed_open_capture_control_example](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_control_example.cpp): this application creates a `VideoCapture` object initialized with default parameters, displays the stereo couple stream on screen and provides runtime control of video stream parameters using keyboard.
+* [zed_open_capture_rectify_example](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_rectify_example.cpp): this application creates a `VideoCapture` object initialized with default parameters, download the camera rectification parameters from Stereolabs serve and performs image rectification displaying raw and calibrated images on screen.
+* [zed_open_capture_sensors_example](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_sensors_example.cpp): this application creates a `SensorCapture` object and displays on the command console the values of camera sensors acquired at full rate.
+* [zed_open_capture_sync_example](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_sync_example.cpp): this application creates a `VideoCapture` and a `SensorCapture` object, initialize the camera/sensors synchronization and displays on screen the video stream with the synchronized IMU data.
 
-To run the examples open a terminal console and enter the relative commands:
+To run the examples, open a terminal console and enter the relative commands:
 
 ```
 $ zed_open_capture_video_example
