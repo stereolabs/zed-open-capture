@@ -1,7 +1,10 @@
 
 name: Documentation generation
 
-on: push
+on: 
+  push:
+    branches:
+      - master
 
 jobs:
   generate_doc:
