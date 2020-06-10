@@ -35,7 +35,7 @@
 
 // ----> Functions
 // Sensor acquisition runs at 400Hz, so it must be executed in a different thread
-void getSensorThreadFunc(sl_oc::SensorCapture* sensCap);
+void getSensorThreadFunc(sl_oc::sensors::SensorCapture* sensCap);
 // <---- Functions
 
 // ----> Global variables
@@ -55,14 +55,14 @@ int main(int argc, char *argv[])
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::ERROR;
 
     // ----> Set the video parameters
-    sl_oc::VideoParams params;
-    params.res = sl_oc::RESOLUTION::HD2K;
-    params.fps = sl_oc::FPS::FPS_15;
+    sl_oc::video::VideoParams params;
+    params.res = sl_oc::video::RESOLUTION::HD2K;
+    params.fps = sl_oc::video::FPS::FPS_15;
     params.verbose = verbose;
     // <---- Video parameters
 
     // ----> Create a Video Capture object
-    sl_oc::VideoCapture videoCap(params);
+    sl_oc::video::VideoCapture videoCap(params);
     if( !videoCap.initializeVideo(-1) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     // <---- Create a Video Capture object
 
     // ----> Create a Sensors Capture object
-    sl_oc::SensorCapture sensCap(verbose);
+    sl_oc::sensors::SensorCapture sensCap(verbose);
     if( !sensCap.initializeSensors(camSn) ) // Note: we use the serial number acquired by the VideoCapture object
     {
         std::cerr << "Cannot open sensors capture" << std::endl;
@@ -106,16 +106,16 @@ int main(int argc, char *argv[])
     switch(params.res)
     {
     default:
-    case sl_oc::RESOLUTION::VGA:
+    case sl_oc::video::RESOLUTION::VGA:
         display_resolution.width = w;
         display_resolution.height = h;
         break;
-    case sl_oc::RESOLUTION::HD720:
+    case sl_oc::video::RESOLUTION::HD720:
         display_resolution.width = w*0.6;
         display_resolution.height = h*0.6;
         break;
-    case sl_oc::RESOLUTION::HD1080:
-    case sl_oc::RESOLUTION::HD2K:
+    case sl_oc::video::RESOLUTION::HD1080:
+    case sl_oc::video::RESOLUTION::HD2K:
         display_resolution.width = w*0.4;
         display_resolution.height = h*0.4;
         break;
@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
     {
         // ----> Get Video frame
         // Get last available frame
-        const sl_oc::Frame* frame = videoCap.getLastFrame(1);
+        const sl_oc::video::Frame* frame = videoCap.getLastFrame(1);
 
         // If the frame is valid we can update it
         std::stringstream videoTs;
@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
 }
 
 // Sensor acquisition runs at 400Hz, so it must be executed in a different thread
-void getSensorThreadFunc(sl_oc::SensorCapture* sensCap)
+void getSensorThreadFunc(sl_oc::sensors::SensorCapture* sensCap)
 {
     // Flag to stop the thread
     sensThreadStop = false;
@@ -233,7 +233,7 @@ void getSensorThreadFunc(sl_oc::SensorCapture* sensCap)
     while(!sensThreadStop)
     {
         // ----> Get IMU data
-        const sl_oc::SensImuData* imuData = sensCap->getLastIMUData(2000);
+        const sl_oc::sensors::data::Imu* imuData = sensCap->getLastIMUData(2000);
 
         // Process data only if valid
         if(imuData && imuData->valid /*&& imuData->sync*/) // Uncomment to use only data syncronized with the video frames

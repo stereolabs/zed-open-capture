@@ -127,15 +127,17 @@ The documentation will be available opening the file `doc/html/index.html` with 
 * Declare a `VideoCapture` object and initialize it
 
     ```
-    sl_oc::VideoCapture cap;
+    sl_oc::video::VideoCapture cap;
     cap.initializeVideo();
     ```
 
 * Retrieve last frame in YUV 4:2:2 format
 
-    `const sl_oc::Frame* frame = cap.getLastFrame();`
+    `const sl_oc::video::Frame* frame = cap.getLastFrame();`
 
-A detailed [Video Example is available](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_video_example.cpp).
+A detailed [video grabbing example](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_video_example.cpp), 
+explaining how to convert from YUV 4:2:2 to RGB format, 
+[is available](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_video_example.cpp).
 
 ### Get sensors data
 
@@ -145,7 +147,7 @@ A detailed [Video Example is available](https://github.com/stereolabs/zed-open-c
 
 * Declare a `SensorCapture` object
 
-    `sl_oc::SensorCapture sens;`
+    `sl_oc::sensors::SensorCapture sens;`
 
 * Get a list of available devices and initialize the first
 
@@ -157,16 +159,17 @@ A detailed [Video Example is available](https://github.com/stereolabs/zed-open-c
 * Retrieve last sensors data
 
     ```
-    const sl_oc::SensImuData* imuData = sens.getLastIMUData(5000);
-    const sl_oc::SensMagData* magData = sens.getLastMagnetometerData(100);
-    const sl_oc::SensEnvData* envData = sens.getLastEnvironmentData(100);
-    const sl_oc::SensCamTempData* tempData = sens.getLastCameraTemperatureData(100);
+    const sl_oc::sensors::data::Imu* imuData = sens.getLastIMUData(5000);
+    const sl_oc::sensors::data::Magnetometer* magData = sens.getLastMagnetometerData(100);
+    const sl_oc::sensors::data::Environment* envData = sens.getLastEnvironmentData(100);
+    const sl_oc::sensors::data::Temperature* tempData = sens.getLastCameraTemperatureData(100);
     ```
 
-A detailed [Sensors Example is available](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_sensors_example.cpp).
+A detailed [sensors data grabbing example is available](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_sensors_example.cpp).
 
-### Coordinates system
+#### Coordinates system
 
-The coordinate system is only used for sensors data (especially for IMU). The given IMU data are expressed in the RAW/IMU coordinate system as show below
+The coordinate system is only used for sensors data. The given IMU and Magnetometer data are expressed in the RAW coordinate system as show below
 
 ![](./images/imu_axis.jpg)
+

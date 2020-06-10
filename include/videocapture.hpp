@@ -26,13 +26,20 @@
 #include <mutex>
 
 #ifdef VIDEO_MOD_AVAILABLE
+
 #include "videocapture_def.hpp"
 
 namespace sl_oc {
 
+
+
 #ifdef SENSORS_MOD_AVAILABLE
+namespace sensors {
 class SensorCapture;
+}
 #endif
+
+namespace video {
 
 /*!
  * \brief The Frame struct containing the acquired video frames
@@ -57,7 +64,7 @@ class SL_OC_EXPORT VideoCapture
 public:
     /*!
      * \brief The default constructor
-     *  * \param params the initialization parameters (see \ref VideoParams)
+     *  * \param params the initialization parameters (see  VideoParams)
      */
     VideoCapture( VideoParams params = VideoParams() );
 
@@ -101,7 +108,7 @@ public:
 
     /*!
      * \brief Get the status of the camera led
-     * \param value returned status: true for "ON", false for "OFF"
+     * \param status returned status: true for "ON", false for "OFF"
      * \return returns a negative value if an error occurred
      */
     int getLEDstatus(bool *status);
@@ -265,28 +272,28 @@ public:
 
     /*!
      * \brief Set the Gain value (disable Exposure and Gain control if active)
-     * \param cam position of the camera sensor (see \ref CAM_SENS_POS)
+     * \param cam position of the camera sensor (see  CAM_SENS_POS)
      * \param gain Gain value in the range [0,100]
      */
     void setGain(CAM_SENS_POS cam, int gain);
 
     /*!
      * \brief Get the current Gain value
-     * \param cam position of the camera sensor (see \ref CAM_SENS_POS)
+     * \param cam position of the camera sensor (see  CAM_SENS_POS)
      * \return the current Gain value
      */
     int getGain(CAM_SENS_POS cam);
 
     /*!
      * \brief Set the Exposure value (disable Exposure and Gain control if active)
-     * \param cam position of the camera sensor (see \ref CAM_SENS_POS)
+     * \param cam position of the camera sensor (see  CAM_SENS_POS)
      * \param exposure Exposure value in the range [0,100]
      */
     void setExposure(CAM_SENS_POS cam, int exposure);
 
     /*!
      * \brief Get the current Exposure value
-     * \param cam position of the camera sensor (see \ref CAM_SENS_POS)
+     * \param cam position of the camera sensor (see  CAM_SENS_POS)
      * \return the current Exposure value
      */
     int getExposure(CAM_SENS_POS cam);
@@ -301,13 +308,13 @@ public:
 #ifdef SENSORS_MOD_AVAILABLE
     /*!
      * \brief Enable synchronizations between Camera frame and Sensors timestamps
-     * \param sensCap pointer to \ref SensorCapture object
+     * \param sensCap pointer to  SensorCapture object
      * \return true if synchronization has been correctly started
      */
-    bool enableSensorSync( SensorCapture* sensCap=nullptr );
+    bool enableSensorSync( sensors::SensorCapture* sensCap=nullptr );
 
     /*!
-     * \brief Indicates that the \ref SensorCapture object received the HW sync signal and a frame must
+     * \brief Indicates that the  SensorCapture object received the HW sync signal and a frame must
      *        be synchronized to the last Sensor Data
      */
     inline void setReadyToSync(){ mSensReadyToSync=true; }
@@ -358,7 +365,7 @@ private:
     int input_set_framerate(int fps);                           //!< Set UVC framerate
     int xioctl(int fd, uint64_t IOCTL_X, void *arg);            //!< Send ioctl command
     void checkResFps();                                         //!< Check if the Framerate is correct for the selected resolution
-    sl_oc::SL_DEVICE getCameraModel(std::string dev_name);     //!< Get the connected camera model
+    SL_DEVICE getCameraModel(std::string dev_name);     //!< Get the connected camera model
     // <---- Connection control functions
 
 private:
@@ -382,7 +389,7 @@ private:
     int mChannels = 0;                  //!< Frame channels
     int mFps=0;                          //!< Frames per seconds
 
-    sl_oc::SL_DEVICE mCameraModel = sl_oc::SL_DEVICE::NONE; //!< The camera model
+    SL_DEVICE mCameraModel = SL_DEVICE::NONE; //!< The camera model
 
     Frame mLastFrame;                   //!< Last grabbed frame
     uint8_t mBufCount = 2;              //!< UVC buffer count
@@ -400,34 +407,30 @@ private:
     bool mFirstFrame=true;              //!< Used to initialize the timestamp start point
 
 #ifdef SENSORS_MOD_AVAILABLE
-    bool mSyncEnabled=false;            //!< Indicates if a \ref SensorCapture object is synchronized
-    SensorCapture* mSensPtr;            //!< Pointer to the synchronized \ref SensorCapture object
+    bool mSyncEnabled=false;            //!< Indicates if a  SensorCapture object is synchronized
+    sensors::SensorCapture* mSensPtr;            //!< Pointer to the synchronized  SensorCapture object
 
     bool mSensReadyToSync=false;        //!< Indicates if the MCU received a HW sync signal
 #endif
 };
 
 }
+
+}
 #endif
 
-
 /** \example zed_oc_video_example.cpp
- * Example of how to use the \ref VideoCapture class to get raw video frames and show the stream on screen using the
+ * Example of how to use the VideoCapture class to get raw video frames and show the stream on screen using the
  * OpenCV library
  */
 
 /** \example zed_oc_control_example.cpp
- * Example of how to use the \ref VideoCapture class to get raw video frames and control the camera
+ * Example of how to use the VideoCapture class to get raw video frames and control the camera
  * parameters.
  */
 
-/** \example zed_oc_sync_example.cpp
- * Example of how to get synchronized video and sensors data from
- * the \ref VideoCapture class and the \ref SensorCapture class.
- */
-
 /** \example zed_oc_rectify_example.cpp
- * Example of how to use the \ref VideoCapture class to get and rectify raw video frames downloading
+ * Example of how to use the VideoCapture class to get and rectify raw video frames downloading
  * calibration parameters from Stereolabs servers
  */
 

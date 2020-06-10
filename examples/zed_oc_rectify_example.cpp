@@ -34,21 +34,21 @@
 
 // ----> Global functions
 // Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::RESOLUTION res );
+void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res );
 
 int main(int argc, char** argv) {
 
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
     // ----> Set Video parameters
-    sl_oc::VideoParams params;
-    params.res = sl_oc::RESOLUTION::HD2K;
-    params.fps = sl_oc::FPS::FPS_15;
+    sl_oc::video::VideoParams params;
+    params.res = sl_oc::video::RESOLUTION::HD2K;
+    params.fps = sl_oc::video::FPS::FPS_15;
     params.verbose = verbose;
     // <---- Set Video parameters
 
     // ----> Create Video Capture
-    sl_oc::VideoCapture cap(params);
+    sl_oc::video::VideoCapture cap(params);
     if( !cap.initializeVideo(-1) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
     while (1)
     {
         // 5) Get a new frame from camera
-        const sl_oc::Frame* frame = cap.getLastFrame();
+        const sl_oc::video::Frame* frame = cap.getLastFrame();
 
         // ----> If the frame is valid we can convert, rectify and display it
         if(frame != nullptr)
@@ -132,21 +132,21 @@ int main(int argc, char** argv) {
 }
 
 // Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::RESOLUTION res )
+void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res )
 {
     cv::Mat resized;
     switch(res)
     {
     default:
-    case sl_oc::RESOLUTION::VGA:
+    case sl_oc::video::RESOLUTION::VGA:
         resized = img;
         break;
-    case sl_oc::RESOLUTION::HD720:
+    case sl_oc::video::RESOLUTION::HD720:
         name += " [Resize factor 0.6]";
         cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
         break;
-    case sl_oc::RESOLUTION::HD1080:
-    case sl_oc::RESOLUTION::HD2K:
+    case sl_oc::video::RESOLUTION::HD1080:
+    case sl_oc::video::RESOLUTION::HD2K:
         name += " [Resize factor 0.4]";
         cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
         break;

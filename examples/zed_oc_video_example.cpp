@@ -33,7 +33,7 @@
 int main(int argc, char *argv[])
 {
     // ----> Create Video Capture
-    sl_oc::VideoCapture cap;
+    sl_oc::video::VideoCapture cap;
     if( !cap.initializeVideo() )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     while (1)
     {
         // 2) Get last available frame
-        const sl_oc::Frame* frame = cap.getLastFrame();
+        const sl_oc::video::Frame* frame = cap.getLastFrame();
 
         // ----> If the frame is valid we can display it
         if(frame != nullptr)

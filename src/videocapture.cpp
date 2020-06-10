@@ -107,8 +107,9 @@
 // <---- Camera Control
 
 
-namespace sl_oc
-{
+namespace sl_oc {
+
+namespace video {
 
 VideoCapture::VideoCapture(VideoParams params)
 {
@@ -333,7 +334,7 @@ bool VideoCapture::openCamera( uint8_t devId )
     // Check camera model
     mCameraModel = getCameraModel(mDevName);
 
-    if( mCameraModel==sl_oc::SL_DEVICE::NONE )
+    if( mCameraModel==SL_DEVICE::NONE )
     {
         if(mParams.verbose)
         {
@@ -343,8 +344,8 @@ bool VideoCapture::openCamera( uint8_t devId )
         return false;
     }
 
-    if( mCameraModel==sl_oc::SL_DEVICE::ZED ||
-            mCameraModel==sl_oc::SL_DEVICE::ZED_M )
+    if( mCameraModel==SL_DEVICE::ZED ||
+            mCameraModel==SL_DEVICE::ZED_M )
     {
         if(mParams.verbose)
         {
@@ -679,9 +680,9 @@ int VideoCapture::xioctl(int fd, uint64_t IOCTL_X, void *arg)
     return (ret);
 }
 
-sl_oc::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
+SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
 {
-    sl_oc::SL_DEVICE camera_device = sl_oc::SL_DEVICE::NONE;
+    sl_oc::video::SL_DEVICE camera_device = sl_oc::video::SL_DEVICE::NONE;
     int vid = 0, pid = 0;
     std::string modalias = "";
     std::string name = dev_name.erase(0, 5); //remove /dev/
@@ -732,15 +733,15 @@ sl_oc::SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
 
     // check PID VID
     if (pid == SL_USB_PROD_ZED_REVA && vid == SL_USB_VENDOR)
-        camera_device = sl_oc::SL_DEVICE::ZED;
+        camera_device = SL_DEVICE::ZED;
     else if (pid == SL_USB_PROD_ZED_M_REVA && vid == SL_USB_VENDOR)
-        camera_device = sl_oc::SL_DEVICE::ZED_M;
+        camera_device = SL_DEVICE::ZED_M;
     else if (pid == SL_USB_PROD_ZED_REVB && vid == SL_USB_VENDOR)
-        camera_device = sl_oc::SL_DEVICE::ZED_CBS;
+        camera_device = SL_DEVICE::ZED_CBS;
     else if (pid == SL_USB_PROD_ZED_M_REVB && vid == SL_USB_VENDOR)
-        camera_device = sl_oc::SL_DEVICE::ZED_M_CBS;
+        camera_device = SL_DEVICE::ZED_M_CBS;
     else if (pid == SL_USB_PROD_ZED_2_REVB && vid == SL_USB_VENDOR)
-        camera_device = sl_oc::SL_DEVICE::ZED_2;
+        camera_device = SL_DEVICE::ZED_2;
 
     return camera_device;
 }
@@ -1499,11 +1500,11 @@ int VideoCapture::setGammaPreset(int side, int value)
     int hr = 0;
 
     for (int i = 0; i < 15; i++) {
-        hr += ll_write_system_register(ulAddr, cbs::PRESET_GAMMA[value-1][i]);
+        hr += ll_write_system_register(ulAddr, PRESET_GAMMA[value-1][i]);
         usleep(10);
         uint8_t valRead = 0x0;
         hr += ll_read_system_register(ulAddr, &valRead);
-        if (valRead != cbs::PRESET_GAMMA[value-1][i]) {
+        if (valRead != PRESET_GAMMA[value-1][i]) {
             return -3;
         }
         ulAddr++;
@@ -1807,7 +1808,7 @@ int VideoCapture::calcGainValue(int rawGain)
 }
 
 #ifdef SENSORS_MOD_AVAILABLE
-bool VideoCapture::enableSensorSync( SensorCapture* sensCap )
+bool VideoCapture::enableSensorSync( sensors::SensorCapture* sensCap )
 {
     if(!sensCap)
         return false;
@@ -1824,6 +1825,9 @@ bool VideoCapture::enableSensorSync( SensorCapture* sensCap )
 }
 #endif
 
+}
 
-} // namespace sl
+}
+
+
 

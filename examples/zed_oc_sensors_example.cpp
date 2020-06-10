@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
     // Create a SensorCapture object
-    sl_oc::SensorCapture sens(verbose);
+    sl_oc::sensors::SensorCapture sens(verbose);
 
     // ----> Get a list of available camera with sensor
     std::vector<int> devs = sens.getDeviceList();
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     while(++count<4000)
     {
         // ----> Get IMU data with a timeout of 5 millisecods
-        const sl_oc::SensImuData* imuData = sens.getLastIMUData(5000);
+        const sl_oc::sensors::data::Imu* imuData = sens.getLastIMUData(5000);
         if( imuData && imuData->valid )
         {
             std::cout << "**** New IMU data ****" << std::endl;
@@ -92,8 +92,8 @@ int main(int argc, char *argv[])
         // <---- Get IMU data with a timeout of 5 millisecods
 
         // ----> Get Magnetometer data with a timeout of 100 microseconds to not slow down fastest data (IMU)
-        const sl_oc::SensMagData* magData = sens.getLastMagnetometerData(100);
-        if( magData && magData->valid == sl_oc::SensMagData::NEW_VAL )
+        const sl_oc::sensors::data::Magnetometer* magData = sens.getLastMagnetometerData(100);
+        if( magData && magData->valid == sl_oc::sensors::data::Magnetometer::NEW_VAL )
         {
             std::cout << "**** New Magnetometer data ****" << std::endl;
             std::cout << " * Timestamp: " << magData->timestamp << " nsec" << std::endl;
@@ -107,8 +107,8 @@ int main(int argc, char *argv[])
         // <---- Get Magnetometer data with a timeout of 100 microseconds to not slow down fastest data (IMU)
 
         // ----> Get Environment data with a timeout of 100 microseconds to not slow down fastest data (IMU)
-        const sl_oc::SensEnvData* envData = sens.getLastEnvironmentData(100);
-        if( envData && envData->valid == sl_oc::SensEnvData::NEW_VAL )
+        const sl_oc::sensors::data::Environment* envData = sens.getLastEnvironmentData(100);
+        if( envData && envData->valid == sl_oc::sensors::data::Environment::NEW_VAL )
         {
             std::cout << "**** New Environment data ****" << std::endl;
             std::cout << " * Timestamp: " << envData->timestamp << " nsec" << std::endl;
@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
         // <---- Get Environment data with a timeout of 100 microseconds to not slow down fastest data (IMU)
 
         // ----> Get Temperature data with a timeout of 100 microseconds to not slow down fastest data (IMU)
-        const sl_oc::SensCamTempData* tempData = sens.getLastCameraTemperatureData(100);
+        const sl_oc::sensors::data::Temperature* tempData = sens.getLastCameraTemperatureData(100);
         if( tempData && tempData->valid )
         {
             std::cout << "**** New Camera Sensors Temperature data ****" << std::endl;

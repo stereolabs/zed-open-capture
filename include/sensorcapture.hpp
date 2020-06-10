@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2020, STEREOLABS.
 //
@@ -30,18 +30,26 @@
 
 
 #ifdef SENSORS_MOD_AVAILABLE
+
 #include "sensorcapture_def.hpp"
 #include "hidapi.h"
+
 namespace sl_oc {
 
 #ifdef VIDEO_MOD_AVAILABLE
+namespace video {
 class VideoCapture;
+}
 #endif
 
+namespace sensors {
+
+namespace data {
+
 /*!
- * \brief Contains the acquired IMU data
+ * \brief Contains the acquired Imu data
  */
-struct SL_OC_EXPORT SensImuData
+struct SL_OC_EXPORT Imu
 {
     bool valid = false;     //!< Indicates if IMU data are valid
     uint64_t timestamp = 0; //!< Timestamp in nanoseconds
@@ -58,7 +66,7 @@ struct SL_OC_EXPORT SensImuData
 /*!
  * \brief Contains the acquired Magnetometer data
  */
-struct SL_OC_EXPORT SensMagData
+struct SL_OC_EXPORT Magnetometer
 {
     // Validity of the magnetometer sensor data
     typedef enum _mag_status {
@@ -75,9 +83,9 @@ struct SL_OC_EXPORT SensMagData
 };
 
 /*!
- * \brief Contains the acquired Environmental data
+ * \brief Contains the acquired Environment data
  */
-struct SL_OC_EXPORT SensEnvData
+struct SL_OC_EXPORT Environment
 {
     // Validity of the environmental sensor data
     typedef enum _env_status {
@@ -96,13 +104,15 @@ struct SL_OC_EXPORT SensEnvData
 /*!
  * \brief Contains the acquired Camera Temperature data
  */
-struct SL_OC_EXPORT SensCamTempData
+struct SL_OC_EXPORT Temperature
 {
     bool valid = false;     //!< Indicates if camera temperature data are valid
     uint64_t timestamp = 0; //!< Timestamp in nanoseconds
     float temp_left;        //!< Temperature of the left CMOS camera sensor
     float temp_right;       //!< Temperature of the right CMOS camera sensor
 };
+
+}
 
 /*!
  * \brief The SensorCapture class provides sensor grabbing functions for the Stereolabs ZED Mini and ZED2 camera models
@@ -114,7 +124,7 @@ class SL_OC_EXPORT SensorCapture
 public:
     /*!
      * \brief The default constructor
-     * \param verbose enable useful information to debug the class behaviours while running
+     * \param verbose_lvl enable useful information to debug the class behaviours while running
      */
     SensorCapture( sl_oc::VERBOSITY verbose_lvl=sl_oc::VERBOSITY::ERROR );
 
@@ -138,7 +148,7 @@ public:
     bool initializeSensors( int sn=-1 );
 
     /*!
-     * \brief Get the MCU firmware version in form `<fw_major>.<fw_minor>
+     * \brief Get the MCU firmware version in form [fw_major].[fw_minor]
      * \param fw_major the major firmware version number
      * \param fw_minor the minor firmware version number
      */
@@ -152,44 +162,44 @@ public:
 
     /*!
      * \brief Get the last received IMU data
-     * \param timeout_msec data grabbing timeout in milliseconds.
+     * \param timeout_usec data grabbing timeout in milliseconds.
      * \return returns the last received data as pointer.
      *
      * \note Do not delete the received data
      */
-    const SensImuData* getLastIMUData(uint64_t timeout_usec=1500);
+    const data::Imu* getLastIMUData(uint64_t timeout_usec=1500);
 
     /*!
      * \brief Get the last received Magnetometer data
-     * \param timeout_msec data grabbing timeout in milliseconds.
+     * \param timeout_usec data grabbing timeout in milliseconds.
      * \return returns the last received data as pointer.
      *
      * \note Do not delete the received data
      */
-    const SensMagData* getLastMagnetometerData(uint64_t timeout_usec=100);
+    const data::Magnetometer* getLastMagnetometerData(uint64_t timeout_usec=100);
 
     /*!
      * \brief Get the last received Environment data
-     * \param timeout_msec data grabbing timeout in milliseconds.
+     * \param timeout_usec data grabbing timeout in milliseconds.
      * \return returns the last received data as pointer.
      *
      * \note Do not delete the received data
      */
-    const SensEnvData* getLastEnvironmentData(uint64_t timeout_usec=100);
+    const data::Environment* getLastEnvironmentData(uint64_t timeout_usec=100);
 
     /*!
      * \brief Get the last received camera sensors temperature data
-     * \param timeout_msec data grabbing timeout in milliseconds.
+     * \param timeout_usec data grabbing timeout in milliseconds.
      * \return returns the last received data as pointer.
      *
      * \note Do not delete the received data
      */
-    const SensCamTempData* getLastCameraTemperatureData(uint64_t timeout_usec=100);
+    const data::Temperature* getLastCameraTemperatureData(uint64_t timeout_usec=100);
 
 #ifdef VIDEO_MOD_AVAILABLE
-    void updateTimestampOffset(uint64_t frame_ts);                                 //!< Called by \ref VideoCapture to update timestamp offset
-    inline void setStartTimestamp(uint64_t start_ts){mStartSysTs=start_ts;}        //!< Called by \ref VideoCapture to sync timestamps reference point
-    inline void setVideoPtr(VideoCapture* videoPtr){mVideoPtr=videoPtr;}           //!< Called by \ref VideoCapture to set the pointer to it
+    void updateTimestampOffset(uint64_t frame_ts);                                 //!< Called by  VideoCapture to update timestamp offset
+    inline void setStartTimestamp(uint64_t start_ts){mStartSysTs=start_ts;}        //!< Called by  VideoCapture to sync timestamps reference point
+    inline void setVideoPtr(video::VideoCapture* videoPtr){mVideoPtr=videoPtr;}           //!< Called by  VideoCapture to set the pointer to it
 #endif
 
 private:
@@ -198,7 +208,7 @@ private:
     bool startCapture();                //!< Start data capture thread
     void reset();                       //!< Reset  connection
 
-    int enumerateDevices();             //!< Populates the \ref mSlDevPid map with serial number and PID of the available devices
+    int enumerateDevices();             //!< Populates the  mSlDevPid map with serial number and PID of the available devices
 
     // ----> USB commands to MCU
     bool enableDataStream(bool enable); //!< Enable/Disable the data stream
@@ -209,10 +219,10 @@ private:
 private:
     // Flags
     int mVerbose=0;                //!< Verbose status
-    bool mNewIMUData=false;             //!< Indicates if new \ref IMU data are available
-    bool mNewMagData=false;             //!< Indicates if new \ref MAG data are available
-    bool mNewEnvData=false;             //!< Indicates if new \ref ENV data are available
-    bool mNewCamTempData=false;         //!< Indicates if new \ref CAM_TEMP data are available
+    bool mNewIMUData=false;             //!< Indicates if new  IMU data are available
+    bool mNewMagData=false;             //!< Indicates if new  MAG data are available
+    bool mNewEnvData=false;             //!< Indicates if new  ENV data are available
+    bool mNewCamTempData=false;         //!< Indicates if new  CAM_TEMP data are available
 
     bool mInitialized = false;          //!< Inficates if the MCU has been initialized
     bool mStopCapture = false;          //!< Indicates if the grabbing thread must be stopped
@@ -226,10 +236,10 @@ private:
     int mDevFwVer = -1;                 //!< FW version of the connected device
     unsigned short mDevPid = 0;         //!< Product ID of the connected device
 
-    SensImuData mLastIMUData;           //!< Contains the last received IMU data
-    SensMagData mLastMagData;           //!< Contains the last received Magnetometer data
-    SensEnvData mLastEnvData;           //!< Contains the last received Environmental data
-    SensCamTempData mLastCamTempData;   //!< Contains the last received camera sensors temperature data
+    data::Imu mLastIMUData;             //!< Contains the last received IMU data
+    data::Magnetometer mLastMagData;    //!< Contains the last received Magnetometer data
+    data::Environment mLastEnvData;     //!< Contains the last received Environmental data
+    data::Temperature mLastCamTempData; //!< Contains the last received camera sensors temperature data
 
     std::thread mGrabThread;            //!< The grabbing thread
 
@@ -256,7 +266,7 @@ private:
     // <---- Timestamp synchronization
 
 #ifdef VIDEO_MOD_AVAILABLE
-    VideoCapture* mVideoPtr=nullptr;    //!< Pointer to the synchronized \ref SensorCapture object
+    video::VideoCapture* mVideoPtr=nullptr;    //!< Pointer to the synchronized SensorCapture object
     uint64_t mSyncTs=0;                 //!< Timestamp of the latest received HW sync signal
 #endif
 
@@ -265,14 +275,16 @@ private:
 #endif
 
 /** \example zed_oc_sensors_example.cpp
- * Example of how to use the \ref SensorCapture class to get the raw sensors data at the maximum available
+ * Example of how to use the SensorCapture class to get the raw sensors data at the maximum available
  * frequency.
  */
 
 /** \example zed_oc_sync_example.cpp
  * Example of how to get synchronized video and sensors data from
- * the \ref VideoCapture class and the \ref SensorCapture class.
+ * the VideoCapture class and the SensorCapture class.
  */
+
+}
 }
 
 
