@@ -36,7 +36,12 @@ Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/
     - Environment (Pressure + Temperature + Humidity)
     - CMOS sensors temperature
  * Sensors + Video synchronization
- * Full explaining examples
+ * Full set of self-explaining examples
+    - [Video capture](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_video_example.cpp)
+    - [Video capture and camera control](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_control_example.cpp)
+    - [Video rectification](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_rectify_example.cpp)
+    - [Sensors capture](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_sensors_example.cpp)
+    - [Video/Sensors synchronization](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_sync_example.cpp)
 
 ## Installation
 
