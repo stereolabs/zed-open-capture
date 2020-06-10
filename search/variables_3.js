@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['env_5fvalid_250',['env_valid',['../structsl__oc_1_1SensData.html#aef6224153f8b18f667eb461d0020c4d8',1,'sl_oc::SensData']]]
+  ['env_5fvalid_308',['env_valid',['../d3/da0/structsl__oc_1_1sensors_1_1_usb_raw_data.html#a73f89beb2c71be6397f7e7e00d393aba',1,'sl_oc::sensors::UsbRawData']]]
 ];

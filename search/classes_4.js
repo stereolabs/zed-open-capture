@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['videocapture_180',['VideoCapture',['../classsl__oc_1_1VideoCapture.html',1,'sl_oc']]],
-  ['videoparams_181',['VideoParams',['../structsl__oc_1_1VideoParams.html',1,'sl_oc']]]
+  ['resolution_206',['Resolution',['../de/da1/structsl__oc_1_1video_1_1_resolution.html',1,'sl_oc::video']]]
 ];

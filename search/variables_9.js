@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['mag_5fvalid_263',['mag_valid',['../structsl__oc_1_1SensData.html#aceea72911af8c37b7e73e63b19832d0f',1,'sl_oc::SensData']]],
-  ['mx_264',['mX',['../structsl__oc_1_1SensMagData.html#afded8b759eef1f139f201edbcf5cc5be',1,'sl_oc::SensMagData::mX()'],['../structsl__oc_1_1SensData.html#a29942998bc57f4886e191b523bc42f1f',1,'sl_oc::SensData::mX()']]],
-  ['my_265',['mY',['../structsl__oc_1_1SensMagData.html#a373c00b337bc818141ee508da5f5704f',1,'sl_oc::SensMagData::mY()'],['../structsl__oc_1_1SensData.html#a3d69d1dd64ea29c290369343eef0067d',1,'sl_oc::SensData::mY()']]],
-  ['mz_266',['mZ',['../structsl__oc_1_1SensMagData.html#ac84305882a3aebc275102bf54f01d82e',1,'sl_oc::SensMagData::mZ()'],['../structsl__oc_1_1SensData.html#a110c4ba06cd45cb8c2f39c71c70c5e4f',1,'sl_oc::SensData::mZ()']]]
+  ['mag_5fvalid_325',['mag_valid',['../d3/da0/structsl__oc_1_1sensors_1_1_usb_raw_data.html#a4fde45bab1a99840d9b4275f0f4fc55f',1,'sl_oc::sensors::UsbRawData']]],
+  ['mcu_5fsync_5fts_326',['mcu_sync_ts',['../da/d5d/zed__oc__sync__example_8cpp.html#a38cf151a5c361c0ed7d3df6ef162cb05',1,'zed_oc_sync_example.cpp']]],
+  ['mx_327',['mX',['../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a6f7e3eab66b9a65b64045accf0d78328',1,'sl_oc::sensors::data::Magnetometer::mX()'],['../d3/da0/structsl__oc_1_1sensors_1_1_usb_raw_data.html#a68da1d7c5f77a8b1a4af685a3942cd0d',1,'sl_oc::sensors::UsbRawData::mX()']]],
+  ['my_328',['mY',['../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a0a29c6c3d371dae4448846aa8c6c0746',1,'sl_oc::sensors::data::Magnetometer::mY()'],['../d3/da0/structsl__oc_1_1sensors_1_1_usb_raw_data.html#ae7145b9975a654516136924b919c104e',1,'sl_oc::sensors::UsbRawData::mY()']]],
+  ['mz_329',['mZ',['../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#ae1845b0f13ae8f77a145a93fa048ac1b',1,'sl_oc::sensors::data::Magnetometer::mZ()'],['../d3/da0/structsl__oc_1_1sensors_1_1_usb_raw_data.html#a6b1dcde3a35b654f5fbba5782bac270d',1,'sl_oc::sensors::UsbRawData::mZ()']]]
 ];

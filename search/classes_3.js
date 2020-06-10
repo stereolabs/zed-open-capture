@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['uvcbuffer_179',['UVCBuffer',['../structsl__oc_1_1UVCBuffer.html',1,'sl_oc']]]
+  ['magnetometer_205',['Magnetometer',['../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html',1,'sl_oc::sensors::data']]]
 ];

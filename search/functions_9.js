@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['_7esensorcapture_238',['~SensorCapture',['../classsl__oc_1_1SensorCapture.html#ace5a869571c1e1f2e0d11d7516cb35e8',1,'sl_oc::SensorCapture']]],
-  ['_7evideocapture_239',['~VideoCapture',['../classsl__oc_1_1VideoCapture.html#a5d4abc568f1fc66e6fe7e63790a163ec',1,'sl_oc::VideoCapture']]]
+  ['toggleautomaticcontrol_290',['toggleAutomaticControl',['../d9/d7c/zed__oc__control__example_8cpp.html#af8259df591b8491ec55bd029cba12716',1,'zed_oc_control_example.cpp']]],
+  ['toggleled_291',['toggleLED',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#af970430296542fc9f3a731bad823e7ce',1,'sl_oc::video::VideoCapture']]]
 ];

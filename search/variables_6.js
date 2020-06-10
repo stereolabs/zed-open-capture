@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['height_258',['height',['../structsl__oc_1_1Frame.html#a81c9f8d0b8c3b49d770be14dbe9f0d37',1,'sl_oc::Frame::height()'],['../structsl__oc_1_1Resolution.html#a02afeaaf8574e7a78d6b466ff2695052',1,'sl_oc::Resolution::height()']]],
-  ['humid_259',['humid',['../structsl__oc_1_1SensEnvData.html#a151b2dd9de34d0a3067c922c243135c6',1,'sl_oc::SensEnvData::humid()'],['../structsl__oc_1_1SensData.html#ad303f467135f909e883618c8cf70c211',1,'sl_oc::SensData::humid()']]]
+  ['height_316',['height',['../de/d91/structsl__oc_1_1video_1_1_frame.html#a8711d7e484d3cedb4ad706417f8ef526',1,'sl_oc::video::Frame::height()'],['../de/da1/structsl__oc_1_1video_1_1_resolution.html#aafb8c2f50d7d71aa76baf72cefd09d1b',1,'sl_oc::video::Resolution::height()']]],
+  ['humid_317',['humid',['../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#ac0408b618528a9eabcda439ac48ba3ed',1,'sl_oc::sensors::data::Environment::humid()'],['../d3/da0/structsl__oc_1_1sensors_1_1_usb_raw_data.html#aca7550a76762aaef6679b4b77bb50628',1,'sl_oc::sensors::UsbRawData::humid()']]]
 ];

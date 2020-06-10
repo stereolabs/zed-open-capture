@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['error_309',['ERROR',['../namespacesl__oc.html#ab16e0dc2a4f7533119f355cdb8b42a84a2fd6f336d08340583bd620a7f5694c90',1,'sl_oc']]]
+  ['brightness_367',['Brightness',['../d9/d7c/zed__oc__control__example_8cpp.html#a05023a52b3438ad1ebf7eb5f028b82c3ad70a295282ea3526d69c428b33c4fef9',1,'zed_oc_control_example.cpp']]]
 ];
