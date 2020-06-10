@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['preset_5fgamma_330',['PRESET_GAMMA',['../d1/da0/namespacesl__oc_1_1video.html#ab2154fe3d39373015d1d0c17a6cc5bc4',1,'sl_oc::video']]],
-  ['press_331',['press',['../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#a1c17d37b11ed80514b6683622af5b9f2',1,'sl_oc::sensors::data::Environment::press()'],['../d3/da0/structsl__oc_1_1sensors_1_1_usb_raw_data.html#a4ca83e5091637c18a8fb256d0ee441eb',1,'sl_oc::sensors::UsbRawData::press()']]]
+  ['preset_5fgamma_267',['PRESET_GAMMA',['../namespacesl__oc_1_1cbs.html#aaba5a84814f6ebd42548cb17bddf797f',1,'sl_oc::cbs']]],
+  ['press_268',['press',['../structsl__oc_1_1SensEnvData.html#a512591c298ab1304bf391d08271daf2b',1,'sl_oc::SensEnvData::press()'],['../structsl__oc_1_1SensData.html#a05b97350468e3010936313b993142da3',1,'sl_oc::SensData::press()']]]
 ];

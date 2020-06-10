@@ -1,0 +1,321 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+		<meta name="robots" content="noindex, follow"/>
+        <meta name="generator" content="Doxygen 1.8.18"/>
+        <title>zed_oc_sensors_example.cpp | ZED Open Capture API Reference | Stereolabs</title><!--END PROJECT_NAME (ZED Open Capture)-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700,800">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,600,700">
+        <link href="tabs.css?t=Wed Jun 10 2020 08:55:16" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery.js?t=Wed Jun 10 2020 08:55:16"></script>
+        <script type="text/javascript" src="custom.js?t=Wed Jun 10 2020 08:55:16"></script>
+        <script type="text/javascript" src="dynsections.js?t=Wed Jun 10 2020 08:55:16"></script>
+        <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+        <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+        <link href="stylesheet.css?t=Wed Jun 10 2020 08:55:16" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+            <div id="titlearea">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr style="height: 58px;">
+                            <td class="headerSpacer"></td>
+                            <td id="projectlogo">
+                                <a href="https://www.stereolabs.com"><img src="https://www.stereolabs.com/img/logo_stereolabs.svg" alt="Stereolabs logo" id="logo"></a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://github.com/stereolabs/zed-open-capture" >SOURCE CODE</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://support.stereolabs.com/hc/en-us" >SUPPORT</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://github.com/stereolabs/zed-open-capture/releases" >DOWNLOADS</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://www.stereolabs.com/developers/release/" >ZED SDK</a>
+                            </td>
+                            <td><i class="mobile-navigation"></i></td>
+                            <!--<td id="projectlogo" >
+                                <a href="https://www.stereolabs.com/"> <img alt="Logo" src="logo_stereolabs.png" height="27"/> </a>
+                            </td>-->
+                            <!--<td style="padding-left: 0.4cm;">-->
+                                <!--<div id="projectname">--><!--ZED Open Capture-->
+                                    <!--<span id="projectnumber"> | ZED SDK 0.1</span>-->
+                                <!--</div>-->
+                                <!--BEGIN PROJECT_BRIEF<div id="projectbrief"></div><!--END PROJECT_BRIEF-->
+                            <!--</td>-->
+                            <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--<div id="subtitlearea">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr style="height: 28px;">
+                            <td class="headerSpacer"></td>
+                            <td id="subMenuCpp" class="nav-links nav-links-header nav-links-selected">
+                                <a href="https://www.stereolabs.com/docs/api/"  >C++</a>
+                            </td>
+                            <td id="subMenuPython" class="nav-links nav-links-header">
+                                <a href="https://www.stereolabs.com/docs/api/python/" >Python</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+            <!-- end header part -->
+<!-- Generated by Doxygen 1.8.18 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('zed_oc_sensors_example_8cpp-example.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">zed_oc_sensors_example.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<p>This is an example of how to use the SensorCapture class to get the raw sensors data at the maximum available frequency.</p>
+<div class="fragment"><div class="line"><span class="comment">//</span></div>
+<div class="line"><span class="comment">// Copyright (c) 2020, STEREOLABS.</span></div>
+<div class="line"><span class="comment">//</span></div>
+<div class="line"><span class="comment">// All rights reserved.</span></div>
+<div class="line"><span class="comment">//</span></div>
+<div class="line"><span class="comment">// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span></div>
+<div class="line"><span class="comment">// &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span></div>
+<div class="line"><span class="comment">// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR</span></div>
+<div class="line"><span class="comment">// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span></div>
+<div class="line"><span class="comment">// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span></div>
+<div class="line"><span class="comment">// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span></div>
+<div class="line"><span class="comment">// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span></div>
+<div class="line"><span class="comment">// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span></div>
+<div class="line"><span class="comment">// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span></div>
+<div class="line"><span class="comment">// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span></div>
+<div class="line"><span class="comment">// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><span class="comment">//</span></div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">// ----&gt; Includes</span></div>
+<div class="line"><span class="preprocessor">#include &quot;sensorcapture.hpp&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;unistd.h&gt;</span> <span class="comment">// for usleep</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><span class="comment">// &lt;---- Includes</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// The main function</span></div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// Set the verbose level</span></div>
+<div class="line">    <a class="code" href="namespacesl__oc.html#ab16e0dc2a4f7533119f355cdb8b42a84">sl_oc::VERBOSITY</a> verbose = sl_oc::VERBOSITY::INFO;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// 1) Create a SensorCapture object</span></div>
+<div class="line">    <a name="_a0"></a><a class="code" href="classsl__oc_1_1SensorCapture.html">sl_oc::SensorCapture</a> sens(verbose);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// ----&gt; 2) Get a list of available camera with sensor</span></div>
+<div class="line">    std::vector&lt;int&gt; devs = sens.<a name="a1"></a><a class="code" href="classsl__oc_1_1SensorCapture.html#a78452b75a1bca63f259c05d3b40805ec">getDeviceList</a>();</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span>( devs.size()==0 )</div>
+<div class="line">    {</div>
+<div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;No available ZED Mini or ZED2 cameras&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">        <span class="keywordflow">return</span> EXIT_FAILURE;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">// &lt;---- Get a list of available camera with sensor</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// ----&gt; 3) Inizialize the sensors</span></div>
+<div class="line">    <span class="keywordflow">if</span>( !sens.<a name="a2"></a><a class="code" href="classsl__oc_1_1SensorCapture.html#a39b729888d4cdc98626e0e67685e970c">initializeSensors</a>( devs[0] ) )</div>
+<div class="line">    {</div>
+<div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Connection failed&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">        <span class="keywordflow">return</span> EXIT_FAILURE;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Video Capture connected to camera sn: &quot;</span> &lt;&lt; sens.<a name="a3"></a><a class="code" href="classsl__oc_1_1SensorCapture.html#a8914d08d225a8f7092ab5d528bc3882c">getSerialNumber</a>() &lt;&lt; std::endl;</div>
+<div class="line">    <span class="comment">// &lt;---- Inizialize the sensors</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// ----&gt; 4) Get FW version information</span></div>
+<div class="line">    uint16_t fw_maior;</div>
+<div class="line">    uint16_t fw_minor;</div>
+<div class="line"> </div>
+<div class="line">    sens.<a name="a4"></a><a class="code" href="classsl__oc_1_1SensorCapture.html#a3b1e5abdd253cb7c664842465a865700">getFirmwareVersion</a>( fw_maior, fw_minor );</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot; * Firmware version: &quot;</span> &lt;&lt; std::to_string(fw_maior) &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; std::to_string(fw_minor) &lt;&lt; std::endl;</div>
+<div class="line">    <span class="comment">// &lt;---- Get FW version information</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// ----&gt; Variables to calculate sensors frequencies</span></div>
+<div class="line">    uint64_t last_imu_ts = 0;</div>
+<div class="line">    uint64_t last_mag_ts = 0;</div>
+<div class="line">    uint64_t last_env_ts = 0;</div>
+<div class="line">    uint64_t last_cam_temp_ts = 0;</div>
+<div class="line">    <span class="comment">// &lt;---- Variables to calculate sensors frequencies</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Lets grab 4000 sensors data (about 10 seconds</span></div>
+<div class="line">    <span class="keywordtype">int</span> count = 0;</div>
+<div class="line">    <span class="keywordflow">while</span>(++count&lt;4000)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="comment">// ----&gt; 5) Get IMU data with a timeout of 5 millisecods</span></div>
+<div class="line">        <span class="keyword">const</span> <a name="_a5"></a><a class="code" href="structsl__oc_1_1SensImuData.html">sl_oc::SensImuData</a>* imuData = sens.<a name="a6"></a><a class="code" href="classsl__oc_1_1SensorCapture.html#a78ee1ef1e6a7a1b0e8ec22e427774584">getLastIMUData</a>(5000);</div>
+<div class="line">        <span class="keywordflow">if</span>( imuData &amp;&amp; imuData-&gt;<a name="a7"></a><a class="code" href="structsl__oc_1_1SensImuData.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> )</div>
+<div class="line">        {</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;**** New IMU data ****&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot; * Timestamp: &quot;</span> &lt;&lt; imuData-&gt;<a name="a8"></a><a class="code" href="structsl__oc_1_1SensImuData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a> &lt;&lt; <span class="stringliteral">&quot; nsec&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            <span class="keywordflow">if</span>(last_imu_ts!=0)</div>
+<div class="line">            {</div>
+<div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot; * Frequency: &quot;</span> &lt;&lt; 1e9/<span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(imuData-&gt;<a class="code" href="structsl__oc_1_1SensImuData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a>-last_imu_ts) &lt;&lt; <span class="stringliteral">&quot; Hz&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            }</div>
+<div class="line">            last_imu_ts = imuData-&gt;<a class="code" href="structsl__oc_1_1SensImuData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a>;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot; * Accelerations [m/s²]: &quot;</span> &lt;&lt; imuData-&gt;<a name="a9"></a><a class="code" href="structsl__oc_1_1SensImuData.html#aa9f27499fb09c5c31ec7281bc79cf972">aX</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; imuData-&gt;<a name="a10"></a><a class="code" href="structsl__oc_1_1SensImuData.html#a7b573a84378f78cbf2bfee9ca304f2d0">aY</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; imuData-&gt;<a name="a11"></a><a class="code" href="structsl__oc_1_1SensImuData.html#a7e0dee32de8773dd38898016117686ee">aZ</a> &lt;&lt; std::endl;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot; * Angular Velocities [°/s]: &quot;</span> &lt;&lt; imuData-&gt;<a name="a12"></a><a class="code" href="structsl__oc_1_1SensImuData.html#a7924dddbfb2c0f4c5974d78fd919f4c5">gX</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; imuData-&gt;<a name="a13"></a><a class="code" href="structsl__oc_1_1SensImuData.html#ab857a2882123103c01a787c041f23e66">gY</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; imuData-&gt;<a name="a14"></a><a class="code" href="structsl__oc_1_1SensImuData.html#aa8eaf0dab9163e9e69478f9c29038728">gZ</a> &lt;&lt; std::endl;</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">// &lt;---- Get IMU data with a timeout of 5 millisecods</span></div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">// ----&gt; 6) Get Magnetometer data with a timeout of 100 microseconds to not slow down fastest data (IMU)</span></div>
+<div class="line">        <span class="keyword">const</span> <a name="_a15"></a><a class="code" href="structsl__oc_1_1SensMagData.html">sl_oc::SensMagData</a>* magData = sens.<a name="a16"></a><a class="code" href="classsl__oc_1_1SensorCapture.html#a6eff39073bd4de4e5080f93a4cf073ea">getLastMagnetometerData</a>(100);</div>
+<div class="line">        <span class="keywordflow">if</span>( magData &amp;&amp; magData-&gt;<a name="a17"></a><a class="code" href="structsl__oc_1_1SensMagData.html#af1261836ec42bffb40d440a3e6446cd8">valid</a> == <a name="a18"></a><a class="code" href="structsl__oc_1_1SensMagData.html#a659e22dd71df099643f7c905089cb377ac70b251b26c22bb70cca39887664a3d6">sl_oc::SensMagData::NEW_VAL</a> )</div>
+<div class="line">        {</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;**** New Magnetometer data ****&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot; * Timestamp: &quot;</span> &lt;&lt; magData-&gt;<a name="a19"></a><a class="code" href="structsl__oc_1_1SensMagData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a> &lt;&lt; <span class="stringliteral">&quot; nsec&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            <span class="keywordflow">if</span>(last_mag_ts!=0)</div>
+<div class="line">            {</div>
+<div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot; * Frequency: &quot;</span> &lt;&lt; 1e9/<span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(magData-&gt;<a class="code" href="structsl__oc_1_1SensMagData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a>-last_mag_ts) &lt;&lt; <span class="stringliteral">&quot; Hz&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            }</div>
+<div class="line">            last_mag_ts = magData-&gt;<a class="code" href="structsl__oc_1_1SensMagData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a>;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot; * Magnetic field [uT]: &quot;</span> &lt;&lt; magData-&gt;<a name="a20"></a><a class="code" href="structsl__oc_1_1SensMagData.html#afded8b759eef1f139f201edbcf5cc5be">mX</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; magData-&gt;<a name="a21"></a><a class="code" href="structsl__oc_1_1SensMagData.html#a373c00b337bc818141ee508da5f5704f">mY</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; magData-&gt;<a name="a22"></a><a class="code" href="structsl__oc_1_1SensMagData.html#ac84305882a3aebc275102bf54f01d82e">mZ</a> &lt;&lt; std::endl;</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">// &lt;---- Get Magnetometer data with a timeout of 100 microseconds to not slow down fastest data (IMU)</span></div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">// ----&gt; 7) Get Environment data with a timeout of 100 microseconds to not slow down fastest data (IMU)</span></div>
+<div class="line">        <span class="keyword">const</span> <a name="_a23"></a><a class="code" href="structsl__oc_1_1SensEnvData.html">sl_oc::SensEnvData</a>* envData = sens.<a name="a24"></a><a class="code" href="classsl__oc_1_1SensorCapture.html#ac7fb7a0c8d47ff1fd224c37f84a5f24f">getLastEnvironmentData</a>(100);</div>
+<div class="line">        <span class="keywordflow">if</span>( envData &amp;&amp; envData-&gt;<a name="a25"></a><a class="code" href="structsl__oc_1_1SensEnvData.html#a8dbff88e359d671acf245c4bb6a53dae">valid</a> == <a name="a26"></a><a class="code" href="structsl__oc_1_1SensEnvData.html#a9e3854ee136b6591a6803b52c07eb331ac70b251b26c22bb70cca39887664a3d6">sl_oc::SensEnvData::NEW_VAL</a> )</div>
+<div class="line">        {</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;**** New Environment data ****&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot; * Timestamp: &quot;</span> &lt;&lt; envData-&gt;<a name="a27"></a><a class="code" href="structsl__oc_1_1SensEnvData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a> &lt;&lt; <span class="stringliteral">&quot; nsec&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            <span class="keywordflow">if</span>(last_env_ts!=0)</div>
+<div class="line">            {</div>
+<div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot; * Frequency: &quot;</span> &lt;&lt; 1e9/<span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(envData-&gt;<a class="code" href="structsl__oc_1_1SensEnvData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a>-last_env_ts) &lt;&lt; <span class="stringliteral">&quot; Hz&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            }</div>
+<div class="line">            last_env_ts = envData-&gt;<a class="code" href="structsl__oc_1_1SensEnvData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a>;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot; * Pressure [hPa]: &quot;</span> &lt;&lt; envData-&gt;<a name="a28"></a><a class="code" href="structsl__oc_1_1SensEnvData.html#a512591c298ab1304bf391d08271daf2b">press</a> &lt;&lt; std::endl;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot; * Temperature [°C]: &quot;</span> &lt;&lt; envData-&gt;<a name="a29"></a><a class="code" href="structsl__oc_1_1SensEnvData.html#a24d61a35b72d7299eb6b5f48e71a571b">temp</a> &lt;&lt; std::endl;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot; * Relative Humidity [%rH]: &quot;</span> &lt;&lt; envData-&gt;<a name="a30"></a><a class="code" href="structsl__oc_1_1SensEnvData.html#a151b2dd9de34d0a3067c922c243135c6">humid</a> &lt;&lt; std::endl;</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">// &lt;---- Get Environment data with a timeout of 100 microseconds to not slow down fastest data (IMU)</span></div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">// ----&gt; 8) Get Temperature data with a timeout of 100 microseconds to not slow down fastest data (IMU)</span></div>
+<div class="line">        <span class="keyword">const</span> <a name="_a31"></a><a class="code" href="structsl__oc_1_1SensCamTempData.html">sl_oc::SensCamTempData</a>* tempData = sens.<a name="a32"></a><a class="code" href="classsl__oc_1_1SensorCapture.html#ae91949532132c07fe970a3d9dba8c2fb">getLastCameraTemperatureData</a>(100);</div>
+<div class="line">        <span class="keywordflow">if</span>( tempData &amp;&amp; tempData-&gt;<a name="a33"></a><a class="code" href="structsl__oc_1_1SensCamTempData.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> )</div>
+<div class="line">        {</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;**** New Camera Sensors Temperature data ****&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot; * Timestamp: &quot;</span> &lt;&lt; tempData-&gt;<a name="a34"></a><a class="code" href="structsl__oc_1_1SensCamTempData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a> &lt;&lt; <span class="stringliteral">&quot; nsec&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            <span class="keywordflow">if</span>(last_cam_temp_ts!=0)</div>
+<div class="line">            {</div>
+<div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot; * Frequency: &quot;</span> &lt;&lt; 1e9/<span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(tempData-&gt;<a class="code" href="structsl__oc_1_1SensCamTempData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a>-last_cam_temp_ts) &lt;&lt; <span class="stringliteral">&quot; Hz&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            }</div>
+<div class="line">            last_cam_temp_ts = tempData-&gt;<a class="code" href="structsl__oc_1_1SensCamTempData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a>;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot; * Left Camera [°C]: &quot;</span> &lt;&lt; tempData-&gt;<a name="a35"></a><a class="code" href="structsl__oc_1_1SensCamTempData.html#a86a66a6d6bf5492522b8655b17c9db64">temp_left</a> &lt;&lt; std::endl;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot; * Right Camera [°C]: &quot;</span> &lt;&lt; tempData-&gt;<a name="a36"></a><a class="code" href="structsl__oc_1_1SensCamTempData.html#a73946651f42a9a4af0a6119c22c56f35">temp_right</a> &lt;&lt; std::endl;</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">// &lt;---- Get Temperature data with a timeout of 100 microseconds to not slow down fastest data (IMU)</span></div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div><!-- contents -->
+</div><!-- doc-content -->
+<div class="ttc" id="aclasssl__oc_1_1SensorCapture_html_a78452b75a1bca63f259c05d3b40805ec"><div class="ttname"><a href="classsl__oc_1_1SensorCapture.html#a78452b75a1bca63f259c05d3b40805ec">sl_oc::SensorCapture::getDeviceList</a></div><div class="ttdeci">std::vector&lt; int &gt; getDeviceList()</div><div class="ttdoc">Get the list of the serial number of all the available devices.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8cpp_source.html#l00099">sensorcapture.cpp:99</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1SensorCapture_html_a6eff39073bd4de4e5080f93a4cf073ea"><div class="ttname"><a href="classsl__oc_1_1SensorCapture.html#a6eff39073bd4de4e5080f93a4cf073ea">sl_oc::SensorCapture::getLastMagnetometerData</a></div><div class="ttdeci">const SensMagData * getLastMagnetometerData(uint64_t timeout_usec=100)</div><div class="ttdoc">Get the last received Magnetometer data.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8cpp_source.html#l00606">sensorcapture.cpp:606</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensCamTempData_html_a465bef81f6478756e5443025b1f2ddfa"><div class="ttname"><a href="structsl__oc_1_1SensCamTempData.html#a465bef81f6478756e5443025b1f2ddfa">sl_oc::SensCamTempData::timestamp</a></div><div class="ttdeci">uint64_t timestamp</div><div class="ttdoc">Timestamp in nanoseconds.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00102">sensorcapture.hpp:102</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensImuData_html"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html">sl_oc::SensImuData</a></div><div class="ttdoc">The struct containing the acquired IMU data.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00044">sensorcapture.hpp:45</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensImuData_html_a7e0dee32de8773dd38898016117686ee"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html#a7e0dee32de8773dd38898016117686ee">sl_oc::SensImuData::aZ</a></div><div class="ttdeci">float aZ</div><div class="ttdoc">Acceleration along Z axis in m/s²</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00050">sensorcapture.hpp:50</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1SensorCapture_html_a8914d08d225a8f7092ab5d528bc3882c"><div class="ttname"><a href="classsl__oc_1_1SensorCapture.html#a8914d08d225a8f7092ab5d528bc3882c">sl_oc::SensorCapture::getSerialNumber</a></div><div class="ttdeci">int getSerialNumber()</div><div class="ttdoc">Retrieve the serial number of the connected camera.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8cpp_source.html#l00190">sensorcapture.cpp:190</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensImuData_html_a7924dddbfb2c0f4c5974d78fd919f4c5"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html#a7924dddbfb2c0f4c5974d78fd919f4c5">sl_oc::SensImuData::gX</a></div><div class="ttdeci">float gX</div><div class="ttdoc">Angular velocity around X axis in °/s.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00051">sensorcapture.hpp:51</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1SensorCapture_html"><div class="ttname"><a href="classsl__oc_1_1SensorCapture.html">sl_oc::SensorCapture</a></div><div class="ttdoc">The SensorCapture class provides sensor grabbing functions for the Stereolabs ZED Mini and ZED2 camer...</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00110">sensorcapture.hpp:111</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensEnvData_html_a512591c298ab1304bf391d08271daf2b"><div class="ttname"><a href="structsl__oc_1_1SensEnvData.html#a512591c298ab1304bf391d08271daf2b">sl_oc::SensEnvData::press</a></div><div class="ttdeci">float press</div><div class="ttdoc">Atmospheric pressure in hPa.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00092">sensorcapture.hpp:92</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensImuData_html_aa8eaf0dab9163e9e69478f9c29038728"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html#aa8eaf0dab9163e9e69478f9c29038728">sl_oc::SensImuData::gZ</a></div><div class="ttdeci">float gZ</div><div class="ttdoc">Angular velocity around &gt; axis in °/s.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00053">sensorcapture.hpp:53</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensMagData_html_a659e22dd71df099643f7c905089cb377ac70b251b26c22bb70cca39887664a3d6"><div class="ttname"><a href="structsl__oc_1_1SensMagData.html#a659e22dd71df099643f7c905089cb377ac70b251b26c22bb70cca39887664a3d6">sl_oc::SensMagData::NEW_VAL</a></div><div class="ttdeci">@ NEW_VAL</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00068">sensorcapture.hpp:67</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_ab16e0dc2a4f7533119f355cdb8b42a84"><div class="ttname"><a href="namespacesl__oc.html#ab16e0dc2a4f7533119f355cdb8b42a84">sl_oc::VERBOSITY</a></div><div class="ttdeci">VERBOSITY</div><div class="ttdef"><b>Definition:</b> <a href="defines_8hpp_source.html#l00083">defines.hpp:83</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensImuData_html_ab857a2882123103c01a787c041f23e66"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html#ab857a2882123103c01a787c041f23e66">sl_oc::SensImuData::gY</a></div><div class="ttdeci">float gY</div><div class="ttdoc">Angular velocity around Y axis in °/s.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00052">sensorcapture.hpp:52</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1SensorCapture_html_a39b729888d4cdc98626e0e67685e970c"><div class="ttname"><a href="classsl__oc_1_1SensorCapture.html#a39b729888d4cdc98626e0e67685e970c">sl_oc::SensorCapture::initializeSensors</a></div><div class="ttdeci">bool initializeSensors(int sn=-1)</div><div class="ttdoc">Open a connection to the MCU of a ZED Mini or a ZED2 camera using the specified serial number or sear...</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8cpp_source.html#l00113">sensorcapture.cpp:113</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1SensorCapture_html_a3b1e5abdd253cb7c664842465a865700"><div class="ttname"><a href="classsl__oc_1_1SensorCapture.html#a3b1e5abdd253cb7c664842465a865700">sl_oc::SensorCapture::getFirmwareVersion</a></div><div class="ttdeci">void getFirmwareVersion(uint16_t &amp;fw_major, uint16_t &amp;fw_minor)</div><div class="ttdoc">Get the MCU firmware version in form `&lt;fw_major&gt;.&lt;fw_minor&gt;</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8cpp_source.html#l00179">sensorcapture.cpp:179</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensCamTempData_html"><div class="ttname"><a href="structsl__oc_1_1SensCamTempData.html">sl_oc::SensCamTempData</a></div><div class="ttdoc">The struct containing the acquired Environmental data.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00099">sensorcapture.hpp:100</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensMagData_html_a465bef81f6478756e5443025b1f2ddfa"><div class="ttname"><a href="structsl__oc_1_1SensMagData.html#a465bef81f6478756e5443025b1f2ddfa">sl_oc::SensMagData::timestamp</a></div><div class="ttdeci">uint64_t timestamp</div><div class="ttdoc">Timestamp in nanoseconds.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00071">sensorcapture.hpp:71</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensCamTempData_html_a86a66a6d6bf5492522b8655b17c9db64"><div class="ttname"><a href="structsl__oc_1_1SensCamTempData.html#a86a66a6d6bf5492522b8655b17c9db64">sl_oc::SensCamTempData::temp_left</a></div><div class="ttdeci">float temp_left</div><div class="ttdoc">Temperature of the left CMOS camera sensor.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00103">sensorcapture.hpp:103</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensImuData_html_a28e3c179a86f337095088b3ca02a2b2a"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html#a28e3c179a86f337095088b3ca02a2b2a">sl_oc::SensImuData::valid</a></div><div class="ttdeci">bool valid</div><div class="ttdoc">Indicates if IMU data are valid.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00046">sensorcapture.hpp:46</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensImuData_html_aa9f27499fb09c5c31ec7281bc79cf972"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html#aa9f27499fb09c5c31ec7281bc79cf972">sl_oc::SensImuData::aX</a></div><div class="ttdeci">float aX</div><div class="ttdoc">Acceleration along X axis in m/s²</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00048">sensorcapture.hpp:48</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensEnvData_html_a24d61a35b72d7299eb6b5f48e71a571b"><div class="ttname"><a href="structsl__oc_1_1SensEnvData.html#a24d61a35b72d7299eb6b5f48e71a571b">sl_oc::SensEnvData::temp</a></div><div class="ttdeci">float temp</div><div class="ttdoc">Sensor temperature in °C.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00091">sensorcapture.hpp:91</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensEnvData_html"><div class="ttname"><a href="structsl__oc_1_1SensEnvData.html">sl_oc::SensEnvData</a></div><div class="ttdoc">The struct containing the acquired Environmental data.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00080">sensorcapture.hpp:81</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensEnvData_html_a151b2dd9de34d0a3067c922c243135c6"><div class="ttname"><a href="structsl__oc_1_1SensEnvData.html#a151b2dd9de34d0a3067c922c243135c6">sl_oc::SensEnvData::humid</a></div><div class="ttdeci">float humid</div><div class="ttdoc">Humidity in rH.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00093">sensorcapture.hpp:93</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensEnvData_html_a8dbff88e359d671acf245c4bb6a53dae"><div class="ttname"><a href="structsl__oc_1_1SensEnvData.html#a8dbff88e359d671acf245c4bb6a53dae">sl_oc::SensEnvData::valid</a></div><div class="ttdeci">EnvStatus valid</div><div class="ttdoc">Indicates if Environmental data are valid.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00089">sensorcapture.hpp:89</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1SensorCapture_html_ac7fb7a0c8d47ff1fd224c37f84a5f24f"><div class="ttname"><a href="classsl__oc_1_1SensorCapture.html#ac7fb7a0c8d47ff1fd224c37f84a5f24f">sl_oc::SensorCapture::getLastEnvironmentData</a></div><div class="ttdeci">const SensEnvData * getLastEnvironmentData(uint64_t timeout_usec=100)</div><div class="ttdoc">Get the last received Environment data.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8cpp_source.html#l00627">sensorcapture.cpp:627</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensMagData_html_af1261836ec42bffb40d440a3e6446cd8"><div class="ttname"><a href="structsl__oc_1_1SensMagData.html#af1261836ec42bffb40d440a3e6446cd8">sl_oc::SensMagData::valid</a></div><div class="ttdeci">MagStatus valid</div><div class="ttdoc">Indicates if Magnetometer data are valid.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00070">sensorcapture.hpp:70</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensMagData_html_a373c00b337bc818141ee508da5f5704f"><div class="ttname"><a href="structsl__oc_1_1SensMagData.html#a373c00b337bc818141ee508da5f5704f">sl_oc::SensMagData::mY</a></div><div class="ttdeci">float mY</div><div class="ttdoc">Acceleration along Y axis in uT.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00073">sensorcapture.hpp:73</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensCamTempData_html_a73946651f42a9a4af0a6119c22c56f35"><div class="ttname"><a href="structsl__oc_1_1SensCamTempData.html#a73946651f42a9a4af0a6119c22c56f35">sl_oc::SensCamTempData::temp_right</a></div><div class="ttdeci">float temp_right</div><div class="ttdoc">Temperature of the right CMOS camera sensor.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00104">sensorcapture.hpp:104</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensMagData_html_afded8b759eef1f139f201edbcf5cc5be"><div class="ttname"><a href="structsl__oc_1_1SensMagData.html#afded8b759eef1f139f201edbcf5cc5be">sl_oc::SensMagData::mX</a></div><div class="ttdeci">float mX</div><div class="ttdoc">Acceleration along X axis in uT.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00072">sensorcapture.hpp:72</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensMagData_html"><div class="ttname"><a href="structsl__oc_1_1SensMagData.html">sl_oc::SensMagData</a></div><div class="ttdoc">The struct containing the acquired Magnetometer data.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00061">sensorcapture.hpp:62</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensMagData_html_ac84305882a3aebc275102bf54f01d82e"><div class="ttname"><a href="structsl__oc_1_1SensMagData.html#ac84305882a3aebc275102bf54f01d82e">sl_oc::SensMagData::mZ</a></div><div class="ttdeci">float mZ</div><div class="ttdoc">Acceleration along Z axis in uT.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00074">sensorcapture.hpp:74</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensImuData_html_a465bef81f6478756e5443025b1f2ddfa"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html#a465bef81f6478756e5443025b1f2ddfa">sl_oc::SensImuData::timestamp</a></div><div class="ttdeci">uint64_t timestamp</div><div class="ttdoc">Timestamp in nanoseconds.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00047">sensorcapture.hpp:47</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1SensorCapture_html_ae91949532132c07fe970a3d9dba8c2fb"><div class="ttname"><a href="classsl__oc_1_1SensorCapture.html#ae91949532132c07fe970a3d9dba8c2fb">sl_oc::SensorCapture::getLastCameraTemperatureData</a></div><div class="ttdeci">const SensCamTempData * getLastCameraTemperatureData(uint64_t timeout_usec=100)</div><div class="ttdoc">Get the last received camera sensors temperature data.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8cpp_source.html#l00648">sensorcapture.cpp:648</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensImuData_html_a7b573a84378f78cbf2bfee9ca304f2d0"><div class="ttname"><a href="structsl__oc_1_1SensImuData.html#a7b573a84378f78cbf2bfee9ca304f2d0">sl_oc::SensImuData::aY</a></div><div class="ttdeci">float aY</div><div class="ttdoc">Acceleration along Y axis in m/s²</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00049">sensorcapture.hpp:49</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensEnvData_html_a9e3854ee136b6591a6803b52c07eb331ac70b251b26c22bb70cca39887664a3d6"><div class="ttname"><a href="structsl__oc_1_1SensEnvData.html#a9e3854ee136b6591a6803b52c07eb331ac70b251b26c22bb70cca39887664a3d6">sl_oc::SensEnvData::NEW_VAL</a></div><div class="ttdeci">@ NEW_VAL</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00087">sensorcapture.hpp:86</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensEnvData_html_a465bef81f6478756e5443025b1f2ddfa"><div class="ttname"><a href="structsl__oc_1_1SensEnvData.html#a465bef81f6478756e5443025b1f2ddfa">sl_oc::SensEnvData::timestamp</a></div><div class="ttdeci">uint64_t timestamp</div><div class="ttdoc">Timestamp in nanoseconds.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00090">sensorcapture.hpp:90</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensCamTempData_html_a28e3c179a86f337095088b3ca02a2b2a"><div class="ttname"><a href="structsl__oc_1_1SensCamTempData.html#a28e3c179a86f337095088b3ca02a2b2a">sl_oc::SensCamTempData::valid</a></div><div class="ttdeci">bool valid</div><div class="ttdoc">Indicates if camera temperature data are valid.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00101">sensorcapture.hpp:101</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1SensorCapture_html_a78ee1ef1e6a7a1b0e8ec22e427774584"><div class="ttname"><a href="classsl__oc_1_1SensorCapture.html#a78ee1ef1e6a7a1b0e8ec22e427774584">sl_oc::SensorCapture::getLastIMUData</a></div><div class="ttdeci">const SensImuData * getLastIMUData(uint64_t timeout_usec=1500)</div><div class="ttdoc">Get the last received IMU data.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8cpp_source.html#l00585">sensorcapture.cpp:585</a></div></div>

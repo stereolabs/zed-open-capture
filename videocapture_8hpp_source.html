@@ -1,0 +1,389 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+		<meta name="robots" content="noindex, follow"/>
+        <meta name="generator" content="Doxygen 1.8.18"/>
+        <title>videocapture.hpp Source File | ZED Open Capture API Reference | Stereolabs</title><!--END PROJECT_NAME (ZED Open Capture)-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700,800">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,600,700">
+        <link href="tabs.css?t=Wed Jun 10 2020 08:55:16" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery.js?t=Wed Jun 10 2020 08:55:16"></script>
+        <script type="text/javascript" src="custom.js?t=Wed Jun 10 2020 08:55:16"></script>
+        <script type="text/javascript" src="dynsections.js?t=Wed Jun 10 2020 08:55:16"></script>
+        <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+        <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+        <link href="stylesheet.css?t=Wed Jun 10 2020 08:55:16" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+            <div id="titlearea">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr style="height: 58px;">
+                            <td class="headerSpacer"></td>
+                            <td id="projectlogo">
+                                <a href="https://www.stereolabs.com"><img src="https://www.stereolabs.com/img/logo_stereolabs.svg" alt="Stereolabs logo" id="logo"></a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://github.com/stereolabs/zed-open-capture" >SOURCE CODE</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://support.stereolabs.com/hc/en-us" >SUPPORT</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://github.com/stereolabs/zed-open-capture/releases" >DOWNLOADS</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://www.stereolabs.com/developers/release/" >ZED SDK</a>
+                            </td>
+                            <td><i class="mobile-navigation"></i></td>
+                            <!--<td id="projectlogo" >
+                                <a href="https://www.stereolabs.com/"> <img alt="Logo" src="logo_stereolabs.png" height="27"/> </a>
+                            </td>-->
+                            <!--<td style="padding-left: 0.4cm;">-->
+                                <!--<div id="projectname">--><!--ZED Open Capture-->
+                                    <!--<span id="projectnumber"> | ZED SDK 0.1</span>-->
+                                <!--</div>-->
+                                <!--BEGIN PROJECT_BRIEF<div id="projectbrief"></div><!--END PROJECT_BRIEF-->
+                            <!--</td>-->
+                            <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--<div id="subtitlearea">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr style="height: 28px;">
+                            <td class="headerSpacer"></td>
+                            <td id="subMenuCpp" class="nav-links nav-links-header nav-links-selected">
+                                <a href="https://www.stereolabs.com/docs/api/"  >C++</a>
+                            </td>
+                            <td id="subMenuPython" class="nav-links nav-links-header">
+                                <a href="https://www.stereolabs.com/docs/api/python/" >Python</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+            <!-- end header part -->
+<!-- Generated by Doxygen 1.8.18 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('videocapture_8hpp_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">videocapture.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2020, STEREOLABS.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">// All rights reserved.</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">// &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#ifndef VIDEOCAPTURE_HPP</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define VIDEOCAPTURE_HPP</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;defines.hpp&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;thread&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;mutex&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifdef VIDEO_MOD_AVAILABLE</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;videocapture_def.hpp&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesl__oc.html">sl_oc</a> {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifdef SENSORS_MOD_AVAILABLE</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">class </span>SensorCapture;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="structsl__oc_1_1Frame.html">   40</a></span>&#160;<span class="keyword">struct </span>SL_OC_EXPORT <a class="code" href="structsl__oc_1_1Frame.html">Frame</a></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="structsl__oc_1_1Frame.html#a0e8ca486cc6ee69a735e7c55af0c2df0">   42</a></span>&#160;    uint64_t frame_id = 0;          </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="structsl__oc_1_1Frame.html#a465bef81f6478756e5443025b1f2ddfa">   43</a></span>&#160;    uint64_t timestamp = 0;         </div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="structsl__oc_1_1Frame.html#abe222f6d3581e7920dcad5306cc906a8">   44</a></span>&#160;    uint8_t* data = <span class="keyword">nullptr</span>;        </div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="structsl__oc_1_1Frame.html#ad0eab1042455a2067c812ab8071d5376">   45</a></span>&#160;    uint16_t width = 0;             </div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structsl__oc_1_1Frame.html#a81c9f8d0b8c3b49d770be14dbe9f0d37">   46</a></span>&#160;    uint16_t height = 0;            </div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="structsl__oc_1_1Frame.html#a0057a7f2eb00a01a4b11243fd5bf2f8d">   47</a></span>&#160;    uint8_t channels = 0;           </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;};</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classsl__oc_1_1VideoCapture.html">   53</a></span>&#160;<span class="keyword">class </span>SL_OC_EXPORT <a class="code" href="classsl__oc_1_1VideoCapture.html">VideoCapture</a></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;{</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    ZED_OC_VERSION_ATTRIBUTE;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="classsl__oc_1_1VideoCapture.html">VideoCapture</a>( <a class="code" href="structsl__oc_1_1VideoParams.html">VideoParams</a> params = <a class="code" href="namespacesl__oc.html#aa249d59737f2502dd206a052116229c0">VideoParams</a>() );</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classsl__oc_1_1VideoCapture.html">VideoCapture</a>();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">bool</span> initializeVideo( <span class="keywordtype">int</span> devId=-1 );</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">const</span> <a class="code" href="structsl__oc_1_1Frame.html">Frame</a>* getLastFrame(uint64_t timeout_msec=10);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classsl__oc_1_1VideoCapture.html#a84491ab5910edd04f3af38ef1443ad61">   92</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classsl__oc_1_1VideoCapture.html#a84491ab5910edd04f3af38ef1443ad61">getFrameSize</a>( <span class="keywordtype">int</span>&amp; width, <span class="keywordtype">int</span>&amp; height ){width=mWidth;height=mHeight;}</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">// ----&gt; Led Control</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment"></span>    <span class="keywordtype">int</span> setLEDstatus(<span class="keywordtype">bool</span> status);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordtype">int</span> getLEDstatus(<span class="keywordtype">bool</span> *status);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordtype">int</span> toggleLED(<span class="keywordtype">bool</span> *value);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="comment">// &lt;---- Led Control</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="comment">// ----&gt; Camera Settings control</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment"></span>    <span class="keywordtype">void</span> setBrightness(<span class="keywordtype">int</span> brightness);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordtype">int</span> getBrightness();</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordtype">void</span> resetBrightness();</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordtype">void</span> setSharpness(<span class="keywordtype">int</span> sharpness);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordtype">int</span> getSharpness();</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keywordtype">void</span> resetSharpness();</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <span class="keywordtype">void</span> setContrast(<span class="keywordtype">int</span> contrast);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keywordtype">int</span> getContrast();</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordtype">void</span> resetContrast();</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordtype">void</span> setHue(<span class="keywordtype">int</span> hue);</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordtype">int</span> getHue();</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordtype">void</span> resetHue();</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordtype">void</span> setSaturation(<span class="keywordtype">int</span> saturation);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="keywordtype">int</span> getSaturation();</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="keywordtype">void</span> resetSaturation();</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordtype">void</span> setWhiteBalance(<span class="keywordtype">int</span> wb);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="keywordtype">int</span> getWhiteBalance();</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keywordtype">void</span> setAutoWhiteBalance(<span class="keywordtype">bool</span> active);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordtype">bool</span> getAutoWhiteBalance();</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordtype">void</span> resetAutoWhiteBalance();</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keywordtype">void</span> setGamma(<span class="keywordtype">int</span> gamma);</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keywordtype">int</span> getGamma();</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    <span class="keywordtype">void</span> resetGamma();</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordtype">int</span> setAECAGC(<span class="keywordtype">bool</span> active);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="keywordtype">bool</span> getAECAGC();</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keywordtype">void</span> resetAECAGC();</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keywordtype">void</span> setGain(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a> cam, <span class="keywordtype">int</span> gain);</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="keywordtype">int</span> getGain(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a> cam);</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <span class="keywordtype">void</span> setExposure(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a> cam, <span class="keywordtype">int</span> exposure);</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <span class="keywordtype">int</span> getExposure(<a class="code" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a> cam);</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="comment">// &lt;---- Camera Settings control</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <span class="keywordtype">int</span> getSerialNumber();</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160; </div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="preprocessor">#ifdef SENSORS_MOD_AVAILABLE</span></div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="keywordtype">bool</span> enableSensorSync( <a class="code" href="classsl__oc_1_1SensorCapture.html">SensorCapture</a>* sensCap=<span class="keyword">nullptr</span> );</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
+<div class="line"><a name="l00313"></a><span class="lineno"><a class="line" href="classsl__oc_1_1VideoCapture.html#adcdb3b055228e7ec601f3f7a49b4ba9a">  313</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classsl__oc_1_1VideoCapture.html#adcdb3b055228e7ec601f3f7a49b4ba9a">setReadyToSync</a>(){ mSensReadyToSync=<span class="keyword">true</span>; }</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <span class="keywordtype">void</span> grabThreadFunc();  </div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <span class="comment">// ----&gt; Low level functions</span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keywordtype">int</span> ll_VendorControl(uint8_t *buf, <span class="keywordtype">int</span> len, <span class="keywordtype">int</span> readMode, <span class="keywordtype">bool</span> safe = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    <span class="keywordtype">int</span> ll_get_gpio_value(<span class="keywordtype">int</span> gpio_number, uint8_t* value);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    <span class="keywordtype">int</span> ll_set_gpio_value(<span class="keywordtype">int</span> gpio_number, uint8_t value);</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <span class="keywordtype">int</span> ll_set_gpio_direction(<span class="keywordtype">int</span> gpio_number, <span class="keywordtype">int</span> direction);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <span class="keywordtype">int</span> ll_read_system_register(uint64_t address, uint8_t* value);</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <span class="keywordtype">int</span> ll_write_system_register(uint64_t address, uint8_t value);</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keywordtype">int</span> ll_read_sensor_register(<span class="keywordtype">int</span> side, <span class="keywordtype">int</span> sscb_id, uint64_t address, uint8_t *value);</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keywordtype">int</span> ll_write_sensor_register(<span class="keywordtype">int</span> side, <span class="keywordtype">int</span> sscb_id, uint64_t address, uint8_t value);</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    <span class="keywordtype">int</span> ll_SPI_FlashProgramRead(uint8_t *pBuf, <span class="keywordtype">int</span> Adr, <span class="keywordtype">int</span> len);</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <span class="keywordtype">int</span> ll_isp_aecagc_enable(<span class="keywordtype">int</span> side, <span class="keywordtype">bool</span> enable);</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <span class="keywordtype">int</span> ll_isp_is_aecagc(<span class="keywordtype">int</span> side);</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordtype">int</span> ll_isp_get_gain(uint8_t *val, uint8_t sensorID);</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    <span class="keywordtype">int</span> ll_isp_set_gain(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucGainH, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucGainM, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucGainL, <span class="keywordtype">int</span> sensorID);</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="keywordtype">int</span> ll_isp_get_exposure(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *val, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> sensorID);</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    <span class="keywordtype">int</span> ll_isp_set_exposure(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpH, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpM, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpL, <span class="keywordtype">int</span> sensorID);</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="keywordtype">void</span> ll_activate_sync(); <span class="comment">// Activate low level sync signal between Camera and MCU</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="comment">// &lt;---- Low level functions</span></div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    <span class="comment">// ----&gt; Mid level functions</span></div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="keywordtype">void</span> setCameraControlSettings(<span class="keywordtype">int</span> ctrl_id, <span class="keywordtype">int</span> ctrl_val);</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keywordtype">void</span> resetCameraControlSettings(<span class="keywordtype">int</span> ctrl_id);</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <span class="keywordtype">int</span> getCameraControlSettings(<span class="keywordtype">int</span> ctrl_id);</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    <span class="keywordtype">int</span> setGammaPreset(<span class="keywordtype">int</span> side, <span class="keywordtype">int</span> value);</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160; </div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="keywordtype">int</span> calcRawGainValue(<span class="keywordtype">int</span> gain); <span class="comment">// Convert &quot;user gain&quot; to &quot;ISP gain&quot;</span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="keywordtype">int</span> calcGainValue(<span class="keywordtype">int</span> rawGain); <span class="comment">// Convert &quot;ISP Gain&quot; to &quot;User gain&quot;</span></div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="comment">// &lt;---- Mid level functions</span></div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <span class="comment">// ----&gt; Connection control functions</span></div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="keywordtype">bool</span> openCamera( uint8_t devId );                           </div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keywordtype">bool</span> startCapture();                                        </div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="keywordtype">void</span> reset();                                               </div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> stopCapture(){mStopCapture=<span class="keyword">true</span>;}               </div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordtype">int</span> input_set_framerate(<span class="keywordtype">int</span> fps);                           </div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    <span class="keywordtype">int</span> xioctl(<span class="keywordtype">int</span> fd, uint64_t IOCTL_X, <span class="keywordtype">void</span> *arg);            </div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <span class="keywordtype">void</span> checkResFps();                                         </div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <a class="code" href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72">sl_oc::SL_DEVICE</a> getCameraModel(std::string dev_name);     </div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="comment">// &lt;---- Connection control functions</span></div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160; </div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="comment">// Flags</span></div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="keywordtype">bool</span> mNewFrame=<span class="keyword">false</span>;               </div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    <span class="keywordtype">bool</span> mInitialized=<span class="keyword">false</span>;            </div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="keywordtype">bool</span> mStopCapture=<span class="keyword">true</span>;             </div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="keywordtype">bool</span> mGrabRunning=<span class="keyword">false</span>;            </div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160; </div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <a class="code" href="namespacesl__oc.html#aa249d59737f2502dd206a052116229c0">VideoParams</a> mParams;                </div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160; </div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordtype">int</span> mDevId = 0;                     </div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    std::string mDevName;               </div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <span class="keywordtype">int</span> mFileDesc=-1;                   </div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160; </div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    std::mutex mBufMutex;               </div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    std::mutex mComMutex;               </div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160; </div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    <span class="keywordtype">int</span> mWidth = 0;                     </div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    <span class="keywordtype">int</span> mHeight = 0;                    </div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <span class="keywordtype">int</span> mChannels = 0;                  </div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    <span class="keywordtype">int</span> mFps=0;                          </div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160; </div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <a class="code" href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72">sl_oc::SL_DEVICE</a> mCameraModel = <a class="code" href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72ab50339a10e1de285ac99d4c3990b8693">sl_oc::SL_DEVICE::NONE</a>; </div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160; </div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    Frame mLastFrame;                   </div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    uint8_t mBufCount = 2;              </div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    uint8_t mCurrentIndex = 0;          </div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <span class="keyword">struct </span>UVCBuffer *mBuffers = <span class="keyword">nullptr</span>;  </div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160; </div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    uint64_t mStartTs=0;                </div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    uint64_t mInitTs=0;                 </div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160; </div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="keywordtype">int</span> mGainSegMax=0;                  </div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    <span class="keywordtype">int</span> mExpoureRawMax;                 </div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160; </div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    std::thread mGrabThread;            </div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160; </div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="keywordtype">bool</span> mFirstFrame=<span class="keyword">true</span>;              </div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160; </div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="preprocessor">#ifdef SENSORS_MOD_AVAILABLE</span></div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    <span class="keywordtype">bool</span> mSyncEnabled=<span class="keyword">false</span>;            </div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    SensorCapture* mSensPtr;            </div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160; </div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;    <span class="keywordtype">bool</span> mSensReadyToSync=<span class="keyword">false</span>;        </div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;};</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160; </div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;}</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160; </div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160; </div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;<span class="preprocessor">#endif // VIDEOCAPTURE_HPP</span></div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160; </div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<div class="ttc" id="aclasssl__oc_1_1SensorCapture_html"><div class="ttname"><a href="classsl__oc_1_1SensorCapture.html">sl_oc::SensorCapture</a></div><div class="ttdoc">The SensorCapture class provides sensor grabbing functions for the Stereolabs ZED Mini and ZED2 camer...</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00110">sensorcapture.hpp:111</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1VideoParams_html"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html">sl_oc::VideoParams</a></div><div class="ttdoc">The camera configuration parameters.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00078">videocapture_def.hpp:79</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_aa249d59737f2502dd206a052116229c0"><div class="ttname"><a href="namespacesl__oc.html#aa249d59737f2502dd206a052116229c0">sl_oc::VideoParams</a></div><div class="ttdeci">struct sl_oc::VideoParams VideoParams</div><div class="ttdoc">The camera configuration parameters.</div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_adcdb3b055228e7ec601f3f7a49b4ba9a"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#adcdb3b055228e7ec601f3f7a49b4ba9a">sl_oc::VideoCapture::setReadyToSync</a></div><div class="ttdeci">void setReadyToSync()</div><div class="ttdoc">Indicates that the SensorCapture object received the HW sync signal and a frame must be synchronized ...</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00313">videocapture.hpp:313</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html"><div class="ttname"><a href="namespacesl__oc.html">sl_oc</a></div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8cpp_source.html#l00031">sensorcapture.cpp:31</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a2b86a6fb96d76950d0de78b1ab840681"><div class="ttname"><a href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">sl_oc::CAM_SENS_POS</a></div><div class="ttdeci">CAM_SENS_POS</div><div class="ttdoc">Position of the Camera CMOS sensors.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00069">videocapture_def.hpp:69</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_ae3205f7c538dc3170f554909df60ee72"><div class="ttname"><a href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72">sl_oc::SL_DEVICE</a></div><div class="ttdeci">SL_DEVICE</div><div class="ttdoc">Camera models.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00035">videocapture_def.hpp:35</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1Frame_html"><div class="ttname"><a href="structsl__oc_1_1Frame.html">sl_oc::Frame</a></div><div class="ttdoc">The Frame struct containing the acquired video frames.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00040">videocapture.hpp:41</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html">sl_oc::VideoCapture</a></div><div class="ttdoc">The VideoCapture class provides image grabbing functions and settings control for all the Stereolabs ...</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00053">videocapture.hpp:54</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a84491ab5910edd04f3af38ef1443ad61"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a84491ab5910edd04f3af38ef1443ad61">sl_oc::VideoCapture::getFrameSize</a></div><div class="ttdeci">void getFrameSize(int &amp;width, int &amp;height)</div><div class="ttdoc">Get the size of the camera frame.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8hpp_source.html#l00092">videocapture.hpp:92</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_ae3205f7c538dc3170f554909df60ee72ab50339a10e1de285ac99d4c3990b8693"><div class="ttname"><a href="namespacesl__oc.html#ae3205f7c538dc3170f554909df60ee72ab50339a10e1de285ac99d4c3990b8693">sl_oc::SL_DEVICE::NONE</a></div><div class="ttdeci">@ NONE</div></div>

@@ -1,0 +1,1815 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+		<meta name="robots" content="noindex, follow"/>
+        <meta name="generator" content="Doxygen 1.8.18"/>
+        <title>VideoCapture Class Reference | ZED Open Capture API Reference | Stereolabs</title><!--END PROJECT_NAME (ZED Open Capture)-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700,800">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,600,700">
+        <link href="tabs.css?t=Wed Jun 10 2020 08:55:16" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery.js?t=Wed Jun 10 2020 08:55:16"></script>
+        <script type="text/javascript" src="custom.js?t=Wed Jun 10 2020 08:55:16"></script>
+        <script type="text/javascript" src="dynsections.js?t=Wed Jun 10 2020 08:55:16"></script>
+        <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+        <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+        <link href="stylesheet.css?t=Wed Jun 10 2020 08:55:16" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+            <div id="titlearea">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr style="height: 58px;">
+                            <td class="headerSpacer"></td>
+                            <td id="projectlogo">
+                                <a href="https://www.stereolabs.com"><img src="https://www.stereolabs.com/img/logo_stereolabs.svg" alt="Stereolabs logo" id="logo"></a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://github.com/stereolabs/zed-open-capture" >SOURCE CODE</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://support.stereolabs.com/hc/en-us" >SUPPORT</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://github.com/stereolabs/zed-open-capture/releases" >DOWNLOADS</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://www.stereolabs.com/developers/release/" >ZED SDK</a>
+                            </td>
+                            <td><i class="mobile-navigation"></i></td>
+                            <!--<td id="projectlogo" >
+                                <a href="https://www.stereolabs.com/"> <img alt="Logo" src="logo_stereolabs.png" height="27"/> </a>
+                            </td>-->
+                            <!--<td style="padding-left: 0.4cm;">-->
+                                <!--<div id="projectname">--><!--ZED Open Capture-->
+                                    <!--<span id="projectnumber"> | ZED SDK 0.1</span>-->
+                                <!--</div>-->
+                                <!--BEGIN PROJECT_BRIEF<div id="projectbrief"></div><!--END PROJECT_BRIEF-->
+                            <!--</td>-->
+                            <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--<div id="subtitlearea">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr style="height: 28px;">
+                            <td class="headerSpacer"></td>
+                            <td id="subMenuCpp" class="nav-links nav-links-header nav-links-selected">
+                                <a href="https://www.stereolabs.com/docs/api/"  >C++</a>
+                            </td>
+                            <td id="subMenuPython" class="nav-links nav-links-header">
+                                <a href="https://www.stereolabs.com/docs/api/python/" >Python</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+            <!-- end header part -->
+<!-- Generated by Doxygen 1.8.18 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('classsl__oc_1_1VideoCapture.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Functions</a> &#124;
+<a href="classsl__oc_1_1VideoCapture-members.html">List of all members</a>  </div>
+  <div class="headertitle">
+<div class="title">VideoCapture Class Reference</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>The <a class="el" href="classsl__oc_1_1VideoCapture.html" title="The VideoCapture class provides image grabbing functions and settings control for all the Stereolabs ...">VideoCapture</a> class provides image grabbing functions and settings control for all the Stereolabs camera models.  
+ <a href="classsl__oc_1_1VideoCapture.html#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a8298eef722bd5d045fdf1bf9e04fc6b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a8298eef722bd5d045fdf1bf9e04fc6b2">VideoCapture</a> (<a class="el" href="structsl__oc_1_1VideoParams.html">VideoParams</a> params=<a class="el" href="structsl__oc_1_1VideoParams.html">VideoParams</a>())</td></tr>
+<tr class="memdesc:a8298eef722bd5d045fdf1bf9e04fc6b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor.  <a href="classsl__oc_1_1VideoCapture.html#a8298eef722bd5d045fdf1bf9e04fc6b2">More...</a><br /></td></tr>
+<tr class="separator:a8298eef722bd5d045fdf1bf9e04fc6b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d4abc568f1fc66e6fe7e63790a163ec"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a5d4abc568f1fc66e6fe7e63790a163ec">~VideoCapture</a> ()</td></tr>
+<tr class="memdesc:a5d4abc568f1fc66e6fe7e63790a163ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class destructor.  <a href="classsl__oc_1_1VideoCapture.html#a5d4abc568f1fc66e6fe7e63790a163ec">More...</a><br /></td></tr>
+<tr class="separator:a5d4abc568f1fc66e6fe7e63790a163ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a446d2a6b9440ef43cfed9fc97e102415"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">initializeVideo</a> (int devId=-1)</td></tr>
+<tr class="memdesc:a446d2a6b9440ef43cfed9fc97e102415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open a ZED camera using the specified ID or searching for the first available.  <a href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">More...</a><br /></td></tr>
+<tr class="separator:a446d2a6b9440ef43cfed9fc97e102415"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd1e11b436d1f4162d38cc1042f5232a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structsl__oc_1_1Frame.html">Frame</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#acd1e11b436d1f4162d38cc1042f5232a">getLastFrame</a> (uint64_t timeout_msec=10)</td></tr>
+<tr class="memdesc:acd1e11b436d1f4162d38cc1042f5232a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last received camera image.  <a href="classsl__oc_1_1VideoCapture.html#acd1e11b436d1f4162d38cc1042f5232a">More...</a><br /></td></tr>
+<tr class="separator:acd1e11b436d1f4162d38cc1042f5232a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84491ab5910edd04f3af38ef1443ad61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a84491ab5910edd04f3af38ef1443ad61">getFrameSize</a> (int &amp;width, int &amp;height)</td></tr>
+<tr class="memdesc:a84491ab5910edd04f3af38ef1443ad61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the size of the camera frame.  <a href="classsl__oc_1_1VideoCapture.html#a84491ab5910edd04f3af38ef1443ad61">More...</a><br /></td></tr>
+<tr class="separator:a84491ab5910edd04f3af38ef1443ad61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68a8f813d4aa374659f1cf92cde0b4ba"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a68a8f813d4aa374659f1cf92cde0b4ba">setLEDstatus</a> (bool status)</td></tr>
+<tr class="memdesc:a68a8f813d4aa374659f1cf92cde0b4ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the status of the camera led.  <a href="classsl__oc_1_1VideoCapture.html#a68a8f813d4aa374659f1cf92cde0b4ba">More...</a><br /></td></tr>
+<tr class="separator:a68a8f813d4aa374659f1cf92cde0b4ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed9b37bce6030f81e8a4e221119a675e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#aed9b37bce6030f81e8a4e221119a675e">getLEDstatus</a> (bool *status)</td></tr>
+<tr class="memdesc:aed9b37bce6030f81e8a4e221119a675e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the status of the camera led.  <a href="classsl__oc_1_1VideoCapture.html#aed9b37bce6030f81e8a4e221119a675e">More...</a><br /></td></tr>
+<tr class="separator:aed9b37bce6030f81e8a4e221119a675e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e392695ab5815eaacd465f5fa4dca3c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a2e392695ab5815eaacd465f5fa4dca3c">toggleLED</a> (bool *value)</td></tr>
+<tr class="memdesc:a2e392695ab5815eaacd465f5fa4dca3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggle the status of the camera led.  <a href="classsl__oc_1_1VideoCapture.html#a2e392695ab5815eaacd465f5fa4dca3c">More...</a><br /></td></tr>
+<tr class="separator:a2e392695ab5815eaacd465f5fa4dca3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0006ebfdca6db81f835f5d0d6a6aee3b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a0006ebfdca6db81f835f5d0d6a6aee3b">setBrightness</a> (int brightness)</td></tr>
+<tr class="memdesc:a0006ebfdca6db81f835f5d0d6a6aee3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Brightness value.  <a href="classsl__oc_1_1VideoCapture.html#a0006ebfdca6db81f835f5d0d6a6aee3b">More...</a><br /></td></tr>
+<tr class="separator:a0006ebfdca6db81f835f5d0d6a6aee3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6731c29ae7def1e712128f43778923d9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a6731c29ae7def1e712128f43778923d9">getBrightness</a> ()</td></tr>
+<tr class="memdesc:a6731c29ae7def1e712128f43778923d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Brightness value.  <a href="classsl__oc_1_1VideoCapture.html#a6731c29ae7def1e712128f43778923d9">More...</a><br /></td></tr>
+<tr class="separator:a6731c29ae7def1e712128f43778923d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a052fc41640dddce60e0889c417bda3dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a052fc41640dddce60e0889c417bda3dd">resetBrightness</a> ()</td></tr>
+<tr class="memdesc:a052fc41640dddce60e0889c417bda3dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the Brightness value to default value.  <a href="classsl__oc_1_1VideoCapture.html#a052fc41640dddce60e0889c417bda3dd">More...</a><br /></td></tr>
+<tr class="separator:a052fc41640dddce60e0889c417bda3dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e7e1a6baafec413f10ef0754e33b497"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a3e7e1a6baafec413f10ef0754e33b497">setSharpness</a> (int sharpness)</td></tr>
+<tr class="memdesc:a3e7e1a6baafec413f10ef0754e33b497"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Sharpness value.  <a href="classsl__oc_1_1VideoCapture.html#a3e7e1a6baafec413f10ef0754e33b497">More...</a><br /></td></tr>
+<tr class="separator:a3e7e1a6baafec413f10ef0754e33b497"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c6cea95108831a8ed3d1c99d0a39665"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a9c6cea95108831a8ed3d1c99d0a39665">getSharpness</a> ()</td></tr>
+<tr class="memdesc:a9c6cea95108831a8ed3d1c99d0a39665"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Sharpness value.  <a href="classsl__oc_1_1VideoCapture.html#a9c6cea95108831a8ed3d1c99d0a39665">More...</a><br /></td></tr>
+<tr class="separator:a9c6cea95108831a8ed3d1c99d0a39665"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ff8d9153da156cc4b42ac4850daeeb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a2ff8d9153da156cc4b42ac4850daeeb6">resetSharpness</a> ()</td></tr>
+<tr class="memdesc:a2ff8d9153da156cc4b42ac4850daeeb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the Sharpness value to default value.  <a href="classsl__oc_1_1VideoCapture.html#a2ff8d9153da156cc4b42ac4850daeeb6">More...</a><br /></td></tr>
+<tr class="separator:a2ff8d9153da156cc4b42ac4850daeeb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32bcdbb1ac23149a2135ed19feed4983"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a32bcdbb1ac23149a2135ed19feed4983">setContrast</a> (int contrast)</td></tr>
+<tr class="memdesc:a32bcdbb1ac23149a2135ed19feed4983"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Contrast value.  <a href="classsl__oc_1_1VideoCapture.html#a32bcdbb1ac23149a2135ed19feed4983">More...</a><br /></td></tr>
+<tr class="separator:a32bcdbb1ac23149a2135ed19feed4983"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa23aee53856ff3c45b5ad76138d673bd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#aa23aee53856ff3c45b5ad76138d673bd">getContrast</a> ()</td></tr>
+<tr class="memdesc:aa23aee53856ff3c45b5ad76138d673bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Contrast value.  <a href="classsl__oc_1_1VideoCapture.html#aa23aee53856ff3c45b5ad76138d673bd">More...</a><br /></td></tr>
+<tr class="separator:aa23aee53856ff3c45b5ad76138d673bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab10b504747a2891bc7d3b3450ecfa1f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#ab10b504747a2891bc7d3b3450ecfa1f4">resetContrast</a> ()</td></tr>
+<tr class="memdesc:ab10b504747a2891bc7d3b3450ecfa1f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the Contrast value to default value.  <a href="classsl__oc_1_1VideoCapture.html#ab10b504747a2891bc7d3b3450ecfa1f4">More...</a><br /></td></tr>
+<tr class="separator:ab10b504747a2891bc7d3b3450ecfa1f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8a6f32fb7e84930cd98d7b37a2d4b01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#ae8a6f32fb7e84930cd98d7b37a2d4b01">setHue</a> (int hue)</td></tr>
+<tr class="memdesc:ae8a6f32fb7e84930cd98d7b37a2d4b01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Hue value.  <a href="classsl__oc_1_1VideoCapture.html#ae8a6f32fb7e84930cd98d7b37a2d4b01">More...</a><br /></td></tr>
+<tr class="separator:ae8a6f32fb7e84930cd98d7b37a2d4b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a87b6173fdc5665ead93cf80ae92ec4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a7a87b6173fdc5665ead93cf80ae92ec4">getHue</a> ()</td></tr>
+<tr class="memdesc:a7a87b6173fdc5665ead93cf80ae92ec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Hue value.  <a href="classsl__oc_1_1VideoCapture.html#a7a87b6173fdc5665ead93cf80ae92ec4">More...</a><br /></td></tr>
+<tr class="separator:a7a87b6173fdc5665ead93cf80ae92ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92b62cf676fffd4845ab564b9731c910"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a92b62cf676fffd4845ab564b9731c910">resetHue</a> ()</td></tr>
+<tr class="memdesc:a92b62cf676fffd4845ab564b9731c910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the Hue value to default value.  <a href="classsl__oc_1_1VideoCapture.html#a92b62cf676fffd4845ab564b9731c910">More...</a><br /></td></tr>
+<tr class="separator:a92b62cf676fffd4845ab564b9731c910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96d67e6e0436b10c135e47e23c27e17a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a96d67e6e0436b10c135e47e23c27e17a">setSaturation</a> (int saturation)</td></tr>
+<tr class="memdesc:a96d67e6e0436b10c135e47e23c27e17a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Saturation value.  <a href="classsl__oc_1_1VideoCapture.html#a96d67e6e0436b10c135e47e23c27e17a">More...</a><br /></td></tr>
+<tr class="separator:a96d67e6e0436b10c135e47e23c27e17a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d6977bedff07af1aad0b1ee2b591f73"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a0d6977bedff07af1aad0b1ee2b591f73">getSaturation</a> ()</td></tr>
+<tr class="memdesc:a0d6977bedff07af1aad0b1ee2b591f73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Saturation value.  <a href="classsl__oc_1_1VideoCapture.html#a0d6977bedff07af1aad0b1ee2b591f73">More...</a><br /></td></tr>
+<tr class="separator:a0d6977bedff07af1aad0b1ee2b591f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7931cb00ff39ae79a32736273985e52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#ad7931cb00ff39ae79a32736273985e52">resetSaturation</a> ()</td></tr>
+<tr class="memdesc:ad7931cb00ff39ae79a32736273985e52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the Saturation value to default value.  <a href="classsl__oc_1_1VideoCapture.html#ad7931cb00ff39ae79a32736273985e52">More...</a><br /></td></tr>
+<tr class="separator:ad7931cb00ff39ae79a32736273985e52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3064c103cebdc6522ac5a902eecb92d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a3064c103cebdc6522ac5a902eecb92d7">setWhiteBalance</a> (int wb)</td></tr>
+<tr class="memdesc:a3064c103cebdc6522ac5a902eecb92d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the White Balance value (disable auto White Balance if active)  <a href="classsl__oc_1_1VideoCapture.html#a3064c103cebdc6522ac5a902eecb92d7">More...</a><br /></td></tr>
+<tr class="separator:a3064c103cebdc6522ac5a902eecb92d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79925bac6d072e320d4c61d742d5d49e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a79925bac6d072e320d4c61d742d5d49e">getWhiteBalance</a> ()</td></tr>
+<tr class="memdesc:a79925bac6d072e320d4c61d742d5d49e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the White Balance value.  <a href="classsl__oc_1_1VideoCapture.html#a79925bac6d072e320d4c61d742d5d49e">More...</a><br /></td></tr>
+<tr class="separator:a79925bac6d072e320d4c61d742d5d49e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86684a2622c450d1796530e12547ba3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a86684a2622c450d1796530e12547ba3c">setAutoWhiteBalance</a> (bool active)</td></tr>
+<tr class="memdesc:a86684a2622c450d1796530e12547ba3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable the automatic White Balance control.  <a href="classsl__oc_1_1VideoCapture.html#a86684a2622c450d1796530e12547ba3c">More...</a><br /></td></tr>
+<tr class="separator:a86684a2622c450d1796530e12547ba3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8291a62ce6f46ffad33674b313077609"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a8291a62ce6f46ffad33674b313077609">getAutoWhiteBalance</a> ()</td></tr>
+<tr class="memdesc:a8291a62ce6f46ffad33674b313077609"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the status of the automatic White Balance control.  <a href="classsl__oc_1_1VideoCapture.html#a8291a62ce6f46ffad33674b313077609">More...</a><br /></td></tr>
+<tr class="separator:a8291a62ce6f46ffad33674b313077609"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68c0278cb190aed28282129aa6b24c8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a68c0278cb190aed28282129aa6b24c8b">resetAutoWhiteBalance</a> ()</td></tr>
+<tr class="memdesc:a68c0278cb190aed28282129aa6b24c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the automatic White Balance control value to default value.  <a href="classsl__oc_1_1VideoCapture.html#a68c0278cb190aed28282129aa6b24c8b">More...</a><br /></td></tr>
+<tr class="separator:a68c0278cb190aed28282129aa6b24c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e5997616d719d9ddd14d77c00b120f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a8e5997616d719d9ddd14d77c00b120f2">setGamma</a> (int gamma)</td></tr>
+<tr class="memdesc:a8e5997616d719d9ddd14d77c00b120f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Gamma value.  <a href="classsl__oc_1_1VideoCapture.html#a8e5997616d719d9ddd14d77c00b120f2">More...</a><br /></td></tr>
+<tr class="separator:a8e5997616d719d9ddd14d77c00b120f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71eef67b24d5f981b9c19bd9bbacf42e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a71eef67b24d5f981b9c19bd9bbacf42e">getGamma</a> ()</td></tr>
+<tr class="memdesc:a71eef67b24d5f981b9c19bd9bbacf42e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Gamma value.  <a href="classsl__oc_1_1VideoCapture.html#a71eef67b24d5f981b9c19bd9bbacf42e">More...</a><br /></td></tr>
+<tr class="separator:a71eef67b24d5f981b9c19bd9bbacf42e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fcbbe7de8a31bbd0e37ef472167b728"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a4fcbbe7de8a31bbd0e37ef472167b728">resetGamma</a> ()</td></tr>
+<tr class="memdesc:a4fcbbe7de8a31bbd0e37ef472167b728"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the Gamma value to default value.  <a href="classsl__oc_1_1VideoCapture.html#a4fcbbe7de8a31bbd0e37ef472167b728">More...</a><br /></td></tr>
+<tr class="separator:a4fcbbe7de8a31bbd0e37ef472167b728"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae566a625e36c44681ba5da6d1044cdbe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#ae566a625e36c44681ba5da6d1044cdbe">setAECAGC</a> (bool active)</td></tr>
+<tr class="memdesc:ae566a625e36c44681ba5da6d1044cdbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable the automatic Exposure and Gain control.  <a href="classsl__oc_1_1VideoCapture.html#ae566a625e36c44681ba5da6d1044cdbe">More...</a><br /></td></tr>
+<tr class="separator:ae566a625e36c44681ba5da6d1044cdbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ac44b3b5c1f8dc61bd127346274f636"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a0ac44b3b5c1f8dc61bd127346274f636">getAECAGC</a> ()</td></tr>
+<tr class="memdesc:a0ac44b3b5c1f8dc61bd127346274f636"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the status of the automatic Exposure and Gain control.  <a href="classsl__oc_1_1VideoCapture.html#a0ac44b3b5c1f8dc61bd127346274f636">More...</a><br /></td></tr>
+<tr class="separator:a0ac44b3b5c1f8dc61bd127346274f636"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acabb31fc74ac978fca972c6592632105"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#acabb31fc74ac978fca972c6592632105">resetAECAGC</a> ()</td></tr>
+<tr class="memdesc:acabb31fc74ac978fca972c6592632105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the automatic Exposure and Gain control value to default value.  <a href="classsl__oc_1_1VideoCapture.html#acabb31fc74ac978fca972c6592632105">More...</a><br /></td></tr>
+<tr class="separator:acabb31fc74ac978fca972c6592632105"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a258d34700af1c17538810633e938866d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a258d34700af1c17538810633e938866d">setGain</a> (<a class="el" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a> cam, int gain)</td></tr>
+<tr class="memdesc:a258d34700af1c17538810633e938866d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Gain value (disable Exposure and Gain control if active)  <a href="classsl__oc_1_1VideoCapture.html#a258d34700af1c17538810633e938866d">More...</a><br /></td></tr>
+<tr class="separator:a258d34700af1c17538810633e938866d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a877f2438c7d719dc08e804dde933bf04"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a877f2438c7d719dc08e804dde933bf04">getGain</a> (<a class="el" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a> cam)</td></tr>
+<tr class="memdesc:a877f2438c7d719dc08e804dde933bf04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current Gain value.  <a href="classsl__oc_1_1VideoCapture.html#a877f2438c7d719dc08e804dde933bf04">More...</a><br /></td></tr>
+<tr class="separator:a877f2438c7d719dc08e804dde933bf04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb7121aeba2ad96a9f08159969f44902"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#acb7121aeba2ad96a9f08159969f44902">setExposure</a> (<a class="el" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a> cam, int exposure)</td></tr>
+<tr class="memdesc:acb7121aeba2ad96a9f08159969f44902"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Exposure value (disable Exposure and Gain control if active)  <a href="classsl__oc_1_1VideoCapture.html#acb7121aeba2ad96a9f08159969f44902">More...</a><br /></td></tr>
+<tr class="separator:acb7121aeba2ad96a9f08159969f44902"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7a3f14944a9a8ce77916760cf5c5f04"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#af7a3f14944a9a8ce77916760cf5c5f04">getExposure</a> (<a class="el" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a> cam)</td></tr>
+<tr class="memdesc:af7a3f14944a9a8ce77916760cf5c5f04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current Exposure value.  <a href="classsl__oc_1_1VideoCapture.html#af7a3f14944a9a8ce77916760cf5c5f04">More...</a><br /></td></tr>
+<tr class="separator:af7a3f14944a9a8ce77916760cf5c5f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8914d08d225a8f7092ab5d528bc3882c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a8914d08d225a8f7092ab5d528bc3882c">getSerialNumber</a> ()</td></tr>
+<tr class="memdesc:a8914d08d225a8f7092ab5d528bc3882c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the serial number of the connected camera.  <a href="classsl__oc_1_1VideoCapture.html#a8914d08d225a8f7092ab5d528bc3882c">More...</a><br /></td></tr>
+<tr class="separator:a8914d08d225a8f7092ab5d528bc3882c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c77ef574ef7219538844a8b73030721"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#a0c77ef574ef7219538844a8b73030721">enableSensorSync</a> (<a class="el" href="classsl__oc_1_1SensorCapture.html">SensorCapture</a> *sensCap=nullptr)</td></tr>
+<tr class="memdesc:a0c77ef574ef7219538844a8b73030721"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable synchronizations between Camera frame and Sensors timestamps.  <a href="classsl__oc_1_1VideoCapture.html#a0c77ef574ef7219538844a8b73030721">More...</a><br /></td></tr>
+<tr class="separator:a0c77ef574ef7219538844a8b73030721"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcdb3b055228e7ec601f3f7a49b4ba9a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsl__oc_1_1VideoCapture.html#adcdb3b055228e7ec601f3f7a49b4ba9a">setReadyToSync</a> ()</td></tr>
+<tr class="memdesc:adcdb3b055228e7ec601f3f7a49b4ba9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates that the <a class="el" href="classsl__oc_1_1SensorCapture.html">SensorCapture</a> object received the HW sync signal and a frame must be synchronized to the last Sensor Data.  <a href="classsl__oc_1_1VideoCapture.html#adcdb3b055228e7ec601f3f7a49b4ba9a">More...</a><br /></td></tr>
+<tr class="separator:adcdb3b055228e7ec601f3f7a49b4ba9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The <a class="el" href="classsl__oc_1_1VideoCapture.html" title="The VideoCapture class provides image grabbing functions and settings control for all the Stereolabs ...">VideoCapture</a> class provides image grabbing functions and settings control for all the Stereolabs camera models. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_rectify_example_8cpp-example.html#_a6">zed_oc_rectify_example.cpp</a>, <a class="el" href="zed_oc_sync_example_8cpp-example.html#_a7">zed_oc_sync_example.cpp</a>, and <a class="el" href="zed_oc_video_example_8cpp-example.html#_a0">zed_oc_video_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8hpp_source.html#l00053">53</a> of file <a class="el" href="videocapture_8hpp_source.html">videocapture.hpp</a>.</p>
+</div><h2 class="groupheader">Constructor and Destructor</h2>
+<a id="a8298eef722bd5d045fdf1bf9e04fc6b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8298eef722bd5d045fdf1bf9e04fc6b2">&#9670;&nbsp;</a></span>VideoCapture()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classsl__oc_1_1VideoCapture.html">VideoCapture</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structsl__oc_1_1VideoParams.html">VideoParams</a>&#160;</td>
+          <td class="paramname"><em>params</em> = <code><a class="el" href="structsl__oc_1_1VideoParams.html">VideoParams</a>()</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The default constructor. </p>
+<ul>
+<li><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">params</td><td>the initialization parameters (see <a class="el" href="structsl__oc_1_1VideoParams.html">VideoParams</a>) </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l00113">113</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;{</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    memcpy( &amp;mParams, &amp;params, <span class="keyword">sizeof</span>(<a class="code" href="namespacesl__oc.html#aa249d59737f2502dd206a052116229c0">VideoParams</a>) );</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">if</span>( mParams.<a class="code" href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">verbose</a> )</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    {</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        std::string ver =</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                <span class="stringliteral">&quot;ZED Open Capture - Camera module - Version: &quot;</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                + std::to_string(mMajorVer) + <span class="stringliteral">&quot;.&quot;</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;                + std::to_string(mMinorVer) + <span class="stringliteral">&quot;.&quot;</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;                + std::to_string(mPatchVer);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        INFO_OUT(mParams.<a class="code" href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">verbose</a>,ver);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="comment">// Check that FPS is coherent with user resolution</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    checkResFps( );</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="comment">// Calculate gain zones (required because the raw gain control is not continuous in the range of values)</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    mGainSegMax = (GAIN_ZONE4_MAX-GAIN_ZONE4_MIN)+(GAIN_ZONE3_MAX-GAIN_ZONE3_MIN)+(GAIN_ZONE2_MAX-GAIN_ZONE2_MIN)+(GAIN_ZONE1_MAX-GAIN_ZONE1_MIN);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="comment">// FPS mapping</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">if</span>( mFps &lt;= 15 )</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        mExpoureRawMax = EXP_RAW_MAX_15FPS;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>( mFps &lt;= 30 )</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        mExpoureRawMax = EXP_RAW_MAX_30FPS;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>( mFps &lt;= 60 )</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        mExpoureRawMax = EXP_RAW_MAX_60FPS;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        mExpoureRawMax = EXP_RAW_MAX_100FPS;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">VideoParams::verbose</a>.</p>
+
+</div>
+</div>
+<a id="a5d4abc568f1fc66e6fe7e63790a163ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d4abc568f1fc66e6fe7e63790a163ec">&#9670;&nbsp;</a></span>~VideoCapture()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">~<a class="el" href="classsl__oc_1_1VideoCapture.html">VideoCapture</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The class destructor. </p>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l00144">144</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;{</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    reset();</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Functions</h2>
+<a id="a446d2a6b9440ef43cfed9fc97e102415"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a446d2a6b9440ef43cfed9fc97e102415">&#9670;&nbsp;</a></span>initializeVideo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool initializeVideo </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>devId</em> = <code>-1</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Open a ZED camera using the specified ID or searching for the first available. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">devId</td><td>Id of the camera (see <code>/dev/video*</code>). Use <code>-1</code> to open the first available camera </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>returns true if the camera is correctly opened </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a1">zed_oc_video_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l00274">274</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;{</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    reset();</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160; </div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="keywordtype">bool</span> opened=<span class="keyword">false</span>;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keywordflow">if</span>( devId==-1 )</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    {</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        <span class="comment">// Try to open all the devices until the first success (max allowed by v4l: 64)</span></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        <span class="keywordflow">for</span>( uint8_t <span class="keywordtype">id</span>=0; <span class="keywordtype">id</span>&lt;64; <span class="keywordtype">id</span>++ )</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        {</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;            opened = openCamera( <span class="keywordtype">id</span> );</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;            <span class="keywordflow">if</span>(opened) <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        }</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    }</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    {</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        opened = openCamera( <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(devId) );</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    }</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="keywordflow">if</span>(!opened)</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    {</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    }</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    mInitialized = startCapture();</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160; </div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keywordflow">if</span>( mParams.<a class="code" href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">verbose</a> &amp;&amp; mInitialized)</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    {</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        std::string msg = <span class="stringliteral">&quot;Device &#39;&quot;</span> + mDevName + <span class="stringliteral">&quot;&#39; opened&quot;</span>;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        INFO_OUT(mParams.<a class="code" href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">verbose</a>,msg );</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    }</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <a class="code" href="classsl__oc_1_1VideoCapture.html#a68a8f813d4aa374659f1cf92cde0b4ba">setLEDstatus</a>( <span class="keyword">true</span> );</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <a class="code" href="classsl__oc_1_1VideoCapture.html#acabb31fc74ac978fca972c6592632105">resetAECAGC</a>();</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <a class="code" href="classsl__oc_1_1VideoCapture.html#a68c0278cb190aed28282129aa6b24c8b">resetAutoWhiteBalance</a>();</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <a class="code" href="classsl__oc_1_1VideoCapture.html#a052fc41640dddce60e0889c417bda3dd">resetBrightness</a>();</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <a class="code" href="classsl__oc_1_1VideoCapture.html#ab10b504747a2891bc7d3b3450ecfa1f4">resetContrast</a>();</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    <a class="code" href="classsl__oc_1_1VideoCapture.html#a4fcbbe7de8a31bbd0e37ef472167b728">resetGamma</a>();</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    <a class="code" href="classsl__oc_1_1VideoCapture.html#a92b62cf676fffd4845ab564b9731c910">resetHue</a>();</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <a class="code" href="classsl__oc_1_1VideoCapture.html#ad7931cb00ff39ae79a32736273985e52">resetSaturation</a>();</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <a class="code" href="classsl__oc_1_1VideoCapture.html#a2ff8d9153da156cc4b42ac4850daeeb6">resetSharpness</a>();</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160; </div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keywordflow">return</span> mInitialized;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="classsl__oc_1_1VideoCapture.html#acabb31fc74ac978fca972c6592632105">VideoCapture::resetAECAGC()</a>, <a class="el" href="classsl__oc_1_1VideoCapture.html#a68c0278cb190aed28282129aa6b24c8b">VideoCapture::resetAutoWhiteBalance()</a>, <a class="el" href="classsl__oc_1_1VideoCapture.html#a052fc41640dddce60e0889c417bda3dd">VideoCapture::resetBrightness()</a>, <a class="el" href="classsl__oc_1_1VideoCapture.html#ab10b504747a2891bc7d3b3450ecfa1f4">VideoCapture::resetContrast()</a>, <a class="el" href="classsl__oc_1_1VideoCapture.html#a4fcbbe7de8a31bbd0e37ef472167b728">VideoCapture::resetGamma()</a>, <a class="el" href="classsl__oc_1_1VideoCapture.html#a92b62cf676fffd4845ab564b9731c910">VideoCapture::resetHue()</a>, <a class="el" href="classsl__oc_1_1VideoCapture.html#ad7931cb00ff39ae79a32736273985e52">VideoCapture::resetSaturation()</a>, <a class="el" href="classsl__oc_1_1VideoCapture.html#a2ff8d9153da156cc4b42ac4850daeeb6">VideoCapture::resetSharpness()</a>, <a class="el" href="classsl__oc_1_1VideoCapture.html#a68a8f813d4aa374659f1cf92cde0b4ba">VideoCapture::setLEDstatus()</a>, and <a class="el" href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">VideoParams::verbose</a>.</p>
+
+</div>
+</div>
+<a id="acd1e11b436d1f4162d38cc1042f5232a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd1e11b436d1f4162d38cc1042f5232a">&#9670;&nbsp;</a></span>getLastFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structsl__oc_1_1Frame.html">Frame</a> * getLastFrame </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timeout_msec</em> = <code>10</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the last received camera image. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout_msec</td><td>frame grabbing timeout in millisecond. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>returns the last received frame as pointer.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Do not delete the received frame </dd>
+<dd>
+<a class="el" href="structsl__oc_1_1Frame.html" title="The Frame struct containing the acquired video frames.">Frame</a> received will contains the RAW buffer from the camera, in YUV4:2:2 color format and in side by side mode. Images must then be converted to RGB for proper display and will not be rectified. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a4">zed_oc_video_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l00858">858</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;{</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;    <span class="comment">// ----&gt; Wait for a new frame</span></div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;    uint64_t time_count = timeout_msec*10;</div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;    <span class="keywordflow">while</span>( !mNewFrame )</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;    {</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;        <span class="keywordflow">if</span>(time_count==0)</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;        {</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;        }</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;        time_count--;</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;        usleep(100);</div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;    }</div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;    <span class="comment">// &lt;---- Wait for a new frame</span></div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160; </div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;    <span class="comment">// Get the frame mutex</span></div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;    <span class="keyword">const</span> std::lock_guard&lt;std::mutex&gt; lock(mBufMutex);</div>
+<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;    mNewFrame = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;    <span class="keywordflow">return</span> &amp;mLastFrame;</div>
+<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a84491ab5910edd04f3af38ef1443ad61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84491ab5910edd04f3af38ef1443ad61">&#9670;&nbsp;</a></span>getFrameSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void getFrameSize </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>height</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the size of the camera frame. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>the frame width </td></tr>
+    <tr><td class="paramname">height</td><td>the frame height </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8hpp_source.html#l00092">92</a> of file <a class="el" href="videocapture_8hpp_source.html">videocapture.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;{width=mWidth;height=mHeight;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a68a8f813d4aa374659f1cf92cde0b4ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68a8f813d4aa374659f1cf92cde0b4ba">&#9670;&nbsp;</a></span>setLEDstatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int setLEDstatus </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>status</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the status of the camera led. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">status</td><td>true for "ON", false for "OFF" </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>returns a negative value if an error occurred </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01357">1357</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;{</div>
+<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160;    <span class="keywordtype">int</span> hr = 0;</div>
+<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;    <span class="comment">//LED GPIO : GPIO 2</span></div>
+<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;    <span class="keywordflow">if</span> (status) {</div>
+<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;        hr += ll_set_gpio_direction(2, 0);</div>
+<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;        hr += ll_set_gpio_value(2, 1);</div>
+<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;        hr += ll_set_gpio_direction(2, 0);</div>
+<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;        hr += ll_set_gpio_value(2, 0);</div>
+<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160;    }</div>
+<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160; </div>
+<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;    <span class="keywordflow">return</span> hr;</div>
+<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">VideoCapture::initializeVideo()</a>, and <a class="el" href="classsl__oc_1_1VideoCapture.html#a2e392695ab5815eaacd465f5fa4dca3c">VideoCapture::toggleLED()</a>.</p>
+
+</div>
+</div>
+<a id="aed9b37bce6030f81e8a4e221119a675e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed9b37bce6030f81e8a4e221119a675e">&#9670;&nbsp;</a></span>getLEDstatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getLEDstatus </td>
+          <td>(</td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>status</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the status of the camera led. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>returned status: true for "ON", false for "OFF" </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>returns a negative value if an error occurred </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01372">1372</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;{</div>
+<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;    <span class="keywordflow">if</span>( status==<span class="keyword">nullptr</span>)</div>
+<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;    {</div>
+<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;    }</div>
+<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160; </div>
+<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;    uint8_t val;</div>
+<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;    <span class="keywordtype">int</span> hr = ll_set_gpio_direction(2, 1);</div>
+<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;    hr += ll_get_gpio_value(2, &amp;val);</div>
+<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;    *status = val!=0;</div>
+<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;    <span class="keywordflow">return</span> hr;</div>
+<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#a2e392695ab5815eaacd465f5fa4dca3c">VideoCapture::toggleLED()</a>.</p>
+
+</div>
+</div>
+<a id="a2e392695ab5815eaacd465f5fa4dca3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e392695ab5815eaacd465f5fa4dca3c">&#9670;&nbsp;</a></span>toggleLED()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int toggleLED </td>
+          <td>(</td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Toggle the status of the camera led. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>returned status: true for "ON", false for "OFF" </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>returns a negative value if an error occurred </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01386">1386</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;{</div>
+<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;    <span class="keywordtype">bool</span> curVal;</div>
+<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160; </div>
+<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;    <span class="keywordtype">int</span> ret = <a class="code" href="classsl__oc_1_1VideoCapture.html#aed9b37bce6030f81e8a4e221119a675e">getLEDstatus</a>( &amp;curVal );</div>
+<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160; </div>
+<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;    <span class="keywordflow">if</span>(ret==0)</div>
+<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;    {</div>
+<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;        <span class="keywordtype">bool</span> newVal = !curVal;</div>
+<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;        ret = <a class="code" href="classsl__oc_1_1VideoCapture.html#a68a8f813d4aa374659f1cf92cde0b4ba">setLEDstatus</a>( newVal );</div>
+<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160; </div>
+<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160;        <span class="keywordflow">if</span>( ret==0 &amp;&amp; value!=<span class="keyword">nullptr</span> )</div>
+<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;        {</div>
+<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160;            *value = newVal;</div>
+<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;        }</div>
+<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;    }</div>
+<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160; </div>
+<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;    <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="classsl__oc_1_1VideoCapture.html#aed9b37bce6030f81e8a4e221119a675e">VideoCapture::getLEDstatus()</a>, and <a class="el" href="classsl__oc_1_1VideoCapture.html#a68a8f813d4aa374659f1cf92cde0b4ba">VideoCapture::setLEDstatus()</a>.</p>
+
+</div>
+</div>
+<a id="a0006ebfdca6db81f835f5d0d6a6aee3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0006ebfdca6db81f835f5d0d6a6aee3b">&#9670;&nbsp;</a></span>setBrightness()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setBrightness </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>brightness</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the Brightness value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">brightness</td><td>Brightness value in the range [0,8] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01526">1526</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01527"></a><span class="lineno"> 1527</span>&#160;{</div>
+<div class="line"><a name="l01528"></a><span class="lineno"> 1528</span>&#160;    setCameraControlSettings(LINUX_CTRL_BRIGHTNESS, brightness);</div>
+<div class="line"><a name="l01529"></a><span class="lineno"> 1529</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6731c29ae7def1e712128f43778923d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6731c29ae7def1e712128f43778923d9">&#9670;&nbsp;</a></span>getBrightness()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getBrightness </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Brightness value. </p>
+<dl class="section return"><dt>Returns</dt><dd>the current Brightness value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01536">1536</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01537"></a><span class="lineno"> 1537</span>&#160;{</div>
+<div class="line"><a name="l01538"></a><span class="lineno"> 1538</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_BRIGHTNESS);</div>
+<div class="line"><a name="l01539"></a><span class="lineno"> 1539</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a052fc41640dddce60e0889c417bda3dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a052fc41640dddce60e0889c417bda3dd">&#9670;&nbsp;</a></span>resetBrightness()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void resetBrightness </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset the Brightness value to default value. </p>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01531">1531</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01532"></a><span class="lineno"> 1532</span>&#160;{</div>
+<div class="line"><a name="l01533"></a><span class="lineno"> 1533</span>&#160;    resetCameraControlSettings(LINUX_CTRL_BRIGHTNESS);</div>
+<div class="line"><a name="l01534"></a><span class="lineno"> 1534</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">VideoCapture::initializeVideo()</a>.</p>
+
+</div>
+</div>
+<a id="a3e7e1a6baafec413f10ef0754e33b497"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e7e1a6baafec413f10ef0754e33b497">&#9670;&nbsp;</a></span>setSharpness()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setSharpness </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>sharpness</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the Sharpness value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sharpness</td><td>Sharpness value in the range [0,8] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01541">1541</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01542"></a><span class="lineno"> 1542</span>&#160;{</div>
+<div class="line"><a name="l01543"></a><span class="lineno"> 1543</span>&#160;    setCameraControlSettings(LINUX_CTRL_SHARPNESS, sharpness);</div>
+<div class="line"><a name="l01544"></a><span class="lineno"> 1544</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a9c6cea95108831a8ed3d1c99d0a39665"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c6cea95108831a8ed3d1c99d0a39665">&#9670;&nbsp;</a></span>getSharpness()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getSharpness </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Sharpness value. </p>
+<dl class="section return"><dt>Returns</dt><dd>the current Sharpness value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01551">1551</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01552"></a><span class="lineno"> 1552</span>&#160;{</div>
+<div class="line"><a name="l01553"></a><span class="lineno"> 1553</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_SHARPNESS);</div>
+<div class="line"><a name="l01554"></a><span class="lineno"> 1554</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2ff8d9153da156cc4b42ac4850daeeb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ff8d9153da156cc4b42ac4850daeeb6">&#9670;&nbsp;</a></span>resetSharpness()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void resetSharpness </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset the Sharpness value to default value. </p>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01546">1546</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01547"></a><span class="lineno"> 1547</span>&#160;{</div>
+<div class="line"><a name="l01548"></a><span class="lineno"> 1548</span>&#160;    resetCameraControlSettings(LINUX_CTRL_SHARPNESS);</div>
+<div class="line"><a name="l01549"></a><span class="lineno"> 1549</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">VideoCapture::initializeVideo()</a>.</p>
+
+</div>
+</div>
+<a id="a32bcdbb1ac23149a2135ed19feed4983"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32bcdbb1ac23149a2135ed19feed4983">&#9670;&nbsp;</a></span>setContrast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setContrast </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>contrast</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the Contrast value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">contrast</td><td>Contrast value in the range [0,8] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01556">1556</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01557"></a><span class="lineno"> 1557</span>&#160;{</div>
+<div class="line"><a name="l01558"></a><span class="lineno"> 1558</span>&#160;    setCameraControlSettings(LINUX_CTRL_CONTRAST, contrast);</div>
+<div class="line"><a name="l01559"></a><span class="lineno"> 1559</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa23aee53856ff3c45b5ad76138d673bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa23aee53856ff3c45b5ad76138d673bd">&#9670;&nbsp;</a></span>getContrast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getContrast </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Contrast value. </p>
+<dl class="section return"><dt>Returns</dt><dd>the current Contrast value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01566">1566</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01567"></a><span class="lineno"> 1567</span>&#160;{</div>
+<div class="line"><a name="l01568"></a><span class="lineno"> 1568</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_CONTRAST);</div>
+<div class="line"><a name="l01569"></a><span class="lineno"> 1569</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab10b504747a2891bc7d3b3450ecfa1f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab10b504747a2891bc7d3b3450ecfa1f4">&#9670;&nbsp;</a></span>resetContrast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void resetContrast </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset the Contrast value to default value. </p>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01561">1561</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01562"></a><span class="lineno"> 1562</span>&#160;{</div>
+<div class="line"><a name="l01563"></a><span class="lineno"> 1563</span>&#160;    resetCameraControlSettings(LINUX_CTRL_CONTRAST);</div>
+<div class="line"><a name="l01564"></a><span class="lineno"> 1564</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">VideoCapture::initializeVideo()</a>.</p>
+
+</div>
+</div>
+<a id="ae8a6f32fb7e84930cd98d7b37a2d4b01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8a6f32fb7e84930cd98d7b37a2d4b01">&#9670;&nbsp;</a></span>setHue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setHue </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>hue</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the Hue value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hue</td><td>Hue value in the range [0,11] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01571">1571</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01572"></a><span class="lineno"> 1572</span>&#160;{</div>
+<div class="line"><a name="l01573"></a><span class="lineno"> 1573</span>&#160;    setCameraControlSettings(LINUX_CTRL_HUE, hue);</div>
+<div class="line"><a name="l01574"></a><span class="lineno"> 1574</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7a87b6173fdc5665ead93cf80ae92ec4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a87b6173fdc5665ead93cf80ae92ec4">&#9670;&nbsp;</a></span>getHue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getHue </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Hue value. </p>
+<dl class="section return"><dt>Returns</dt><dd>the current Hue value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01581">1581</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01582"></a><span class="lineno"> 1582</span>&#160;{</div>
+<div class="line"><a name="l01583"></a><span class="lineno"> 1583</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_HUE);</div>
+<div class="line"><a name="l01584"></a><span class="lineno"> 1584</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a92b62cf676fffd4845ab564b9731c910"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92b62cf676fffd4845ab564b9731c910">&#9670;&nbsp;</a></span>resetHue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void resetHue </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset the Hue value to default value. </p>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01576">1576</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01577"></a><span class="lineno"> 1577</span>&#160;{</div>
+<div class="line"><a name="l01578"></a><span class="lineno"> 1578</span>&#160;    resetCameraControlSettings(LINUX_CTRL_HUE);</div>
+<div class="line"><a name="l01579"></a><span class="lineno"> 1579</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">VideoCapture::initializeVideo()</a>.</p>
+
+</div>
+</div>
+<a id="a96d67e6e0436b10c135e47e23c27e17a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96d67e6e0436b10c135e47e23c27e17a">&#9670;&nbsp;</a></span>setSaturation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setSaturation </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>saturation</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the Saturation value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">saturation</td><td>Saturation value in the range [0,8] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01586">1586</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01587"></a><span class="lineno"> 1587</span>&#160;{</div>
+<div class="line"><a name="l01588"></a><span class="lineno"> 1588</span>&#160;    setCameraControlSettings(LINUX_CTRL_SATURATION, saturation);</div>
+<div class="line"><a name="l01589"></a><span class="lineno"> 1589</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0d6977bedff07af1aad0b1ee2b591f73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d6977bedff07af1aad0b1ee2b591f73">&#9670;&nbsp;</a></span>getSaturation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getSaturation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Saturation value. </p>
+<dl class="section return"><dt>Returns</dt><dd>the current Saturation value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01596">1596</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01597"></a><span class="lineno"> 1597</span>&#160;{</div>
+<div class="line"><a name="l01598"></a><span class="lineno"> 1598</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_SATURATION);</div>
+<div class="line"><a name="l01599"></a><span class="lineno"> 1599</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad7931cb00ff39ae79a32736273985e52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7931cb00ff39ae79a32736273985e52">&#9670;&nbsp;</a></span>resetSaturation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void resetSaturation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset the Saturation value to default value. </p>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01591">1591</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01592"></a><span class="lineno"> 1592</span>&#160;{</div>
+<div class="line"><a name="l01593"></a><span class="lineno"> 1593</span>&#160;    resetCameraControlSettings(LINUX_CTRL_SATURATION);</div>
+<div class="line"><a name="l01594"></a><span class="lineno"> 1594</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">VideoCapture::initializeVideo()</a>.</p>
+
+</div>
+</div>
+<a id="a3064c103cebdc6522ac5a902eecb92d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3064c103cebdc6522ac5a902eecb92d7">&#9670;&nbsp;</a></span>setWhiteBalance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setWhiteBalance </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>wb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the White Balance value (disable auto White Balance if active) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wb</td><td>White Balance value in the range [2800,6500] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01606">1606</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01607"></a><span class="lineno"> 1607</span>&#160;{</div>
+<div class="line"><a name="l01608"></a><span class="lineno"> 1608</span>&#160;    <span class="comment">// Disable auto white balance if active</span></div>
+<div class="line"><a name="l01609"></a><span class="lineno"> 1609</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classsl__oc_1_1VideoCapture.html#a8291a62ce6f46ffad33674b313077609">getAutoWhiteBalance</a>() != 0)</div>
+<div class="line"><a name="l01610"></a><span class="lineno"> 1610</span>&#160;        <a class="code" href="classsl__oc_1_1VideoCapture.html#a86684a2622c450d1796530e12547ba3c">setAutoWhiteBalance</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01611"></a><span class="lineno"> 1611</span>&#160; </div>
+<div class="line"><a name="l01612"></a><span class="lineno"> 1612</span>&#160;    setCameraControlSettings(LINUX_CTRL_AWB, wb);</div>
+<div class="line"><a name="l01613"></a><span class="lineno"> 1613</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="classsl__oc_1_1VideoCapture.html#a8291a62ce6f46ffad33674b313077609">VideoCapture::getAutoWhiteBalance()</a>, and <a class="el" href="classsl__oc_1_1VideoCapture.html#a86684a2622c450d1796530e12547ba3c">VideoCapture::setAutoWhiteBalance()</a>.</p>
+
+</div>
+</div>
+<a id="a79925bac6d072e320d4c61d742d5d49e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79925bac6d072e320d4c61d742d5d49e">&#9670;&nbsp;</a></span>getWhiteBalance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getWhiteBalance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the White Balance value. </p>
+<dl class="section return"><dt>Returns</dt><dd>the current White Balance value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01601">1601</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01602"></a><span class="lineno"> 1602</span>&#160;{</div>
+<div class="line"><a name="l01603"></a><span class="lineno"> 1603</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_AWB);</div>
+<div class="line"><a name="l01604"></a><span class="lineno"> 1604</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a86684a2622c450d1796530e12547ba3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86684a2622c450d1796530e12547ba3c">&#9670;&nbsp;</a></span>setAutoWhiteBalance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setAutoWhiteBalance </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>active</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable/Disable the automatic White Balance control. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">active</td><td>true to activate automatic White Balance </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01620">1620</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01621"></a><span class="lineno"> 1621</span>&#160;{</div>
+<div class="line"><a name="l01622"></a><span class="lineno"> 1622</span>&#160;    setCameraControlSettings(LINUX_CTRL_AWB_AUTO, active?1:0);</div>
+<div class="line"><a name="l01623"></a><span class="lineno"> 1623</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#a68c0278cb190aed28282129aa6b24c8b">VideoCapture::resetAutoWhiteBalance()</a>, and <a class="el" href="classsl__oc_1_1VideoCapture.html#a3064c103cebdc6522ac5a902eecb92d7">VideoCapture::setWhiteBalance()</a>.</p>
+
+</div>
+</div>
+<a id="a8291a62ce6f46ffad33674b313077609"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8291a62ce6f46ffad33674b313077609">&#9670;&nbsp;</a></span>getAutoWhiteBalance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool getAutoWhiteBalance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the status of the automatic White Balance control. </p>
+<dl class="section return"><dt>Returns</dt><dd>the status of the automatic White Balance control </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01615">1615</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01616"></a><span class="lineno"> 1616</span>&#160;{</div>
+<div class="line"><a name="l01617"></a><span class="lineno"> 1617</span>&#160;    <span class="keywordflow">return</span> (getCameraControlSettings(LINUX_CTRL_AWB_AUTO)!=0);</div>
+<div class="line"><a name="l01618"></a><span class="lineno"> 1618</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#a3064c103cebdc6522ac5a902eecb92d7">VideoCapture::setWhiteBalance()</a>.</p>
+
+</div>
+</div>
+<a id="a68c0278cb190aed28282129aa6b24c8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68c0278cb190aed28282129aa6b24c8b">&#9670;&nbsp;</a></span>resetAutoWhiteBalance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void resetAutoWhiteBalance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset the automatic White Balance control value to default value. </p>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01625">1625</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01626"></a><span class="lineno"> 1626</span>&#160;{</div>
+<div class="line"><a name="l01627"></a><span class="lineno"> 1627</span>&#160;    <a class="code" href="classsl__oc_1_1VideoCapture.html#a86684a2622c450d1796530e12547ba3c">setAutoWhiteBalance</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l01628"></a><span class="lineno"> 1628</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="classsl__oc_1_1VideoCapture.html#a86684a2622c450d1796530e12547ba3c">VideoCapture::setAutoWhiteBalance()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">VideoCapture::initializeVideo()</a>.</p>
+
+</div>
+</div>
+<a id="a8e5997616d719d9ddd14d77c00b120f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e5997616d719d9ddd14d77c00b120f2">&#9670;&nbsp;</a></span>setGamma()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setGamma </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>gamma</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the Gamma value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gamma</td><td>Gamma value in the range [1,9] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01630">1630</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01631"></a><span class="lineno"> 1631</span>&#160;{</div>
+<div class="line"><a name="l01632"></a><span class="lineno"> 1632</span>&#160;    <span class="keywordtype">int</span> current_gamma = getCameraControlSettings(LINUX_CTRL_GAMMA);</div>
+<div class="line"><a name="l01633"></a><span class="lineno"> 1633</span>&#160; </div>
+<div class="line"><a name="l01634"></a><span class="lineno"> 1634</span>&#160;    <span class="keywordflow">if</span> (gamma!=current_gamma)</div>
+<div class="line"><a name="l01635"></a><span class="lineno"> 1635</span>&#160;    {</div>
+<div class="line"><a name="l01636"></a><span class="lineno"> 1636</span>&#160;        setGammaPreset(0,gamma);</div>
+<div class="line"><a name="l01637"></a><span class="lineno"> 1637</span>&#160;        setGammaPreset(1,gamma);</div>
+<div class="line"><a name="l01638"></a><span class="lineno"> 1638</span>&#160;        setCameraControlSettings(LINUX_CTRL_GAMMA, gamma);</div>
+<div class="line"><a name="l01639"></a><span class="lineno"> 1639</span>&#160;    }</div>
+<div class="line"><a name="l01640"></a><span class="lineno"> 1640</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a71eef67b24d5f981b9c19bd9bbacf42e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71eef67b24d5f981b9c19bd9bbacf42e">&#9670;&nbsp;</a></span>getGamma()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getGamma </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Gamma value. </p>
+<dl class="section return"><dt>Returns</dt><dd>the current Gamma value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01650">1650</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01650"></a><span class="lineno"> 1650</span>&#160;                           {</div>
+<div class="line"><a name="l01651"></a><span class="lineno"> 1651</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_GAMMA);</div>
+<div class="line"><a name="l01652"></a><span class="lineno"> 1652</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4fcbbe7de8a31bbd0e37ef472167b728"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fcbbe7de8a31bbd0e37ef472167b728">&#9670;&nbsp;</a></span>resetGamma()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void resetGamma </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset the Gamma value to default value. </p>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01642">1642</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01643"></a><span class="lineno"> 1643</span>&#160;{</div>
+<div class="line"><a name="l01644"></a><span class="lineno"> 1644</span>&#160;    <span class="keywordtype">int</span> def_value = DEFAULT_GAMMA_NOECT;</div>
+<div class="line"><a name="l01645"></a><span class="lineno"> 1645</span>&#160;    setGammaPreset(0,def_value);</div>
+<div class="line"><a name="l01646"></a><span class="lineno"> 1646</span>&#160;    setGammaPreset(1,def_value);</div>
+<div class="line"><a name="l01647"></a><span class="lineno"> 1647</span>&#160;    setCameraControlSettings(LINUX_CTRL_GAMMA, def_value);</div>
+<div class="line"><a name="l01648"></a><span class="lineno"> 1648</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">VideoCapture::initializeVideo()</a>.</p>
+
+</div>
+</div>
+<a id="ae566a625e36c44681ba5da6d1044cdbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae566a625e36c44681ba5da6d1044cdbe">&#9670;&nbsp;</a></span>setAECAGC()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int setAECAGC </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>active</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable/Disable the automatic Exposure and Gain control. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">active</td><td>true to activate automatic White Balance </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01654">1654</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01655"></a><span class="lineno"> 1655</span>&#160;{</div>
+<div class="line"><a name="l01656"></a><span class="lineno"> 1656</span>&#160;    <span class="keywordtype">int</span> res = 0;</div>
+<div class="line"><a name="l01657"></a><span class="lineno"> 1657</span>&#160;    res += ll_isp_aecagc_enable(0, active);</div>
+<div class="line"><a name="l01658"></a><span class="lineno"> 1658</span>&#160;    res += ll_isp_aecagc_enable(1, active);</div>
+<div class="line"><a name="l01659"></a><span class="lineno"> 1659</span>&#160;    <span class="keywordflow">return</span> res;</div>
+<div class="line"><a name="l01660"></a><span class="lineno"> 1660</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#acabb31fc74ac978fca972c6592632105">VideoCapture::resetAECAGC()</a>, <a class="el" href="classsl__oc_1_1VideoCapture.html#acb7121aeba2ad96a9f08159969f44902">VideoCapture::setExposure()</a>, and <a class="el" href="classsl__oc_1_1VideoCapture.html#a258d34700af1c17538810633e938866d">VideoCapture::setGain()</a>.</p>
+
+</div>
+</div>
+<a id="a0ac44b3b5c1f8dc61bd127346274f636"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ac44b3b5c1f8dc61bd127346274f636">&#9670;&nbsp;</a></span>getAECAGC()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool getAECAGC </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the status of the automatic Exposure and Gain control. </p>
+<dl class="section return"><dt>Returns</dt><dd>the status of the automatic Exposure and Gain control </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01662">1662</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01663"></a><span class="lineno"> 1663</span>&#160;{</div>
+<div class="line"><a name="l01664"></a><span class="lineno"> 1664</span>&#160;    <span class="keywordtype">int</span> resL = ll_isp_is_aecagc(0);</div>
+<div class="line"><a name="l01665"></a><span class="lineno"> 1665</span>&#160;    <span class="keywordtype">int</span> resR = ll_isp_is_aecagc(1);</div>
+<div class="line"><a name="l01666"></a><span class="lineno"> 1666</span>&#160;    <span class="keywordflow">return</span> (resL &amp;&amp; resR);</div>
+<div class="line"><a name="l01667"></a><span class="lineno"> 1667</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#acb7121aeba2ad96a9f08159969f44902">VideoCapture::setExposure()</a>, and <a class="el" href="classsl__oc_1_1VideoCapture.html#a258d34700af1c17538810633e938866d">VideoCapture::setGain()</a>.</p>
+
+</div>
+</div>
+<a id="acabb31fc74ac978fca972c6592632105"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acabb31fc74ac978fca972c6592632105">&#9670;&nbsp;</a></span>resetAECAGC()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void resetAECAGC </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset the automatic Exposure and Gain control value to default value. </p>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01669">1669</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01670"></a><span class="lineno"> 1670</span>&#160;{</div>
+<div class="line"><a name="l01671"></a><span class="lineno"> 1671</span>&#160;    <a class="code" href="classsl__oc_1_1VideoCapture.html#ae566a625e36c44681ba5da6d1044cdbe">setAECAGC</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l01672"></a><span class="lineno"> 1672</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="classsl__oc_1_1VideoCapture.html#ae566a625e36c44681ba5da6d1044cdbe">VideoCapture::setAECAGC()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415">VideoCapture::initializeVideo()</a>.</p>
+
+</div>
+</div>
+<a id="a258d34700af1c17538810633e938866d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a258d34700af1c17538810633e938866d">&#9670;&nbsp;</a></span>setGain()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setGain </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a>&#160;</td>
+          <td class="paramname"><em>cam</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>gain</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the Gain value (disable Exposure and Gain control if active) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cam</td><td>position of the camera sensor (see <a class="el" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a>) </td></tr>
+    <tr><td class="paramname">gain</td><td>Gain value in the range [0,100] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01674">1674</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160;{</div>
+<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="classsl__oc_1_1VideoCapture.html#a0ac44b3b5c1f8dc61bd127346274f636">getAECAGC</a>())</div>
+<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160;        <a class="code" href="classsl__oc_1_1VideoCapture.html#ae566a625e36c44681ba5da6d1044cdbe">setAECAGC</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01678"></a><span class="lineno"> 1678</span>&#160; </div>
+<div class="line"><a name="l01679"></a><span class="lineno"> 1679</span>&#160;    <span class="keywordflow">if</span> (gain &lt;= DEFAULT_MIN_GAIN)</div>
+<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;        gain = DEFAULT_MIN_GAIN;</div>
+<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (gain &gt;= DEFAULT_MAX_GAIN)</div>
+<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160;        gain = DEFAULT_MAX_GAIN;</div>
+<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160; </div>
+<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160;    uint8_t ucGainH=0, ucGainM=0, ucGainL=0;</div>
+<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160; </div>
+<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160;    <span class="keywordtype">int</span> rawGain = calcRawGainValue(gain);</div>
+<div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160; </div>
+<div class="line"><a name="l01688"></a><span class="lineno"> 1688</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
+<div class="line"><a name="l01689"></a><span class="lineno"> 1689</span>&#160; </div>
+<div class="line"><a name="l01690"></a><span class="lineno"> 1690</span>&#160;    ucGainM = (rawGain &gt;&gt; 8) &amp; 0xff;</div>
+<div class="line"><a name="l01691"></a><span class="lineno"> 1691</span>&#160;    ucGainL = rawGain &amp; 0xff;</div>
+<div class="line"><a name="l01692"></a><span class="lineno"> 1692</span>&#160;    ll_isp_set_gain(ucGainH, ucGainM, ucGainL, sensorId);</div>
+<div class="line"><a name="l01693"></a><span class="lineno"> 1693</span>&#160; </div>
+<div class="line"><a name="l01694"></a><span class="lineno"> 1694</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="classsl__oc_1_1VideoCapture.html#a0ac44b3b5c1f8dc61bd127346274f636">VideoCapture::getAECAGC()</a>, and <a class="el" href="classsl__oc_1_1VideoCapture.html#ae566a625e36c44681ba5da6d1044cdbe">VideoCapture::setAECAGC()</a>.</p>
+
+</div>
+</div>
+<a id="a877f2438c7d719dc08e804dde933bf04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a877f2438c7d719dc08e804dde933bf04">&#9670;&nbsp;</a></span>getGain()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getGain </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a>&#160;</td>
+          <td class="paramname"><em>cam</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the current Gain value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cam</td><td>position of the camera sensor (see <a class="el" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a>) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the current Gain value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01696">1696</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160;{</div>
+<div class="line"><a name="l01698"></a><span class="lineno"> 1698</span>&#160;    <span class="keywordtype">int</span> rawGain=0;</div>
+<div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160; </div>
+<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160;    uint8_t val[3];</div>
+<div class="line"><a name="l01701"></a><span class="lineno"> 1701</span>&#160;    memset(val, 0, 3);</div>
+<div class="line"><a name="l01702"></a><span class="lineno"> 1702</span>&#160; </div>
+<div class="line"><a name="l01703"></a><span class="lineno"> 1703</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
+<div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160;    <span class="keywordtype">int</span> r = ll_isp_get_gain(val, sensorId);</div>
+<div class="line"><a name="l01705"></a><span class="lineno"> 1705</span>&#160;    <span class="keywordflow">if</span>(r&lt;0)</div>
+<div class="line"><a name="l01706"></a><span class="lineno"> 1706</span>&#160;        <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160; </div>
+<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;    rawGain = (int) ((val[1] &lt;&lt; 8) + val[0]);</div>
+<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;    <span class="keywordflow">return</span> calcGainValue(rawGain);</div>
+<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="acb7121aeba2ad96a9f08159969f44902"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb7121aeba2ad96a9f08159969f44902">&#9670;&nbsp;</a></span>setExposure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setExposure </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a>&#160;</td>
+          <td class="paramname"><em>cam</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>exposure</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the Exposure value (disable Exposure and Gain control if active) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cam</td><td>position of the camera sensor (see <a class="el" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a>) </td></tr>
+    <tr><td class="paramname">exposure</td><td>Exposure value in the range [0,100] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01712">1712</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160;{</div>
+<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpH, ucExpM, ucExpL;</div>
+<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160; </div>
+<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="classsl__oc_1_1VideoCapture.html#a0ac44b3b5c1f8dc61bd127346274f636">getAECAGC</a>())</div>
+<div class="line"><a name="l01717"></a><span class="lineno"> 1717</span>&#160;        <a class="code" href="classsl__oc_1_1VideoCapture.html#ae566a625e36c44681ba5da6d1044cdbe">setAECAGC</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01718"></a><span class="lineno"> 1718</span>&#160; </div>
+<div class="line"><a name="l01719"></a><span class="lineno"> 1719</span>&#160;    <span class="keywordflow">if</span>(exposure &lt; DEFAULT_MIN_EXP)</div>
+<div class="line"><a name="l01720"></a><span class="lineno"> 1720</span>&#160;        exposure = DEFAULT_MIN_EXP;</div>
+<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160;    <span class="keywordflow">if</span>(exposure &gt; DEFAULT_MAX_EXP)</div>
+<div class="line"><a name="l01722"></a><span class="lineno"> 1722</span>&#160;        exposure = DEFAULT_MAX_EXP;</div>
+<div class="line"><a name="l01723"></a><span class="lineno"> 1723</span>&#160; </div>
+<div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160;    <span class="keywordtype">int</span> rawExp = (mExpoureRawMax * ((float) exposure / 100.0));</div>
+<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160;    <span class="keywordflow">if</span>(rawExp&lt;EXP_RAW_MIN)</div>
+<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;        rawExp = EXP_RAW_MIN;</div>
+<div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160; </div>
+<div class="line"><a name="l01728"></a><span class="lineno"> 1728</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;Set Raw Exp: &quot;</span> &lt;&lt; rawExp &lt;&lt; std::endl;</div>
+<div class="line"><a name="l01729"></a><span class="lineno"> 1729</span>&#160; </div>
+<div class="line"><a name="l01730"></a><span class="lineno"> 1730</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
+<div class="line"><a name="l01731"></a><span class="lineno"> 1731</span>&#160; </div>
+<div class="line"><a name="l01732"></a><span class="lineno"> 1732</span>&#160;    ucExpH = (rawExp &gt;&gt; 12) &amp; 0xff;</div>
+<div class="line"><a name="l01733"></a><span class="lineno"> 1733</span>&#160;    ucExpM = (rawExp &gt;&gt; 4) &amp; 0xff;</div>
+<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160;    ucExpL = (rawExp &lt;&lt; 4) &amp; 0xf0;</div>
+<div class="line"><a name="l01735"></a><span class="lineno"> 1735</span>&#160;    ll_isp_set_exposure(ucExpH, ucExpM, ucExpL, sensorId);</div>
+<div class="line"><a name="l01736"></a><span class="lineno"> 1736</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="classsl__oc_1_1VideoCapture.html#a0ac44b3b5c1f8dc61bd127346274f636">VideoCapture::getAECAGC()</a>, and <a class="el" href="classsl__oc_1_1VideoCapture.html#ae566a625e36c44681ba5da6d1044cdbe">VideoCapture::setAECAGC()</a>.</p>
+
+</div>
+</div>
+<a id="af7a3f14944a9a8ce77916760cf5c5f04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7a3f14944a9a8ce77916760cf5c5f04">&#9670;&nbsp;</a></span>getExposure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getExposure </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a>&#160;</td>
+          <td class="paramname"><em>cam</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the current Exposure value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cam</td><td>position of the camera sensor (see <a class="el" href="namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681">CAM_SENS_POS</a>) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the current Exposure value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01738">1738</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01739"></a><span class="lineno"> 1739</span>&#160;{</div>
+<div class="line"><a name="l01740"></a><span class="lineno"> 1740</span>&#160;    <span class="keywordtype">int</span> rawExp=0;</div>
+<div class="line"><a name="l01741"></a><span class="lineno"> 1741</span>&#160; </div>
+<div class="line"><a name="l01742"></a><span class="lineno"> 1742</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> val[3];</div>
+<div class="line"><a name="l01743"></a><span class="lineno"> 1743</span>&#160;    memset(val, 0, 3);</div>
+<div class="line"><a name="l01744"></a><span class="lineno"> 1744</span>&#160; </div>
+<div class="line"><a name="l01745"></a><span class="lineno"> 1745</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
+<div class="line"><a name="l01746"></a><span class="lineno"> 1746</span>&#160; </div>
+<div class="line"><a name="l01747"></a><span class="lineno"> 1747</span>&#160;    <span class="keywordtype">int</span> r = ll_isp_get_exposure(val, sensorId);</div>
+<div class="line"><a name="l01748"></a><span class="lineno"> 1748</span>&#160;    <span class="keywordflow">if</span>(r&lt;0)</div>
+<div class="line"><a name="l01749"></a><span class="lineno"> 1749</span>&#160;        <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l01750"></a><span class="lineno"> 1750</span>&#160;    rawExp = (int) ((val[2] &lt;&lt; 12) + (val[1] &lt;&lt; 4) + (val[0] &gt;&gt; 4));</div>
+<div class="line"><a name="l01751"></a><span class="lineno"> 1751</span>&#160; </div>
+<div class="line"><a name="l01752"></a><span class="lineno"> 1752</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;Get Raw Exp: &quot;</span> &lt;&lt; rawExp &lt;&lt; std::endl;</div>
+<div class="line"><a name="l01753"></a><span class="lineno"> 1753</span>&#160; </div>
+<div class="line"><a name="l01754"></a><span class="lineno"> 1754</span>&#160;    <span class="keywordtype">int</span> exposure = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(std::round((100.0*rawExp)/mExpoureRawMax));</div>
+<div class="line"><a name="l01755"></a><span class="lineno"> 1755</span>&#160;    <span class="keywordflow">return</span> exposure;</div>
+<div class="line"><a name="l01756"></a><span class="lineno"> 1756</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8914d08d225a8f7092ab5d528bc3882c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8914d08d225a8f7092ab5d528bc3882c">&#9670;&nbsp;</a></span>getSerialNumber()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getSerialNumber </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieve the serial number of the connected camera. </p>
+<dl class="section return"><dt>Returns</dt><dd>the serial number of the connected camera </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="zed_oc_video_example_8cpp-example.html#a2">zed_oc_video_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l00539">539</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;{</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;    <span class="keywordflow">if</span>(!mInitialized)</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160; </div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;    <span class="keywordtype">int</span> ulValue = -1;</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160; </div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;    uint8_t UNIQUE_BUF[384];</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;    memset(UNIQUE_BUF, 0, 384);</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160; </div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;    <span class="keywordtype">int</span> res = -1;</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160; </div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;    <span class="keywordtype">int</span> try_count = 0;</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;    <span class="keywordflow">while</span>(res!=0)</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;    {</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;        res = ll_SPI_FlashProgramRead(&amp;UNIQUE_BUF[0], UNIQUE_ID_START, 64);</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160; </div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;        <span class="comment">//check bytes read</span></div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;        <span class="keywordflow">if</span> (UNIQUE_BUF[0] != <span class="charliteral">&#39;O&#39;</span>) {</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;            res =  -1;</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;        }</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;        <span class="keywordflow">if</span> (UNIQUE_BUF[1] != <span class="charliteral">&#39;V&#39;</span>) {</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;            res =  -1;</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;        }</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160; </div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;        try_count++;</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;        <span class="keywordflow">if</span> (try_count&gt;500)</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;        usleep(1000);</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;    }</div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160; </div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;    <span class="keywordflow">if</span> (res != 0)</div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160; </div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;    <span class="comment">//check bytes read</span></div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;    <span class="keywordflow">if</span> (UNIQUE_BUF[0] != <span class="charliteral">&#39;O&#39;</span>) {</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;    }</div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;    <span class="keywordflow">if</span> (UNIQUE_BUF[1] != <span class="charliteral">&#39;V&#39;</span>) {</div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;    }</div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160; </div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;    ulValue = (UNIQUE_BUF[2] &lt;&lt; 24) + (UNIQUE_BUF[3] &lt;&lt; 16) + (UNIQUE_BUF[4] &lt;&lt; 8) + UNIQUE_BUF[5];</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160; </div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;    <span class="keywordtype">char</span> buff[128];</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;    memset(buff, 0, 128);</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;    sprintf(buff, <span class="stringliteral">&quot;%x&quot;</span>, ulValue);</div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;    <span class="keywordflow">return</span> (<span class="keywordtype">int</span>) atoi(buff);</div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0c77ef574ef7219538844a8b73030721"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c77ef574ef7219538844a8b73030721">&#9670;&nbsp;</a></span>enableSensorSync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool enableSensorSync </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classsl__oc_1_1SensorCapture.html">SensorCapture</a> *&#160;</td>
+          <td class="paramname"><em>sensCap</em> = <code>nullptr</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable synchronizations between Camera frame and Sensors timestamps. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sensCap</td><td>pointer to <a class="el" href="classsl__oc_1_1SensorCapture.html">SensorCapture</a> object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if synchronization has been correctly started </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8cpp_source.html#l01810">1810</a> of file <a class="el" href="videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01811"></a><span class="lineno"> 1811</span>&#160;{</div>
+<div class="line"><a name="l01812"></a><span class="lineno"> 1812</span>&#160;    <span class="keywordflow">if</span>(!sensCap)</div>
+<div class="line"><a name="l01813"></a><span class="lineno"> 1813</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01814"></a><span class="lineno"> 1814</span>&#160; </div>
+<div class="line"><a name="l01815"></a><span class="lineno"> 1815</span>&#160;    <span class="comment">// Activate low level sync mechanism</span></div>
+<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160;    ll_activate_sync();</div>
+<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160; </div>
+<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160;    mSyncEnabled = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l01819"></a><span class="lineno"> 1819</span>&#160;    mSensPtr = sensCap;</div>
+<div class="line"><a name="l01820"></a><span class="lineno"> 1820</span>&#160; </div>
+<div class="line"><a name="l01821"></a><span class="lineno"> 1821</span>&#160;    mSensPtr-&gt;<a class="code" href="classsl__oc_1_1SensorCapture.html#a6e2f19f16fc16493c4718f5481d98ed8">setVideoPtr</a>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l01822"></a><span class="lineno"> 1822</span>&#160; </div>
+<div class="line"><a name="l01823"></a><span class="lineno"> 1823</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l01824"></a><span class="lineno"> 1824</span>&#160;}</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="classsl__oc_1_1SensorCapture.html#a6e2f19f16fc16493c4718f5481d98ed8">SensorCapture::setVideoPtr()</a>.</p>
+
+</div>
+</div>
+<a id="adcdb3b055228e7ec601f3f7a49b4ba9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcdb3b055228e7ec601f3f7a49b4ba9a">&#9670;&nbsp;</a></span>setReadyToSync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setReadyToSync </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Indicates that the <a class="el" href="classsl__oc_1_1SensorCapture.html">SensorCapture</a> object received the HW sync signal and a frame must be synchronized to the last Sensor Data. </p>
+
+<p class="definition">Definition at line <a class="el" href="videocapture_8hpp_source.html#l00313">313</a> of file <a class="el" href="videocapture_8hpp_source.html">videocapture.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;{ mSensReadyToSync=<span class="keyword">true</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a0ac44b3b5c1f8dc61bd127346274f636"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a0ac44b3b5c1f8dc61bd127346274f636">sl_oc::VideoCapture::getAECAGC</a></div><div class="ttdeci">bool getAECAGC()</div><div class="ttdoc">Get the status of the automatic Exposure and Gain control.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01662">videocapture.cpp:1662</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_aed9b37bce6030f81e8a4e221119a675e"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#aed9b37bce6030f81e8a4e221119a675e">sl_oc::VideoCapture::getLEDstatus</a></div><div class="ttdeci">int getLEDstatus(bool *status)</div><div class="ttdoc">Get the status of the camera led.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01372">videocapture.cpp:1372</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a92b62cf676fffd4845ab564b9731c910"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a92b62cf676fffd4845ab564b9731c910">sl_oc::VideoCapture::resetHue</a></div><div class="ttdeci">void resetHue()</div><div class="ttdoc">Reset the Hue value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01576">videocapture.cpp:1576</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_ab10b504747a2891bc7d3b3450ecfa1f4"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#ab10b504747a2891bc7d3b3450ecfa1f4">sl_oc::VideoCapture::resetContrast</a></div><div class="ttdeci">void resetContrast()</div><div class="ttdoc">Reset the Contrast value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01561">videocapture.cpp:1561</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a68a8f813d4aa374659f1cf92cde0b4ba"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a68a8f813d4aa374659f1cf92cde0b4ba">sl_oc::VideoCapture::setLEDstatus</a></div><div class="ttdeci">int setLEDstatus(bool status)</div><div class="ttdoc">Set the status of the camera led.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01357">videocapture.cpp:1357</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a052fc41640dddce60e0889c417bda3dd"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a052fc41640dddce60e0889c417bda3dd">sl_oc::VideoCapture::resetBrightness</a></div><div class="ttdeci">void resetBrightness()</div><div class="ttdoc">Reset the Brightness value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01531">videocapture.cpp:1531</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_aa249d59737f2502dd206a052116229c0"><div class="ttname"><a href="namespacesl__oc.html#aa249d59737f2502dd206a052116229c0">sl_oc::VideoParams</a></div><div class="ttdeci">struct sl_oc::VideoParams VideoParams</div><div class="ttdoc">The camera configuration parameters.</div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a4fcbbe7de8a31bbd0e37ef472167b728"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a4fcbbe7de8a31bbd0e37ef472167b728">sl_oc::VideoCapture::resetGamma</a></div><div class="ttdeci">void resetGamma()</div><div class="ttdoc">Reset the Gamma value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01642">videocapture.cpp:1642</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a86684a2622c450d1796530e12547ba3c"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a86684a2622c450d1796530e12547ba3c">sl_oc::VideoCapture::setAutoWhiteBalance</a></div><div class="ttdeci">void setAutoWhiteBalance(bool active)</div><div class="ttdoc">Enable/Disable the automatic White Balance control.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01620">videocapture.cpp:1620</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1VideoParams_html_a0b2caeb4b6f130be43e5a2f0267dd453"><div class="ttname"><a href="structsl__oc_1_1VideoParams.html#a0b2caeb4b6f130be43e5a2f0267dd453">sl_oc::VideoParams::verbose</a></div><div class="ttdeci">int verbose</div><div class="ttdoc">Verbose mode.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture__def_8hpp_source.html#l00091">videocapture_def.hpp:91</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a8291a62ce6f46ffad33674b313077609"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a8291a62ce6f46ffad33674b313077609">sl_oc::VideoCapture::getAutoWhiteBalance</a></div><div class="ttdeci">bool getAutoWhiteBalance()</div><div class="ttdoc">Get the status of the automatic White Balance control.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01615">videocapture.cpp:1615</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_ad7931cb00ff39ae79a32736273985e52"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#ad7931cb00ff39ae79a32736273985e52">sl_oc::VideoCapture::resetSaturation</a></div><div class="ttdeci">void resetSaturation()</div><div class="ttdoc">Reset the Saturation value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01591">videocapture.cpp:1591</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a2ff8d9153da156cc4b42ac4850daeeb6"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a2ff8d9153da156cc4b42ac4850daeeb6">sl_oc::VideoCapture::resetSharpness</a></div><div class="ttdeci">void resetSharpness()</div><div class="ttdoc">Reset the Sharpness value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01546">videocapture.cpp:1546</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1SensorCapture_html_a6e2f19f16fc16493c4718f5481d98ed8"><div class="ttname"><a href="classsl__oc_1_1SensorCapture.html#a6e2f19f16fc16493c4718f5481d98ed8">sl_oc::SensorCapture::setVideoPtr</a></div><div class="ttdeci">void setVideoPtr(VideoCapture *videoPtr)</div><div class="ttdoc">Called by VideoCapture to set the pointer to it.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8hpp_source.html#l00192">sensorcapture.hpp:192</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_ae566a625e36c44681ba5da6d1044cdbe"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#ae566a625e36c44681ba5da6d1044cdbe">sl_oc::VideoCapture::setAECAGC</a></div><div class="ttdeci">int setAECAGC(bool active)</div><div class="ttdoc">Enable/Disable the automatic Exposure and Gain control.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01654">videocapture.cpp:1654</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_acabb31fc74ac978fca972c6592632105"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#acabb31fc74ac978fca972c6592632105">sl_oc::VideoCapture::resetAECAGC</a></div><div class="ttdeci">void resetAECAGC()</div><div class="ttdoc">Reset the automatic Exposure and Gain control value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01669">videocapture.cpp:1669</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1VideoCapture_html_a68c0278cb190aed28282129aa6b24c8b"><div class="ttname"><a href="classsl__oc_1_1VideoCapture.html#a68c0278cb190aed28282129aa6b24c8b">sl_oc::VideoCapture::resetAutoWhiteBalance</a></div><div class="ttdeci">void resetAutoWhiteBalance()</div><div class="ttdoc">Reset the automatic White Balance control value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="videocapture_8cpp_source.html#l01625">videocapture.cpp:1625</a></div></div>

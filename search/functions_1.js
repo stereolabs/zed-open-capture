@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['changecontrolvalue_232',['changeControlValue',['../d9/d7c/zed__oc__control__example_8cpp.html#a3462be104c38d1172882aefc07270cfe',1,'zed_oc_control_example.cpp']]]
+  ['enablesensorsync_185',['enableSensorSync',['../classsl__oc_1_1VideoCapture.html#a0c77ef574ef7219538844a8b73030721',1,'sl_oc::VideoCapture']]]
 ];

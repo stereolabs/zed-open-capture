@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['usbstreamstatus_354',['UsbStreamStatus',['../df/dd8/namespacesl__oc_1_1sensors.html#abfe0938c19a2fa6cd09baa88d5602a42',1,'sl_oc::sensors']]]
+  ['videoparams_298',['VideoParams',['../namespacesl__oc.html#aa249d59737f2502dd206a052116229c0',1,'sl_oc']]]
 ];

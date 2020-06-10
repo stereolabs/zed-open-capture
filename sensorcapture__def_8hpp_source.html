@@ -1,0 +1,339 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+		<meta name="robots" content="noindex, follow"/>
+        <meta name="generator" content="Doxygen 1.8.18"/>
+        <title>sensorcapture_def.hpp Source File | ZED Open Capture API Reference | Stereolabs</title><!--END PROJECT_NAME (ZED Open Capture)-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700,800">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,600,700">
+        <link href="tabs.css?t=Wed Jun 10 2020 08:55:16" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery.js?t=Wed Jun 10 2020 08:55:16"></script>
+        <script type="text/javascript" src="custom.js?t=Wed Jun 10 2020 08:55:16"></script>
+        <script type="text/javascript" src="dynsections.js?t=Wed Jun 10 2020 08:55:16"></script>
+        <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+        <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+        <link href="stylesheet.css?t=Wed Jun 10 2020 08:55:16" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+            <div id="titlearea">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr style="height: 58px;">
+                            <td class="headerSpacer"></td>
+                            <td id="projectlogo">
+                                <a href="https://www.stereolabs.com"><img src="https://www.stereolabs.com/img/logo_stereolabs.svg" alt="Stereolabs logo" id="logo"></a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://github.com/stereolabs/zed-open-capture" >SOURCE CODE</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://support.stereolabs.com/hc/en-us" >SUPPORT</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://github.com/stereolabs/zed-open-capture/releases" >DOWNLOADS</a>
+                            </td>
+                            <td class="nav-links nav-links-header">
+                                <a href="https://www.stereolabs.com/developers/release/" >ZED SDK</a>
+                            </td>
+                            <td><i class="mobile-navigation"></i></td>
+                            <!--<td id="projectlogo" >
+                                <a href="https://www.stereolabs.com/"> <img alt="Logo" src="logo_stereolabs.png" height="27"/> </a>
+                            </td>-->
+                            <!--<td style="padding-left: 0.4cm;">-->
+                                <!--<div id="projectname">--><!--ZED Open Capture-->
+                                    <!--<span id="projectnumber"> | ZED SDK 0.1</span>-->
+                                <!--</div>-->
+                                <!--BEGIN PROJECT_BRIEF<div id="projectbrief"></div><!--END PROJECT_BRIEF-->
+                            <!--</td>-->
+                            <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--<div id="subtitlearea">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr style="height: 28px;">
+                            <td class="headerSpacer"></td>
+                            <td id="subMenuCpp" class="nav-links nav-links-header nav-links-selected">
+                                <a href="https://www.stereolabs.com/docs/api/"  >C++</a>
+                            </td>
+                            <td id="subMenuPython" class="nav-links nav-links-header">
+                                <a href="https://www.stereolabs.com/docs/api/python/" >Python</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+            <!-- end header part -->
+<!-- Generated by Doxygen 1.8.18 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('sensorcapture__def_8hpp_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">sensorcapture_def.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2020, STEREOLABS.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">// All rights reserved.</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">// &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#ifndef SENSORCAPTURE_DEF_HPP</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define SENSORCAPTURE_DEF_HPP</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#define DEFAULT_GRAVITY (9.8189f)</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define ACC_SCALE       (DEFAULT_GRAVITY*(8.0f/32768.0f))</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define GYRO_SCALE      (1000.0f/32768.0f)</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define MAG_SCALE       (1.0f/16.0f)</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define TEMP_SCALE      (0.01f)</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define PRESS_SCALE_NEW (0.0001f)       // FM &gt;= V3.9</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define PRESS_SCALE_OLD (0.01f)         // FW &lt; v3.9</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define HUMID_SCALE_NEW (0.01f)         // FM &gt;= V3.9</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#define HUMID_SCALE_OLD (1.0f/1024.0f)  // FW &lt; v3.9</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#define TS_SCALE        (39062.5f)</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#define TEMP_NOT_VALID  (-27315)</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;defines.hpp&quot;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesl__oc.html">sl_oc</a> {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">// ----&gt; Command to be used with the REPORT ID &quot;REP_ID_REQUEST_SET&quot;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">// Command to ping the MCU to communicate that host is alive</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define RQ_CMD_PING 0xF2</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">// &lt;---- Command to be used with the REPORT ID &quot;REP_ID_REQUEST_SET&quot;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193e">   49</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> <a class="code" href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193e">CUSTOMHID_REPORT_ID</a> {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="comment">// Input Reports</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193ea824a0d400a55220fff7358064fb59740">   51</a></span>&#160;    <a class="code" href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193ea824a0d400a55220fff7358064fb59740">REP_ID_SENSOR_DATA</a>          = 0x01,  </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">// Generic commands</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193ea75d791ebda0d360e0cdc4e10e5add114">   54</a></span>&#160;    <a class="code" href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193ea75d791ebda0d360e0cdc4e10e5add114">REP_ID_REQUEST_SET</a>          = 0x21, </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">// Features Reports</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193eabe0ef0f7843da33ceac5ba63bcaa6009">   57</a></span>&#160;    <a class="code" href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193eabe0ef0f7843da33ceac5ba63bcaa6009">REP_ID_SENSOR_STREAM_STATUS</a> = 0x32, </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#a8e6f9726b7547303238a4c2f05f7c212">   59</a></span>&#160;} <a class="code" href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193e">CUSTOMHID_REPORT_ID</a>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#pragma pack(push)  // push current alignment to stack</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#pragma pack(1)     // set alignment to 1 byte boundary</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html">   67</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsl__oc_1_1SensData.html">SensData</a> {</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#adb0355deeb58c506783d1e04a5158f36">   68</a></span>&#160;    uint8_t <a class="code" href="structsl__oc_1_1SensData.html#adb0355deeb58c506783d1e04a5158f36">struct_id</a>;      </div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#ac770c69d9be4d9b64972921ec16205d8">   69</a></span>&#160;    uint8_t <a class="code" href="structsl__oc_1_1SensData.html#ac770c69d9be4d9b64972921ec16205d8">imu_not_valid</a>;  </div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a465bef81f6478756e5443025b1f2ddfa">   70</a></span>&#160;    uint64_t <a class="code" href="structsl__oc_1_1SensData.html#a465bef81f6478756e5443025b1f2ddfa">timestamp</a>;     </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#af311395520d3063de824b529c9cdb10d">   71</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#af311395520d3063de824b529c9cdb10d">gX</a>;             </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a158916f3f452bccade03134dd750e452">   72</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#a158916f3f452bccade03134dd750e452">gY</a>;             </div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a2c037649b97f103359d32fc55121c752">   73</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#a2c037649b97f103359d32fc55121c752">gZ</a>;             </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#ab14e45e035bf8c51db9308a25b7b48e8">   74</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#ab14e45e035bf8c51db9308a25b7b48e8">aX</a>;             </div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a165af57442f078f51cec8e95c21f6971">   75</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#a165af57442f078f51cec8e95c21f6971">aY</a>;             </div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a75ee09a5cf3da885dbaeafea9ed1dfac">   76</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#a75ee09a5cf3da885dbaeafea9ed1dfac">aZ</a>;             </div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#ac634fb79e16a7dc8ebb41ac3dda24ac2">   77</a></span>&#160;    uint8_t <a class="code" href="structsl__oc_1_1SensData.html#ac634fb79e16a7dc8ebb41ac3dda24ac2">frame_sync</a>;     </div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a1d5114772a4d2fb2c53cd03a68e002db">   78</a></span>&#160;    uint8_t <a class="code" href="structsl__oc_1_1SensData.html#a1d5114772a4d2fb2c53cd03a68e002db">sync_capabilities</a>; </div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#ac2988e9849c001d7af7b7867a619148d">   79</a></span>&#160;    uint32_t <a class="code" href="structsl__oc_1_1SensData.html#ac2988e9849c001d7af7b7867a619148d">frame_sync_count</a>; </div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a3df7e5821d66a1e39ac486c791f14f9c">   80</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#a3df7e5821d66a1e39ac486c791f14f9c">imu_temp</a>;       </div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#aceea72911af8c37b7e73e63b19832d0f">   81</a></span>&#160;    uint8_t <a class="code" href="structsl__oc_1_1SensData.html#aceea72911af8c37b7e73e63b19832d0f">mag_valid</a>;      </div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a29942998bc57f4886e191b523bc42f1f">   82</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#a29942998bc57f4886e191b523bc42f1f">mX</a>;             </div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a3d69d1dd64ea29c290369343eef0067d">   83</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#a3d69d1dd64ea29c290369343eef0067d">mY</a>;             </div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a110c4ba06cd45cb8c2f39c71c70c5e4f">   84</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#a110c4ba06cd45cb8c2f39c71c70c5e4f">mZ</a>;             </div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a08358736999a4a027c8db8d3e297c4c5">   85</a></span>&#160;    uint8_t <a class="code" href="structsl__oc_1_1SensData.html#a08358736999a4a027c8db8d3e297c4c5">camera_moving</a>;  </div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#ada3ba4dc718efae37e2aee7880fd50a1">   86</a></span>&#160;    uint32_t <a class="code" href="structsl__oc_1_1SensData.html#ada3ba4dc718efae37e2aee7880fd50a1">camera_moving_count</a>; </div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#ae65c0254ca7c6492a0a55bf5df4f5d3b">   87</a></span>&#160;    uint8_t <a class="code" href="structsl__oc_1_1SensData.html#ae65c0254ca7c6492a0a55bf5df4f5d3b">camera_falling</a>; </div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a5d80013d722ae67548433a678009c297">   88</a></span>&#160;    uint32_t <a class="code" href="structsl__oc_1_1SensData.html#a5d80013d722ae67548433a678009c297">camera_falling_count</a>; </div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#aef6224153f8b18f667eb461d0020c4d8">   89</a></span>&#160;    uint8_t <a class="code" href="structsl__oc_1_1SensData.html#aef6224153f8b18f667eb461d0020c4d8">env_valid</a>;      </div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a54baf6d3cf7819fd576efcdeb5ed6d98">   90</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#a54baf6d3cf7819fd576efcdeb5ed6d98">temp</a>;           </div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a05b97350468e3010936313b993142da3">   91</a></span>&#160;    uint32_t <a class="code" href="structsl__oc_1_1SensData.html#a05b97350468e3010936313b993142da3">press</a>;         </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#ad303f467135f909e883618c8cf70c211">   92</a></span>&#160;    uint32_t <a class="code" href="structsl__oc_1_1SensData.html#ad303f467135f909e883618c8cf70c211">humid</a>;         </div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a22437a1f1bea689b16ab2626ddde3506">   93</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#a22437a1f1bea689b16ab2626ddde3506">temp_cam_left</a>;  </div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensData.html#a85a2d49e0dd78fb90d0a569aef91c93d">   94</a></span>&#160;    int16_t <a class="code" href="structsl__oc_1_1SensData.html#a85a2d49e0dd78fb90d0a569aef91c93d">temp_cam_right</a>; </div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#a370ed5594621f90b4ee1b0e83a4c1503">   95</a></span>&#160;} <a class="code" href="namespacesl__oc.html#a370ed5594621f90b4ee1b0e83a4c1503">SensData</a>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensStreamStatus.html">  100</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsl__oc_1_1SensStreamStatus.html">SensStreamStatus</a> {</div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensStreamStatus.html#adb0355deeb58c506783d1e04a5158f36">  101</a></span>&#160;    uint8_t <a class="code" href="structsl__oc_1_1SensStreamStatus.html#adb0355deeb58c506783d1e04a5158f36">struct_id</a>;      </div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="structsl__oc_1_1SensStreamStatus.html#a15e43e58094b780227518f193d70a79c">  102</a></span>&#160;    uint8_t <a class="code" href="structsl__oc_1_1SensStreamStatus.html#a15e43e58094b780227518f193d70a79c">stream_status</a>;  </div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#a3d0ede3f0ff727bde29e3a05dedb930d">  103</a></span>&#160;} <a class="code" href="namespacesl__oc.html#a3d0ede3f0ff727bde29e3a05dedb930d">SensStreamStatus</a>;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#pragma pack(pop) // Restore previous saved alignment</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">// ----&gt; FW versions</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1">  108</a></span>&#160;<span class="keyword">enum class</span> <a class="code" href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1">ZED_M_FW</a> {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <a class="code" href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1a2f28700d851a91bd86f6a6af9137e802">FW_2_2</a> = 514, </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <a class="code" href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1a153a5e54cfe2a07527e2927b5bdcb274">FW_2_3</a> = 515, </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <a class="code" href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1ace1fc56b495420b692a3abfaa2392cf8">FW_2_4</a> = 516, </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <a class="code" href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1af32a5d9d6532dcb40ad430e4f60f7fe5">FW_2_5</a> = 517, </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <a class="code" href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1af447f5c03508de4d88e340390ba7c78f">LAST</a></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;};</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827">  116</a></span>&#160;<span class="keyword">enum class</span> <a class="code" href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827">ZED_2_FW</a> {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <a class="code" href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827abf6fcaf40e2d3317296b81a4e2897e81">FW_3_4</a> = 772,  </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <a class="code" href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827a3633b5948ae700d15b9f6e73f1c07587">FW_3_5</a> = 773,  </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827ab5a0b5f6b3c6a3fa261573dee5a801b0">FW_3_6</a> = 774,  </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <a class="code" href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827aeb367bc50b2b12db8326f7482614969b">FW_3_7</a> = 775,  </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <a class="code" href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827a17d8858dd4ac68cff0841f02513e5357">FW_3_8</a> = 776,  </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <a class="code" href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827a9edf2dec4526fd1acea761f336c95f8a">FW_3_9</a> = 777   </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;};</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#a73a5c9e7e3331bc49430459f2837b41e">  131</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespacesl__oc.html#a73a5c9e7e3331bc49430459f2837b41e">atLeast</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;version_current, <span class="keyword">const</span> <a class="code" href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827">ZED_2_FW</a> &amp;version_required) {</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordflow">return</span> (version_current &gt;= <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(version_required));</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#a0ae90fed02a949a9df94893ffacb5774">  141</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespacesl__oc.html#a73a5c9e7e3331bc49430459f2837b41e">atLeast</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;version_current, <span class="keyword">const</span> <a class="code" href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1">ZED_M_FW</a> &amp;version_required) {</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keywordflow">return</span> (version_current &gt;= <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(version_required));</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;}</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment">// &lt;---- FW versions</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="preprocessor">#define NTP_ADJUST_CT 1</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno"><a class="line" href="namespacesl__oc.html#a9dbd6e4a3133082a5c964a5dbe502c6e">  148</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code" href="namespacesl__oc.html#a9dbd6e4a3133082a5c964a5dbe502c6e">TS_SHIFT_VAL_COUNT</a> = 50; </div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;}</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="keyword">inline</span> std::string wstr2str( <span class="keyword">const</span> <span class="keywordtype">wchar_t</span>* wstr)</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;{</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keywordflow">try</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    {</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        std::wstring ws( wstr );</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        std::string str( ws.begin(), ws.end() );</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="keywordflow">return</span> str;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    }</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordflow">catch</span>(...)</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    {</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        std::cerr &lt;&lt; <span class="stringliteral">&quot;Failure reading USB data. Please install the udev rules available in the `udev` folder&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        exit(-1);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    }</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordflow">return</span> std::string();</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;}</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor">#endif // SENSORCAPTURE_DEF_HPP</span></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<div class="ttc" id="astructsl__oc_1_1SensData_html_ac634fb79e16a7dc8ebb41ac3dda24ac2"><div class="ttname"><a href="structsl__oc_1_1SensData.html#ac634fb79e16a7dc8ebb41ac3dda24ac2">sl_oc::SensData::frame_sync</a></div><div class="ttdeci">uint8_t frame_sync</div><div class="ttdoc">Indicates if data are synced to a camera frame.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00077">sensorcapture_def.hpp:77</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_aa5d128d89b4401e16b8fdd1aeeca5827a3633b5948ae700d15b9f6e73f1c07587"><div class="ttname"><a href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827a3633b5948ae700d15b9f6e73f1c07587">sl_oc::ZED_2_FW::FW_3_5</a></div><div class="ttdeci">@ FW_3_5</div><div class="ttdoc">ZED2 v3.5.</div></div>
+<div class="ttc" id="anamespacesl__oc_html_aa5d128d89b4401e16b8fdd1aeeca5827a9edf2dec4526fd1acea761f336c95f8a"><div class="ttname"><a href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827a9edf2dec4526fd1acea761f336c95f8a">sl_oc::ZED_2_FW::FW_3_9</a></div><div class="ttdeci">@ FW_3_9</div><div class="ttdoc">ZED2 v3.9.</div></div>
+<div class="ttc" id="astructsl__oc_1_1SensStreamStatus_html_a15e43e58094b780227518f193d70a79c"><div class="ttname"><a href="structsl__oc_1_1SensStreamStatus.html#a15e43e58094b780227518f193d70a79c">sl_oc::SensStreamStatus::stream_status</a></div><div class="ttdeci">uint8_t stream_status</div><div class="ttdoc">Status of the USB streaming.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00102">sensorcapture_def.hpp:102</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensStreamStatus_html_adb0355deeb58c506783d1e04a5158f36"><div class="ttname"><a href="structsl__oc_1_1SensStreamStatus.html#adb0355deeb58c506783d1e04a5158f36">sl_oc::SensStreamStatus::struct_id</a></div><div class="ttdeci">uint8_t struct_id</div><div class="ttdoc">Struct identifier, it matches the USB HID Report ID.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00101">sensorcapture_def.hpp:101</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a08632ed985ea3a5cb6c06484428cd4b1af32a5d9d6532dcb40ad430e4f60f7fe5"><div class="ttname"><a href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1af32a5d9d6532dcb40ad430e4f60f7fe5">sl_oc::ZED_M_FW::FW_2_5</a></div><div class="ttdeci">@ FW_2_5</div><div class="ttdoc">ZED Mini v2.5.</div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_aceea72911af8c37b7e73e63b19832d0f"><div class="ttname"><a href="structsl__oc_1_1SensData.html#aceea72911af8c37b7e73e63b19832d0f">sl_oc::SensData::mag_valid</a></div><div class="ttdeci">uint8_t mag_valid</div><div class="ttdoc">Indicates if Magnetometer data are valid (put to 0 if no magnetometer is present)</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00081">sensorcapture_def.hpp:81</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a22437a1f1bea689b16ab2626ddde3506"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a22437a1f1bea689b16ab2626ddde3506">sl_oc::SensData::temp_cam_left</a></div><div class="ttdeci">int16_t temp_cam_left</div><div class="ttdoc">Temperature of the left camera sensor [0.01 °C].</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00093">sensorcapture_def.hpp:93</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a08632ed985ea3a5cb6c06484428cd4b1"><div class="ttname"><a href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1">sl_oc::ZED_M_FW</a></div><div class="ttdeci">ZED_M_FW</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00108">sensorcapture_def.hpp:108</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a08632ed985ea3a5cb6c06484428cd4b1af447f5c03508de4d88e340390ba7c78f"><div class="ttname"><a href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1af447f5c03508de4d88e340390ba7c78f">sl_oc::ZED_M_FW::LAST</a></div><div class="ttdeci">@ LAST</div></div>
+<div class="ttc" id="anamespacesl__oc_html_a348e0a5ba687ae21d88042939e03193ea824a0d400a55220fff7358064fb59740"><div class="ttname"><a href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193ea824a0d400a55220fff7358064fb59740">sl_oc::REP_ID_SENSOR_DATA</a></div><div class="ttdeci">@ REP_ID_SENSOR_DATA</div><div class="ttdoc">Sensor data report ID.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00051">sensorcapture_def.hpp:51</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_ab14e45e035bf8c51db9308a25b7b48e8"><div class="ttname"><a href="structsl__oc_1_1SensData.html#ab14e45e035bf8c51db9308a25b7b48e8">sl_oc::SensData::aX</a></div><div class="ttdeci">int16_t aX</div><div class="ttdoc">Raw Accelerometer X.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00074">sensorcapture_def.hpp:74</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a2c037649b97f103359d32fc55121c752"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a2c037649b97f103359d32fc55121c752">sl_oc::SensData::gZ</a></div><div class="ttdeci">int16_t gZ</div><div class="ttdoc">Raw Gyroscope Z.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00073">sensorcapture_def.hpp:73</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensStreamStatus_html"><div class="ttname"><a href="structsl__oc_1_1SensStreamStatus.html">sl_oc::SensStreamStatus</a></div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00100">sensorcapture_def.hpp:100</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a08358736999a4a027c8db8d3e297c4c5"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a08358736999a4a027c8db8d3e297c4c5">sl_oc::SensData::camera_moving</a></div><div class="ttdeci">uint8_t camera_moving</div><div class="ttdoc">Indicate if the camera is moving (uses BMI internal HW)</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00085">sensorcapture_def.hpp:85</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_ad303f467135f909e883618c8cf70c211"><div class="ttname"><a href="structsl__oc_1_1SensData.html#ad303f467135f909e883618c8cf70c211">sl_oc::SensData::humid</a></div><div class="ttdeci">uint32_t humid</div><div class="ttdoc">Relative humidity [1.0/1024.0 rH].</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00092">sensorcapture_def.hpp:92</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html"><div class="ttname"><a href="structsl__oc_1_1SensData.html">sl_oc::SensData</a></div><div class="ttdoc">The RAW sensor data structure retrieved from camera MCU by USB.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00067">sensorcapture_def.hpp:67</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a165af57442f078f51cec8e95c21f6971"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a165af57442f078f51cec8e95c21f6971">sl_oc::SensData::aY</a></div><div class="ttdeci">int16_t aY</div><div class="ttdoc">Raw Accelerometer Y.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00075">sensorcapture_def.hpp:75</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_aa5d128d89b4401e16b8fdd1aeeca5827abf6fcaf40e2d3317296b81a4e2897e81"><div class="ttname"><a href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827abf6fcaf40e2d3317296b81a4e2897e81">sl_oc::ZED_2_FW::FW_3_4</a></div><div class="ttdeci">@ FW_3_4</div><div class="ttdoc">ZED2 v3.4.</div></div>
+<div class="ttc" id="anamespacesl__oc_html_a370ed5594621f90b4ee1b0e83a4c1503"><div class="ttname"><a href="namespacesl__oc.html#a370ed5594621f90b4ee1b0e83a4c1503">sl_oc::SensData</a></div><div class="ttdeci">struct sl_oc::SensData SensData</div><div class="ttdoc">The RAW sensor data structure retrieved from camera MCU by USB.</div></div>
+<div class="ttc" id="anamespacesl__oc_html_a08632ed985ea3a5cb6c06484428cd4b1a2f28700d851a91bd86f6a6af9137e802"><div class="ttname"><a href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1a2f28700d851a91bd86f6a6af9137e802">sl_oc::ZED_M_FW::FW_2_2</a></div><div class="ttdeci">@ FW_2_2</div><div class="ttdoc">ZED Mini v2.2.</div></div>
+<div class="ttc" id="anamespacesl__oc_html_aa5d128d89b4401e16b8fdd1aeeca5827a17d8858dd4ac68cff0841f02513e5357"><div class="ttname"><a href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827a17d8858dd4ac68cff0841f02513e5357">sl_oc::ZED_2_FW::FW_3_8</a></div><div class="ttdeci">@ FW_3_8</div><div class="ttdoc">ZED2 v3.8.</div></div>
+<div class="ttc" id="anamespacesl__oc_html_aa5d128d89b4401e16b8fdd1aeeca5827ab5a0b5f6b3c6a3fa261573dee5a801b0"><div class="ttname"><a href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827ab5a0b5f6b3c6a3fa261573dee5a801b0">sl_oc::ZED_2_FW::FW_3_6</a></div><div class="ttdeci">@ FW_3_6</div><div class="ttdoc">ZED2 v3.6.</div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_af311395520d3063de824b529c9cdb10d"><div class="ttname"><a href="structsl__oc_1_1SensData.html#af311395520d3063de824b529c9cdb10d">sl_oc::SensData::gX</a></div><div class="ttdeci">int16_t gX</div><div class="ttdoc">Raw Gyroscope X.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00071">sensorcapture_def.hpp:71</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_aef6224153f8b18f667eb461d0020c4d8"><div class="ttname"><a href="structsl__oc_1_1SensData.html#aef6224153f8b18f667eb461d0020c4d8">sl_oc::SensData::env_valid</a></div><div class="ttdeci">uint8_t env_valid</div><div class="ttdoc">Indicate if Environmental data are valid (put to ENV_SENS_NOT_PRESENT if no environmental sensor is p...</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00089">sensorcapture_def.hpp:89</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a08632ed985ea3a5cb6c06484428cd4b1ace1fc56b495420b692a3abfaa2392cf8"><div class="ttname"><a href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1ace1fc56b495420b692a3abfaa2392cf8">sl_oc::ZED_M_FW::FW_2_4</a></div><div class="ttdeci">@ FW_2_4</div><div class="ttdoc">ZED Mini v2.4 (not released)</div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a110c4ba06cd45cb8c2f39c71c70c5e4f"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a110c4ba06cd45cb8c2f39c71c70c5e4f">sl_oc::SensData::mZ</a></div><div class="ttdeci">int16_t mZ</div><div class="ttdoc">Raw Magnetometer Z.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00084">sensorcapture_def.hpp:84</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html"><div class="ttname"><a href="namespacesl__oc.html">sl_oc</a></div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture_8cpp_source.html#l00031">sensorcapture.cpp:31</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a3d0ede3f0ff727bde29e3a05dedb930d"><div class="ttname"><a href="namespacesl__oc.html#a3d0ede3f0ff727bde29e3a05dedb930d">sl_oc::SensStreamStatus</a></div><div class="ttdeci">struct sl_oc::SensStreamStatus SensStreamStatus</div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a54baf6d3cf7819fd576efcdeb5ed6d98"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a54baf6d3cf7819fd576efcdeb5ed6d98">sl_oc::SensData::temp</a></div><div class="ttdeci">int16_t temp</div><div class="ttdoc">Temperature [0.01 °C].</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00090">sensorcapture_def.hpp:90</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a9dbd6e4a3133082a5c964a5dbe502c6e"><div class="ttname"><a href="namespacesl__oc.html#a9dbd6e4a3133082a5c964a5dbe502c6e">sl_oc::TS_SHIFT_VAL_COUNT</a></div><div class="ttdeci">const size_t TS_SHIFT_VAL_COUNT</div><div class="ttdoc">Number of sensor data to use to update timestamp scaling.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00148">sensorcapture_def.hpp:148</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_ac770c69d9be4d9b64972921ec16205d8"><div class="ttname"><a href="structsl__oc_1_1SensData.html#ac770c69d9be4d9b64972921ec16205d8">sl_oc::SensData::imu_not_valid</a></div><div class="ttdeci">uint8_t imu_not_valid</div><div class="ttdoc">Indicate if IMU data are valid [0-&gt;valid, 1-&gt;not_valid.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00069">sensorcapture_def.hpp:69</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a348e0a5ba687ae21d88042939e03193ea75d791ebda0d360e0cdc4e10e5add114"><div class="ttname"><a href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193ea75d791ebda0d360e0cdc4e10e5add114">sl_oc::REP_ID_REQUEST_SET</a></div><div class="ttdeci">@ REP_ID_REQUEST_SET</div><div class="ttdoc">USB Request report ID.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00054">sensorcapture_def.hpp:54</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a29942998bc57f4886e191b523bc42f1f"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a29942998bc57f4886e191b523bc42f1f">sl_oc::SensData::mX</a></div><div class="ttdeci">int16_t mX</div><div class="ttdoc">Raw Magnetometer X.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00082">sensorcapture_def.hpp:82</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a348e0a5ba687ae21d88042939e03193eabe0ef0f7843da33ceac5ba63bcaa6009"><div class="ttname"><a href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193eabe0ef0f7843da33ceac5ba63bcaa6009">sl_oc::REP_ID_SENSOR_STREAM_STATUS</a></div><div class="ttdeci">@ REP_ID_SENSOR_STREAM_STATUS</div><div class="ttdoc">Stream Status report ID.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00057">sensorcapture_def.hpp:57</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_ae65c0254ca7c6492a0a55bf5df4f5d3b"><div class="ttname"><a href="structsl__oc_1_1SensData.html#ae65c0254ca7c6492a0a55bf5df4f5d3b">sl_oc::SensData::camera_falling</a></div><div class="ttdeci">uint8_t camera_falling</div><div class="ttdoc">Indicate if the camera is free falling (uses BMI internal HW)</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00087">sensorcapture_def.hpp:87</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a3d69d1dd64ea29c290369343eef0067d"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a3d69d1dd64ea29c290369343eef0067d">sl_oc::SensData::mY</a></div><div class="ttdeci">int16_t mY</div><div class="ttdoc">Raw Magnetometer Y.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00083">sensorcapture_def.hpp:83</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a1d5114772a4d2fb2c53cd03a68e002db"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a1d5114772a4d2fb2c53cd03a68e002db">sl_oc::SensData::sync_capabilities</a></div><div class="ttdeci">uint8_t sync_capabilities</div><div class="ttdoc">Indicates if frame synchronization is active.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00078">sensorcapture_def.hpp:78</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_adb0355deeb58c506783d1e04a5158f36"><div class="ttname"><a href="structsl__oc_1_1SensData.html#adb0355deeb58c506783d1e04a5158f36">sl_oc::SensData::struct_id</a></div><div class="ttdeci">uint8_t struct_id</div><div class="ttdoc">Struct identifier, it matches the USB HID Report ID.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00068">sensorcapture_def.hpp:68</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a465bef81f6478756e5443025b1f2ddfa"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a465bef81f6478756e5443025b1f2ddfa">sl_oc::SensData::timestamp</a></div><div class="ttdeci">uint64_t timestamp</div><div class="ttdoc">Data timestamp (from IMU sensor) [usec/39].</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00070">sensorcapture_def.hpp:70</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_ac2988e9849c001d7af7b7867a619148d"><div class="ttname"><a href="structsl__oc_1_1SensData.html#ac2988e9849c001d7af7b7867a619148d">sl_oc::SensData::frame_sync_count</a></div><div class="ttdeci">uint32_t frame_sync_count</div><div class="ttdoc">Counts the number of synced frames.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00079">sensorcapture_def.hpp:79</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_aa5d128d89b4401e16b8fdd1aeeca5827"><div class="ttname"><a href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827">sl_oc::ZED_2_FW</a></div><div class="ttdeci">ZED_2_FW</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00116">sensorcapture_def.hpp:116</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a348e0a5ba687ae21d88042939e03193e"><div class="ttname"><a href="namespacesl__oc.html#a348e0a5ba687ae21d88042939e03193e">sl_oc::CUSTOMHID_REPORT_ID</a></div><div class="ttdeci">CUSTOMHID_REPORT_ID</div><div class="ttdoc">USB HID communication report IDs.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00049">sensorcapture_def.hpp:49</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a05b97350468e3010936313b993142da3"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a05b97350468e3010936313b993142da3">sl_oc::SensData::press</a></div><div class="ttdeci">uint32_t press</div><div class="ttdoc">Pressure [0.01 hPa].</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00091">sensorcapture_def.hpp:91</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a5d80013d722ae67548433a678009c297"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a5d80013d722ae67548433a678009c297">sl_oc::SensData::camera_falling_count</a></div><div class="ttdeci">uint32_t camera_falling_count</div><div class="ttdoc">Counts the number of camera falling interrupts.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00088">sensorcapture_def.hpp:88</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a73a5c9e7e3331bc49430459f2837b41e"><div class="ttname"><a href="namespacesl__oc.html#a73a5c9e7e3331bc49430459f2837b41e">sl_oc::atLeast</a></div><div class="ttdeci">bool atLeast(const int &amp;version_current, const ZED_2_FW &amp;version_required)</div><div class="ttdoc">Check firmware version for ZED2 camera.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00131">sensorcapture_def.hpp:131</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a158916f3f452bccade03134dd750e452"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a158916f3f452bccade03134dd750e452">sl_oc::SensData::gY</a></div><div class="ttdeci">int16_t gY</div><div class="ttdoc">Raw Gyroscope Y.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00072">sensorcapture_def.hpp:72</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_ada3ba4dc718efae37e2aee7880fd50a1"><div class="ttname"><a href="structsl__oc_1_1SensData.html#ada3ba4dc718efae37e2aee7880fd50a1">sl_oc::SensData::camera_moving_count</a></div><div class="ttdeci">uint32_t camera_moving_count</div><div class="ttdoc">Counts the number of camera moving interrupts.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00086">sensorcapture_def.hpp:86</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a85a2d49e0dd78fb90d0a569aef91c93d"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a85a2d49e0dd78fb90d0a569aef91c93d">sl_oc::SensData::temp_cam_right</a></div><div class="ttdeci">int16_t temp_cam_right</div><div class="ttdoc">Temperature of the right camera sensor [0.01 °C].</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00094">sensorcapture_def.hpp:94</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_a08632ed985ea3a5cb6c06484428cd4b1a153a5e54cfe2a07527e2927b5bdcb274"><div class="ttname"><a href="namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1a153a5e54cfe2a07527e2927b5bdcb274">sl_oc::ZED_M_FW::FW_2_3</a></div><div class="ttdeci">@ FW_2_3</div><div class="ttdoc">ZED Mini v2.3.</div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a75ee09a5cf3da885dbaeafea9ed1dfac"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a75ee09a5cf3da885dbaeafea9ed1dfac">sl_oc::SensData::aZ</a></div><div class="ttdeci">int16_t aZ</div><div class="ttdoc">Raw Accelerometer Z.</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00076">sensorcapture_def.hpp:76</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1SensData_html_a3df7e5821d66a1e39ac486c791f14f9c"><div class="ttname"><a href="structsl__oc_1_1SensData.html#a3df7e5821d66a1e39ac486c791f14f9c">sl_oc::SensData::imu_temp</a></div><div class="ttdeci">int16_t imu_temp</div><div class="ttdoc">Temperature from the IMU sensor [0.01 °C].</div><div class="ttdef"><b>Definition:</b> <a href="sensorcapture__def_8hpp_source.html#l00080">sensorcapture_def.hpp:80</a></div></div>
+<div class="ttc" id="anamespacesl__oc_html_aa5d128d89b4401e16b8fdd1aeeca5827aeb367bc50b2b12db8326f7482614969b"><div class="ttname"><a href="namespacesl__oc.html#aa5d128d89b4401e16b8fdd1aeeca5827aeb367bc50b2b12db8326f7482614969b">sl_oc::ZED_2_FW::FW_3_7</a></div><div class="ttdeci">@ FW_3_7</div><div class="ttdoc">ZED2 v3.7.</div></div>

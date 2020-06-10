@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['info_391',['INFO',['../d8/dcf/namespacesl__oc.html#a5f9ed77b6fa4bdd3d7cd9666242d4eb1a3cc3a1d5afd9cf352f080f0357552489',1,'sl_oc']]]
+  ['old_5fval_333',['OLD_VAL',['../structsl__oc_1_1SensMagData.html#a659e22dd71df099643f7c905089cb377add6a8c1fa2e6f7349f9f325904b5eec1',1,'sl_oc::SensMagData::OLD_VAL()'],['../structsl__oc_1_1SensEnvData.html#a9e3854ee136b6591a6803b52c07eb331add6a8c1fa2e6f7349f9f325904b5eec1',1,'sl_oc::SensEnvData::OLD_VAL()']]]
 ];

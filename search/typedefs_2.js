@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['magstatus_352',['MagStatus',['../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#adc3ca0515338f9fa6bc2042e8099b9b3',1,'sl_oc::sensors::data::Magnetometer']]]
+  ['magstatus_295',['MagStatus',['../structsl__oc_1_1SensMagData.html#a3e5eb25e848eda5cecca5d4a7d295e70',1,'sl_oc::SensMagData']]]
 ];

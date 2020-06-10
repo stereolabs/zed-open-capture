@@ -1,5 +1,19 @@
 var searchData=
 [
-  ['initializesensors_259',['initializeSensors',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a417ef2121978cba6426519490024f406',1,'sl_oc::sensors::SensorCapture']]],
-  ['initializevideo_260',['initializeVideo',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e',1,'sl_oc::video::VideoCapture']]]
+  ['sensorcapture_218',['SensorCapture',['../classsl__oc_1_1SensorCapture.html#a053865669799034dd6f8e95cbee1868c',1,'sl_oc::SensorCapture']]],
+  ['setaecagc_219',['setAECAGC',['../classsl__oc_1_1VideoCapture.html#ae566a625e36c44681ba5da6d1044cdbe',1,'sl_oc::VideoCapture']]],
+  ['setautowhitebalance_220',['setAutoWhiteBalance',['../classsl__oc_1_1VideoCapture.html#a86684a2622c450d1796530e12547ba3c',1,'sl_oc::VideoCapture']]],
+  ['setbrightness_221',['setBrightness',['../classsl__oc_1_1VideoCapture.html#a0006ebfdca6db81f835f5d0d6a6aee3b',1,'sl_oc::VideoCapture']]],
+  ['setcontrast_222',['setContrast',['../classsl__oc_1_1VideoCapture.html#a32bcdbb1ac23149a2135ed19feed4983',1,'sl_oc::VideoCapture']]],
+  ['setexposure_223',['setExposure',['../classsl__oc_1_1VideoCapture.html#acb7121aeba2ad96a9f08159969f44902',1,'sl_oc::VideoCapture']]],
+  ['setgain_224',['setGain',['../classsl__oc_1_1VideoCapture.html#a258d34700af1c17538810633e938866d',1,'sl_oc::VideoCapture']]],
+  ['setgamma_225',['setGamma',['../classsl__oc_1_1VideoCapture.html#a8e5997616d719d9ddd14d77c00b120f2',1,'sl_oc::VideoCapture']]],
+  ['sethue_226',['setHue',['../classsl__oc_1_1VideoCapture.html#ae8a6f32fb7e84930cd98d7b37a2d4b01',1,'sl_oc::VideoCapture']]],
+  ['setledstatus_227',['setLEDstatus',['../classsl__oc_1_1VideoCapture.html#a68a8f813d4aa374659f1cf92cde0b4ba',1,'sl_oc::VideoCapture']]],
+  ['setreadytosync_228',['setReadyToSync',['../classsl__oc_1_1VideoCapture.html#adcdb3b055228e7ec601f3f7a49b4ba9a',1,'sl_oc::VideoCapture']]],
+  ['setsaturation_229',['setSaturation',['../classsl__oc_1_1VideoCapture.html#a96d67e6e0436b10c135e47e23c27e17a',1,'sl_oc::VideoCapture']]],
+  ['setsharpness_230',['setSharpness',['../classsl__oc_1_1VideoCapture.html#a3e7e1a6baafec413f10ef0754e33b497',1,'sl_oc::VideoCapture']]],
+  ['setstarttimestamp_231',['setStartTimestamp',['../classsl__oc_1_1SensorCapture.html#a0deffb8d551cc3269065918257d33c09',1,'sl_oc::SensorCapture']]],
+  ['setvideoptr_232',['setVideoPtr',['../classsl__oc_1_1SensorCapture.html#a6e2f19f16fc16493c4718f5481d98ed8',1,'sl_oc::SensorCapture']]],
+  ['setwhitebalance_233',['setWhiteBalance',['../classsl__oc_1_1VideoCapture.html#a3064c103cebdc6522ac5a902eecb92d7',1,'sl_oc::VideoCapture']]]
 ];

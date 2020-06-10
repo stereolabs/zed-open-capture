@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['width_348',['width',['../de/d91/structsl__oc_1_1video_1_1_frame.html#aeb2b160926f10fb19c9c6e1c015e4681',1,'sl_oc::video::Frame::width()'],['../de/da1/structsl__oc_1_1video_1_1_resolution.html#ab12ce7eb561d6ff96124133ee37cd2b9',1,'sl_oc::video::Resolution::width()']]]
+  ['width_292',['width',['../structsl__oc_1_1Frame.html#ad0eab1042455a2067c812ab8071d5376',1,'sl_oc::Frame::width()'],['../structsl__oc_1_1Resolution.html#a02bed8590a9ddf520e58a060059518ec',1,'sl_oc::Resolution::width()']]]
 ];

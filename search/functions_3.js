@@ -1,27 +1,5 @@
 var searchData=
 [
-  ['getaecagc_234',['getAECAGC',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4',1,'sl_oc::video::VideoCapture']]],
-  ['getautowhitebalance_235',['getAutoWhiteBalance',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a757a2669d47f4be91059681e5b590af2',1,'sl_oc::video::VideoCapture']]],
-  ['getbrightness_236',['getBrightness',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a0582fd54401ab3a191206048ab94f57c',1,'sl_oc::video::VideoCapture']]],
-  ['getcontrast_237',['getContrast',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#aa20c8a45c36cfaa4d4cfad4bf5b664b8',1,'sl_oc::video::VideoCapture']]],
-  ['getdevicelist_238',['getDeviceList',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#ad568cc655072ec7861beb7dd3e24ce1d',1,'sl_oc::sensors::SensorCapture']]],
-  ['getexposure_239',['getExposure',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abe128c2f45a29dc71d08064e41ed3149',1,'sl_oc::video::VideoCapture']]],
-  ['getfirmwareversion_240',['getFirmwareVersion',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a61198093018195dd56530e4654f2c8f8',1,'sl_oc::sensors::SensorCapture']]],
-  ['getframesize_241',['getFrameSize',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a881a9359b48a18919d8ab02141f6b8a4',1,'sl_oc::video::VideoCapture']]],
-  ['getgain_242',['getGain',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a52fbfe5616bb1c443d1754c4dce2d767',1,'sl_oc::video::VideoCapture']]],
-  ['getgamma_243',['getGamma',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a79d07be43ebb1f4aea6b9b5796b47df3',1,'sl_oc::video::VideoCapture']]],
-  ['gethue_244',['getHue',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a6b1dcb9449f0344bf3f608501e1f60b6',1,'sl_oc::video::VideoCapture']]],
-  ['getlastcameratemperaturedata_245',['getLastCameraTemperatureData',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a917326c168fefad8d209c4b96d346f43',1,'sl_oc::sensors::SensorCapture']]],
-  ['getlastenvironmentdata_246',['getLastEnvironmentData',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#aa10916940d66acf3084464996e4ba4c8',1,'sl_oc::sensors::SensorCapture']]],
-  ['getlastframe_247',['getLastFrame',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ae5a3c39cdc0aa5c2638d88b3c6685a03',1,'sl_oc::video::VideoCapture']]],
-  ['getlastimudata_248',['getLastIMUData',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#ac2c064ea9f3c437b34f86b9c3dc9fee6',1,'sl_oc::sensors::SensorCapture']]],
-  ['getlastmagnetometerdata_249',['getLastMagnetometerData',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#aa03975a0ea443d37f94343bbafcc841d',1,'sl_oc::sensors::SensorCapture']]],
-  ['getledstatus_250',['getLEDstatus',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a4e326fed89aeec27b0a0f7805006a176',1,'sl_oc::video::VideoCapture']]],
-  ['getsaturation_251',['getSaturation',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a65dd1900ecf02e11c60ae3cda0b5eb40',1,'sl_oc::video::VideoCapture']]],
-  ['getsensorthreadfunc_252',['getSensorThreadFunc',['../da/d5d/zed__oc__sync__example_8cpp.html#afbc7c8c8f7147191eab6bb5a47862ff4',1,'zed_oc_sync_example.cpp']]],
-  ['getserialnumber_253',['getSerialNumber',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a0214aaaa08d41427446660c96cb5ef60',1,'sl_oc::sensors::SensorCapture::getSerialNumber()'],['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ae1def612a9502f0dd85ff46d5d5f1131',1,'sl_oc::video::VideoCapture::getSerialNumber()']]],
-  ['getsharpness_254',['getSharpness',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a1f8fdb3702127dd2a74abf6e6dbbe378',1,'sl_oc::video::VideoCapture']]],
-  ['getsteadytimestamp_255',['getSteadyTimestamp',['../db/df8/defines_8hpp.html#a7655773641067c1b3945975cd79b4fdb',1,'defines.hpp']]],
-  ['getwalltimestamp_256',['getWallTimestamp',['../db/df8/defines_8hpp.html#abaa6ff2bb60843da4683abd7710ded22',1,'defines.hpp']]],
-  ['getwhitebalance_257',['getWhiteBalance',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a7fa74009d7209a5b2cf073beb6a98355',1,'sl_oc::video::VideoCapture']]]
+  ['initializesensors_207',['initializeSensors',['../classsl__oc_1_1SensorCapture.html#a39b729888d4cdc98626e0e67685e970c',1,'sl_oc::SensorCapture']]],
+  ['initializevideo_208',['initializeVideo',['../classsl__oc_1_1VideoCapture.html#a446d2a6b9440ef43cfed9fc97e102415',1,'sl_oc::VideoCapture']]]
 ];
