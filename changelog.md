@@ -1,6 +1,6 @@
 # Changelog
 
-v0.1.1 - 2012 06 10
+v0.2 - 2012 06 10
 -------------------
 * Documentation refactoring
 * New "sl_oc::video" namespace
