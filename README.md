@@ -20,7 +20,7 @@
   <a href="#license">License</a>
 </p>
 
-The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The C++ library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the internal sensors (only ZED Mini and ZED2). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
+The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The open source C++ library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the camera sensors (only ZED Mini and ZED2). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
 
 **Note:** The provided data are not calibrated, images are not rectified in a stereoscopic way, IMU data may drift or be misaligned.
 Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/developers/release/).
@@ -28,7 +28,7 @@ Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/
 [Online documentation](https://stereolabs.github.io/zed-open-capture)
 
 ## Key Features
- * C++ library compatible with the C++11 standard
+ * Open source C++ library compatible with the C++11 standard
  * Video grabbing
     - YUV 4:2:2 data format
     - Camera runtime control
@@ -37,7 +37,7 @@ Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/
     - 3 DOF Magnetometer 
     - Environment (Pressure + Temperature + Humidity)
     - CMOS sensors temperature
- * Sensors + Video synchronization
+ * Sensors/Video synchronization
  * Full set of self-explaining examples
     - [Video capture](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_video_example.cpp)
     - [Video capture and camera control](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_control_example.cpp)
@@ -50,12 +50,12 @@ Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/
 ### Prerequisites
 
  * A Stereolabs camera: [ZED](https://www.stereolabs.com/zed/), [ZED Mini](https://www.stereolabs.com/zed-mini/), [ZED2](https://www.stereolabs.com/zed-2/)
- * Linux OS [Tested on Ubuntu 16.04, 18.04 and 20.04]
- * GCC compiler [at least v7.5]
- * CMake build system [at least v3.1] 
+ * Linux OS (Tested on Ubuntu 16.04, 18.04 and 20.04)
+ * GCC compiler (at least v7.5)
+ * CMake build system (at least v3.1)
  * HIDAPI and LIBUSB Libraries for USB communication
- * OpenCV [at least v3.4. Required only by examples]
- * git [if installing from source]
+ * OpenCV (at least v3.4. Required only by examples)
+ * git (if installing from source)
 
 #### Install prerequisites
 
