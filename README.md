@@ -12,9 +12,10 @@
   <a href="#key-features">Key Features</a> •
   <a href="#installation">Install</a> •
   <a href="#documentation">Documentation</a> •
-  <a href="#usage-guide">Run</a> •
+  <a href="#run">Run</a> •
   <a href="#get-video-data">Get Video Frames</a> •
   <a href="#get-sensors-data">Get Sensors Data</a> •
+  <a href="#running-the-examples">Examples</a> •
   <a href="#coordinates-system">Coordinates</a> •
   <a href="#license">License</a>
 </p>
@@ -31,7 +32,7 @@ Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/
     - YUV 4:2:2 data format
     - Camera runtime control
  * Sensors data grabbing
-    - 6 DOF IMU (Accelerometer + Gyroscope)
+    - 6 DOF IMU (3 DOF Accelerometer + 3 DOF Gyroscope)
     - 3 DOF Magnetometer 
     - Environment (Pressure + Temperature + Humidity)
     - CMOS sensors temperature
@@ -69,7 +70,7 @@ Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/
 
     `$ sudo apt install libusb-1.0-0-dev libhidapi-libusb0 libhidapi-dev`
 
-* Install OpenCV to compile the examples
+* Install OpenCV to build the examples
 
     `$ sudo apt install opencv-dev`
 
@@ -86,44 +87,44 @@ To be able to access the USB you must install the udev rule contained in the `ud
     $ git clone https://github.com/stereolabs/zed-open-capture.git
     $ cd zed-open-capture
 
-### Compile
+### Build
 
-#### Compile library and examples
+#### Build library and examples
 
     $ mkdir build
     $ cd build
     $ cmake ..
     $ make -j$(nproc)
 
-#### Compile only the library
+#### Build only the library
 
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_EXAMPLES=OFF 
     $ make -j$(nproc)
 
-#### Compile only the video library with the video examples
+#### Build only the video library with the video examples
 
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_SENSORS=OFF
     $ make -j$(nproc)
 
-#### Compile only the video library
+#### Build only the video library
 
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_SENSORS=OFF -DBUILD_EXAMPLES=OFF
     $ make -j$(nproc)
 
-#### Compile only the sensors library with the sensors example
+#### Build only the sensors library with the sensors example
     
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_VIDEO=OFF
     $ make -j$(nproc)
 
-#### Compile only the sensors library
+#### Build only the sensors library
     
     $ mkdir build
     $ cd build
@@ -150,7 +151,7 @@ Documentation can be locally generated in HTML format using Doxygen:
     
 The documentation will be available opening the file `doc/html/index.html` with a standard web browser.
 
-## Usage Guide
+## Run
 
 ### Get video data
 
@@ -201,11 +202,34 @@ explaining how to convert from YUV 4:2:2 to RGB format,
 
 A detailed [sensors data grabbing example is available](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_sensors_example.cpp).
 
-#### Coordinates system
+### Running the examples
+
+After installation, if you chose to build the examples, you will have the following sample application available opening a command console:
+
+* zed_open_capture_video_example: this application creates a `VideoCapture` object initialized with default parameters and displays the stereo couple stream on screen.
+* zed_open_capture_control_example: this application creates a `VideoCapture` object initialized with default parameters, displays the stereo couple stream on screen and provides runtime control of video stream parameters using keyboard.
+* zed_open_capture_rectify_example: this application creates a `VideoCapture` object initialized with default parameters, download the camera rectification parameters from Stereolabs serve and performs image rectification displaying raw and calibrated images on screen.
+* zed_open_capture_sensors_example: this application creates a `SensorCapture` object and displays on the command console the values of camera sensors acquired at full rate.
+* zed_open_capture_sync_example: this application creates a `VideoCapture` and a `SensorCapture` object, initialize the camera/sensors synchronization and displays on screen the video stream with the synchronized IMU data.
+
+To run the examples open a terminal console and enter the relative commands:
+
+```
+$ zed_open_capture_video_example
+$ zed_open_capture_control_example
+$ zed_open_capture_rectify_example
+$ zed_open_capture_sensors_example
+$ zed_open_capture_sync_example
+```
+
+## Coordinates system
 
 The coordinate system is only used for sensors data. The given IMU and Magnetometer data are expressed in the RAW coordinate system as show below
 
 ![](./images/imu_axis.jpg)
+
+## Run the examples
+
 
 ## License
 

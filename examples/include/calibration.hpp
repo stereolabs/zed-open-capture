@@ -4242,7 +4242,11 @@ bool initCalibration(std::string calibration_file, cv::Size2i image_size, cv::Ma
         std::cout << "ZED File invalid" << std::endl;
 
         std::string cmd = "rm " + calibration_file;
-        system(cmd.c_str());
+        int res = system(cmd.c_str());
+        if( res == EXIT_FAILURE )
+        {
+            exit(1);
+        }
 
         exit(1);
     }
