@@ -19,6 +19,7 @@
   <a href="#coordinates-system">Coordinates</a> •
   <a href="#license">License</a>
 </p>
+<br>
 
 The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The open source C++ library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the camera sensors (only ZED Mini and ZED2). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
 
