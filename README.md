@@ -1,6 +1,23 @@
-![](https://raw.githubusercontent.com/stereolabs/zed-open-capture/master/images/Picto+STEREOLABS_Black.jpg)
+<p align="center">
+  <a href="https://www.stereolabs.com"> <img src="https://github.com/stereolabs/zed-open-capture/blob/master/images/Picto+STEREOLABS_Black.jpg?raw=true" alt="Stereolabs"> </a>
 
-# ZED Open Capture API
+<h1 align="center">
+  ZED OPEN CAPTURE API
+  <br>
+</h1>
+
+<h4 align="center">Low level camera driver for the ZED stereo camera family</h4>
+
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#installation">Install</a> •
+  <a href="#documentation">Documentation</a> •
+  <a href="#usage-guide">Run</a> •
+  <a href="#get-video-data">Get Video Frames</a> •
+  <a href="#get-sensors-data">Get Sensors Data</a> •
+  <a href="#coordinates-system">Coordinates</a> •
+  <a href="#license">License</a>
+</p>
 
 The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the internal sensors (only ZED Mini and ZED2). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
 
@@ -8,6 +25,23 @@ The ZED Open Capture library allows the low level control of ZED, ZED Mini and Z
 Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/developers/release/).
 
 [Online documentation](https://stereolabs.github.io/zed-open-capture)
+
+## Key Features
+ * Video grabbing
+    - YUV 4:2:2 data format
+    - Camera runtime control
+ * Sensors data grabbing
+    - 6 DOF IMU (Accelerometer + Gyroscope)
+    - 3 DOF Magnetometer 
+    - Environment (Pressure + Temperature + Humidity)
+    - CMOS sensors temperature
+ * Sensors + Video synchronization
+ * Full set of self-explaining examples
+    - [Video capture](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_video_example.cpp)
+    - [Video capture and camera control](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_control_example.cpp)
+    - [Video rectification](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_rectify_example.cpp)
+    - [Sensors capture](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_sensors_example.cpp)
+    - [Video/Sensors synchronization](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_sync_example.cpp)
 
 ## Installation
 
@@ -173,3 +207,6 @@ The coordinate system is only used for sensors data. The given IMU and Magnetome
 
 ![](./images/imu_axis.jpg)
 
+## License
+
+This library is licensed under the MIT License.
