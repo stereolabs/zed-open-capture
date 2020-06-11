@@ -585,7 +585,7 @@ bool SensorCapture::sendPing() {
     return true;
 }
 
-const data::Imu *SensorCapture::getLastIMUData(uint64_t timeout_usec)
+const data::Imu& SensorCapture::getLastIMUData(uint64_t timeout_usec)
 {
     // ----> Wait for a new frame
     uint64_t time_count = (timeout_usec<100?100:timeout_usec)/100;
@@ -593,7 +593,8 @@ const data::Imu *SensorCapture::getLastIMUData(uint64_t timeout_usec)
     {
         if(time_count==0)
         {
-            return nullptr;
+            mLastIMUData.valid = false;
+            return mLastIMUData;
         }
         time_count--;
         usleep(100);
@@ -603,10 +604,10 @@ const data::Imu *SensorCapture::getLastIMUData(uint64_t timeout_usec)
     // Get the frame mutex
     const std::lock_guard<std::mutex> lock(mIMUMutex);
     mNewIMUData = false;
-    return &mLastIMUData;
+    return mLastIMUData;
 }
 
-const data::Magnetometer *SensorCapture::getLastMagnetometerData(uint64_t timeout_usec)
+const data::Magnetometer& SensorCapture::getLastMagnetometerData(uint64_t timeout_usec)
 {
     // ----> Wait for a new frame
     uint64_t time_count = (timeout_usec<100?100:timeout_usec)/10;
@@ -614,7 +615,8 @@ const data::Magnetometer *SensorCapture::getLastMagnetometerData(uint64_t timeou
     {
         if(time_count==0)
         {
-            return nullptr;
+            mLastMagData.valid=data::Magnetometer::OLD_VAL;
+            return mLastMagData;
         }
         time_count--;
         usleep(10);
@@ -624,10 +626,10 @@ const data::Magnetometer *SensorCapture::getLastMagnetometerData(uint64_t timeou
     // Get the frame mutex
     const std::lock_guard<std::mutex> lock(mMagMutex);
     mNewMagData = false;
-    return &mLastMagData;
+    return mLastMagData;
 }
 
-const data::Environment *SensorCapture::getLastEnvironmentData(uint64_t timeout_usec)
+const data::Environment &SensorCapture::getLastEnvironmentData(uint64_t timeout_usec)
 {
     // ----> Wait for a new frame
     uint64_t time_count = (timeout_usec<100?100:timeout_usec)/10;
@@ -635,7 +637,8 @@ const data::Environment *SensorCapture::getLastEnvironmentData(uint64_t timeout_
     {
         if(time_count==0)
         {
-            return nullptr;
+            mLastEnvData.valid = data::Environment::OLD_VAL;
+            return mLastEnvData;
         }
         time_count--;
         usleep(10);
@@ -645,10 +648,10 @@ const data::Environment *SensorCapture::getLastEnvironmentData(uint64_t timeout_
     // Get the frame mutex
     const std::lock_guard<std::mutex> lock(mEnvMutex);
     mNewEnvData = false;
-    return &mLastEnvData;
+    return mLastEnvData;
 }
 
-const data::Temperature *SensorCapture::getLastCameraTemperatureData(uint64_t timeout_usec)
+const data::Temperature& SensorCapture::getLastCameraTemperatureData(uint64_t timeout_usec)
 {
     // ----> Wait for a new frame
     uint64_t time_count = (timeout_usec<100?100:timeout_usec)/10;
@@ -656,7 +659,8 @@ const data::Temperature *SensorCapture::getLastCameraTemperatureData(uint64_t ti
     {
         if(time_count==0)
         {
-            return nullptr;
+            mLastCamTempData.valid = false;
+            return mLastCamTempData;
         }
         time_count--;
         usleep(10);
@@ -666,7 +670,7 @@ const data::Temperature *SensorCapture::getLastCameraTemperatureData(uint64_t ti
     // Get the frame mutex
     const std::lock_guard<std::mutex> lock(mCamTempMutex);
     mNewCamTempData = false;
-    return &mLastCamTempData;
+    return mLastCamTempData;
 }
 
 }

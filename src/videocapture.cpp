@@ -856,7 +856,7 @@ void VideoCapture::grabThreadFunc()
     mGrabRunning = false;
 }
 
-const Frame *VideoCapture::getLastFrame( uint64_t timeout_msec )
+const Frame& VideoCapture::getLastFrame( uint64_t timeout_msec )
 {
     // ----> Wait for a new frame
     uint64_t time_count = timeout_msec*10;
@@ -864,7 +864,7 @@ const Frame *VideoCapture::getLastFrame( uint64_t timeout_msec )
     {
         if(time_count==0)
         {
-            return nullptr;
+            return mLastFrame;
         }
         time_count--;
         usleep(100);
@@ -874,7 +874,7 @@ const Frame *VideoCapture::getLastFrame( uint64_t timeout_msec )
     // Get the frame mutex
     const std::lock_guard<std::mutex> lock(mBufMutex);
     mNewFrame = false;
-    return &mLastFrame;
+    return mLastFrame;
 }
 
 int VideoCapture::ll_VendorControl(uint8_t *buf, int len, int readMode, bool safe)

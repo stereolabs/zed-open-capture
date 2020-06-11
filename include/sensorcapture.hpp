@@ -75,7 +75,7 @@ struct SL_OC_EXPORT Magnetometer
         NEW_VAL = 2
     } MagStatus;
 
-    MagStatus valid = NOT_PRESENT;     //!< Indicates if Magnetometer data are valid
+    MagStatus valid = OLD_VAL;     //!< Indicates if Magnetometer data are valid
     uint64_t timestamp = 0; //!< Timestamp in nanoseconds
     float mX;               //!< Acceleration along X axis in uT
     float mY;               //!< Acceleration along Y axis in uT
@@ -163,38 +163,30 @@ public:
     /*!
      * \brief Get the last received IMU data
      * \param timeout_usec data grabbing timeout in milliseconds.
-     * \return returns the last received data as pointer.
-     *
-     * \note Do not delete the received data
+     * \return returns the last received data.
      */
-    const data::Imu* getLastIMUData(uint64_t timeout_usec=1500);
+    const data::Imu& getLastIMUData(uint64_t timeout_usec=1500);
 
     /*!
      * \brief Get the last received Magnetometer data
      * \param timeout_usec data grabbing timeout in milliseconds.
-     * \return returns the last received data as pointer.
-     *
-     * \note Do not delete the received data
+     * \return returns the last received data.
      */
-    const data::Magnetometer* getLastMagnetometerData(uint64_t timeout_usec=100);
+    const data::Magnetometer& getLastMagnetometerData(uint64_t timeout_usec=100);
 
     /*!
      * \brief Get the last received Environment data
      * \param timeout_usec data grabbing timeout in milliseconds.
-     * \return returns the last received data as pointer.
-     *
-     * \note Do not delete the received data
+     * \return returns the last received data.
      */
-    const data::Environment* getLastEnvironmentData(uint64_t timeout_usec=100);
+    const data::Environment& getLastEnvironmentData(uint64_t timeout_usec=100);
 
     /*!
      * \brief Get the last received camera sensors temperature data
      * \param timeout_usec data grabbing timeout in milliseconds.
-     * \return returns the last received data as pointer.
-     *
-     * \note Do not delete the received data
+     * \return returns the last received data.
      */
-    const data::Temperature* getLastCameraTemperatureData(uint64_t timeout_usec=100);
+    const data::Temperature& getLastCameraTemperatureData(uint64_t timeout_usec=100);
 
 #ifdef VIDEO_MOD_AVAILABLE
     void updateTimestampOffset(uint64_t frame_ts);                                 //!< Called by  VideoCapture to update timestamp offset

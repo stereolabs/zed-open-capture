@@ -97,26 +97,26 @@ int main(int argc, char *argv[])
     while (1)
     {
         // 3) Get last available frame
-        const sl_oc::video::Frame* frame = cap.getLastFrame();
+        const sl_oc::video::Frame frame = cap.getLastFrame();
 
         // ----> If the frame is valid we can display it
-        if(frame != nullptr)
+        if(frame.data!=nullptr)
         {
 #if 0
             // ----> Video Debug information
             static uint64_t last_ts=0;
-            std::cout << std::setprecision(9) << "[" << frame->frame_id << "] Ts: " <<  static_cast<double>(frame->timestamp)/1e9 << " sec" << std::endl;
+            std::cout << std::setprecision(9) << "[" << frame.frame_id << "] Ts: " <<  static_cast<double>(frame.timestamp)/1e9 << " sec" << std::endl;
             if( last_ts!=0 )
             {
-                double dt = (frame->timestamp - last_ts)/1e9;
+                double dt = (frame.timestamp - last_ts)/1e9;
                 std::cout << std::setprecision(9) << " * dT: " << dt << " sec - FPS: " << 1./dt <<  std::endl;
             }
-            last_ts = frame->timestamp;
+            last_ts = frame.timestamp;
             // <---- Video Debug information
 #endif
 
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
-            cv::Mat frameYUV = cv::Mat( frame->height, frame->width, CV_8UC2, frame->data );
+            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
             cv::Mat frameBGR;
             cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization

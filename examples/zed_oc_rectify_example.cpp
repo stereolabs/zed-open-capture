@@ -93,14 +93,14 @@ int main(int argc, char** argv) {
     // Infinite video grabbing loop
     while (1)
     {
-        // 5) Get a new frame from camera
-        const sl_oc::video::Frame* frame = cap.getLastFrame();
+        // Get a new frame from camera
+        const sl_oc::video::Frame frame = cap.getLastFrame();
 
         // ----> If the frame is valid we can convert, rectify and display it
-        if(frame != nullptr)
+        if(frame.data!=nullptr)
         {
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
-            cv::Mat frameYUV = cv::Mat( frame->height, frame->width, CV_8UC2, frame->data );
+            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
             cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
 

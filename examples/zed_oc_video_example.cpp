@@ -47,19 +47,19 @@ int main(int argc, char *argv[])
     // Infinite video grabbing loop
     while (1)
     {
-        // 2) Get last available frame
-        const sl_oc::video::Frame* frame = cap.getLastFrame();
+        // Get last available frame
+        const sl_oc::video::Frame frame = cap.getLastFrame();
 
         // ----> If the frame is valid we can display it
-        if(frame != nullptr)
+        if(frame.data!=nullptr)
         {
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
-            cv::Mat frameYUV = cv::Mat( frame->height, frame->width, CV_8UC2, frame->data );
+            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
             cv::Mat frameBGR;
             cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
 
-            // 3.b) Show frame
+            // Show frame
             cv::imshow( "Stream RGB", frameBGR );
         }
         // <---- If the frame is valid we can display it

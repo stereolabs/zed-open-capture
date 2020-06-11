@@ -76,66 +76,66 @@ int main(int argc, char *argv[])
     while(++count<4000)
     {
         // ----> Get IMU data with a timeout of 5 millisecods
-        const sl_oc::sensors::data::Imu* imuData = sens.getLastIMUData(5000);
-        if( imuData && imuData->valid )
+        const sl_oc::sensors::data::Imu imuData = sens.getLastIMUData(5000);
+        if( imuData.valid )
         {
             std::cout << "**** New IMU data ****" << std::endl;
-            std::cout << " * Timestamp: " << imuData->timestamp << " nsec" << std::endl;
+            std::cout << " * Timestamp: " << imuData.timestamp << " nsec" << std::endl;
             if(last_imu_ts!=0)
             {
-                std::cout << " * Frequency: " << 1e9/static_cast<float>(imuData->timestamp-last_imu_ts) << " Hz" << std::endl;
+                std::cout << " * Frequency: " << 1e9/static_cast<float>(imuData.timestamp-last_imu_ts) << " Hz" << std::endl;
             }
-            last_imu_ts = imuData->timestamp;
-            std::cout << " * Accelerations [m/s²]: " << imuData->aX << " " << imuData->aY << " " << imuData->aZ << std::endl;
-            std::cout << " * Angular Velocities [°/s]: " << imuData->gX << " " << imuData->gY << " " << imuData->gZ << std::endl;
+            last_imu_ts = imuData.timestamp;
+            std::cout << " * Accelerations [m/s²]: " << imuData.aX << " " << imuData.aY << " " << imuData.aZ << std::endl;
+            std::cout << " * Angular Velocities [°/s]: " << imuData.gX << " " << imuData.gY << " " << imuData.gZ << std::endl;
         }
         // <---- Get IMU data with a timeout of 5 millisecods
 
         // ----> Get Magnetometer data with a timeout of 100 microseconds to not slow down fastest data (IMU)
-        const sl_oc::sensors::data::Magnetometer* magData = sens.getLastMagnetometerData(100);
-        if( magData && magData->valid == sl_oc::sensors::data::Magnetometer::NEW_VAL )
+        const sl_oc::sensors::data::Magnetometer magData = sens.getLastMagnetometerData(100);
+        if( magData.valid == sl_oc::sensors::data::Magnetometer::NEW_VAL )
         {
             std::cout << "**** New Magnetometer data ****" << std::endl;
-            std::cout << " * Timestamp: " << magData->timestamp << " nsec" << std::endl;
+            std::cout << " * Timestamp: " << magData.timestamp << " nsec" << std::endl;
             if(last_mag_ts!=0)
             {
-                std::cout << " * Frequency: " << 1e9/static_cast<float>(magData->timestamp-last_mag_ts) << " Hz" << std::endl;
+                std::cout << " * Frequency: " << 1e9/static_cast<float>(magData.timestamp-last_mag_ts) << " Hz" << std::endl;
             }
-            last_mag_ts = magData->timestamp;
-            std::cout << " * Magnetic field [uT]: " << magData->mX << " " << magData->mY << " " << magData->mZ << std::endl;
+            last_mag_ts = magData.timestamp;
+            std::cout << " * Magnetic field [uT]: " << magData.mX << " " << magData.mY << " " << magData.mZ << std::endl;
         }
         // <---- Get Magnetometer data with a timeout of 100 microseconds to not slow down fastest data (IMU)
 
         // ----> Get Environment data with a timeout of 100 microseconds to not slow down fastest data (IMU)
-        const sl_oc::sensors::data::Environment* envData = sens.getLastEnvironmentData(100);
-        if( envData && envData->valid == sl_oc::sensors::data::Environment::NEW_VAL )
+        const sl_oc::sensors::data::Environment envData = sens.getLastEnvironmentData(100);
+        if( envData.valid == sl_oc::sensors::data::Environment::NEW_VAL )
         {
             std::cout << "**** New Environment data ****" << std::endl;
-            std::cout << " * Timestamp: " << envData->timestamp << " nsec" << std::endl;
+            std::cout << " * Timestamp: " << envData.timestamp << " nsec" << std::endl;
             if(last_env_ts!=0)
             {
-                std::cout << " * Frequency: " << 1e9/static_cast<float>(envData->timestamp-last_env_ts) << " Hz" << std::endl;
+                std::cout << " * Frequency: " << 1e9/static_cast<float>(envData.timestamp-last_env_ts) << " Hz" << std::endl;
             }
-            last_env_ts = envData->timestamp;
-            std::cout << " * Pressure [hPa]: " << envData->press << std::endl;
-            std::cout << " * Temperature [°C]: " << envData->temp << std::endl;
-            std::cout << " * Relative Humidity [%rH]: " << envData->humid << std::endl;
+            last_env_ts = envData.timestamp;
+            std::cout << " * Pressure [hPa]: " << envData.press << std::endl;
+            std::cout << " * Temperature [°C]: " << envData.temp << std::endl;
+            std::cout << " * Relative Humidity [%rH]: " << envData.humid << std::endl;
         }
         // <---- Get Environment data with a timeout of 100 microseconds to not slow down fastest data (IMU)
 
         // ----> Get Temperature data with a timeout of 100 microseconds to not slow down fastest data (IMU)
-        const sl_oc::sensors::data::Temperature* tempData = sens.getLastCameraTemperatureData(100);
-        if( tempData && tempData->valid )
+        const sl_oc::sensors::data::Temperature tempData = sens.getLastCameraTemperatureData(100);
+        if( tempData.valid )
         {
             std::cout << "**** New Camera Sensors Temperature data ****" << std::endl;
-            std::cout << " * Timestamp: " << tempData->timestamp << " nsec" << std::endl;
+            std::cout << " * Timestamp: " << tempData.timestamp << " nsec" << std::endl;
             if(last_cam_temp_ts!=0)
             {
-                std::cout << " * Frequency: " << 1e9/static_cast<float>(tempData->timestamp-last_cam_temp_ts) << " Hz" << std::endl;
+                std::cout << " * Frequency: " << 1e9/static_cast<float>(tempData.timestamp-last_cam_temp_ts) << " Hz" << std::endl;
             }
-            last_cam_temp_ts = tempData->timestamp;
-            std::cout << " * Left Camera [°C]: " << tempData->temp_left << std::endl;
-            std::cout << " * Right Camera [°C]: " << tempData->temp_right << std::endl;
+            last_cam_temp_ts = tempData.timestamp;
+            std::cout << " * Left Camera [°C]: " << tempData.temp_left << std::endl;
+            std::cout << " * Right Camera [°C]: " << tempData.temp_right << std::endl;
         }
         // <---- Get Temperature data with a timeout of 100 microseconds to not slow down fastest data (IMU)
     }
