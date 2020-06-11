@@ -13,13 +13,15 @@ set(CMAKE_CXX_FLAGS "${${PROJECT_NAME}_CXX_FLAGS} -Wall -pedantic -g")
 
 if(NOT CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE Release)
-    set(CMAKE_CXX_FLAGS_RELEASE "-O2")
+    set(CMAKE_CXX_FLAGS_RELEASE "-Os -s -flto") # File size optimization
+    message("* Release mode")
 endif()
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     message("* Debug mode")
     SET(CMAKE_DEBUG_POSTFIX  "d")
 else()
+    set(CMAKE_CXX_FLAGS_RELEASE "-Os -s -flto") # File size optimization
     message("* Release mode")
 endif()
 
