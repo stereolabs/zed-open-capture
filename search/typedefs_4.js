@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['videoparams_298',['VideoParams',['../namespacesl__oc.html#aa249d59737f2502dd206a052116229c0',1,'sl_oc']]]
+  ['rawdata_361',['RawData',['../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#adc3f17d07af280d4b432ac6baeae68d6',1,'sl_oc::sensors::usb']]]
 ];

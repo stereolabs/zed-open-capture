@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['magstatus_295',['MagStatus',['../structsl__oc_1_1SensMagData.html#a3e5eb25e848eda5cecca5d4a7d295e70',1,'sl_oc::SensMagData']]]
+  ['imustatus_359',['ImuStatus',['../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#a51c0dc0539f63092ee7f475d6df31da0',1,'sl_oc::sensors::data::Imu']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['last_328',['LAST',['../namespacesl__oc.html#a08632ed985ea3a5cb6c06484428cd4b1af447f5c03508de4d88e340390ba7c78f',1,'sl_oc::LAST()'],['../namespacesl__oc.html#abd0374c748530a64a72872c43b2cc828af447f5c03508de4d88e340390ba7c78f',1,'sl_oc::LAST()'],['../namespacesl__oc.html#af2be5e41610afb58aeec369e8bb9a524af447f5c03508de4d88e340390ba7c78f',1,'sl_oc::LAST()'],['../namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681af447f5c03508de4d88e340390ba7c78f',1,'sl_oc::LAST()']]],
-  ['left_329',['LEFT',['../namespacesl__oc.html#a2b86a6fb96d76950d0de78b1ab840681a684d325a7303f52e64011467ff5c5758',1,'sl_oc']]]
+  ['gain_396',['Gain',['../d9/d7c/zed__oc__control__example_8cpp.html#a05023a52b3438ad1ebf7eb5f028b82c3abe84336cca2fb96dc255abc3bd0cbbf6',1,'zed_oc_control_example.cpp']]],
+  ['gamma_397',['Gamma',['../d9/d7c/zed__oc__control__example_8cpp.html#a05023a52b3438ad1ebf7eb5f028b82c3a963f5e0d34eb5d82de2aced931dc501c',1,'zed_oc_control_example.cpp']]]
 ];

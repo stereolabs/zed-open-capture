@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['fps_251',['fps',['../structsl__oc_1_1VideoParams.html#af11815e3fc76bef0ebf32bff8fe0bdd2',1,'sl_oc::VideoParams']]],
-  ['frame_5fid_252',['frame_id',['../structsl__oc_1_1Frame.html#a0e8ca486cc6ee69a735e7c55af0c2df0',1,'sl_oc::Frame']]],
-  ['frame_5fsync_253',['frame_sync',['../structsl__oc_1_1SensData.html#ac634fb79e16a7dc8ebb41ac3dda24ac2',1,'sl_oc::SensData']]],
-  ['frame_5fsync_5fcount_254',['frame_sync_count',['../structsl__oc_1_1SensData.html#ac2988e9849c001d7af7b7867a619148d',1,'sl_oc::SensData']]]
+  ['fps_315',['fps',['../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a26ec82468284b8311039e7075e5e7d5e',1,'sl_oc::video::VideoParams']]],
+  ['frame_5fid_316',['frame_id',['../de/d91/structsl__oc_1_1video_1_1_frame.html#aaad8ef45171b85c80b357593e305d296',1,'sl_oc::video::Frame']]],
+  ['frame_5fsync_317',['frame_sync',['../db/dd1/structsl__oc_1_1sensors_1_1usb_1_1_raw_data.html#a85ec4b8e2be364a844f2d6b8a4e61280',1,'sl_oc::sensors::usb::RawData']]],
+  ['frame_5fsync_5fcount_318',['frame_sync_count',['../db/dd1/structsl__oc_1_1sensors_1_1usb_1_1_raw_data.html#a658193682e316f1fc9fff0cc9515feb1',1,'sl_oc::sensors::usb::RawData']]]
 ];

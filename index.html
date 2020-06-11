@@ -1,122 +1,53 @@
-<!-- HTML header for doxygen 1.8.7-->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-		<meta name="robots" content="noindex, follow"/>
-        <meta name="generator" content="Doxygen 1.8.18"/>
-        <title>ZED Open Capture API | ZED Open Capture API Reference | Stereolabs</title><!--END PROJECT_NAME (ZED Open Capture)-->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700,800">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,600,700">
-        <link href="tabs.css?t=Wed Jun 10 2020 10:14:26" rel="stylesheet" type="text/css"/>
-        <script type="text/javascript" src="jquery.js?t=Wed Jun 10 2020 10:14:26"></script>
-        <script type="text/javascript" src="custom.js?t=Wed Jun 10 2020 10:14:26"></script>
-        <script type="text/javascript" src="dynsections.js?t=Wed Jun 10 2020 10:14:26"></script>
-        <link href="navtree.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="resize.js"></script>
-<script type="text/javascript" src="navtreedata.js"></script>
-<script type="text/javascript" src="navtree.js"></script>
-        <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.18"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ZED Open Capture: ZED Open Capture API</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-  $(document).ready(function() { init_search(); });
-/* @license-end */
-</script>
-        <link href="stylesheet.css?t=Wed Jun 10 2020 10:14:26" rel="stylesheet" type="text/css" />
-    </head>
-    <body>
-        <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
-            <div id="titlearea">
-                <table cellspacing="0" cellpadding="0">
-                    <tbody>
-                        <tr style="height: 58px;">
-                            <td class="headerSpacer"></td>
-                            <td id="projectlogo">
-                                <a href="https://www.stereolabs.com"><img src="https://www.stereolabs.com/img/logo_stereolabs.svg" alt="Stereolabs logo" id="logo"></a>
-                            </td>
-                            <td class="nav-links nav-links-header">
-                                <a href="https://github.com/stereolabs/zed-open-capture" >SOURCE CODE</a>
-                            </td>
-                            <td class="nav-links nav-links-header">
-                                <a href="https://support.stereolabs.com/hc/en-us" >SUPPORT</a>
-                            </td>
-                            <td class="nav-links nav-links-header">
-                                <a href="https://github.com/stereolabs/zed-open-capture/releases" >DOWNLOADS</a>
-                            </td>
-                            <td class="nav-links nav-links-header">
-                                <a href="https://www.stereolabs.com/developers/release/" >ZED SDK</a>
-                            </td>
-                            <td><i class="mobile-navigation"></i></td>
-                            <!--<td id="projectlogo" >
-                                <a href="https://www.stereolabs.com/"> <img alt="Logo" src="logo_stereolabs.png" height="27"/> </a>
-                            </td>-->
-                            <!--<td style="padding-left: 0.4cm;">-->
-                                <!--<div id="projectname">--><!--ZED Open Capture-->
-                                    <!--<span id="projectnumber"> | ZED SDK 0.1</span>-->
-                                <!--</div>-->
-                                <!--BEGIN PROJECT_BRIEF<div id="projectbrief"></div><!--END PROJECT_BRIEF-->
-                            <!--</td>-->
-                            <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
-               alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
-</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!--<div id="subtitlearea">
-                <table cellspacing="0" cellpadding="0">
-                    <tbody>
-                        <tr style="height: 28px;">
-                            <td class="headerSpacer"></td>
-                            <td id="subMenuCpp" class="nav-links nav-links-header nav-links-selected">
-                                <a href="https://www.stereolabs.com/docs/api/"  >C++</a>
-                            </td>
-                            <td id="subMenuPython" class="nav-links nav-links-header">
-                                <a href="https://www.stereolabs.com/docs/api/python/" >Python</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div> -->
-            <!-- end header part -->
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ZED Open Capture
+   &#160;<span id="projectnumber">v0.1.1</span>
+   </div>
+   <div id="projectbrief">Low level camera driver for the ZED stereo camera family</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
 <!-- Generated by Doxygen 1.8.18 -->
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 var searchBox = new SearchBox("searchBox", "search",false,'Search');
 /* @license-end */
 </script>
-</div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
-  <div id="nav-tree">
-    <div id="nav-tree-contents">
-      <div id="nav-sync" class="sync"></div>
-    </div>
-  </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
-  </div>
-</div>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('index.html',''); initResizable(); });
-/* @license-end */
-</script>
-<div id="doc-content">
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -136,25 +67,91 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="title">ZED Open Capture API </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><img src="ZED-2-front.jpg" alt="" class="inline"/>   </p>
-<p>The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The library provides methods to access video frames, to control the video parameters and to acquire data from the internal sensors. A synchronization mechanism is provided to get the correct sensor data associated to each video frame.</p>
-<p><b>Note:</b> The provided data are not calibrated, images are not rectified in a stereoscopic way, IMU data may drift or be misaligned. Calibration data can be accessed using the ZED SDK.</p>
-<p><br  />
-</p>
-<h2 style="text-align: left;">Modules</h2>
-<p>The library is composed of two modules:</p>
+<div class="textblock"><p><a class="anchor" id="md_main_page"></a> The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the internal sensors (only ZED Mini and ZED2). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.</p>
+<p><b>Note:</b> The provided data are not calibrated, images are not rectified in a stereoscopic way, IMU data may drift or be misaligned. Calibration data can be accessed using the <a href="https://www.stereolabs.com/developers/release/">ZED SDK</a>.</p>
+<h1>Coordinates system</h1>
+<p>The coordinate system is only used for sensors data (especially for IMU). The given IMU data are expressed in the RAW/IMU coordinate system as show below</p>
+<p><img src="https://raw.githubusercontent.com/stereolabs/zed-open-capture/master/images/imu_axis.jpg" alt="" class="inline"/></p>
+<h1>Installation</h1>
+<h2>Prerequisites</h2>
 <ul>
-<li><a href="classsl__oc_1_1VideoCapture.html">Video Capture</a>: video frame grabbing and camera control</li>
-<li><a href="classsl__oc_1_1SensorCapture.html">Sensor Capture</a>: camera sensors data grabbing</li>
+<li>A Stereolabs camera: <a href="https://www.stereolabs.com/zed/">ZED</a>, <a href="https://www.stereolabs.com/zed-mini/">ZED Mini</a>, <a href="https://www.stereolabs.com/zed-2/">ZED2</a></li>
+<li>Linux OS [Tested on Ubuntu 16.04, 18.04 and 20.04]</li>
+<li>GCC compiler [at least v7.5]</li>
+<li>CMake build system [at least v3.1]</li>
+<li>HIDAPI and LIBUSB Libraries for USB communication</li>
+<li>OpenCV [at least v3.4. Required only by examples]</li>
+<li>git [if installing from source]</li>
 </ul>
-<p><br  />
-</p>
-<h2 style="text-align: left;">Coordinates system</h2>
-<p>The coordinate system is only used for sensors data. (especially for IMU) The given IMU data are expressed in the RAW/IMU coordinate system as show below</p>
-<p><img src="imu_axis.jpg" alt="" class="inline"/>   </p>
-<h2 style="text-align: left;">Examples</h2>
-<p>A <a href="md_examples.html">set of examples</a> is provided to better understand how to use ZED Open Capture and how to exploit all the available features.</p>
-<p> </p>
+<h3>Install prerequisites</h3>
+<ul>
+<li><p class="startli">Install GCC compiler and build tools</p>
+<p class="startli"><code>$ sudo apt install build-essential</code></p>
+</li>
+<li><p class="startli">Install CMake build system</p>
+<p class="startli"><code>$ sudo apt install cmake</code></p>
+</li>
+<li><p class="startli">Install HIDAPI and LIBUSB libraries:</p>
+<p class="startli"><code>$ sudo apt install libusb-1.0-0-dev libhidapi-libusb0 libhidapi-dev</code></p>
+</li>
+<li><p class="startli">Install OpenCV to compile the examples</p>
+<p class="startli"><code>$ sudo apt install opencv-dev</code></p>
+</li>
+</ul>
+<h2>Install the udev rule</h2>
+<p>To be able to access the USB you must install the udev rule contained in the <code>udev</code> folder: </p><pre class="fragment">$ cd udev
+$ bash install_udev_rule.sh
+$ cd ..
+$ udevadm trigger
+</pre><h2>Clone the repository</h2>
+<pre class="fragment">$ git clone https://github.com/stereolabs/zed-open-capture.git
+$ cd zed-open-capture
+</pre><h2>Compile</h2>
+<h3>Compile library and examples</h3>
+<pre class="fragment">$ mkdir build
+$ cd build
+$ cmake ..
+$ make -j$(nproc)
+</pre><h3>Compile only the library</h3>
+<pre class="fragment">$ mkdir build
+$ cd build
+$ cmake .. -DBUILD_EXAMPLES=OFF 
+$ make -j$(nproc)
+</pre><h3>Compile only the video library with the video examples</h3>
+<pre class="fragment">$ mkdir build
+$ cd build
+$ cmake .. -DBUILD_SENSORS=OFF
+$ make -j$(nproc)
+</pre><h3>Compile only the video library</h3>
+<pre class="fragment">$ mkdir build
+$ cd build
+$ cmake .. -DBUILD_SENSORS=OFF -DBUILD_EXAMPLES=OFF
+$ make -j$(nproc)
+</pre><h3>Compile only the sensors library with the sensors example</h3>
+<pre class="fragment">$ mkdir build
+$ cd build
+$ cmake .. -DBUILD_VIDEO=OFF
+$ make -j$(nproc)
+</pre><h3>Compile only the sensors library</h3>
+<pre class="fragment">$ mkdir build
+$ cd build
+$ cmake .. -DBUILD_VIDEO=OFF -DBUILD_EXAMPLES=OFF
+$ make -j$(nproc)
+</pre><h2>Install</h2>
+<p>After compiling it is possible to install the library and the examples. From inside the <code>build</code> folder: </p><pre class="fragment">$ sudo make install
+$ sudo ldconfig
+</pre><h1>Local documentation</h1>
+<p>Documentation can be locally generated in HTML format using Doxygen: </p><pre class="fragment">$ sudo apt-get install -y doxygen # if not previously installed
+$ cd doc
+$ ./generate_doc.sh
+</pre><p>The documentation will be available opening the file <code>doc/html/index.html</code> with a standard web browser. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
-</div><!-- doc-content -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.18
+</small></address>
+</body>
+</html>
