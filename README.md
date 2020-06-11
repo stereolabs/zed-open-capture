@@ -129,18 +129,15 @@ To install the library, go to the `build` folder and launch the following comman
 
 Include the `videocapture.hpp` header, declare a `VideoCapture` object and retrieve a video frame (in YUV 4:2:2 format) with `getLastFrame()`:
 
-    ```
     #include "videocapture.hpp"
     sl_oc::video::VideoCapture cap;
     cap.initializeVideo();
     const sl_oc::video::Frame frame = cap.getLastFrame();
-    ```
-
+    
 ### Get sensors data
 
 Include the `SensorCapture` header, declare a `SensorCapture` object, get a list of available devices, initialize the first one and finally retrieve sensors data:
 
-    ```
     #include "sensorcapture.hpp"
     sl_oc::sensors::SensorCapture sens;
     std::vector<int> devs = sens.getDeviceList();
@@ -149,8 +146,7 @@ Include the `SensorCapture` header, declare a `SensorCapture` object, get a list
     const sl_oc::sensors::data::Magnetometer magData = sens.getLastMagnetometerData(100);
     const sl_oc::sensors::data::Environment envData = sens.getLastEnvironmentData(100);
     const sl_oc::sensors::data::Temperature tempData = sens.getLastCameraTemperatureData(100);
-    ```
-
+    
 ## Running the examples
 
 After installing the library and examples, you will have the following sample applications in your `build` directory:
