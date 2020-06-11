@@ -32,8 +32,8 @@
 // The main function
 int main(int argc, char *argv[])
 {
-    // ----> 1) Create Video Capture
-    sl_oc::VideoCapture cap;
+    // ----> Create Video Capture
+    sl_oc::video::VideoCapture cap;
     if( !cap.initializeVideo() )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
@@ -47,24 +47,24 @@ int main(int argc, char *argv[])
     // Infinite video grabbing loop
     while (1)
     {
-        // 2) Get last available frame
-        const sl_oc::Frame* frame = cap.getLastFrame();
+        // Get last available frame
+        const sl_oc::video::Frame frame = cap.getLastFrame();
 
-        // ----> 3) If the frame is valid we can display it
-        if(frame != nullptr)
+        // ----> If the frame is valid we can display it
+        if(frame.data!=nullptr)
         {
-            // ----> 3.a)Conversion from YUV 4:2:2 to BGR for visualization
-            cv::Mat frameYUV = cv::Mat( frame->height, frame->width, CV_8UC2, frame->data );
+            // ----> Conversion from YUV 4:2:2 to BGR for visualization
+            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
             cv::Mat frameBGR;
             cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
 
-            // 3.b) Show frame
+            // Show frame
             cv::imshow( "Stream RGB", frameBGR );
         }
         // <---- If the frame is valid we can display it
 
-        // ----> 4) Keyboard handling
+        // ----> Keyboard handling
         int key = cv::waitKey( 5 );
         if(key=='q' || key=='Q') // Quit
             break;

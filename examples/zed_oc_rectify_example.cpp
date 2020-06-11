@@ -34,21 +34,21 @@
 
 // ----> Global functions
 // Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::RESOLUTION res );
+void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res );
 
 int main(int argc, char** argv) {
 
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
-    // ----> 1) Set Video parameters
-    sl_oc::VideoParams params;
-    params.res = sl_oc::RESOLUTION::HD2K;
-    params.fps = sl_oc::FPS::FPS_15;
+    // ----> Set Video parameters
+    sl_oc::video::VideoParams params;
+    params.res = sl_oc::video::RESOLUTION::HD2K;
+    params.fps = sl_oc::video::FPS::FPS_15;
     params.verbose = verbose;
     // <---- Set Video parameters
 
-    // ----> 2) Create Video Capture
-    sl_oc::VideoCapture cap(params);
+    // ----> Create Video Capture
+    sl_oc::video::VideoCapture cap(params);
     if( !cap.initializeVideo(-1) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
     std::cout << "Connected to camera sn: " << sn << std::endl;
     // <---- Create Video Capture
 
-    // ----> 3) Retrieve calibration file from Stereolabs server
+    // ----> Retrieve calibration file from Stereolabs server
     std::string calibration_file;
     // ZED Calibration
     unsigned int serial_number = sn;
@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
     cap.getFrameSize(w,h);
     // <---- Frame size
 
-    // ----> 4) Initialize calibration
+    // ----> Initialize calibration
     cv::Mat map_left_x, map_left_y;
     cv::Mat map_right_x, map_right_y;
     cv::Mat cameraMatrix_left, cameraMatrix_right;
@@ -90,21 +90,25 @@ int main(int argc, char** argv) {
 
     cv::Mat frameBGR, left_raw, left_rect, right_raw, right_rect;
 
+    uint64_t last_ts=0;
+
     // Infinite video grabbing loop
     while (1)
     {
-        // 5) Get a new frame from camera
-        const sl_oc::Frame* frame = cap.getLastFrame();
+        // Get a new frame from camera
+        const sl_oc::video::Frame frame = cap.getLastFrame();
 
-        // ----> 6) If the frame is valid we can convert, rectify and display it
-        if(frame != nullptr)
+        // ----> If the frame is valid we can convert, rectify and display it
+        if(frame.data!=nullptr && frame.timestamp!=last_ts)
         {
-            // ----> 6.b) Conversion from YUV 4:2:2 to BGR for visualization
-            cv::Mat frameYUV = cv::Mat( frame->height, frame->width, CV_8UC2, frame->data );
+            last_ts = frame.timestamp;
+
+            // ----> Conversion from YUV 4:2:2 to BGR for visualization
+            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
             cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
 
-            // ----> 6.c) Extract left and right images from side-by-sideq
+            // ----> Extract left and right images from side-by-sideq
             left_raw = frameBGR(cv::Rect(0, 0, frameBGR.cols / 2, frameBGR.rows));
             right_raw = frameBGR(cv::Rect(frameBGR.cols / 2, 0, frameBGR.cols / 2, frameBGR.rows));
             // Display images
@@ -112,7 +116,7 @@ int main(int argc, char** argv) {
             showImage("right RAW", right_raw, params.res);
             // <---- Extract left and right images from side-by-side
 
-            // ----> 6.d) Apply rectification
+            // ----> Apply rectification
             cv::remap(left_raw, left_rect, map_left_x, map_left_y, cv::INTER_LINEAR );
             cv::remap(right_raw, right_rect, map_right_x, map_right_y, cv::INTER_LINEAR );
 
@@ -121,7 +125,7 @@ int main(int argc, char** argv) {
             // <---- Apply rectification
         }
 
-        // ----> 7) Keyboard handling
+        // ----> Keyboard handling
         int key = cv::waitKey( 5 );
         if(key=='q' || key=='Q') // Quit
             break;
@@ -132,21 +136,21 @@ int main(int argc, char** argv) {
 }
 
 // Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::RESOLUTION res )
+void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res )
 {
     cv::Mat resized;
     switch(res)
     {
     default:
-    case sl_oc::RESOLUTION::VGA:
+    case sl_oc::video::RESOLUTION::VGA:
         resized = img;
         break;
-    case sl_oc::RESOLUTION::HD720:
+    case sl_oc::video::RESOLUTION::HD720:
         name += " [Resize factor 0.6]";
         cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
         break;
-    case sl_oc::RESOLUTION::HD1080:
-    case sl_oc::RESOLUTION::HD2K:
+    case sl_oc::video::RESOLUTION::HD1080:
+    case sl_oc::video::RESOLUTION::HD2K:
         name += " [Resize factor 0.4]";
         cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
         break;

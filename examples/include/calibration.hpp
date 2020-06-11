@@ -4087,7 +4087,8 @@ static inline std::string getRootHiddenDir() {
     filename += "\\Stereolabs\\";
 
 #else //LINUX
-    std::string filename = "/usr/local/zed/";
+    std::string homepath = getenv("HOME");
+    std::string filename = homepath + "/zed/";
 #endif
 
     return filename;
@@ -4111,12 +4112,19 @@ bool downloadCalibrationFile(unsigned int serial_number, std::string &calibratio
     sprintf(specific_name, "SN%d.conf", serial_number);
     calibration_file = path + specific_name;
     if (!checkFile(calibration_file)) {
-        // Download the file
-        std::string url("'http://calib.stereolabs.com/?SN=");
         std::string cmd;
+        int res;
+
+        // Create download folder
+        cmd = "mkdir -p " + path;
+        res = system(cmd.c_str());
+
+        // Download the file
+        std::string url("'https://calib.stereolabs.com/?SN=");
+
         cmd = "wget " + url + std::to_string(serial_number) + "' -O " + calibration_file;
         std::cout << cmd << std::endl;
-        int res = system(cmd.c_str());
+        res = system(cmd.c_str());
 
         if( res == EXIT_FAILURE )
         {
@@ -4140,7 +4148,7 @@ bool downloadCalibrationFile(unsigned int serial_number, std::string &calibratio
         std::copy(path.begin(), path.end(), settingFolder);
         SHCreateDirectoryEx(NULL, settingFolder, NULL); //recursive creation
 
-        std::string url("http://calib.stereolabs.com/?SN=");
+        std::string url("https://calib.stereolabs.com/?SN=");
         url += std::to_string(serial_number);
         TCHAR *address = new TCHAR[url.size() + 1];
         address[url.size()] = 0;
@@ -4232,6 +4240,14 @@ bool initCalibration(std::string calibration_file, cv::Size2i image_size, cv::Ma
 #ifndef _WIN32
     if (right_cam_k1 == 0 && left_cam_k1 == 0 && left_cam_k2 == 0 && right_cam_k2 == 0) {
         std::cout << "ZED File invalid" << std::endl;
+
+        std::string cmd = "rm " + calibration_file;
+        int res = system(cmd.c_str());
+        if( res == EXIT_FAILURE )
+        {
+            exit(1);
+        }
+
         exit(1);
     }
 #endif

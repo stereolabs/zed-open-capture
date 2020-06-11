@@ -38,9 +38,12 @@
 
 namespace sl_oc {
 
+namespace sensors {
+
+namespace usb {
 // ----> Command to be used with the REPORT ID "REP_ID_REQUEST_SET"
 // Command to ping the MCU to communicate that host is alive
-#define RQ_CMD_PING 0xF2
+const uint8_t RQ_CMD_PING = 0xF2;
 // <---- Command to be used with the REPORT ID "REP_ID_REQUEST_SET"
 
 /*!
@@ -64,9 +67,9 @@ typedef enum CUSTOMHID_REPORT_ID {
 /*!
  * \brief The RAW sensor data structure retrieved from camera MCU by USB
  */
-typedef struct SensData {
+typedef struct RawData {
     uint8_t struct_id;		//!< Struct identifier, it matches the USB HID Report ID
-    uint8_t imu_not_valid; 	//!< Indicate if IMU data are valid [0->valid, 1->not_valid
+    uint8_t imu_not_valid; 	//!< Indicate if IMU data are valid [0->valid, 1->not_valid]
     uint64_t timestamp;		//!< Data timestamp (from IMU sensor) [usec/39]
     int16_t gX;				//!< Raw Gyroscope X
     int16_t gY;				//!< Raw Gyroscope Y
@@ -92,17 +95,19 @@ typedef struct SensData {
     uint32_t humid;			//!< Relative humidity [1.0/1024.0 %rH]
     int16_t temp_cam_left;	//!< Temperature of the left camera sensor [0.01 °C]
     int16_t temp_cam_right; //!< Temperature of the right camera sensor [0.01 °C]
-} SensData;
+} RawData;
 
 /*!
- * Status of the data streaming
+ *  \brief Status of the usb data streaming
  */
-typedef struct SensStreamStatus {
+typedef struct StreamStatus {
     uint8_t struct_id;		//!< Struct identifier, it matches the USB HID Report ID
     uint8_t stream_status;	//!< Status of the USB streaming
-} SensStreamStatus;
+} StreamStatus;
 
 #pragma pack(pop) // Restore previous saved alignment
+
+}
 
 // ----> FW versions
 enum class ZED_M_FW {
@@ -149,6 +154,8 @@ const size_t TS_SHIFT_VAL_COUNT = 50; //!< Number of sensor data to use to updat
 
 }
 
+}
+
 /*!
  * \brief Convert a wchar array to std::string
  * \param wstr the wchar array to be converted
@@ -170,5 +177,7 @@ inline std::string wstr2str( const wchar_t* wstr)
 
     return std::string();
 }
+
+
 
 #endif // SENSORCAPTURE_DEF_HPP

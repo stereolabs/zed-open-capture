@@ -1,27 +1,63 @@
-![](./images/Picto+STEREOLABS_Black.jpg)
+<h1 align="center">
+  Open Capture Camera API
+</h1>
 
-# ZED Open Capture API
+<h4 align="center">A platform-agnostic camera and sensor capture API for the ZED stereo camera family</h4>
 
-The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the internal sensors (only ZED Mini and ZED2). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#build">Build</a> •
+  <a href="#run">Run</a> • 
+  <a href="#documentation">Documentation</a> •
+  <a href="#running-the-examples">Examples</a> •
+  <a href="#related">Related</a> •
+  <a href="#license">License</a>
+</p>
+<br>
 
-**Note:** The provided data are not calibrated, images are not rectified in a stereoscopic way, IMU data may drift or be misaligned.
-Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/developers/release/).
 
-[Online documentation](https://stereolabs.github.io/zed-open-capture)
+## Key Features
+ * Open source C++ capture library compatible with C++11 standard
+ * Video Capture
+    - YUV 4:2:2 data format
+    - Camera controls
+ * Sensor Data Capture
+    - 6-DOF IMU (3-DOF accelerometer + 3-DOF gyroscope)
+    - 3-DOF Magnetometer
+    - Barometer
+    - Sensors temperature
+ * Sensors/video Synchronization
+ * Portable
+    - Tested on Linux
+    - Tested on x64, ARM
+ * Small Size
+    - ~100KB library size
+    - libusb, hidapi dependencies
+ * Complete set of examples
+    - Video capture
+    - Camera control
+    - Stereo rectification
+    - IMU, magnetometer and barometer data capture
+    - Video and sensors synchronization
 
-## Installation
+## Description
+
+The ZED Open Capture is a multi-platform, open-source C++ library for low-level camera and sensor capture for the ZED stereo camera family. It doesn't require CUDA and therefore can be used on many desktop and embedded platforms.
+
+The open-source library provides methods to access raw video frames, calibration data, camera controls and raw data from the camera sensors (on ZED 2 and ZED Mini). A synchronization mechanism is provided to get the correct sensor data associated to a video frame.
+
+**Note:** While in the ZED SDK all output data is calibrated and compensated, here the extracted raw data is not corrected by the camera and sensor calibration parameters. You can retrieve camera and sensor calibration data using the [ZED SDK](https://www.stereolabs.com/docs/video/camera-calibration/) to correct your camera data.
+
+## Build
 
 ### Prerequisites
 
- * A Stereolabs camera: [ZED](https://www.stereolabs.com/zed/), [ZED Mini](https://www.stereolabs.com/zed-mini/), [ZED2](https://www.stereolabs.com/zed-2/)
- * Linux OS [Tested on Ubuntu 16.04, 18.04 and 20.04]
- * GCC compiler [at least v7.5]
- * CMake build system [at least v3.1] 
- * HIDAPI and LIBUSB Libraries for USB communication
- * OpenCV [at least v3.4. Required only by examples]
- * git [if installing from source]
+ * Stereo camera: [ZED 2](https://www.stereolabs.com/zed-2/), [ZED](https://www.stereolabs.com/zed/), [ZED Mini](https://www.stereolabs.com/zed-mini/)
+ * Linux OS
+ * GCC (v7.5+)
+ * CMake (v3.1+)
 
-#### Install prerequisites
+### Install prerequisites
 
 * Install GCC compiler and build tools
 
@@ -35,95 +71,130 @@ Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/
 
     `$ sudo apt install libusb-1.0-0-dev libhidapi-libusb0 libhidapi-dev`
 
-* Install OpenCV to compile the examples
+* Install OpenCV to build the examples (optional)
 
     `$ sudo apt install opencv-dev`
 
-### Install the udev rule 
-To be able to access the USB you must install the udev rule contained in the `udev` folder:
+### Add udev rule
+Stereo cameras such as ZED 2 and ZED Mini have built-in sensors (e.g. IMU) that are identified as USB HID devices.
+To be able to access the USB HID device, you must add a udev rule contained in the `udev` folder:
 
     $ cd udev
     $ bash install_udev_rule.sh
     $ cd ..
-    $ udevadm trigger
 
 ### Clone the repository
-    
+
     $ git clone https://github.com/stereolabs/zed-open-capture.git
     $ cd zed-open-capture
 
-### Compile
+### Build
 
-#### Option 1
-
-Compile the library and the examples
+#### Build library and examples
 
     $ mkdir build
     $ cd build
     $ cmake ..
     $ make -j$(nproc)
 
-#### Option 2
-
-Compile only the library
+#### Build only the library
 
     $ mkdir build
     $ cd build
-    $ cmake .. -DBUILD_EXAMPLES=OFF 
+    $ cmake .. -DBUILD_EXAMPLES=OFF
     $ make -j$(nproc)
 
-#### Option 3
-
-Compile only the video library with the video example
-
-    $ mkdir build
-    $ cd build
-    $ cmake .. -DBUILD_SENSORS=OFF
-    $ make -j$(nproc)
-
-#### Option 4
-
-Compile only the video library
+#### Build only the video capture library
 
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_SENSORS=OFF -DBUILD_EXAMPLES=OFF
     $ make -j$(nproc)
 
-#### Option 5
+#### Build only the sensor capture library
 
-Compile only the sensors library with the sensors example
-    
-    $ mkdir build
-    $ cd build
-    $ cmake .. -DBUILD_VIDEO=OFF
-    $ make -j$(nproc)
-
-#### Option 6
-
-Compile only the sensors library
-    
     $ mkdir build
     $ cd build
     $ cmake .. -DBUILD_VIDEO=OFF -DBUILD_EXAMPLES=OFF
     $ make -j$(nproc)
-    
-### Install
 
-After compiling it is possible to install the library and the examples.
-From inside the `build` folder:
+## Run
+
+To install the library, go to the `build` folder and launch the following commands:
 
     $ sudo make install
     $ sudo ldconfig
 
+### Get video data
+
+Include the `videocapture.hpp` header, declare a `VideoCapture` object and retrieve a video frame (in YUV 4:2:2 format) with `getLastFrame()`:
+
+    #include "videocapture.hpp"
+    sl_oc::video::VideoCapture cap;
+    cap.initializeVideo();
+    const sl_oc::video::Frame frame = cap.getLastFrame();
+    
+### Get sensors data
+
+Include the `SensorCapture` header, declare a `SensorCapture` object, get a list of available devices, initialize the first one and finally retrieve sensors data:
+
+    #include "sensorcapture.hpp"
+    sl_oc::sensors::SensorCapture sens;
+    std::vector<int> devs = sens.getDeviceList();
+    sens.initializeSensors( devs[0] );
+    const sl_oc::sensors::data::Imu imuData = sens.getLastIMUData(5000);
+    const sl_oc::sensors::data::Magnetometer magData = sens.getLastMagnetometerData(100);
+    const sl_oc::sensors::data::Environment envData = sens.getLastEnvironmentData(100);
+    const sl_oc::sensors::data::Temperature tempData = sens.getLastCameraTemperatureData(100);
+    
+## Running the examples
+
+After installing the library and examples, you will have the following sample applications in your `build` directory:
+
+* [zed_open_capture_video_example](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_video_example.cpp): This application captures and displays video frames from the camera.
+* [zed_open_capture_control_example](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_control_example.cpp): This application captures and displays video frames from the camera and provides runtime control of camera parameters using keyboard shortcuts.
+* [zed_open_capture_rectify_example](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_rectify_example.cpp): This application downloads factory stereo calibration parameters from Stereolabs server, performs stereo image rectification and displays original and rectified frames.
+* [zed_open_capture_sensors_example](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_sensors_example.cpp): This application creates a `SensorCapture` object and displays on the command console the values of camera sensors acquired at full rate.
+* [zed_open_capture_sync_example](https://github.com/stereolabs/zed-open-capture/blob/fix_doc/examples/zed_oc_sync_example.cpp): This application creates a `VideoCapture` and a `SensorCapture` object, initialize the camera/sensors synchronization and displays on screen the video stream with the synchronized IMU data.
+
+To run the examples, open a terminal console and enter the following commands:
+
+```
+$ zed_open_capture_video_example
+$ zed_open_capture_control_example
+$ zed_open_capture_rectify_example
+$ zed_open_capture_sensors_example
+$ zed_open_capture_sync_example
+```
+
+**Note:** OpenCV is used in the examples for controls and display.
+
+
 ## Documentation
 
-Full online documentation: https://stereolabs.github.io/zed-open-capture
+The API is documented in the Include.h files. It is also generated as a Doxygen for simpler navigation: https://stereolabs.github.io/zed-open-capture
 
-Documentation can be locally generated in HTML format using Doxygen:
+You can also generate the documentation locally in HTML format (with Doxygen) using the commands below. Access the docs by opening `doc/html/index.html` in your web browser.
 
+​
     $ sudo apt-get install -y doxygen # if not previously installed
     $ cd doc
     $ ./generate_doc.sh
-    
-The documentation will be available opening the file `doc/html/index.html` with a standard web browser.
+
+
+
+## Coordinates system
+
+The coordinate system is only used for sensors data. The given IMU and Magnetometer data are expressed in the RAW coordinate system as show below
+
+![](./images/imu_axis.jpg)
+
+## Related
+
+- [Stereolabs](https://www.stereolabs.com)
+- [ZED 2 multi-sensor camera](https://www.stereolabs.com/zed-2/)
+- [ZED SDK](https://www.stereolabs.com/developers/)
+
+## License
+
+This library is licensed under the MIT License.

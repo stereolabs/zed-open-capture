@@ -35,7 +35,7 @@
 
 // ----> Functions
 // Sensor acquisition runs at 400Hz, so it must be executed in a different thread
-void getSensorThreadFunc(sl_oc::SensorCapture* sensCap);
+void getSensorThreadFunc(sl_oc::sensors::SensorCapture* sensCap);
 // <---- Functions
 
 // ----> Global variables
@@ -54,15 +54,15 @@ int main(int argc, char *argv[])
     // Set the verbose level
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::ERROR;
 
-    // ----> 1) Set the video parameters
-    sl_oc::VideoParams params;
-    params.res = sl_oc::RESOLUTION::HD2K;
-    params.fps = sl_oc::FPS::FPS_15;
+    // ----> Set the video parameters
+    sl_oc::video::VideoParams params;
+    params.res = sl_oc::video::RESOLUTION::HD720;
+    params.fps = sl_oc::video::FPS::FPS_30;
     params.verbose = verbose;
     // <---- Video parameters
 
-    // ----> 2) Create a Video Capture object
-    sl_oc::VideoCapture videoCap(params);
+    // ----> Create a Video Capture object
+    sl_oc::video::VideoCapture videoCap(params);
     if( !videoCap.initializeVideo(-1) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
@@ -77,8 +77,8 @@ int main(int argc, char *argv[])
     std::cout << "Video Capture connected to camera sn: " << camSn << std::endl;
     // <---- Create a Video Capture object
 
-    // ----> 4) Create a Sensors Capture object
-    sl_oc::SensorCapture sensCap(verbose);
+    // ----> Create a Sensors Capture object
+    sl_oc::sensors::SensorCapture sensCap(verbose);
     if( !sensCap.initializeSensors(camSn) ) // Note: we use the serial number acquired by the VideoCapture object
     {
         std::cerr << "Cannot open sensors capture" << std::endl;
@@ -93,11 +93,11 @@ int main(int argc, char *argv[])
     std::thread sensThread(getSensorThreadFunc,&sensCap);
     // <---- Create Sensors Capture
 
-    // ----> 5) Enable video/sensors synchronization
+    // ----> Enable video/sensors synchronization
     videoCap.enableSensorSync(&sensCap);
     // <---- Enable video/sensors synchronization
 
-    // ----> 6) Init OpenCV RGB frame
+    // ----> Init OpenCV RGB frame
     int w,h;
     videoCap.getFrameSize(w,h);
 
@@ -106,16 +106,16 @@ int main(int argc, char *argv[])
     switch(params.res)
     {
     default:
-    case sl_oc::RESOLUTION::VGA:
+    case sl_oc::video::RESOLUTION::VGA:
         display_resolution.width = w;
         display_resolution.height = h;
         break;
-    case sl_oc::RESOLUTION::HD720:
+    case sl_oc::video::RESOLUTION::HD720:
         display_resolution.width = w*0.6;
         display_resolution.height = h*0.6;
         break;
-    case sl_oc::RESOLUTION::HD1080:
-    case sl_oc::RESOLUTION::HD2K:
+    case sl_oc::video::RESOLUTION::HD1080:
+    case sl_oc::video::RESOLUTION::HD2K:
         display_resolution.width = w*0.4;
         display_resolution.height = h*0.4;
         break;
@@ -126,38 +126,41 @@ int main(int argc, char *argv[])
     cv::Mat frameData = frameDisplay(cv::Rect(0,0, display_resolution.width, h_data));
     cv::Mat frameBGRDisplay = frameDisplay(cv::Rect(0,h_data, display_resolution.width, display_resolution.height));
     cv::Mat frameBGR(h, w, CV_8UC3, cv::Scalar(0,0,0));
-
     // <---- Init OpenCV RGB frame
+
+    uint64_t last_timestamp = 0;
+
+    float frame_fps=0;
 
     // Infinite grabbing loop
     while (1)
     {
-        // ----> 7) Get Video frame
+        // ----> Get Video frame
         // Get last available frame
-        const sl_oc::Frame* frame = videoCap.getLastFrame(1);
+        const sl_oc::video::Frame frame = videoCap.getLastFrame(1);
 
         // If the frame is valid we can update it
         std::stringstream videoTs;
-        if(frame != nullptr)
+        if(frame.data!=nullptr && frame.timestamp!=last_timestamp)
         {
-            // ----> 7.a) Video Debug information
-            static uint64_t last_ts=0;
+            frame_fps = 1e9/static_cast<float>(frame.timestamp-last_timestamp);
+            last_timestamp = frame.timestamp;
 
-            videoTs << std::fixed << std::setprecision(9) << "Video timestamp: " << static_cast<double>(frame->timestamp)/1e9<< " sec" ;
-            if( last_ts!=0 )
-                videoTs << std::fixed << std::setprecision(1)  << " [" << 1e9/static_cast<float>(frame->timestamp-last_ts) << " Hz]";
-            last_ts = frame->timestamp;
-            // <---- Video Debug information
-
-            // ----> 7.b) Conversion from YUV 4:2:2 to BGR for visualization
-            cv::Mat frameYUV( frame->height, frame->width, CV_8UC2, frame->data);
+            // ----> Conversion from YUV 4:2:2 to BGR for visualization
+            cv::Mat frameYUV( frame.height, frame.width, CV_8UC2, frame.data);
             cv::cvtColor(frameYUV,frameBGR, cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
         }
         // <---- Get Video frame
 
-        // ----> 8) Display frame with info
-        if(frame != nullptr)
+        // ----> Video Debug information
+        videoTs << std::fixed << std::setprecision(9) << "Video timestamp: " << static_cast<double>(last_timestamp)/1e9<< " sec" ;
+        if( last_timestamp!=0 )
+            videoTs << std::fixed << std::setprecision(1)  << " [" << frame_fps << " Hz]";
+        // <---- Video Debug information
+
+        // ----> Display frame with info
+        if(frame.data!=nullptr)
         {
             frameData.setTo(0);
 
@@ -170,12 +173,12 @@ int main(int argc, char *argv[])
 
             // Timestamp offset info
             std::stringstream offsetStr;
-            double offset = (static_cast<double>(frame->timestamp)-static_cast<double>(mcu_sync_ts))/1e9;
+            double offset = (static_cast<double>(frame.timestamp)-static_cast<double>(mcu_sync_ts))/1e9;
             offsetStr << std::fixed << std::setprecision(9) << std::showpos << "Timestamp offset: " << offset << " sec [video-sensors]";
             cv::putText( frameData, offsetStr.str().c_str(), cv::Point(10, 50),cv::FONT_HERSHEY_SIMPLEX, 0.35, cv::Scalar(241,240,236));
 
             // Average timestamp offset info (we wait at least 200 frames to be sure that offset is stable)
-            if( frame->frame_id>200 )
+            if( frame.frame_id>200 )
             {
                 static double sum=0;
                 static int count=0;
@@ -201,7 +204,7 @@ int main(int argc, char *argv[])
         }
         // <---- Display frame with info
 
-        // ----> 9) Keyboard handling
+        // ----> Keyboard handling
         int key = cv::waitKey(1);
 
         if( key != -1 )
@@ -221,7 +224,7 @@ int main(int argc, char *argv[])
 }
 
 // Sensor acquisition runs at 400Hz, so it must be executed in a different thread
-void getSensorThreadFunc(sl_oc::SensorCapture* sensCap)
+void getSensorThreadFunc(sl_oc::sensors::SensorCapture* sensCap)
 {
     // Flag to stop the thread
     sensThreadStop = false;
@@ -233,23 +236,23 @@ void getSensorThreadFunc(sl_oc::SensorCapture* sensCap)
     while(!sensThreadStop)
     {
         // ----> Get IMU data
-        const sl_oc::SensImuData* imuData = sensCap->getLastIMUData(2000);
+        const sl_oc::sensors::data::Imu imuData = sensCap->getLastIMUData(2000);
 
         // Process data only if valid
-        if(imuData && imuData->valid /*&& imuData->sync*/) // Uncomment to use only data syncronized with the video frames
+        if(imuData.valid == sl_oc::sensors::data::Imu::NEW_VAL ) // Uncomment to use only data syncronized with the video frames
         {
             // ----> Data info to be displayed
             std::stringstream timestamp;
             std::stringstream accel;
             std::stringstream gyro;
 
-            timestamp << std::fixed << std::setprecision(9) << "IMU timestamp:   " << static_cast<double>(imuData->timestamp)/1e9<< " sec" ;
+            timestamp << std::fixed << std::setprecision(9) << "IMU timestamp:   " << static_cast<double>(imuData.timestamp)/1e9<< " sec" ;
             if(last_imu_ts!=0)
-                timestamp << std::fixed << std::setprecision(1)  << " [" << 1e9/static_cast<float>(imuData->timestamp-last_imu_ts) << " Hz]";
-            last_imu_ts = imuData->timestamp;
+                timestamp << std::fixed << std::setprecision(1)  << " [" << 1e9/static_cast<float>(imuData.timestamp-last_imu_ts) << " Hz]";
+            last_imu_ts = imuData.timestamp;
 
-            accel << std::fixed << std::showpos << std::setprecision(4) << " * Accel: " << imuData->aX << " " << imuData->aY << " " << imuData->aZ << " [m/s^2]";
-            gyro << std::fixed << std::showpos << std::setprecision(4) << " * Gyro: " << imuData->gX << " " << imuData->gY << " " << imuData->gZ << " [deg/s]";
+            accel << std::fixed << std::showpos << std::setprecision(4) << " * Accel: " << imuData.aX << " " << imuData.aY << " " << imuData.aZ << " [m/s^2]";
+            gyro << std::fixed << std::showpos << std::setprecision(4) << " * Gyro: " << imuData.gX << " " << imuData.gY << " " << imuData.gZ << " [deg/s]";
             // <---- Data info to be displayed
 
             // Mutex to not overwrite data while diplaying them
@@ -260,9 +263,9 @@ void getSensorThreadFunc(sl_oc::SensorCapture* sensCap)
             imuGyroStr = gyro.str();
 
             // ----> Timestamp of the synchronized data
-            if(imuData->sync)
+            if(imuData.sync)
             {
-                mcu_sync_ts = imuData->timestamp;
+                mcu_sync_ts = imuData.timestamp;
             }
             // <---- Timestamp of the synchronized data
 
