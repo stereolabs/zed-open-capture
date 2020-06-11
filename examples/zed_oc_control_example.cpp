@@ -93,6 +93,8 @@ int main(int argc, char *argv[])
     // Set the default camera control setting
     setActiveControl( Brightness );
 
+    uint64_t last_ts=0;
+
     // Infinite video grabbing loop
     while (1)
     {
@@ -100,20 +102,21 @@ int main(int argc, char *argv[])
         const sl_oc::video::Frame frame = cap.getLastFrame();
 
         // ----> If the frame is valid we can display it
-        if(frame.data!=nullptr)
+        if(frame.data!=nullptr && frame.timestamp!=last_ts)
         {
 #if 0
             // ----> Video Debug information
-            static uint64_t last_ts=0;
+
             std::cout << std::setprecision(9) << "[" << frame.frame_id << "] Ts: " <<  static_cast<double>(frame.timestamp)/1e9 << " sec" << std::endl;
             if( last_ts!=0 )
             {
                 double dt = (frame.timestamp - last_ts)/1e9;
                 std::cout << std::setprecision(9) << " * dT: " << dt << " sec - FPS: " << 1./dt <<  std::endl;
             }
-            last_ts = frame.timestamp;
+
             // <---- Video Debug information
 #endif
+            last_ts = frame.timestamp;
 
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
             cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );

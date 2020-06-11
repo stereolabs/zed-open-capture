@@ -90,6 +90,8 @@ int main(int argc, char** argv) {
 
     cv::Mat frameBGR, left_raw, left_rect, right_raw, right_rect;
 
+    uint64_t last_ts=0;
+
     // Infinite video grabbing loop
     while (1)
     {
@@ -97,8 +99,10 @@ int main(int argc, char** argv) {
         const sl_oc::video::Frame frame = cap.getLastFrame();
 
         // ----> If the frame is valid we can convert, rectify and display it
-        if(frame.data!=nullptr)
+        if(frame.data!=nullptr && frame.timestamp!=last_ts)
         {
+            last_ts = frame.timestamp;
+
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
             cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
             cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);

@@ -56,8 +56,8 @@ int main(int argc, char *argv[])
 
     // ----> Set the video parameters
     sl_oc::video::VideoParams params;
-    params.res = sl_oc::video::RESOLUTION::HD2K;
-    params.fps = sl_oc::video::FPS::FPS_15;
+    params.res = sl_oc::video::RESOLUTION::HD720;
+    params.fps = sl_oc::video::FPS::FPS_30;
     params.verbose = verbose;
     // <---- Video parameters
 
@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
 
         // If the frame is valid we can update it
         std::stringstream videoTs;
-        if(frame.timestamp!=last_timestamp)
+        if(frame.data!=nullptr && frame.timestamp!=last_timestamp)
         {
             frame_fps = 1e9/static_cast<float>(frame.timestamp-last_timestamp);
             last_timestamp = frame.timestamp;
