@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     {
         // ----> Get IMU data with a timeout of 5 millisecods
         const sl_oc::sensors::data::Imu imuData = sens.getLastIMUData(5000);
-        if( imuData.valid )
+        if( imuData.valid == sl_oc::sensors::data::Imu::NEW_VAL  )
         {
             std::cout << "**** New IMU data ****" << std::endl;
             std::cout << " * Timestamp: " << imuData.timestamp << " nsec" << std::endl;
@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 
         // ----> Get Temperature data with a timeout of 100 microseconds to not slow down fastest data (IMU)
         const sl_oc::sensors::data::Temperature tempData = sens.getLastCameraTemperatureData(100);
-        if( tempData.valid )
+        if( tempData.valid == sl_oc::sensors::data::Temperature::NEW_VAL )
         {
             std::cout << "**** New Camera Sensors Temperature data ****" << std::endl;
             std::cout << " * Timestamp: " << tempData.timestamp << " nsec" << std::endl;

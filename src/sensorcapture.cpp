@@ -448,7 +448,7 @@ void SensorCapture::grabThreadFunc()
         // ----> IMU data
         mIMUMutex.lock();
         mLastIMUData.sync = data->frame_sync;
-        mLastIMUData.valid = data->imu_not_valid!=1;
+        mLastIMUData.valid = (data->imu_not_valid!=1)?(data::Imu::NEW_VAL):(data::Imu::OLD_VAL);
         mLastIMUData.timestamp = current_data_ts;
         mLastIMUData.aX = data->aX*ACC_SCALE;
         mLastIMUData.aY = data->aY*ACC_SCALE;
@@ -481,7 +481,12 @@ void SensorCapture::grabThreadFunc()
         }
         else
         {
-            mLastIMUData.valid = static_cast<data::Magnetometer::MagStatus>(data->mag_valid);
+            if(data->mag_valid==0)
+                mLastMagData.valid = data::Magnetometer::NOT_PRESENT;
+            else if(data->mag_valid==1)
+                mLastMagData.valid = data::Magnetometer::OLD_VAL;
+            else
+                mLastMagData.valid = data::Magnetometer::NEW_VAL;
         }
         // <---- Magnetometer data
 
@@ -510,7 +515,12 @@ void SensorCapture::grabThreadFunc()
         }
         else
         {
-            mLastIMUData.valid = static_cast<data::Magnetometer::MagStatus>(data->mag_valid);
+            if(data->env_valid==0)
+                mLastEnvData.valid = data::Environment::NOT_PRESENT;
+            else if(data->env_valid==1)
+                mLastEnvData.valid = data::Environment::OLD_VAL;
+            else
+                mLastEnvData.valid = data::Environment::NEW_VAL;
         }
         // <---- Environmental data
 
@@ -520,7 +530,7 @@ void SensorCapture::grabThreadFunc()
                 data->env_valid == data::Environment::NEW_VAL ) // Sensor temperature is linked to Environmental data acquisition at FW level
         {
             mCamTempMutex.lock();
-            mLastCamTempData.valid = true;
+            mLastCamTempData.valid = data::Temperature::NEW_VAL;
             mLastCamTempData.timestamp = current_data_ts;
             mLastCamTempData.temp_left = data->temp_cam_left*TEMP_SCALE;
             mLastCamTempData.temp_right = data->temp_cam_right*TEMP_SCALE;
@@ -532,7 +542,7 @@ void SensorCapture::grabThreadFunc()
         }
         else
         {
-            mLastCamTempData.valid = false;
+            mLastCamTempData.valid = data::Temperature::OLD_VAL;
         }
         // <---- Camera sensors temperature data
     }
@@ -593,7 +603,8 @@ const data::Imu& SensorCapture::getLastIMUData(uint64_t timeout_usec)
     {
         if(time_count==0)
         {
-            mLastIMUData.valid = false;
+            if(mLastIMUData.valid!=data::Imu::NOT_PRESENT)
+                mLastIMUData.valid = data::Imu::OLD_VAL;
             return mLastIMUData;
         }
         time_count--;
@@ -615,7 +626,8 @@ const data::Magnetometer& SensorCapture::getLastMagnetometerData(uint64_t timeou
     {
         if(time_count==0)
         {
-            mLastMagData.valid=data::Magnetometer::OLD_VAL;
+            if(mLastMagData.valid!=data::Magnetometer::NOT_PRESENT)
+                mLastMagData.valid=data::Magnetometer::OLD_VAL;
             return mLastMagData;
         }
         time_count--;
@@ -637,7 +649,8 @@ const data::Environment &SensorCapture::getLastEnvironmentData(uint64_t timeout_
     {
         if(time_count==0)
         {
-            mLastEnvData.valid = data::Environment::OLD_VAL;
+            if(mLastEnvData.valid!=data::Environment::NOT_PRESENT)
+                mLastEnvData.valid = data::Environment::OLD_VAL;
             return mLastEnvData;
         }
         time_count--;
@@ -659,7 +672,8 @@ const data::Temperature& SensorCapture::getLastCameraTemperatureData(uint64_t ti
     {
         if(time_count==0)
         {
-            mLastCamTempData.valid = false;
+            if(mLastCamTempData.valid!=data::Temperature::NOT_PRESENT)
+                mLastCamTempData.valid = data::Temperature::OLD_VAL;
             return mLastCamTempData;
         }
         time_count--;

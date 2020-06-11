@@ -239,7 +239,7 @@ void getSensorThreadFunc(sl_oc::sensors::SensorCapture* sensCap)
         const sl_oc::sensors::data::Imu imuData = sensCap->getLastIMUData(2000);
 
         // Process data only if valid
-        if(imuData.valid) // Uncomment to use only data syncronized with the video frames
+        if(imuData.valid == sl_oc::sensors::data::Imu::NEW_VAL ) // Uncomment to use only data syncronized with the video frames
         {
             // ----> Data info to be displayed
             std::stringstream timestamp;

@@ -51,7 +51,14 @@ namespace data {
  */
 struct SL_OC_EXPORT Imu
 {
-    bool valid = false;     //!< Indicates if IMU data are valid
+    // Validity of the magnetometer sensor data
+    typedef enum _imu_status {
+        NOT_PRESENT = 0,
+        OLD_VAL = 1,
+        NEW_VAL = 2
+    } ImuStatus;
+
+    ImuStatus valid = NOT_PRESENT;     //!< Indicates if IMU data are valid
     uint64_t timestamp = 0; //!< Timestamp in nanoseconds
     float aX;               //!< Acceleration along X axis in m/s²
     float aY;               //!< Acceleration along Y axis in m/s²
@@ -75,7 +82,7 @@ struct SL_OC_EXPORT Magnetometer
         NEW_VAL = 2
     } MagStatus;
 
-    MagStatus valid = OLD_VAL;     //!< Indicates if Magnetometer data are valid
+    MagStatus valid = NOT_PRESENT;     //!< Indicates if Magnetometer data are valid
     uint64_t timestamp = 0; //!< Timestamp in nanoseconds
     float mX;               //!< Acceleration along X axis in uT
     float mY;               //!< Acceleration along Y axis in uT
@@ -106,7 +113,13 @@ struct SL_OC_EXPORT Environment
  */
 struct SL_OC_EXPORT Temperature
 {
-    bool valid = false;     //!< Indicates if camera temperature data are valid
+    typedef enum _temp_status {
+        NOT_PRESENT = 0,
+        OLD_VAL = 1,
+        NEW_VAL = 2
+    } TempStatus;
+
+    TempStatus valid = NOT_PRESENT;     //!< Indicates if camera temperature data are valid
     uint64_t timestamp = 0; //!< Timestamp in nanoseconds
     float temp_left;        //!< Temperature of the left CMOS camera sensor
     float temp_right;       //!< Temperature of the right CMOS camera sensor
@@ -163,28 +176,28 @@ public:
     /*!
      * \brief Get the last received IMU data
      * \param timeout_usec data grabbing timeout in milliseconds.
-     * \return returns the last received data.
+     * \return returns a reference to the last received data.
      */
     const data::Imu& getLastIMUData(uint64_t timeout_usec=1500);
 
     /*!
      * \brief Get the last received Magnetometer data
      * \param timeout_usec data grabbing timeout in milliseconds.
-     * \return returns the last received data.
+     * \return returns a reference to the last received data.
      */
     const data::Magnetometer& getLastMagnetometerData(uint64_t timeout_usec=100);
 
     /*!
      * \brief Get the last received Environment data
      * \param timeout_usec data grabbing timeout in milliseconds.
-     * \return returns the last received data.
+     * \return returns a reference to the last received data.
      */
     const data::Environment& getLastEnvironmentData(uint64_t timeout_usec=100);
 
     /*!
      * \brief Get the last received camera sensors temperature data
      * \param timeout_usec data grabbing timeout in milliseconds.
-     * \return returns the last received data.
+     * \return returns a reference to the last received data.
      */
     const data::Temperature& getLastCameraTemperatureData(uint64_t timeout_usec=100);
 

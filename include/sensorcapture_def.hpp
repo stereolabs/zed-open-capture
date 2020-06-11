@@ -69,7 +69,7 @@ typedef enum CUSTOMHID_REPORT_ID {
  */
 typedef struct RawData {
     uint8_t struct_id;		//!< Struct identifier, it matches the USB HID Report ID
-    uint8_t imu_not_valid; 	//!< Indicate if IMU data are valid [0->valid, 1->not_valid
+    uint8_t imu_not_valid; 	//!< Indicate if IMU data are valid [0->valid, 1->not_valid]
     uint64_t timestamp;		//!< Data timestamp (from IMU sensor) [usec/39]
     int16_t gX;				//!< Raw Gyroscope X
     int16_t gY;				//!< Raw Gyroscope Y

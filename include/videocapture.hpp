@@ -83,7 +83,10 @@ public:
     /*!
      * \brief Get the last received camera image
      * \param timeout_msec frame grabbing timeout in millisecond.
-     * \return returns the last received frame as pointer.
+     * \return returns a reference to the last received frame as pointer.
+     *
+     * \note To check if a new frame is available it is possible to compare the timestamp of the returned frame with
+     * the timestamp of the previous valid frame
      *
      * \note Frame received will contains the RAW buffer from the camera, in YUV4:2:2 color format and in side by side mode.
      * Images must then be converted to RGB for proper display and will not be rectified.
