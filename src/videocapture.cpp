@@ -1285,7 +1285,7 @@ int VideoCapture::ll_isp_is_aecagc(int side) {
 
     // Adjust Value
     if (hr == 0)
-        result = ((value & MASK_ON) == MASK_ON); //check that secodn bit is on
+        result = ((value & MASK_ON) == MASK_ON); //check that second bit is on
     else
         return hr;
 
