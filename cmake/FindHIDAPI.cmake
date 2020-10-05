@@ -203,8 +203,10 @@ if(HIDAPI_FOUND)
     if(NOT TARGET HIDAPI::hidapi)
         add_library(HIDAPI::hidapi UNKNOWN IMPORTED)
         set_target_properties(
-            HIDAPI::hidapi PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES "C"
-                                      IMPORTED_LOCATION ${HIDAPI_LIBRARY})
+            HIDAPI::hidapi 
+	    PROPERTIES 
+            IMPORTED_LINK_INTERFACE_LANGUAGES "C"
+            IMPORTED_LOCATION ${HIDAPI_LIBRARY})
         set_property(
             TARGET HIDAPI::hidapi PROPERTY IMPORTED_LINK_INTERFACE_LIBRARIES
                                            Threads::Threads)
