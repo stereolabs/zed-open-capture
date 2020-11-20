@@ -198,3 +198,6 @@ The coordinate system is only used for sensors data. The given IMU and Magnetome
 ## License
 
 This library is licensed under the MIT License.
+
+## Support
+If you need assistance go to our Community site at https://community.stereolabs.com/
