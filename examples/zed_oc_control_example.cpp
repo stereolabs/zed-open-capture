@@ -73,8 +73,8 @@ int main(int argc, char *argv[])
 
     // ----> Set Video parameters
     sl_oc::video::VideoParams params;
-    params.res = sl_oc::video::RESOLUTION::HD2K;
-    params.fps = sl_oc::video::FPS::FPS_15;
+    params.res = sl_oc::video::RESOLUTION::GS_HIGH;
+    params.fps = sl_oc::video::FPS::FPS_50;
     params.verbose = verbose;
     // <---- Set Video parameters
 
@@ -118,14 +118,23 @@ int main(int argc, char *argv[])
 #endif
             last_ts = frame.timestamp;
 
-            // ----> Conversion from YUV 4:2:2 to BGR for visualization
-            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
-            cv::Mat frameBGR;
-            cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
-            // <---- Conversion from YUV 4:2:2 to BGR for visualization
+            //            // ----> Conversion from YUV 4:2:2 to BGR for visualization
+            //            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
+            //            cv::Mat frameBGR;
+            //            cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
+            //            // <---- Conversion from YUV 4:2:2 to BGR for visualization
 
-            // 4.c) Show frame
-            showImage( "Stream RGB", frameBGR, params.res );
+            //            // 4.c) Show frame
+            //            showImage( "Stream RGB", frameBGR, params.res );
+
+            cv::Mat frameRAW8 = cv::Mat( frame.height, frame.width*2, CV_8UC1, frame.data );
+            cv::imshow( "Stream Bayer", frameRAW8 );
+            cv::Mat frameBGR;
+            cv::cvtColor(frameRAW8,frameBGR,cv::COLOR_BayerRG2BGR_EA);
+
+            // Show frame
+            cv::imshow( "Stream Bayer", frameRAW8 );
+            cv::imshow( "Stream RGB", frameBGR );
         }
         // <---- If the frame is valid we can display it
 

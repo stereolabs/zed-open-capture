@@ -40,6 +40,7 @@ enum class SL_DEVICE {
     ZED_CBS,    //!< ZED new FW
     ZED_M_CBS,  //!< ZED Mini new FW
     ZED_2,      //!< ZED2
+    GS,         //!< TEST GS
     NONE
 };
 
@@ -47,10 +48,12 @@ enum class SL_DEVICE {
  * \brief Available resolutions
  */
 enum class RESOLUTION {
-    HD2K,       /**< 2208*1242, available framerates: 15 fps.*/
-    HD1080,     /**< 1920*1080, available framerates: 15, 30 fps.*/
-    HD720,      /**< 1280*720, available framerates: 15, 30, 60 fps.*/
-    VGA,        /**< 672*376, available framerates: 15, 30, 60, 100 fps.*/
+    HD2K,       /**< 2208*1242, available framerates: 15 fps. Not available for \ref SL_DEVICE::GS.*/
+    HD1080,     /**< 1920*1080, available framerates: 15, 30 fps. Not available for \ref SL_DEVICE::GS.*/
+    HD720,      /**< 1280*720, available framerates: 15, 30, 60 fps. Not available for \ref SL_DEVICE::GS.*/
+    VGA,        /**< 672*376, available framerates: 15, 30, 60, 100 fps. Not available for \ref SL_DEVICE::GS.*/
+    GS_HIGH,    /**< 1280*800, available framerates: 100, 50 fps. Only for \ref SL_DEVICE::GS.*/
+    GS_LOW,     /**< 640*400, available framerates: 200, 50 fps. Only for \ref SL_DEVICE::GS.*/
     LAST
 };
 
@@ -60,8 +63,10 @@ enum class RESOLUTION {
 enum class FPS {
     FPS_15 = 15,    //!< 15 Frames per second. Available for all the resolutions.
     FPS_30 = 30,    //!< 30 Frames per second. Not available for \ref RESOLUTION::HD2K.
+    FPS_50 = 50,    //!< 50 Frames per second. Only for \ref RESOLUTION::GS_HIGH, \ref RESOLUTION::GS_LOW.
     FPS_60 = 60,    //!< 60 Frames per second. Not available for \ref RESOLUTION::HD2K and  \ref RESOLUTION::HD1080.
-    FPS_100 = 100,  //!< 100 Frames per second. Only available for \ref RESOLUTION::VGA.
+    FPS_100 = 100,  //!< 100 Frames per second. Only available for \ref RESOLUTION::VGA and \ref RESOLUTION::GS_HIGH.
+    FPS_200 = 200,  //!< 200 Frames per second. Only available for \ref RESOLUTION::GS_LOW.
     LAST = 101
 };
 
@@ -116,7 +121,9 @@ static const std::vector<Resolution> cameraResolution = {
     Resolution(2208, 1242),     /**< HD2K */
     Resolution(1920, 1080),     /**< HD1080 */
     Resolution(1280, 720),      /**< HD720 */
-    Resolution(672, 376)        /**< VGA */
+    Resolution(672, 376),       /**< VGA */
+    Resolution(640, 800),       /**< GS_HIGH */
+    Resolution(320, 400),       /**< GS_LOW */
 };
 
 

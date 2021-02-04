@@ -71,14 +71,17 @@ inline uint64_t getWallTimestamp() {return std::chrono::duration_cast<std::chron
 namespace sl_oc {
 
 static const uint16_t SL_USB_VENDOR = 0x2b03;           //!< Stereolabs Vendor ID
+static const uint16_t OV_USB_VENDOR = 0x05a9;           //!< OmniVision Vendor ID
 
-static const uint16_t SL_USB_PROD_ZED_REVA = 0xf580;         //!< Old ZED firmware Product ID
-static const uint16_t SL_USB_PROD_ZED_M_REVA = 0xf680;       //!< Old ZED-M binary modified firmware Product ID
-static const uint16_t SL_USB_PROD_ZED_REVB = 0xf582;     //!< CBS ZED Firmware Product ID
-static const uint16_t SL_USB_PROD_ZED_M_REVB = 0xf682;   //!< CBS ZED-M Firmware Product ID
-static const uint16_t SL_USB_PROD_ZED_2_REVB = 0xf780;   //!< CBS ZED 2 Firmware Product ID
-static const uint16_t SL_USB_PROD_MCU_ZEDM_REVA= 0xf681; //!< MCU sensor device for ZED-M
+static const uint16_t SL_USB_PROD_ZED_REVA = 0xf580;      //!< Old ZED firmware Product ID
+static const uint16_t SL_USB_PROD_ZED_M_REVA = 0xf680;    //!< Old ZED-M binary modified firmware Product ID
+static const uint16_t SL_USB_PROD_ZED_REVB = 0xf582;      //!< CBS ZED Firmware Product ID
+static const uint16_t SL_USB_PROD_ZED_M_REVB = 0xf682;    //!< CBS ZED-M Firmware Product ID
+static const uint16_t SL_USB_PROD_ZED_2_REVB = 0xf780;    //!< CBS ZED 2 Firmware Product ID
+static const uint16_t SL_USB_PROD_MCU_ZEDM_REVA= 0xf681;  //!< MCU sensor device for ZED-M
 static const uint16_t SL_USB_PROD_MCU_ZED2_REVA = 0xf781; //!< MCU sensor device for ZED2
+static const uint16_t OV_USB_PROD_GS = 0x0581; //!< OmniVision 580 for GS
+
 
 enum VERBOSITY {
     NONE = 0,

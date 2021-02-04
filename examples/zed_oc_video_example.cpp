@@ -33,7 +33,12 @@
 int main(int argc, char *argv[])
 {
     // ----> Create Video Capture
-    sl_oc::video::VideoCapture cap;
+    sl_oc::video::VideoParams params;
+    params.fps = sl_oc::video::FPS::FPS_100;
+    params.res = sl_oc::video::RESOLUTION::GS_HIGH;
+    params.verbose = sl_oc::VERBOSITY::ERROR;
+
+    sl_oc::video::VideoCapture cap(params);
     if( !cap.initializeVideo() )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
@@ -53,13 +58,24 @@ int main(int argc, char *argv[])
         // ----> If the frame is valid we can display it
         if(frame.data!=nullptr)
         {
-            // ----> Conversion from YUV 4:2:2 to BGR for visualization
-            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
+            //            // ----> Conversion from YUV 4:2:2 to BGR for visualization
+            //            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
+            //            cv::Mat frameBayer;
+            //            cv::Mat frameBGR;
+            //            cv::cvtColor(frameYUV,frameBayer,cv::COLOR_YUV2GRAY_Y422);
+            //            cv::cvtColor(frameBayer,frameBGR,cv::COLOR_BayerRG2BGR);
+            //            // <---- Conversion from YUV 4:2:2 to BGR for visualization
+
+            //            // Show frame
+            //            cv::imshow( "Stream Bayer", frameBayer );
+            //            cv::imshow( "Stream RGB", frameBGR );
+            cv::Mat frameRAW8 = cv::Mat( frame.height, frame.width*2, CV_8UC1, frame.data );
+            cv::imshow( "Stream Bayer", frameRAW8 );
             cv::Mat frameBGR;
-            cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
-            // <---- Conversion from YUV 4:2:2 to BGR for visualization
+            cv::cvtColor(frameRAW8,frameBGR,cv::COLOR_BayerRG2BGR);
 
             // Show frame
+            cv::imshow( "Stream Bayer", frameRAW8 );
             cv::imshow( "Stream RGB", frameBGR );
         }
         // <---- If the frame is valid we can display it

@@ -256,6 +256,29 @@ void VideoCapture::checkResFps()
             else
                 mFps = 100;
         }
+        break;
+    case RESOLUTION::GS_HIGH:
+        if( mFps!=100 && mFps!=50 )
+        {
+            WARNING_OUT(mParams.verbose,"FPS not supported for the chosen resolution. Using the best value");
+
+            if( mFps <= 75  )
+                mFps = 50;
+            else
+                mFps = 100;
+        }
+        break;
+    case RESOLUTION::GS_LOW:
+        if( mFps!=200 && mFps!=50 )
+        {
+            WARNING_OUT(mParams.verbose,"FPS not supported for the chosen resolution. Using the best value");
+
+            if( mFps <= 100  )
+                mFps = 50;
+            else
+                mFps = 200;
+        }
+        break;
     }
 
     if(mParams.verbose)
@@ -742,6 +765,8 @@ SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
         camera_device = SL_DEVICE::ZED_M_CBS;
     else if (pid == SL_USB_PROD_ZED_2_REVB && vid == SL_USB_VENDOR)
         camera_device = SL_DEVICE::ZED_2;
+    else if (pid == OV_USB_PROD_GS && vid == OV_USB_VENDOR)
+        camera_device = SL_DEVICE::GS;
 
     return camera_device;
 }
