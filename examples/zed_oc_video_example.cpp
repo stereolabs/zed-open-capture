@@ -29,7 +29,7 @@
 #include <opencv2/highgui/highgui.hpp>
 // <---- Includes
 
-#define TEST_FPS 1
+// #define TEST_FPS 1
 
 // The main function
 int main(int argc, char *argv[])
