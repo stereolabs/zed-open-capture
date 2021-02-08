@@ -1,6 +1,6 @@
 # Changelog
 
-v.02.1 - 2020 02 08
+v0.2.1 - 2020 02 08
 -------------------
 * Fix FPS issue caused by wrong default timeout in `getLastFrame` function (see #10)
 
