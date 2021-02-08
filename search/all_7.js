@@ -15,7 +15,7 @@ var searchData=
   ['gethue_61',['getHue',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a6b1dcb9449f0344bf3f608501e1f60b6',1,'sl_oc::video::VideoCapture']]],
   ['getlastcameratemperaturedata_62',['getLastCameraTemperatureData',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a9e3262c544c4bed84f15c8d192565702',1,'sl_oc::sensors::SensorCapture']]],
   ['getlastenvironmentdata_63',['getLastEnvironmentData',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#ac85d904b56c24f943f527a6d484256ab',1,'sl_oc::sensors::SensorCapture']]],
-  ['getlastframe_64',['getLastFrame',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a0dc5ae6fbee81087b73a91864813e943',1,'sl_oc::video::VideoCapture']]],
+  ['getlastframe_64',['getLastFrame',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a16d2238b0c34d6d1dfbdebe97f656759',1,'sl_oc::video::VideoCapture']]],
   ['getlastimudata_65',['getLastIMUData',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a829abb584703322272281e8f5939b2e3',1,'sl_oc::sensors::SensorCapture']]],
   ['getlastmagnetometerdata_66',['getLastMagnetometerData',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a962d607831bb79c07b2a2ed268c4802e',1,'sl_oc::sensors::SensorCapture']]],
   ['getledstatus_67',['getLEDstatus',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a4e326fed89aeec27b0a0f7805006a176',1,'sl_oc::video::VideoCapture']]],
