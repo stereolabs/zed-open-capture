@@ -273,6 +273,35 @@ public:
     void resetAECAGC();
 
     /*!
+     * \brief Set Region Of Interest (ROI) for AECAGC control
+     * \param side position of the camera sensor (see  CAM_SENS_POS)
+     * \param x top left ROI rectangle X coordinate
+     * \param y top left ROI rectangle Y coordinate
+     * \param w ROI rectangle width
+     * \param h ROI rectangle width
+     * \return returns true if the ROI has been correctly set
+     */
+    bool setROIforAECAGC(CAM_SENS_POS side, uint16_t x, uint16_t y, uint16_t w, uint16_t h);
+
+    /*!
+     * \brief Reset the ROI for AECAGC control
+     * \param side position of the camera sensor (see  CAM_SENS_POS)
+     * \return returns true if the ROI has been correctly reset
+     */
+    bool resetROIforAECAGC(CAM_SENS_POS side);
+
+    /*!
+     * \brief Get the coordinates of the current ROI for AECAGC control
+     * \param side position of the camera sensor (see  CAM_SENS_POS)
+     * \param x top left ROI rectangle X coordinate
+     * \param y top left ROI rectangle Y coordinate
+     * \param w ROI rectangle width
+     * \param h ROI rectangle width
+     * \return returns true if no errors occurred
+     */
+    bool getROIforAECAGC(CAM_SENS_POS side,uint16_t& x, uint16_t& y, uint16_t& w, uint16_t& h);
+
+    /*!
      * \brief Set the Gain value (disable Exposure and Gain control if active)
      * \param cam position of the camera sensor (see  CAM_SENS_POS)
      * \param gain Gain value in the range [0,100]
