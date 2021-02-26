@@ -819,7 +819,11 @@ void VideoCapture::grabThreadFunc()
                 memcpy(mLastFrame.data, (unsigned char*) mBuffers[mCurrentIndex].start, mBuffers[mCurrentIndex].length);
                 mLastFrame.timestamp = mStartTs + rel_ts;
 
-                //std::cout << "Video:\t" << mLastFrame.timestamp << std::endl;
+//                static uint64_t last_ts=0;
+//                std::cout << "[Video] Frame TS: " << static_cast<double>(mLastFrame.timestamp)/1e9 << " sec" << std::endl;
+//                double dT = static_cast<double>(mLastFrame.timestamp-last_ts)/1e9;
+//                last_ts = mLastFrame.timestamp;
+//                std::cout << "[Video] Frame FPS: " << 1./dT << std::endl;
 
 #ifdef SENSORS_MOD_AVAILABLE
                 if(mSensReadyToSync)

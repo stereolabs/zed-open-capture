@@ -91,7 +91,7 @@ public:
      * \note Frame received will contains the RAW buffer from the camera, in YUV4:2:2 color format and in side by side mode.
      * Images must then be converted to RGB for proper display and will not be rectified.
      */
-    const Frame& getLastFrame(uint64_t timeout_msec=10);
+    const Frame& getLastFrame(uint64_t timeout_msec=100);
 
     /*!
      * \brief Get the size of the camera frame

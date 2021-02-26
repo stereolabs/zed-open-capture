@@ -75,6 +75,11 @@ The open-source library provides methods to access raw video frames, calibration
 
     `$ sudo apt install opencv-dev`
 
+### Clone the repository
+
+    $ git clone https://github.com/stereolabs/zed-open-capture.git
+    $ cd zed-open-capture
+
 ### Add udev rule
 Stereo cameras such as ZED 2 and ZED Mini have built-in sensors (e.g. IMU) that are identified as USB HID devices.
 To be able to access the USB HID device, you must add a udev rule contained in the `udev` folder:
@@ -82,11 +87,6 @@ To be able to access the USB HID device, you must add a udev rule contained in t
     $ cd udev
     $ bash install_udev_rule.sh
     $ cd ..
-
-### Clone the repository
-
-    $ git clone https://github.com/stereolabs/zed-open-capture.git
-    $ cd zed-open-capture
 
 ### Build
 
