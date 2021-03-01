@@ -1676,6 +1676,86 @@ void VideoCapture::resetAECAGC()
     setAECAGC(true);
 }
 
+bool VideoCapture::setROIforAECAGC(CAM_SENS_POS side, uint16_t x, uint16_t y, uint16_t w, uint16_t h)
+{
+    if(side!=CAM_SENS_POS::LEFT && side!=CAM_SENS_POS::RIGHT)
+    {
+        return false;
+    }
+    if(w==0 || h==0)
+    {
+        return false;
+    }
+    if((x+w)>(mWidth/2) || (y+h)>mHeight)
+    {
+        return false;
+    }
+    if(w*h<=100)
+    {
+        return false;
+    }
+
+    int x_start_high = x / 256;
+    int x_start_low = (x - x_start_high * 256);
+    int y_start_high = y / 256;
+    int y_start_low = (y - x_start_high * 256);
+    int w_start_high = w / 256;
+    int w_start_low = (w - x_start_high * 256);
+    int h_start_high = h / 256;
+    int h_start_low = (h - x_start_high * 256);
+
+
+    uint32_t ulAddr = 0x801810C0;
+    if (static_cast<int>(side)==1)
+        ulAddr= 0x801818C0;
+
+    int r = ll_write_system_register(ulAddr,static_cast<uint8_t>(x_start_high));ulAddr++;usleep(100);
+    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(x_start_low));ulAddr++;usleep(100);
+    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(y_start_high));ulAddr++;usleep(100);
+    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(y_start_low));ulAddr++;usleep(100);
+    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(w_start_high));ulAddr++;usleep(100);
+    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(w_start_low));ulAddr++;usleep(100);
+    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(h_start_high));ulAddr++;usleep(100);
+    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(h_start_low));ulAddr++;usleep(100);
+
+    return (r==0);
+}
+
+bool VideoCapture::resetROIforAECAGC(CAM_SENS_POS side)
+{
+    return setROIforAECAGC(side, 0,0, mWidth/2, mHeight);
+}
+
+bool VideoCapture::getROIforAECAGC(CAM_SENS_POS side, uint16_t &x, uint16_t &y, uint16_t &w, uint16_t &h)
+{
+    uint8_t x_start_high = 0;
+    uint8_t x_start_low = 0;
+    uint8_t y_start_high =0;
+    uint8_t y_start_low = 0;
+    uint8_t w_start_high =0;
+    uint8_t w_start_low = 0;
+    uint8_t h_start_high = 0;
+    uint8_t h_start_low = 0;
+    uint32_t ulAddr = 0x801810C0;
+    if (static_cast<int>(side)==1)
+        ulAddr= 0x801818C0;
+    int r =  ll_read_system_register(ulAddr,&x_start_high);ulAddr++;usleep(100);
+    r +=  ll_read_system_register(ulAddr,&x_start_low);ulAddr++;usleep(100);
+    r +=   ll_read_system_register(ulAddr,&y_start_high);ulAddr++;usleep(100);
+    r +=   ll_read_system_register(ulAddr,&y_start_low);ulAddr++;usleep(100);
+    r +=   ll_read_system_register(ulAddr,&w_start_high);ulAddr++;usleep(100);
+    r +=   ll_read_system_register(ulAddr,&w_start_low);ulAddr++;usleep(100);
+    r +=   ll_read_system_register(ulAddr,&h_start_high);ulAddr++;usleep(100);
+    r +=   ll_read_system_register(ulAddr,&h_start_low);ulAddr++;usleep(100);
+
+    x = x_start_high*256 + x_start_low;
+    y = y_start_high*256 + y_start_low;
+    w = w_start_high*256 + w_start_low;
+    h = h_start_high*256 + h_start_low;
+
+    return (r==0);
+}
+
 void VideoCapture::setGain(CAM_SENS_POS cam, int gain)
 {
     if(getAECAGC())
