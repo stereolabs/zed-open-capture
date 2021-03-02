@@ -70,6 +70,9 @@ static void toggleAutomaticControl( sl_oc::video::VideoCapture &cap );
 
 // Retrieve all the control values from the camera
 static void updateAllCtrlValues(sl_oc::video::VideoCapture &cap);
+
+// Reset all the control values to default
+static void resetControls( sl_oc::video::VideoCapture &cap );
 // <---- Global functions to control settings
 
 // ----> Global variables
@@ -106,8 +109,8 @@ int main(int argc, char *argv[])
 
     // ----> Set Video parameters
     sl_oc::video::VideoParams params;
-    params.res = sl_oc::video::RESOLUTION::HD2K;
-    params.fps = sl_oc::video::FPS::FPS_15;
+    params.res = sl_oc::video::RESOLUTION::HD1080;
+    params.fps = sl_oc::video::FPS::FPS_30;
     params.verbose = verbose;
     // <---- Set Video parameters
 
@@ -128,12 +131,16 @@ int main(int argc, char *argv[])
     cv::setMouseCallback(win_name, handleMouse);
     // <---- Create rendering window
 
+    // Reset all the controls to default values
+    resetControls(cap);
+
     // Set the default camera control setting
     setActiveControl(cap, Brightness );
 
-    uint64_t last_ts=0;
-
+    // Update the values for all the controls
     updateAllCtrlValues(cap);
+
+    uint64_t last_ts=0;
 
     // Infinite video grabbing loop
     while (1)
@@ -261,16 +268,7 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
 
     case 'r':
     case 'R':
-        cap.resetBrightness();
-        cap.resetSharpness();
-        cap.resetContrast();
-        cap.resetHue();
-        cap.resetSaturation();
-        cap.resetGamma();
-        cap.resetAECAGC();
-        cap.resetAutoWhiteBalance();
-        cap.resetROIforAECAGC(sl_oc::video::CAM_SENS_POS::LEFT);
-        cap.resetROIforAECAGC(sl_oc::video::CAM_SENS_POS::RIGHT);
+        resetControls(cap);
         updateAllCtrlValues(cap);
 
         std::cout << "All control settings are reset to default values" << std::endl;
@@ -456,6 +454,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case Brightness:
         cap.setBrightness( value );
         newValue = cap.getBrightness();
+        brightness_val = newValue;
 
         std::cout << "New Brightness value: ";
         break;
@@ -463,6 +462,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case Contrast:
         cap.setContrast( value );
         newValue = cap.getContrast();
+        contrast_val = newValue;
 
         std::cout << "New Contrast value: ";
         break;
@@ -470,6 +470,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case Hue:
         cap.setHue( value );
         newValue = cap.getHue();
+        hue_val = newValue;
 
         std::cout << "New Hue value: ";
         break;
@@ -477,6 +478,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case Saturation:
         cap.setSaturation( value );
         newValue = cap.getSaturation();
+        saturation_val = newValue;
 
         std::cout << "New Saturation value: ";
         break;
@@ -484,6 +486,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case WhiteBalance:
         cap.setWhiteBalance( 2800+value*411 );
         newValue = cap.getWhiteBalance();
+        whiteBalance_val = newValue;
 
         std::cout << "New White Balance value: ";
         break;
@@ -491,6 +494,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case Sharpness:
         cap.setSharpness( value );
         newValue = cap.getSharpness();
+        sharpness_val = newValue;
 
         std::cout << "New Sharpness value: ";
         break;
@@ -498,6 +502,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case Gamma:
         cap.setGamma( value);
         newValue = cap.getGamma();
+        gamma_val = newValue;
 
         std::cout << "New Gamma value: ";
         break;
@@ -557,8 +562,8 @@ void changeControlValue( sl_oc::video::VideoCapture &cap, bool increase )
         gain_val_left = cap.getGain(sl_oc::video::CAM_SENS_POS::LEFT);
         gain_val_right = cap.getGain(sl_oc::video::CAM_SENS_POS::RIGHT);
 
-        std::cout << "New Left Gain value: " << gain_val_left << std::endl;
-        std::cout << "New Right Gain value: " << gain_val_right << std::endl;
+        std::cout << "New Left Gain value: " << (int)gain_val_left << std::endl;
+        std::cout << "New Right Gain value: " << (int)gain_val_right << std::endl;
 
         autoAECAGC = cap.getAECAGC();
     }
@@ -583,8 +588,8 @@ void changeControlValue( sl_oc::video::VideoCapture &cap, bool increase )
         exposure_val_left = cap.getExposure(sl_oc::video::CAM_SENS_POS::LEFT);
         exposure_val_right = cap.getExposure(sl_oc::video::CAM_SENS_POS::RIGHT);
 
-        std::cout << "New Left Exposure value: " << exposure_val_left << std::endl;
-        std::cout << "New Right Exposure value: " << exposure_val_right << std::endl;
+        std::cout << "New Left Exposure value: " << (int)exposure_val_left << std::endl;
+        std::cout << "New Right Exposure value: " << (int)exposure_val_right << std::endl;
 
         autoAECAGC = cap.getAECAGC();
     }
@@ -774,4 +779,18 @@ void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res )
                  cv::Scalar(241,240,236), 2);
 
     cv::imshow( win_name, resized );
+}
+
+void resetControls( sl_oc::video::VideoCapture &cap )
+{
+    cap.resetBrightness();
+    cap.resetSharpness();
+    cap.resetContrast();
+    cap.resetHue();
+    cap.resetSaturation();
+    cap.resetGamma();
+    cap.resetAECAGC();
+    cap.resetAutoWhiteBalance();
+    cap.resetROIforAECAGC(sl_oc::video::CAM_SENS_POS::LEFT);
+    cap.resetROIforAECAGC(sl_oc::video::CAM_SENS_POS::RIGHT);
 }
