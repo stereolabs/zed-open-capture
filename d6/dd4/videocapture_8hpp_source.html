@@ -198,127 +198,133 @@ $(function() {
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="keywordtype">void</span> resetAECAGC();</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keywordtype">void</span> setGain(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam, <span class="keywordtype">int</span> gain);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160; </div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <span class="keywordtype">int</span> getGain(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam);</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160; </div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="keywordtype">void</span> setExposure(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam, <span class="keywordtype">int</span> exposure);</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keywordtype">int</span> getExposure(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam);</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <span class="comment">// &lt;---- Camera Settings control</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keywordtype">bool</span> setROIforAECAGC(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> side, uint16_t x, uint16_t y, uint16_t w, uint16_t h);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    <span class="keywordtype">bool</span> resetROIforAECAGC(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> side);</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <span class="keywordtype">bool</span> getROIforAECAGC(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> side,uint16_t&amp; x, uint16_t&amp; y, uint16_t&amp; w, uint16_t&amp; h);</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="keywordtype">int</span> getSerialNumber();</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="preprocessor">#ifdef SENSORS_MOD_AVAILABLE</span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keywordtype">bool</span> enableSensorSync( <a class="code" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html">sensors::SensorCapture</a>* sensCap=<span class="keyword">nullptr</span> );</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <span class="keywordtype">void</span> setGain(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam, <span class="keywordtype">int</span> gain);</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160; </div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keywordtype">int</span> getGain(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam);</div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160; </div>
-<div class="line"><a name="l00322"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a7cd0d152995a413a70edb39e8ea21fb5">  322</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a7cd0d152995a413a70edb39e8ea21fb5">setReadyToSync</a>(){ mSensReadyToSync=<span class="keyword">true</span>; }</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <span class="keywordtype">void</span> setExposure(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam, <span class="keywordtype">int</span> exposure);</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keywordtype">void</span> grabThreadFunc();  </div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <span class="comment">// ----&gt; Low level functions</span></div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    <span class="keywordtype">int</span> ll_VendorControl(uint8_t *buf, <span class="keywordtype">int</span> len, <span class="keywordtype">int</span> readMode, <span class="keywordtype">bool</span> safe = <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <span class="keywordtype">int</span> ll_get_gpio_value(<span class="keywordtype">int</span> gpio_number, uint8_t* value);</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <span class="keywordtype">int</span> ll_set_gpio_value(<span class="keywordtype">int</span> gpio_number, uint8_t value);</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <span class="keywordtype">int</span> ll_set_gpio_direction(<span class="keywordtype">int</span> gpio_number, <span class="keywordtype">int</span> direction);</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <span class="keywordtype">int</span> ll_read_system_register(uint64_t address, uint8_t* value);</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordtype">int</span> ll_write_system_register(uint64_t address, uint8_t value);</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    <span class="keywordtype">int</span> ll_read_sensor_register(<span class="keywordtype">int</span> side, <span class="keywordtype">int</span> sscb_id, uint64_t address, uint8_t *value);</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="keywordtype">int</span> ll_write_sensor_register(<span class="keywordtype">int</span> side, <span class="keywordtype">int</span> sscb_id, uint64_t address, uint8_t value);</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <span class="keywordtype">int</span> ll_SPI_FlashProgramRead(uint8_t *pBuf, <span class="keywordtype">int</span> Adr, <span class="keywordtype">int</span> len);</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160; </div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keywordtype">int</span> ll_isp_aecagc_enable(<span class="keywordtype">int</span> side, <span class="keywordtype">bool</span> enable);</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <span class="keywordtype">int</span> ll_isp_is_aecagc(<span class="keywordtype">int</span> side);</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="keywordtype">int</span> ll_isp_get_gain(uint8_t *val, uint8_t sensorID);</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keywordtype">int</span> ll_isp_set_gain(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucGainH, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucGainM, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucGainL, <span class="keywordtype">int</span> sensorID);</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <span class="keywordtype">int</span> ll_isp_get_exposure(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *val, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> sensorID);</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <span class="keywordtype">int</span> ll_isp_set_exposure(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpH, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpM, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpL, <span class="keywordtype">int</span> sensorID);</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160; </div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="keywordtype">void</span> ll_activate_sync(); <span class="comment">// Activate low level sync signal between Camera and MCU</span></div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="comment">// &lt;---- Low level functions</span></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="comment">// ----&gt; Mid level functions</span></div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <span class="keywordtype">void</span> setCameraControlSettings(<span class="keywordtype">int</span> ctrl_id, <span class="keywordtype">int</span> ctrl_val);</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <span class="keywordtype">void</span> resetCameraControlSettings(<span class="keywordtype">int</span> ctrl_id);</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="keywordtype">int</span> getCameraControlSettings(<span class="keywordtype">int</span> ctrl_id);</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160; </div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="keywordtype">int</span> setGammaPreset(<span class="keywordtype">int</span> side, <span class="keywordtype">int</span> value);</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160; </div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordtype">int</span> calcRawGainValue(<span class="keywordtype">int</span> gain); <span class="comment">// Convert &quot;user gain&quot; to &quot;ISP gain&quot;</span></div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    <span class="keywordtype">int</span> calcGainValue(<span class="keywordtype">int</span> rawGain); <span class="comment">// Convert &quot;ISP Gain&quot; to &quot;User gain&quot;</span></div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <span class="comment">// &lt;---- Mid level functions</span></div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160; </div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="comment">// ----&gt; Connection control functions</span></div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keywordtype">bool</span> openCamera( uint8_t devId );                           </div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    <span class="keywordtype">bool</span> startCapture();                                        </div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="keywordtype">void</span> reset();                                               </div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> stopCapture(){mStopCapture=<span class="keyword">true</span>;}               </div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    <span class="keywordtype">int</span> input_set_framerate(<span class="keywordtype">int</span> fps);                           </div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="keywordtype">int</span> xioctl(<span class="keywordtype">int</span> fd, uint64_t IOCTL_X, <span class="keywordtype">void</span> *arg);            </div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="keywordtype">void</span> checkResFps();                                         </div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33f">SL_DEVICE</a> getCameraModel(std::string dev_name);     </div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="comment">// &lt;---- Connection control functions</span></div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160; </div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="comment">// Flags</span></div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <span class="keywordtype">bool</span> mNewFrame=<span class="keyword">false</span>;               </div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="keywordtype">bool</span> mInitialized=<span class="keyword">false</span>;            </div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <span class="keywordtype">bool</span> mStopCapture=<span class="keyword">true</span>;             </div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="keywordtype">bool</span> mGrabRunning=<span class="keyword">false</span>;            </div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <span class="keywordtype">int</span> getExposure(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam);</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <span class="comment">// &lt;---- Camera Settings control</span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160; </div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    <span class="keywordtype">int</span> getSerialNumber();</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="preprocessor">#ifdef SENSORS_MOD_AVAILABLE</span></div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <span class="keywordtype">bool</span> enableSensorSync( <a class="code" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html">sensors::SensorCapture</a>* sensCap=<span class="keyword">nullptr</span> );</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
+<div class="line"><a name="l00351"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a7cd0d152995a413a70edb39e8ea21fb5">  351</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a7cd0d152995a413a70edb39e8ea21fb5">setReadyToSync</a>(){ mSensReadyToSync=<span class="keyword">true</span>; }</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160; </div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keywordtype">void</span> grabThreadFunc();  </div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    <span class="comment">// ----&gt; Low level functions</span></div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordtype">int</span> ll_VendorControl(uint8_t *buf, <span class="keywordtype">int</span> len, <span class="keywordtype">int</span> readMode, <span class="keywordtype">bool</span> safe = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    <span class="keywordtype">int</span> ll_get_gpio_value(<span class="keywordtype">int</span> gpio_number, uint8_t* value);</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <span class="keywordtype">int</span> ll_set_gpio_value(<span class="keywordtype">int</span> gpio_number, uint8_t value);</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <span class="keywordtype">int</span> ll_set_gpio_direction(<span class="keywordtype">int</span> gpio_number, <span class="keywordtype">int</span> direction);</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="keywordtype">int</span> ll_read_system_register(uint64_t address, uint8_t* value);</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keywordtype">int</span> ll_write_system_register(uint64_t address, uint8_t value);</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    <span class="keywordtype">int</span> ll_read_sensor_register(<span class="keywordtype">int</span> side, <span class="keywordtype">int</span> sscb_id, uint64_t address, uint8_t *value);</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="keywordtype">int</span> ll_write_sensor_register(<span class="keywordtype">int</span> side, <span class="keywordtype">int</span> sscb_id, uint64_t address, uint8_t value);</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160; </div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    <span class="keywordtype">int</span> ll_SPI_FlashProgramRead(uint8_t *pBuf, <span class="keywordtype">int</span> Adr, <span class="keywordtype">int</span> len);</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160; </div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="keywordtype">int</span> ll_isp_aecagc_enable(<span class="keywordtype">int</span> side, <span class="keywordtype">bool</span> enable);</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="keywordtype">int</span> ll_isp_is_aecagc(<span class="keywordtype">int</span> side);</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160; </div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="keywordtype">int</span> ll_isp_get_gain(uint8_t *val, uint8_t sensorID);</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordtype">int</span> ll_isp_set_gain(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucGainH, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucGainM, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucGainL, <span class="keywordtype">int</span> sensorID);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="keywordtype">int</span> ll_isp_get_exposure(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *val, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> sensorID);</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <span class="keywordtype">int</span> ll_isp_set_exposure(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpH, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpM, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpL, <span class="keywordtype">int</span> sensorID);</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160; </div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <span class="keywordtype">void</span> ll_activate_sync(); <span class="comment">// Activate low level sync signal between Camera and MCU</span></div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="comment">// &lt;---- Low level functions</span></div>
 <div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160; </div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    <a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a2ea4cd892c21be73f3e63eb966433d75">VideoParams</a> mParams;                </div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160; </div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <span class="keywordtype">int</span> mDevId = 0;                     </div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    std::string mDevName;               </div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    <span class="keywordtype">int</span> mFileDesc=-1;                   </div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160; </div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    std::mutex mBufMutex;               </div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    std::mutex mComMutex;               </div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    <span class="keywordtype">int</span> mWidth = 0;                     </div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <span class="keywordtype">int</span> mHeight = 0;                    </div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    <span class="keywordtype">int</span> mChannels = 0;                  </div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    <span class="keywordtype">int</span> mFps=0;                          </div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160; </div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33f">SL_DEVICE</a> mCameraModel = <a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33fab50339a10e1de285ac99d4c3990b8693">SL_DEVICE::NONE</a>; </div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160; </div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    Frame mLastFrame;                   </div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    uint8_t mBufCount = 2;              </div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    uint8_t mCurrentIndex = 0;          </div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    <span class="keyword">struct </span>UVCBuffer *mBuffers = <span class="keyword">nullptr</span>;  </div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160; </div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    uint64_t mStartTs=0;                </div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;    uint64_t mInitTs=0;                 </div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160; </div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    <span class="keywordtype">int</span> mGainSegMax=0;                  </div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    <span class="keywordtype">int</span> mExpoureRawMax;                 </div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160; </div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    std::thread mGrabThread;            </div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    <span class="comment">// ----&gt; Mid level functions</span></div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    <span class="keywordtype">void</span> setCameraControlSettings(<span class="keywordtype">int</span> ctrl_id, <span class="keywordtype">int</span> ctrl_val);</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <span class="keywordtype">void</span> resetCameraControlSettings(<span class="keywordtype">int</span> ctrl_id);</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    <span class="keywordtype">int</span> getCameraControlSettings(<span class="keywordtype">int</span> ctrl_id);</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160; </div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <span class="keywordtype">int</span> setGammaPreset(<span class="keywordtype">int</span> side, <span class="keywordtype">int</span> value);</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160; </div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    <span class="keywordtype">int</span> calcRawGainValue(<span class="keywordtype">int</span> gain); <span class="comment">// Convert &quot;user gain&quot; to &quot;ISP gain&quot;</span></div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    <span class="keywordtype">int</span> calcGainValue(<span class="keywordtype">int</span> rawGain); <span class="comment">// Convert &quot;ISP Gain&quot; to &quot;User gain&quot;</span></div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    <span class="comment">// &lt;---- Mid level functions</span></div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160; </div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    <span class="comment">// ----&gt; Connection control functions</span></div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    <span class="keywordtype">bool</span> openCamera( uint8_t devId );                           </div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    <span class="keywordtype">bool</span> startCapture();                                        </div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <span class="keywordtype">void</span> reset();                                               </div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> stopCapture(){mStopCapture=<span class="keyword">true</span>;}               </div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    <span class="keywordtype">int</span> input_set_framerate(<span class="keywordtype">int</span> fps);                           </div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    <span class="keywordtype">int</span> xioctl(<span class="keywordtype">int</span> fd, uint64_t IOCTL_X, <span class="keywordtype">void</span> *arg);            </div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    <span class="keywordtype">void</span> checkResFps();                                         </div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    <a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33f">SL_DEVICE</a> getCameraModel(std::string dev_name);     </div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="comment">// &lt;---- Connection control functions</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160; </div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    <span class="comment">// Flags</span></div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    <span class="keywordtype">bool</span> mNewFrame=<span class="keyword">false</span>;               </div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    <span class="keywordtype">bool</span> mInitialized=<span class="keyword">false</span>;            </div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;    <span class="keywordtype">bool</span> mStopCapture=<span class="keyword">true</span>;             </div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    <span class="keywordtype">bool</span> mGrabRunning=<span class="keyword">false</span>;            </div>
 <div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160; </div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <span class="keywordtype">bool</span> mFirstFrame=<span class="keyword">true</span>;              </div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a2ea4cd892c21be73f3e63eb966433d75">VideoParams</a> mParams;                </div>
 <div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160; </div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="preprocessor">#ifdef SENSORS_MOD_AVAILABLE</span></div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    <span class="keywordtype">bool</span> mSyncEnabled=<span class="keyword">false</span>;            </div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <a class="code" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html">sensors::SensorCapture</a>* mSensPtr;            </div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    <span class="keywordtype">int</span> mDevId = 0;                     </div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    std::string mDevName;               </div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <span class="keywordtype">int</span> mFileDesc=-1;                   </div>
 <div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160; </div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    <span class="keywordtype">bool</span> mSensReadyToSync=<span class="keyword">false</span>;        </div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;};</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160; </div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;}</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160; </div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;}</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160; </div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// VIDEOCAPTURE_HPP</span></div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160; </div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    std::mutex mBufMutex;               </div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    std::mutex mComMutex;               </div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160; </div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    <span class="keywordtype">int</span> mWidth = 0;                     </div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    <span class="keywordtype">int</span> mHeight = 0;                    </div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    <span class="keywordtype">int</span> mChannels = 0;                  </div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    <span class="keywordtype">int</span> mFps=0;                          </div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160; </div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    <a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33f">SL_DEVICE</a> mCameraModel = <a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33fab50339a10e1de285ac99d4c3990b8693">SL_DEVICE::NONE</a>; </div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160; </div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    Frame mLastFrame;                   </div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    uint8_t mBufCount = 2;              </div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    uint8_t mCurrentIndex = 0;          </div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    <span class="keyword">struct </span>UVCBuffer *mBuffers = <span class="keyword">nullptr</span>;  </div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160; </div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    uint64_t mStartTs=0;                </div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    uint64_t mInitTs=0;                 </div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160; </div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    <span class="keywordtype">int</span> mGainSegMax=0;                  </div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;    <span class="keywordtype">int</span> mExpoureRawMax;                 </div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160; </div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    std::thread mGrabThread;            </div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160; </div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;    <span class="keywordtype">bool</span> mFirstFrame=<span class="keyword">true</span>;              </div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160; </div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="preprocessor">#ifdef SENSORS_MOD_AVAILABLE</span></div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    <span class="keywordtype">bool</span> mSyncEnabled=<span class="keyword">false</span>;            </div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;    <a class="code" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html">sensors::SensorCapture</a>* mSensPtr;            </div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160; </div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;    <span class="keywordtype">bool</span> mSensReadyToSync=<span class="keyword">false</span>;        </div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;};</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160; </div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;}</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160; </div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;}</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160; </div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// VIDEOCAPTURE_HPP</span></div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160; </div>
 <div class="ttc" id="aclasssl__oc_1_1sensors_1_1_sensor_capture_html"><div class="ttname"><a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html">sl_oc::sensors::SensorCapture</a></div><div class="ttdoc">The SensorCapture class provides sensor grabbing functions for the Stereolabs ZED Mini and ZED2 camer...</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00133">sensorcapture.hpp:134</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html">sl_oc::video::VideoCapture</a></div><div class="ttdoc">The VideoCapture class provides image grabbing functions and settings control for all the Stereolabs ...</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/dd4/videocapture_8hpp_source.html#l00060">videocapture.hpp:61</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a7cd0d152995a413a70edb39e8ea21fb5"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a7cd0d152995a413a70edb39e8ea21fb5">sl_oc::video::VideoCapture::setReadyToSync</a></div><div class="ttdeci">void setReadyToSync()</div><div class="ttdoc">Indicates that the SensorCapture object received the HW sync signal and a frame must be synchronized ...</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/dd4/videocapture_8hpp_source.html#l00322">videocapture.hpp:322</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a7cd0d152995a413a70edb39e8ea21fb5"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a7cd0d152995a413a70edb39e8ea21fb5">sl_oc::video::VideoCapture::setReadyToSync</a></div><div class="ttdeci">void setReadyToSync()</div><div class="ttdoc">Indicates that the SensorCapture object received the HW sync signal and a frame must be synchronized ...</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/dd4/videocapture_8hpp_source.html#l00351">videocapture.hpp:351</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a881a9359b48a18919d8ab02141f6b8a4"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a881a9359b48a18919d8ab02141f6b8a4">sl_oc::video::VideoCapture::getFrameSize</a></div><div class="ttdeci">void getFrameSize(int &amp;width, int &amp;height)</div><div class="ttdoc">Get the size of the camera frame.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/dd4/videocapture_8hpp_source.html#l00101">videocapture.hpp:101</a></div></div>
 <div class="ttc" id="adefines_8hpp_html"><div class="ttname"><a href="../../db/df8/defines_8hpp.html">defines.hpp</a></div></div>
 <div class="ttc" id="anamespacesl__oc_1_1video_html_a2ea4cd892c21be73f3e63eb966433d75"><div class="ttname"><a href="../../d1/da0/namespacesl__oc_1_1video.html#a2ea4cd892c21be73f3e63eb966433d75">sl_oc::video::VideoParams</a></div><div class="ttdeci">struct sl_oc::video::VideoParams VideoParams</div><div class="ttdoc">The camera configuration parameters.</div></div>

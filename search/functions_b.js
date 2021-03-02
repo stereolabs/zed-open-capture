@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['videocapture_302',['VideoCapture',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9988ab7895d0fe69558eb7450f3ea33d',1,'sl_oc::video::VideoCapture']]],
-  ['videoparams_303',['VideoParams',['../d1/ded/structsl__oc_1_1video_1_1_video_params.html#adc4654229dce636b2d2d6a471a841d10',1,'sl_oc::video::VideoParams']]]
+  ['_7esensorcapture_323',['~SensorCapture',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a5356fbb520b6860ebf3e55ce3767f6c0',1,'sl_oc::sensors::SensorCapture']]],
+  ['_7evideocapture_324',['~VideoCapture',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abd56d8396d5c4e578a508be4c0233323',1,'sl_oc::video::VideoCapture']]]
 ];

@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['fps_318',['fps',['../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a26ec82468284b8311039e7075e5e7d5e',1,'sl_oc::video::VideoParams']]],
-  ['frame_5fid_319',['frame_id',['../de/d91/structsl__oc_1_1video_1_1_frame.html#aaad8ef45171b85c80b357593e305d296',1,'sl_oc::video::Frame']]],
-  ['frame_5fsync_320',['frame_sync',['../db/dd1/structsl__oc_1_1sensors_1_1usb_1_1_raw_data.html#a85ec4b8e2be364a844f2d6b8a4e61280',1,'sl_oc::sensors::usb::RawData']]],
-  ['frame_5fsync_5fcount_321',['frame_sync_count',['../db/dd1/structsl__oc_1_1sensors_1_1usb_1_1_raw_data.html#a658193682e316f1fc9fff0cc9515feb1',1,'sl_oc::sensors::usb::RawData']]]
+  ['env_5fvalid_342',['env_valid',['../db/dd1/structsl__oc_1_1sensors_1_1usb_1_1_raw_data.html#ad971e425584c51174b80952647ba0f4b',1,'sl_oc::sensors::usb::RawData']]],
+  ['exposure_5fval_5fleft_343',['exposure_val_left',['../d9/d7c/zed__oc__control__example_8cpp.html#a755d418b6aa3b23d8fee6b2fc6e2d3ee',1,'zed_oc_control_example.cpp']]],
+  ['exposure_5fval_5fright_344',['exposure_val_right',['../d9/d7c/zed__oc__control__example_8cpp.html#aa062d8983c9a510525884a944e4ee191',1,'zed_oc_control_example.cpp']]]
 ];

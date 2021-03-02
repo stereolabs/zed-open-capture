@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['updatetimestampoffset_301',['updateTimestampOffset',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a2d4db59f9e4aa5b84ec48902985a2bd2',1,'sl_oc::sensors::SensorCapture']]]
+  ['wstr2str_322',['wstr2str',['../da/da5/sensorcapture__def_8hpp.html#a9b634eb903d1afbc226f3415ec162669',1,'sensorcapture_def.hpp']]]
 ];

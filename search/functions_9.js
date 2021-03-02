@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['toggleautomaticcontrol_299',['toggleAutomaticControl',['../d9/d7c/zed__oc__control__example_8cpp.html#af8259df591b8491ec55bd029cba12716',1,'zed_oc_control_example.cpp']]],
-  ['toggleled_300',['toggleLED',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#af970430296542fc9f3a731bad823e7ce',1,'sl_oc::video::VideoCapture']]]
+  ['videocapture_320',['VideoCapture',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9988ab7895d0fe69558eb7450f3ea33d',1,'sl_oc::video::VideoCapture']]],
+  ['videoparams_321',['VideoParams',['../d1/ded/structsl__oc_1_1video_1_1_video_params.html#adc4654229dce636b2d2d6a471a841d10',1,'sl_oc::video::VideoParams']]]
 ];

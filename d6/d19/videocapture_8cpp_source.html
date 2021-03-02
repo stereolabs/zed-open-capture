@@ -1729,171 +1729,252 @@ $(function() {
 <div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160;    <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC</a>(<span class="keyword">true</span>);</div>
 <div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160;}</div>
 <div class="line"><a name="l01678"></a><span class="lineno"> 1678</span>&#160; </div>
-<div class="line"><a name="l01679"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#adbf3d737cb881c39299a09009de58032"> 1679</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#adbf3d737cb881c39299a09009de58032">VideoCapture::setGain</a>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam, <span class="keywordtype">int</span> gain)</div>
+<div class="line"><a name="l01679"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a07c3771e9b6c580d59c2bd8a7de2ab5f"> 1679</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a07c3771e9b6c580d59c2bd8a7de2ab5f">VideoCapture::setROIforAECAGC</a>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> side, uint16_t x, uint16_t y, uint16_t w, uint16_t h)</div>
 <div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;{</div>
-<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">getAECAGC</a>())</div>
-<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160;        <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160; </div>
-<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160;    <span class="keywordflow">if</span> (gain &lt;= DEFAULT_MIN_GAIN)</div>
-<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160;        gain = DEFAULT_MIN_GAIN;</div>
-<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (gain &gt;= DEFAULT_MAX_GAIN)</div>
-<div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160;        gain = DEFAULT_MAX_GAIN;</div>
-<div class="line"><a name="l01688"></a><span class="lineno"> 1688</span>&#160; </div>
-<div class="line"><a name="l01689"></a><span class="lineno"> 1689</span>&#160;    uint8_t ucGainH=0, ucGainM=0, ucGainL=0;</div>
-<div class="line"><a name="l01690"></a><span class="lineno"> 1690</span>&#160; </div>
-<div class="line"><a name="l01691"></a><span class="lineno"> 1691</span>&#160;    <span class="keywordtype">int</span> rawGain = calcRawGainValue(gain);</div>
-<div class="line"><a name="l01692"></a><span class="lineno"> 1692</span>&#160; </div>
-<div class="line"><a name="l01693"></a><span class="lineno"> 1693</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
-<div class="line"><a name="l01694"></a><span class="lineno"> 1694</span>&#160; </div>
-<div class="line"><a name="l01695"></a><span class="lineno"> 1695</span>&#160;    ucGainM = (rawGain &gt;&gt; 8) &amp; 0xff;</div>
-<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160;    ucGainL = rawGain &amp; 0xff;</div>
-<div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160;    ll_isp_set_gain(ucGainH, ucGainM, ucGainL, sensorId);</div>
-<div class="line"><a name="l01698"></a><span class="lineno"> 1698</span>&#160; </div>
-<div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160;}</div>
-<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160; </div>
-<div class="line"><a name="l01701"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a52fbfe5616bb1c443d1754c4dce2d767"> 1701</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a52fbfe5616bb1c443d1754c4dce2d767">VideoCapture::getGain</a>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam)</div>
-<div class="line"><a name="l01702"></a><span class="lineno"> 1702</span>&#160;{</div>
-<div class="line"><a name="l01703"></a><span class="lineno"> 1703</span>&#160;    <span class="keywordtype">int</span> rawGain=0;</div>
-<div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160; </div>
-<div class="line"><a name="l01705"></a><span class="lineno"> 1705</span>&#160;    uint8_t val[3];</div>
-<div class="line"><a name="l01706"></a><span class="lineno"> 1706</span>&#160;    memset(val, 0, 3);</div>
+<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;    <span class="keywordflow">if</span>(side!=<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176a684d325a7303f52e64011467ff5c5758">CAM_SENS_POS::LEFT</a> &amp;&amp; side!=<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176a21507b40c80068eda19865706fdc2403">CAM_SENS_POS::RIGHT</a>)</div>
+<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160;    {</div>
+<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160;    }</div>
+<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160;    <span class="keywordflow">if</span>(w==0 || h==0)</div>
+<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160;    {</div>
+<div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01688"></a><span class="lineno"> 1688</span>&#160;    }</div>
+<div class="line"><a name="l01689"></a><span class="lineno"> 1689</span>&#160;    <span class="keywordflow">if</span>((x+w)&gt;(mWidth/2) || (y+h)&gt;mHeight)</div>
+<div class="line"><a name="l01690"></a><span class="lineno"> 1690</span>&#160;    {</div>
+<div class="line"><a name="l01691"></a><span class="lineno"> 1691</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01692"></a><span class="lineno"> 1692</span>&#160;    }</div>
+<div class="line"><a name="l01693"></a><span class="lineno"> 1693</span>&#160;    <span class="keywordflow">if</span>(w*h&lt;=100)</div>
+<div class="line"><a name="l01694"></a><span class="lineno"> 1694</span>&#160;    {</div>
+<div class="line"><a name="l01695"></a><span class="lineno"> 1695</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160;    }</div>
+<div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160; </div>
+<div class="line"><a name="l01698"></a><span class="lineno"> 1698</span>&#160;    <span class="keywordtype">int</span> x_start_high = x / 256;</div>
+<div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160;    <span class="keywordtype">int</span> x_start_low = (x - x_start_high * 256);</div>
+<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160;    <span class="keywordtype">int</span> y_start_high = y / 256;</div>
+<div class="line"><a name="l01701"></a><span class="lineno"> 1701</span>&#160;    <span class="keywordtype">int</span> y_start_low = (y - x_start_high * 256);</div>
+<div class="line"><a name="l01702"></a><span class="lineno"> 1702</span>&#160;    <span class="keywordtype">int</span> w_start_high = w / 256;</div>
+<div class="line"><a name="l01703"></a><span class="lineno"> 1703</span>&#160;    <span class="keywordtype">int</span> w_start_low = (w - x_start_high * 256);</div>
+<div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160;    <span class="keywordtype">int</span> h_start_high = h / 256;</div>
+<div class="line"><a name="l01705"></a><span class="lineno"> 1705</span>&#160;    <span class="keywordtype">int</span> h_start_low = (h - x_start_high * 256);</div>
+<div class="line"><a name="l01706"></a><span class="lineno"> 1706</span>&#160; </div>
 <div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160; </div>
-<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
-<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;    <span class="keywordtype">int</span> r = ll_isp_get_gain(val, sensorId);</div>
-<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;    <span class="keywordflow">if</span>(r&lt;0)</div>
-<div class="line"><a name="l01711"></a><span class="lineno"> 1711</span>&#160;        <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l01712"></a><span class="lineno"> 1712</span>&#160; </div>
-<div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160;    rawGain = (int) ((val[1] &lt;&lt; 8) + val[0]);</div>
-<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160;    <span class="keywordflow">return</span> calcGainValue(rawGain);</div>
-<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;}</div>
-<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160; </div>
-<div class="line"><a name="l01717"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a907f58660df3ee70ba6725c943ba9834"> 1717</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a907f58660df3ee70ba6725c943ba9834">VideoCapture::setExposure</a>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam, <span class="keywordtype">int</span> exposure)</div>
-<div class="line"><a name="l01718"></a><span class="lineno"> 1718</span>&#160;{</div>
-<div class="line"><a name="l01719"></a><span class="lineno"> 1719</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpH, ucExpM, ucExpL;</div>
+<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;    uint32_t ulAddr = 0x801810C0;</div>
+<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;    <span class="keywordflow">if</span> (<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(side)==1)</div>
+<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;        ulAddr= 0x801818C0;</div>
+<div class="line"><a name="l01711"></a><span class="lineno"> 1711</span>&#160; </div>
+<div class="line"><a name="l01712"></a><span class="lineno"> 1712</span>&#160;    <span class="keywordtype">int</span> r = ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(x_start_high));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(x_start_low));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(y_start_high));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(y_start_low));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(w_start_high));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01717"></a><span class="lineno"> 1717</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(w_start_low));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01718"></a><span class="lineno"> 1718</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(h_start_high));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01719"></a><span class="lineno"> 1719</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(h_start_low));ulAddr++;usleep(100);</div>
 <div class="line"><a name="l01720"></a><span class="lineno"> 1720</span>&#160; </div>
-<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">getAECAGC</a>())</div>
-<div class="line"><a name="l01722"></a><span class="lineno"> 1722</span>&#160;        <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160;    <span class="keywordflow">return</span> (r==0);</div>
+<div class="line"><a name="l01722"></a><span class="lineno"> 1722</span>&#160;}</div>
 <div class="line"><a name="l01723"></a><span class="lineno"> 1723</span>&#160; </div>
-<div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160;    <span class="keywordflow">if</span>(exposure &lt; DEFAULT_MIN_EXP)</div>
-<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160;        exposure = DEFAULT_MIN_EXP;</div>
-<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;    <span class="keywordflow">if</span>(exposure &gt; DEFAULT_MAX_EXP)</div>
-<div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160;        exposure = DEFAULT_MAX_EXP;</div>
+<div class="line"><a name="l01724"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#adfa43f0942c818e0130c1adb75aa8b46"> 1724</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#adfa43f0942c818e0130c1adb75aa8b46">VideoCapture::resetROIforAECAGC</a>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> side)</div>
+<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160;{</div>
+<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a07c3771e9b6c580d59c2bd8a7de2ab5f">setROIforAECAGC</a>(side, 0,0, mWidth/2, mHeight);</div>
+<div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160;}</div>
 <div class="line"><a name="l01728"></a><span class="lineno"> 1728</span>&#160; </div>
-<div class="line"><a name="l01729"></a><span class="lineno"> 1729</span>&#160;    <span class="keywordtype">int</span> rawExp = (mExpoureRawMax * ((float) exposure / 100.0));</div>
-<div class="line"><a name="l01730"></a><span class="lineno"> 1730</span>&#160;    <span class="keywordflow">if</span>(rawExp&lt;EXP_RAW_MIN)</div>
-<div class="line"><a name="l01731"></a><span class="lineno"> 1731</span>&#160;        rawExp = EXP_RAW_MIN;</div>
-<div class="line"><a name="l01732"></a><span class="lineno"> 1732</span>&#160; </div>
-<div class="line"><a name="l01733"></a><span class="lineno"> 1733</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;Set Raw Exp: &quot;</span> &lt;&lt; rawExp &lt;&lt; std::endl;</div>
-<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160; </div>
-<div class="line"><a name="l01735"></a><span class="lineno"> 1735</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
-<div class="line"><a name="l01736"></a><span class="lineno"> 1736</span>&#160; </div>
-<div class="line"><a name="l01737"></a><span class="lineno"> 1737</span>&#160;    ucExpH = (rawExp &gt;&gt; 12) &amp; 0xff;</div>
-<div class="line"><a name="l01738"></a><span class="lineno"> 1738</span>&#160;    ucExpM = (rawExp &gt;&gt; 4) &amp; 0xff;</div>
-<div class="line"><a name="l01739"></a><span class="lineno"> 1739</span>&#160;    ucExpL = (rawExp &lt;&lt; 4) &amp; 0xf0;</div>
-<div class="line"><a name="l01740"></a><span class="lineno"> 1740</span>&#160;    ll_isp_set_exposure(ucExpH, ucExpM, ucExpL, sensorId);</div>
-<div class="line"><a name="l01741"></a><span class="lineno"> 1741</span>&#160;}</div>
-<div class="line"><a name="l01742"></a><span class="lineno"> 1742</span>&#160; </div>
-<div class="line"><a name="l01743"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abe128c2f45a29dc71d08064e41ed3149"> 1743</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abe128c2f45a29dc71d08064e41ed3149">VideoCapture::getExposure</a>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam)</div>
-<div class="line"><a name="l01744"></a><span class="lineno"> 1744</span>&#160;{</div>
-<div class="line"><a name="l01745"></a><span class="lineno"> 1745</span>&#160;    <span class="keywordtype">int</span> rawExp=0;</div>
-<div class="line"><a name="l01746"></a><span class="lineno"> 1746</span>&#160; </div>
-<div class="line"><a name="l01747"></a><span class="lineno"> 1747</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> val[3];</div>
-<div class="line"><a name="l01748"></a><span class="lineno"> 1748</span>&#160;    memset(val, 0, 3);</div>
-<div class="line"><a name="l01749"></a><span class="lineno"> 1749</span>&#160; </div>
-<div class="line"><a name="l01750"></a><span class="lineno"> 1750</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
-<div class="line"><a name="l01751"></a><span class="lineno"> 1751</span>&#160; </div>
-<div class="line"><a name="l01752"></a><span class="lineno"> 1752</span>&#160;    <span class="keywordtype">int</span> r = ll_isp_get_exposure(val, sensorId);</div>
-<div class="line"><a name="l01753"></a><span class="lineno"> 1753</span>&#160;    <span class="keywordflow">if</span>(r&lt;0)</div>
-<div class="line"><a name="l01754"></a><span class="lineno"> 1754</span>&#160;        <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l01755"></a><span class="lineno"> 1755</span>&#160;    rawExp = (int) ((val[2] &lt;&lt; 12) + (val[1] &lt;&lt; 4) + (val[0] &gt;&gt; 4));</div>
-<div class="line"><a name="l01756"></a><span class="lineno"> 1756</span>&#160; </div>
-<div class="line"><a name="l01757"></a><span class="lineno"> 1757</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;Get Raw Exp: &quot;</span> &lt;&lt; rawExp &lt;&lt; std::endl;</div>
+<div class="line"><a name="l01729"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ac3199bfc9e174bda9c44d0dd5d736950"> 1729</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ac3199bfc9e174bda9c44d0dd5d736950">VideoCapture::getROIforAECAGC</a>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> side, uint16_t &amp;x, uint16_t &amp;y, uint16_t &amp;w, uint16_t &amp;h)</div>
+<div class="line"><a name="l01730"></a><span class="lineno"> 1730</span>&#160;{</div>
+<div class="line"><a name="l01731"></a><span class="lineno"> 1731</span>&#160;    uint8_t x_start_high = 0;</div>
+<div class="line"><a name="l01732"></a><span class="lineno"> 1732</span>&#160;    uint8_t x_start_low = 0;</div>
+<div class="line"><a name="l01733"></a><span class="lineno"> 1733</span>&#160;    uint8_t y_start_high =0;</div>
+<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160;    uint8_t y_start_low = 0;</div>
+<div class="line"><a name="l01735"></a><span class="lineno"> 1735</span>&#160;    uint8_t w_start_high =0;</div>
+<div class="line"><a name="l01736"></a><span class="lineno"> 1736</span>&#160;    uint8_t w_start_low = 0;</div>
+<div class="line"><a name="l01737"></a><span class="lineno"> 1737</span>&#160;    uint8_t h_start_high = 0;</div>
+<div class="line"><a name="l01738"></a><span class="lineno"> 1738</span>&#160;    uint8_t h_start_low = 0;</div>
+<div class="line"><a name="l01739"></a><span class="lineno"> 1739</span>&#160;    uint32_t ulAddr = 0x801810C0;</div>
+<div class="line"><a name="l01740"></a><span class="lineno"> 1740</span>&#160;    <span class="keywordflow">if</span> (<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(side)==1)</div>
+<div class="line"><a name="l01741"></a><span class="lineno"> 1741</span>&#160;        ulAddr= 0x801818C0;</div>
+<div class="line"><a name="l01742"></a><span class="lineno"> 1742</span>&#160;    <span class="keywordtype">int</span> r =  ll_read_system_register(ulAddr,&amp;x_start_high);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01743"></a><span class="lineno"> 1743</span>&#160;    r +=  ll_read_system_register(ulAddr,&amp;x_start_low);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01744"></a><span class="lineno"> 1744</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;y_start_high);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01745"></a><span class="lineno"> 1745</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;y_start_low);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01746"></a><span class="lineno"> 1746</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;w_start_high);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01747"></a><span class="lineno"> 1747</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;w_start_low);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01748"></a><span class="lineno"> 1748</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;h_start_high);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01749"></a><span class="lineno"> 1749</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;h_start_low);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01750"></a><span class="lineno"> 1750</span>&#160; </div>
+<div class="line"><a name="l01751"></a><span class="lineno"> 1751</span>&#160;    x = x_start_high*256 + x_start_low;</div>
+<div class="line"><a name="l01752"></a><span class="lineno"> 1752</span>&#160;    y = y_start_high*256 + y_start_low;</div>
+<div class="line"><a name="l01753"></a><span class="lineno"> 1753</span>&#160;    w = w_start_high*256 + w_start_low;</div>
+<div class="line"><a name="l01754"></a><span class="lineno"> 1754</span>&#160;    h = h_start_high*256 + h_start_low;</div>
+<div class="line"><a name="l01755"></a><span class="lineno"> 1755</span>&#160; </div>
+<div class="line"><a name="l01756"></a><span class="lineno"> 1756</span>&#160;    <span class="keywordflow">return</span> (r==0);</div>
+<div class="line"><a name="l01757"></a><span class="lineno"> 1757</span>&#160;}</div>
 <div class="line"><a name="l01758"></a><span class="lineno"> 1758</span>&#160; </div>
-<div class="line"><a name="l01759"></a><span class="lineno"> 1759</span>&#160;    <span class="keywordtype">int</span> exposure = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(std::round((100.0*rawExp)/mExpoureRawMax));</div>
-<div class="line"><a name="l01760"></a><span class="lineno"> 1760</span>&#160;    <span class="keywordflow">return</span> exposure;</div>
-<div class="line"><a name="l01761"></a><span class="lineno"> 1761</span>&#160;}</div>
-<div class="line"><a name="l01762"></a><span class="lineno"> 1762</span>&#160; </div>
-<div class="line"><a name="l01763"></a><span class="lineno"> 1763</span>&#160;<span class="keywordtype">int</span> VideoCapture::calcRawGainValue(<span class="keywordtype">int</span> gain) {</div>
-<div class="line"><a name="l01764"></a><span class="lineno"> 1764</span>&#160; </div>
-<div class="line"><a name="l01765"></a><span class="lineno"> 1765</span>&#160;    <span class="comment">// From [0,100] to segmented gain</span></div>
-<div class="line"><a name="l01766"></a><span class="lineno"> 1766</span>&#160;    <span class="keywordtype">int</span> segmentedGain = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(std::round(mGainSegMax * (<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(gain) / 100.0)));</div>
-<div class="line"><a name="l01767"></a><span class="lineno"> 1767</span>&#160;    <span class="keywordtype">int</span> rawGain = 0;</div>
+<div class="line"><a name="l01759"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#adbf3d737cb881c39299a09009de58032"> 1759</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#adbf3d737cb881c39299a09009de58032">VideoCapture::setGain</a>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam, <span class="keywordtype">int</span> gain)</div>
+<div class="line"><a name="l01760"></a><span class="lineno"> 1760</span>&#160;{</div>
+<div class="line"><a name="l01761"></a><span class="lineno"> 1761</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">getAECAGC</a>())</div>
+<div class="line"><a name="l01762"></a><span class="lineno"> 1762</span>&#160;        <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01763"></a><span class="lineno"> 1763</span>&#160; </div>
+<div class="line"><a name="l01764"></a><span class="lineno"> 1764</span>&#160;    <span class="keywordflow">if</span> (gain &lt;= DEFAULT_MIN_GAIN)</div>
+<div class="line"><a name="l01765"></a><span class="lineno"> 1765</span>&#160;        gain = DEFAULT_MIN_GAIN;</div>
+<div class="line"><a name="l01766"></a><span class="lineno"> 1766</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (gain &gt;= DEFAULT_MAX_GAIN)</div>
+<div class="line"><a name="l01767"></a><span class="lineno"> 1767</span>&#160;        gain = DEFAULT_MAX_GAIN;</div>
 <div class="line"><a name="l01768"></a><span class="lineno"> 1768</span>&#160; </div>
-<div class="line"><a name="l01769"></a><span class="lineno"> 1769</span>&#160;    <span class="comment">// ----&gt; Calculate correct GAIN ZONE</span></div>
-<div class="line"><a name="l01770"></a><span class="lineno"> 1770</span>&#160;    <span class="keywordtype">int</span> gainZone1nbVal = GAIN_ZONE1_MAX - GAIN_ZONE1_MIN;</div>
-<div class="line"><a name="l01771"></a><span class="lineno"> 1771</span>&#160;    <span class="keywordtype">int</span> gainZone2nbVal = GAIN_ZONE2_MAX - GAIN_ZONE2_MIN;</div>
-<div class="line"><a name="l01772"></a><span class="lineno"> 1772</span>&#160;    <span class="keywordtype">int</span> gainZone3nbVal = GAIN_ZONE3_MAX - GAIN_ZONE3_MIN;</div>
-<div class="line"><a name="l01773"></a><span class="lineno"> 1773</span>&#160;    <span class="keywordtype">int</span> gainZone4nbVal = GAIN_ZONE4_MAX - GAIN_ZONE4_MIN;</div>
+<div class="line"><a name="l01769"></a><span class="lineno"> 1769</span>&#160;    uint8_t ucGainH=0, ucGainM=0, ucGainL=0;</div>
+<div class="line"><a name="l01770"></a><span class="lineno"> 1770</span>&#160; </div>
+<div class="line"><a name="l01771"></a><span class="lineno"> 1771</span>&#160;    <span class="keywordtype">int</span> rawGain = calcRawGainValue(gain);</div>
+<div class="line"><a name="l01772"></a><span class="lineno"> 1772</span>&#160; </div>
+<div class="line"><a name="l01773"></a><span class="lineno"> 1773</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
 <div class="line"><a name="l01774"></a><span class="lineno"> 1774</span>&#160; </div>
-<div class="line"><a name="l01775"></a><span class="lineno"> 1775</span>&#160;    <span class="keywordflow">if</span> (segmentedGain &lt;= gainZone1nbVal)</div>
-<div class="line"><a name="l01776"></a><span class="lineno"> 1776</span>&#160;        rawGain = segmentedGain + GAIN_ZONE1_MIN;</div>
-<div class="line"><a name="l01777"></a><span class="lineno"> 1777</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (segmentedGain &lt;= gainZone1nbVal + gainZone2nbVal)</div>
-<div class="line"><a name="l01778"></a><span class="lineno"> 1778</span>&#160;        rawGain = segmentedGain + GAIN_ZONE2_MIN - (gainZone1nbVal);</div>
-<div class="line"><a name="l01779"></a><span class="lineno"> 1779</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (segmentedGain &lt;= gainZone1nbVal + gainZone2nbVal + gainZone3nbVal)</div>
-<div class="line"><a name="l01780"></a><span class="lineno"> 1780</span>&#160;        rawGain = segmentedGain + GAIN_ZONE3_MIN - (gainZone1nbVal + gainZone2nbVal);</div>
-<div class="line"><a name="l01781"></a><span class="lineno"> 1781</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (segmentedGain &lt;= gainZone1nbVal + gainZone2nbVal + gainZone3nbVal + gainZone4nbVal)</div>
-<div class="line"><a name="l01782"></a><span class="lineno"> 1782</span>&#160;        rawGain = segmentedGain + GAIN_ZONE4_MIN - (gainZone1nbVal + gainZone2nbVal + gainZone3nbVal);</div>
-<div class="line"><a name="l01783"></a><span class="lineno"> 1783</span>&#160;    <span class="comment">// &lt;---- Calculate correct GAIN ZONE</span></div>
+<div class="line"><a name="l01775"></a><span class="lineno"> 1775</span>&#160;    ucGainM = (rawGain &gt;&gt; 8) &amp; 0xff;</div>
+<div class="line"><a name="l01776"></a><span class="lineno"> 1776</span>&#160;    ucGainL = rawGain &amp; 0xff;</div>
+<div class="line"><a name="l01777"></a><span class="lineno"> 1777</span>&#160;    ll_isp_set_gain(ucGainH, ucGainM, ucGainL, sensorId);</div>
+<div class="line"><a name="l01778"></a><span class="lineno"> 1778</span>&#160; </div>
+<div class="line"><a name="l01779"></a><span class="lineno"> 1779</span>&#160;}</div>
+<div class="line"><a name="l01780"></a><span class="lineno"> 1780</span>&#160; </div>
+<div class="line"><a name="l01781"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a52fbfe5616bb1c443d1754c4dce2d767"> 1781</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a52fbfe5616bb1c443d1754c4dce2d767">VideoCapture::getGain</a>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam)</div>
+<div class="line"><a name="l01782"></a><span class="lineno"> 1782</span>&#160;{</div>
+<div class="line"><a name="l01783"></a><span class="lineno"> 1783</span>&#160;    <span class="keywordtype">int</span> rawGain=0;</div>
 <div class="line"><a name="l01784"></a><span class="lineno"> 1784</span>&#160; </div>
-<div class="line"><a name="l01785"></a><span class="lineno"> 1785</span>&#160;    <span class="keywordflow">return</span> rawGain;</div>
-<div class="line"><a name="l01786"></a><span class="lineno"> 1786</span>&#160;}</div>
+<div class="line"><a name="l01785"></a><span class="lineno"> 1785</span>&#160;    uint8_t val[3];</div>
+<div class="line"><a name="l01786"></a><span class="lineno"> 1786</span>&#160;    memset(val, 0, 3);</div>
 <div class="line"><a name="l01787"></a><span class="lineno"> 1787</span>&#160; </div>
-<div class="line"><a name="l01788"></a><span class="lineno"> 1788</span>&#160;<span class="keywordtype">int</span> VideoCapture::calcGainValue(<span class="keywordtype">int</span> rawGain)</div>
-<div class="line"><a name="l01789"></a><span class="lineno"> 1789</span>&#160;{</div>
-<div class="line"><a name="l01790"></a><span class="lineno"> 1790</span>&#160;    <span class="keywordtype">int</span> segmentedGain;</div>
-<div class="line"><a name="l01791"></a><span class="lineno"> 1791</span>&#160; </div>
-<div class="line"><a name="l01792"></a><span class="lineno"> 1792</span>&#160;    <span class="comment">// ----&gt; Calculate correct GAIN ZONE</span></div>
-<div class="line"><a name="l01793"></a><span class="lineno"> 1793</span>&#160;    <span class="keywordtype">int</span> gainZone1nbVal = GAIN_ZONE1_MAX - GAIN_ZONE1_MIN;</div>
-<div class="line"><a name="l01794"></a><span class="lineno"> 1794</span>&#160;    <span class="keywordtype">int</span> gainZone2nbVal = GAIN_ZONE2_MAX - GAIN_ZONE2_MIN;</div>
-<div class="line"><a name="l01795"></a><span class="lineno"> 1795</span>&#160;    <span class="keywordtype">int</span> gainZone3nbVal = GAIN_ZONE3_MAX - GAIN_ZONE3_MIN;</div>
-<div class="line"><a name="l01796"></a><span class="lineno"> 1796</span>&#160;    <span class="keywordflow">if</span> (rawGain &gt;= GAIN_ZONE1_MIN &amp;&amp; rawGain &lt;= GAIN_ZONE1_MAX)</div>
-<div class="line"><a name="l01797"></a><span class="lineno"> 1797</span>&#160;        segmentedGain = rawGain - GAIN_ZONE1_MIN;</div>
-<div class="line"><a name="l01798"></a><span class="lineno"> 1798</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (rawGain &gt;= GAIN_ZONE2_MIN &amp;&amp; rawGain &lt;= GAIN_ZONE2_MAX)</div>
-<div class="line"><a name="l01799"></a><span class="lineno"> 1799</span>&#160;        segmentedGain = rawGain - GAIN_ZONE2_MIN + gainZone1nbVal;</div>
-<div class="line"><a name="l01800"></a><span class="lineno"> 1800</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (rawGain &gt;= GAIN_ZONE3_MIN &amp;&amp; rawGain &lt;= GAIN_ZONE3_MAX)</div>
-<div class="line"><a name="l01801"></a><span class="lineno"> 1801</span>&#160;        segmentedGain = rawGain - GAIN_ZONE3_MIN + gainZone1nbVal + gainZone2nbVal;</div>
-<div class="line"><a name="l01802"></a><span class="lineno"> 1802</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (rawGain &gt;= GAIN_ZONE4_MIN &amp;&amp; rawGain &lt;= GAIN_ZONE4_MAX)</div>
-<div class="line"><a name="l01803"></a><span class="lineno"> 1803</span>&#160;        segmentedGain = rawGain - GAIN_ZONE4_MIN + gainZone1nbVal + gainZone2nbVal + gainZone3nbVal;</div>
-<div class="line"><a name="l01804"></a><span class="lineno"> 1804</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l01805"></a><span class="lineno"> 1805</span>&#160;        segmentedGain = -1;</div>
-<div class="line"><a name="l01806"></a><span class="lineno"> 1806</span>&#160;    <span class="comment">// &lt;---- Calculate correct GAIN ZONE</span></div>
-<div class="line"><a name="l01807"></a><span class="lineno"> 1807</span>&#160; </div>
-<div class="line"><a name="l01808"></a><span class="lineno"> 1808</span>&#160;    <span class="comment">// From segmented gain to [0,100]</span></div>
-<div class="line"><a name="l01809"></a><span class="lineno"> 1809</span>&#160;    <span class="keywordtype">int</span> gain = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(std::round((100.0*segmentedGain)/mGainSegMax));</div>
-<div class="line"><a name="l01810"></a><span class="lineno"> 1810</span>&#160; </div>
-<div class="line"><a name="l01811"></a><span class="lineno"> 1811</span>&#160;    <span class="keywordflow">return</span> gain;</div>
-<div class="line"><a name="l01812"></a><span class="lineno"> 1812</span>&#160;}</div>
-<div class="line"><a name="l01813"></a><span class="lineno"> 1813</span>&#160; </div>
-<div class="line"><a name="l01814"></a><span class="lineno"> 1814</span>&#160;<span class="preprocessor">#ifdef SENSORS_MOD_AVAILABLE</span></div>
-<div class="line"><a name="l01815"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abf275abae3c47fa253b80c7b1bdd6a44"> 1815</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abf275abae3c47fa253b80c7b1bdd6a44">VideoCapture::enableSensorSync</a>( <a class="code" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html">sensors::SensorCapture</a>* sensCap )</div>
-<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160;{</div>
-<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160;    <span class="keywordflow">if</span>(!sensCap)</div>
-<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l01819"></a><span class="lineno"> 1819</span>&#160; </div>
-<div class="line"><a name="l01820"></a><span class="lineno"> 1820</span>&#160;    <span class="comment">// Activate low level sync mechanism</span></div>
-<div class="line"><a name="l01821"></a><span class="lineno"> 1821</span>&#160;    ll_activate_sync();</div>
+<div class="line"><a name="l01788"></a><span class="lineno"> 1788</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
+<div class="line"><a name="l01789"></a><span class="lineno"> 1789</span>&#160;    <span class="keywordtype">int</span> r = ll_isp_get_gain(val, sensorId);</div>
+<div class="line"><a name="l01790"></a><span class="lineno"> 1790</span>&#160;    <span class="keywordflow">if</span>(r&lt;0)</div>
+<div class="line"><a name="l01791"></a><span class="lineno"> 1791</span>&#160;        <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l01792"></a><span class="lineno"> 1792</span>&#160; </div>
+<div class="line"><a name="l01793"></a><span class="lineno"> 1793</span>&#160;    rawGain = (int) ((val[1] &lt;&lt; 8) + val[0]);</div>
+<div class="line"><a name="l01794"></a><span class="lineno"> 1794</span>&#160;    <span class="keywordflow">return</span> calcGainValue(rawGain);</div>
+<div class="line"><a name="l01795"></a><span class="lineno"> 1795</span>&#160;}</div>
+<div class="line"><a name="l01796"></a><span class="lineno"> 1796</span>&#160; </div>
+<div class="line"><a name="l01797"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a907f58660df3ee70ba6725c943ba9834"> 1797</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a907f58660df3ee70ba6725c943ba9834">VideoCapture::setExposure</a>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam, <span class="keywordtype">int</span> exposure)</div>
+<div class="line"><a name="l01798"></a><span class="lineno"> 1798</span>&#160;{</div>
+<div class="line"><a name="l01799"></a><span class="lineno"> 1799</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpH, ucExpM, ucExpL;</div>
+<div class="line"><a name="l01800"></a><span class="lineno"> 1800</span>&#160; </div>
+<div class="line"><a name="l01801"></a><span class="lineno"> 1801</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">getAECAGC</a>())</div>
+<div class="line"><a name="l01802"></a><span class="lineno"> 1802</span>&#160;        <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01803"></a><span class="lineno"> 1803</span>&#160; </div>
+<div class="line"><a name="l01804"></a><span class="lineno"> 1804</span>&#160;    <span class="keywordflow">if</span>(exposure &lt; DEFAULT_MIN_EXP)</div>
+<div class="line"><a name="l01805"></a><span class="lineno"> 1805</span>&#160;        exposure = DEFAULT_MIN_EXP;</div>
+<div class="line"><a name="l01806"></a><span class="lineno"> 1806</span>&#160;    <span class="keywordflow">if</span>(exposure &gt; DEFAULT_MAX_EXP)</div>
+<div class="line"><a name="l01807"></a><span class="lineno"> 1807</span>&#160;        exposure = DEFAULT_MAX_EXP;</div>
+<div class="line"><a name="l01808"></a><span class="lineno"> 1808</span>&#160; </div>
+<div class="line"><a name="l01809"></a><span class="lineno"> 1809</span>&#160;    <span class="keywordtype">int</span> rawExp = (mExpoureRawMax * ((float) exposure / 100.0));</div>
+<div class="line"><a name="l01810"></a><span class="lineno"> 1810</span>&#160;    <span class="keywordflow">if</span>(rawExp&lt;EXP_RAW_MIN)</div>
+<div class="line"><a name="l01811"></a><span class="lineno"> 1811</span>&#160;        rawExp = EXP_RAW_MIN;</div>
+<div class="line"><a name="l01812"></a><span class="lineno"> 1812</span>&#160; </div>
+<div class="line"><a name="l01813"></a><span class="lineno"> 1813</span>&#160;    <span class="comment">//std::cout &lt;&lt; &quot;Set Raw Exp: &quot; &lt;&lt; rawExp &lt;&lt; std::endl;</span></div>
+<div class="line"><a name="l01814"></a><span class="lineno"> 1814</span>&#160; </div>
+<div class="line"><a name="l01815"></a><span class="lineno"> 1815</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
+<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160; </div>
+<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160;    ucExpH = (rawExp &gt;&gt; 12) &amp; 0xff;</div>
+<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160;    ucExpM = (rawExp &gt;&gt; 4) &amp; 0xff;</div>
+<div class="line"><a name="l01819"></a><span class="lineno"> 1819</span>&#160;    ucExpL = (rawExp &lt;&lt; 4) &amp; 0xf0;</div>
+<div class="line"><a name="l01820"></a><span class="lineno"> 1820</span>&#160;    ll_isp_set_exposure(ucExpH, ucExpM, ucExpL, sensorId);</div>
+<div class="line"><a name="l01821"></a><span class="lineno"> 1821</span>&#160;}</div>
 <div class="line"><a name="l01822"></a><span class="lineno"> 1822</span>&#160; </div>
-<div class="line"><a name="l01823"></a><span class="lineno"> 1823</span>&#160;    mSyncEnabled = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l01824"></a><span class="lineno"> 1824</span>&#160;    mSensPtr = sensCap;</div>
-<div class="line"><a name="l01825"></a><span class="lineno"> 1825</span>&#160; </div>
-<div class="line"><a name="l01826"></a><span class="lineno"> 1826</span>&#160;    mSensPtr-&gt;<a class="code" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a44cd3eb30725cff54ce9269a75ff4db5">setVideoPtr</a>(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l01827"></a><span class="lineno"> 1827</span>&#160; </div>
-<div class="line"><a name="l01828"></a><span class="lineno"> 1828</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l01829"></a><span class="lineno"> 1829</span>&#160;}</div>
-<div class="line"><a name="l01830"></a><span class="lineno"> 1830</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l01823"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abe128c2f45a29dc71d08064e41ed3149"> 1823</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abe128c2f45a29dc71d08064e41ed3149">VideoCapture::getExposure</a>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">CAM_SENS_POS</a> cam)</div>
+<div class="line"><a name="l01824"></a><span class="lineno"> 1824</span>&#160;{</div>
+<div class="line"><a name="l01825"></a><span class="lineno"> 1825</span>&#160;    <span class="keywordtype">int</span> rawExp=0;</div>
+<div class="line"><a name="l01826"></a><span class="lineno"> 1826</span>&#160; </div>
+<div class="line"><a name="l01827"></a><span class="lineno"> 1827</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> val[3];</div>
+<div class="line"><a name="l01828"></a><span class="lineno"> 1828</span>&#160;    memset(val, 0, 3);</div>
+<div class="line"><a name="l01829"></a><span class="lineno"> 1829</span>&#160; </div>
+<div class="line"><a name="l01830"></a><span class="lineno"> 1830</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
 <div class="line"><a name="l01831"></a><span class="lineno"> 1831</span>&#160; </div>
-<div class="line"><a name="l01832"></a><span class="lineno"> 1832</span>&#160;}</div>
-<div class="line"><a name="l01833"></a><span class="lineno"> 1833</span>&#160; </div>
-<div class="line"><a name="l01834"></a><span class="lineno"> 1834</span>&#160;}</div>
-<div class="line"><a name="l01835"></a><span class="lineno"> 1835</span>&#160; </div>
+<div class="line"><a name="l01832"></a><span class="lineno"> 1832</span>&#160;    <span class="keywordtype">int</span> r = ll_isp_get_exposure(val, sensorId);</div>
+<div class="line"><a name="l01833"></a><span class="lineno"> 1833</span>&#160;    <span class="keywordflow">if</span>(r&lt;0)</div>
+<div class="line"><a name="l01834"></a><span class="lineno"> 1834</span>&#160;        <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l01835"></a><span class="lineno"> 1835</span>&#160;    rawExp = (int) ((val[2] &lt;&lt; 12) + (val[1] &lt;&lt; 4) + (val[0] &gt;&gt; 4));</div>
 <div class="line"><a name="l01836"></a><span class="lineno"> 1836</span>&#160; </div>
-<div class="line"><a name="l01837"></a><span class="lineno"> 1837</span>&#160; </div>
+<div class="line"><a name="l01837"></a><span class="lineno"> 1837</span>&#160;    <span class="comment">//std::cout &lt;&lt; &quot;Get Raw Exp: &quot; &lt;&lt; rawExp &lt;&lt; std::endl;</span></div>
+<div class="line"><a name="l01838"></a><span class="lineno"> 1838</span>&#160; </div>
+<div class="line"><a name="l01839"></a><span class="lineno"> 1839</span>&#160;    <span class="keywordtype">int</span> exposure = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(std::round((100.0*rawExp)/mExpoureRawMax));</div>
+<div class="line"><a name="l01840"></a><span class="lineno"> 1840</span>&#160;    <span class="keywordflow">return</span> exposure;</div>
+<div class="line"><a name="l01841"></a><span class="lineno"> 1841</span>&#160;}</div>
+<div class="line"><a name="l01842"></a><span class="lineno"> 1842</span>&#160; </div>
+<div class="line"><a name="l01843"></a><span class="lineno"> 1843</span>&#160;<span class="keywordtype">int</span> VideoCapture::calcRawGainValue(<span class="keywordtype">int</span> gain) {</div>
+<div class="line"><a name="l01844"></a><span class="lineno"> 1844</span>&#160; </div>
+<div class="line"><a name="l01845"></a><span class="lineno"> 1845</span>&#160;    <span class="comment">// From [0,100] to segmented gain</span></div>
+<div class="line"><a name="l01846"></a><span class="lineno"> 1846</span>&#160;    <span class="keywordtype">int</span> segmentedGain = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(std::round(mGainSegMax * (<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(gain) / 100.0)));</div>
+<div class="line"><a name="l01847"></a><span class="lineno"> 1847</span>&#160;    <span class="keywordtype">int</span> rawGain = 0;</div>
+<div class="line"><a name="l01848"></a><span class="lineno"> 1848</span>&#160; </div>
+<div class="line"><a name="l01849"></a><span class="lineno"> 1849</span>&#160;    <span class="comment">// ----&gt; Calculate correct GAIN ZONE</span></div>
+<div class="line"><a name="l01850"></a><span class="lineno"> 1850</span>&#160;    <span class="keywordtype">int</span> gainZone1nbVal = GAIN_ZONE1_MAX - GAIN_ZONE1_MIN;</div>
+<div class="line"><a name="l01851"></a><span class="lineno"> 1851</span>&#160;    <span class="keywordtype">int</span> gainZone2nbVal = GAIN_ZONE2_MAX - GAIN_ZONE2_MIN;</div>
+<div class="line"><a name="l01852"></a><span class="lineno"> 1852</span>&#160;    <span class="keywordtype">int</span> gainZone3nbVal = GAIN_ZONE3_MAX - GAIN_ZONE3_MIN;</div>
+<div class="line"><a name="l01853"></a><span class="lineno"> 1853</span>&#160;    <span class="keywordtype">int</span> gainZone4nbVal = GAIN_ZONE4_MAX - GAIN_ZONE4_MIN;</div>
+<div class="line"><a name="l01854"></a><span class="lineno"> 1854</span>&#160; </div>
+<div class="line"><a name="l01855"></a><span class="lineno"> 1855</span>&#160;    <span class="keywordflow">if</span> (segmentedGain &lt;= gainZone1nbVal)</div>
+<div class="line"><a name="l01856"></a><span class="lineno"> 1856</span>&#160;        rawGain = segmentedGain + GAIN_ZONE1_MIN;</div>
+<div class="line"><a name="l01857"></a><span class="lineno"> 1857</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (segmentedGain &lt;= gainZone1nbVal + gainZone2nbVal)</div>
+<div class="line"><a name="l01858"></a><span class="lineno"> 1858</span>&#160;        rawGain = segmentedGain + GAIN_ZONE2_MIN - (gainZone1nbVal);</div>
+<div class="line"><a name="l01859"></a><span class="lineno"> 1859</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (segmentedGain &lt;= gainZone1nbVal + gainZone2nbVal + gainZone3nbVal)</div>
+<div class="line"><a name="l01860"></a><span class="lineno"> 1860</span>&#160;        rawGain = segmentedGain + GAIN_ZONE3_MIN - (gainZone1nbVal + gainZone2nbVal);</div>
+<div class="line"><a name="l01861"></a><span class="lineno"> 1861</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (segmentedGain &lt;= gainZone1nbVal + gainZone2nbVal + gainZone3nbVal + gainZone4nbVal)</div>
+<div class="line"><a name="l01862"></a><span class="lineno"> 1862</span>&#160;        rawGain = segmentedGain + GAIN_ZONE4_MIN - (gainZone1nbVal + gainZone2nbVal + gainZone3nbVal);</div>
+<div class="line"><a name="l01863"></a><span class="lineno"> 1863</span>&#160;    <span class="comment">// &lt;---- Calculate correct GAIN ZONE</span></div>
+<div class="line"><a name="l01864"></a><span class="lineno"> 1864</span>&#160; </div>
+<div class="line"><a name="l01865"></a><span class="lineno"> 1865</span>&#160;    <span class="keywordflow">return</span> rawGain;</div>
+<div class="line"><a name="l01866"></a><span class="lineno"> 1866</span>&#160;}</div>
+<div class="line"><a name="l01867"></a><span class="lineno"> 1867</span>&#160; </div>
+<div class="line"><a name="l01868"></a><span class="lineno"> 1868</span>&#160;<span class="keywordtype">int</span> VideoCapture::calcGainValue(<span class="keywordtype">int</span> rawGain)</div>
+<div class="line"><a name="l01869"></a><span class="lineno"> 1869</span>&#160;{</div>
+<div class="line"><a name="l01870"></a><span class="lineno"> 1870</span>&#160;    <span class="keywordtype">int</span> segmentedGain;</div>
+<div class="line"><a name="l01871"></a><span class="lineno"> 1871</span>&#160; </div>
+<div class="line"><a name="l01872"></a><span class="lineno"> 1872</span>&#160;    <span class="comment">// ----&gt; Calculate correct GAIN ZONE</span></div>
+<div class="line"><a name="l01873"></a><span class="lineno"> 1873</span>&#160;    <span class="keywordtype">int</span> gainZone1nbVal = GAIN_ZONE1_MAX - GAIN_ZONE1_MIN;</div>
+<div class="line"><a name="l01874"></a><span class="lineno"> 1874</span>&#160;    <span class="keywordtype">int</span> gainZone2nbVal = GAIN_ZONE2_MAX - GAIN_ZONE2_MIN;</div>
+<div class="line"><a name="l01875"></a><span class="lineno"> 1875</span>&#160;    <span class="keywordtype">int</span> gainZone3nbVal = GAIN_ZONE3_MAX - GAIN_ZONE3_MIN;</div>
+<div class="line"><a name="l01876"></a><span class="lineno"> 1876</span>&#160;    <span class="keywordflow">if</span> (rawGain &gt;= GAIN_ZONE1_MIN &amp;&amp; rawGain &lt;= GAIN_ZONE1_MAX)</div>
+<div class="line"><a name="l01877"></a><span class="lineno"> 1877</span>&#160;        segmentedGain = rawGain - GAIN_ZONE1_MIN;</div>
+<div class="line"><a name="l01878"></a><span class="lineno"> 1878</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (rawGain &gt;= GAIN_ZONE2_MIN &amp;&amp; rawGain &lt;= GAIN_ZONE2_MAX)</div>
+<div class="line"><a name="l01879"></a><span class="lineno"> 1879</span>&#160;        segmentedGain = rawGain - GAIN_ZONE2_MIN + gainZone1nbVal;</div>
+<div class="line"><a name="l01880"></a><span class="lineno"> 1880</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (rawGain &gt;= GAIN_ZONE3_MIN &amp;&amp; rawGain &lt;= GAIN_ZONE3_MAX)</div>
+<div class="line"><a name="l01881"></a><span class="lineno"> 1881</span>&#160;        segmentedGain = rawGain - GAIN_ZONE3_MIN + gainZone1nbVal + gainZone2nbVal;</div>
+<div class="line"><a name="l01882"></a><span class="lineno"> 1882</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (rawGain &gt;= GAIN_ZONE4_MIN &amp;&amp; rawGain &lt;= GAIN_ZONE4_MAX)</div>
+<div class="line"><a name="l01883"></a><span class="lineno"> 1883</span>&#160;        segmentedGain = rawGain - GAIN_ZONE4_MIN + gainZone1nbVal + gainZone2nbVal + gainZone3nbVal;</div>
+<div class="line"><a name="l01884"></a><span class="lineno"> 1884</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01885"></a><span class="lineno"> 1885</span>&#160;        segmentedGain = -1;</div>
+<div class="line"><a name="l01886"></a><span class="lineno"> 1886</span>&#160;    <span class="comment">// &lt;---- Calculate correct GAIN ZONE</span></div>
+<div class="line"><a name="l01887"></a><span class="lineno"> 1887</span>&#160; </div>
+<div class="line"><a name="l01888"></a><span class="lineno"> 1888</span>&#160;    <span class="comment">// From segmented gain to [0,100]</span></div>
+<div class="line"><a name="l01889"></a><span class="lineno"> 1889</span>&#160;    <span class="keywordtype">int</span> gain = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(std::round((100.0*segmentedGain)/mGainSegMax));</div>
+<div class="line"><a name="l01890"></a><span class="lineno"> 1890</span>&#160; </div>
+<div class="line"><a name="l01891"></a><span class="lineno"> 1891</span>&#160;    <span class="keywordflow">return</span> gain;</div>
+<div class="line"><a name="l01892"></a><span class="lineno"> 1892</span>&#160;}</div>
+<div class="line"><a name="l01893"></a><span class="lineno"> 1893</span>&#160; </div>
+<div class="line"><a name="l01894"></a><span class="lineno"> 1894</span>&#160;<span class="preprocessor">#ifdef SENSORS_MOD_AVAILABLE</span></div>
+<div class="line"><a name="l01895"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abf275abae3c47fa253b80c7b1bdd6a44"> 1895</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abf275abae3c47fa253b80c7b1bdd6a44">VideoCapture::enableSensorSync</a>( <a class="code" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html">sensors::SensorCapture</a>* sensCap )</div>
+<div class="line"><a name="l01896"></a><span class="lineno"> 1896</span>&#160;{</div>
+<div class="line"><a name="l01897"></a><span class="lineno"> 1897</span>&#160;    <span class="keywordflow">if</span>(!sensCap)</div>
+<div class="line"><a name="l01898"></a><span class="lineno"> 1898</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01899"></a><span class="lineno"> 1899</span>&#160; </div>
+<div class="line"><a name="l01900"></a><span class="lineno"> 1900</span>&#160;    <span class="comment">// Activate low level sync mechanism</span></div>
+<div class="line"><a name="l01901"></a><span class="lineno"> 1901</span>&#160;    ll_activate_sync();</div>
+<div class="line"><a name="l01902"></a><span class="lineno"> 1902</span>&#160; </div>
+<div class="line"><a name="l01903"></a><span class="lineno"> 1903</span>&#160;    mSyncEnabled = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l01904"></a><span class="lineno"> 1904</span>&#160;    mSensPtr = sensCap;</div>
+<div class="line"><a name="l01905"></a><span class="lineno"> 1905</span>&#160; </div>
+<div class="line"><a name="l01906"></a><span class="lineno"> 1906</span>&#160;    mSensPtr-&gt;<a class="code" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a44cd3eb30725cff54ce9269a75ff4db5">setVideoPtr</a>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l01907"></a><span class="lineno"> 1907</span>&#160; </div>
+<div class="line"><a name="l01908"></a><span class="lineno"> 1908</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l01909"></a><span class="lineno"> 1909</span>&#160;}</div>
+<div class="line"><a name="l01910"></a><span class="lineno"> 1910</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l01911"></a><span class="lineno"> 1911</span>&#160; </div>
+<div class="line"><a name="l01912"></a><span class="lineno"> 1912</span>&#160;}</div>
+<div class="line"><a name="l01913"></a><span class="lineno"> 1913</span>&#160; </div>
+<div class="line"><a name="l01914"></a><span class="lineno"> 1914</span>&#160;}</div>
+<div class="line"><a name="l01915"></a><span class="lineno"> 1915</span>&#160; </div>
+<div class="line"><a name="l01916"></a><span class="lineno"> 1916</span>&#160; </div>
+<div class="line"><a name="l01917"></a><span class="lineno"> 1917</span>&#160; </div>
 <div class="ttc" id="aclasssl__oc_1_1sensors_1_1_sensor_capture_html"><div class="ttname"><a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html">sl_oc::sensors::SensorCapture</a></div><div class="ttdoc">The SensorCapture class provides sensor grabbing functions for the Stereolabs ZED Mini and ZED2 camer...</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00133">sensorcapture.hpp:134</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1sensors_1_1_sensor_capture_html_a2d4db59f9e4aa5b84ec48902985a2bd2"><div class="ttname"><a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a2d4db59f9e4aa5b84ec48902985a2bd2">sl_oc::sensors::SensorCapture::updateTimestampOffset</a></div><div class="ttdeci">void updateTimestampOffset(uint64_t frame_ts)</div><div class="ttdoc">Called by VideoCapture to update timestamp offset.</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d67/sensorcapture_8cpp_source.html#l00554">sensorcapture.cpp:554</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1sensors_1_1_sensor_capture_html_a44cd3eb30725cff54ce9269a75ff4db5"><div class="ttname"><a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a44cd3eb30725cff54ce9269a75ff4db5">sl_oc::sensors::SensorCapture::setVideoPtr</a></div><div class="ttdeci">void setVideoPtr(video::VideoCapture *videoPtr)</div><div class="ttdoc">Called by VideoCapture to set the pointer to it.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00207">sensorcapture.hpp:207</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1sensors_1_1_sensor_capture_html_a9324a7f63677953410949f093cc1578d"><div class="ttname"><a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a9324a7f63677953410949f093cc1578d">sl_oc::sensors::SensorCapture::setStartTimestamp</a></div><div class="ttdeci">void setStartTimestamp(uint64_t start_ts)</div><div class="ttdoc">Called by VideoCapture to sync timestamps reference point.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00206">sensorcapture.hpp:206</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a027a557172988b5bb2dd3521f5252ee3"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a027a557172988b5bb2dd3521f5252ee3">sl_oc::video::VideoCapture::setHue</a></div><div class="ttdeci">void setHue(int hue)</div><div class="ttdoc">Set the Hue value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01576">videocapture.cpp:1576</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a0582fd54401ab3a191206048ab94f57c"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a0582fd54401ab3a191206048ab94f57c">sl_oc::video::VideoCapture::getBrightness</a></div><div class="ttdeci">int getBrightness()</div><div class="ttdoc">Get the Brightness value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01541">videocapture.cpp:1541</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a07c3771e9b6c580d59c2bd8a7de2ab5f"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a07c3771e9b6c580d59c2bd8a7de2ab5f">sl_oc::video::VideoCapture::setROIforAECAGC</a></div><div class="ttdeci">bool setROIforAECAGC(CAM_SENS_POS side, uint16_t x, uint16_t y, uint16_t w, uint16_t h)</div><div class="ttdoc">Set Region Of Interest (ROI) for AECAGC control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01679">videocapture.cpp:1679</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a0a4f0f528835a4035eee4169ffec2cbb"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a0a4f0f528835a4035eee4169ffec2cbb">sl_oc::video::VideoCapture::resetBrightness</a></div><div class="ttdeci">void resetBrightness()</div><div class="ttdoc">Reset the Brightness value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01536">videocapture.cpp:1536</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a16d2238b0c34d6d1dfbdebe97f656759"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a16d2238b0c34d6d1dfbdebe97f656759">sl_oc::video::VideoCapture::getLastFrame</a></div><div class="ttdeci">const Frame &amp; getLastFrame(uint64_t timeout_msec=100)</div><div class="ttdoc">Get the last received camera image.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l00863">videocapture.cpp:863</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a1f8fdb3702127dd2a74abf6e6dbbe378"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a1f8fdb3702127dd2a74abf6e6dbbe378">sl_oc::video::VideoCapture::getSharpness</a></div><div class="ttdeci">int getSharpness()</div><div class="ttdoc">Get the Sharpness value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01556">videocapture.cpp:1556</a></div></div>
@@ -1902,7 +1983,7 @@ $(function() {
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a48628e7c57ec81cd5cf405b3fb166ba8"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a48628e7c57ec81cd5cf405b3fb166ba8">sl_oc::video::VideoCapture::resetHue</a></div><div class="ttdeci">void resetHue()</div><div class="ttdoc">Reset the Hue value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01581">videocapture.cpp:1581</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a4e326fed89aeec27b0a0f7805006a176"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a4e326fed89aeec27b0a0f7805006a176">sl_oc::video::VideoCapture::getLEDstatus</a></div><div class="ttdeci">int getLEDstatus(bool *status)</div><div class="ttdoc">Get the status of the camera led.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01377">videocapture.cpp:1377</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a52c601937f55a208b52bdd56c1d22fb1"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a52c601937f55a208b52bdd56c1d22fb1">sl_oc::video::VideoCapture::setSaturation</a></div><div class="ttdeci">void setSaturation(int saturation)</div><div class="ttdoc">Set the Saturation value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01591">videocapture.cpp:1591</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a52fbfe5616bb1c443d1754c4dce2d767"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a52fbfe5616bb1c443d1754c4dce2d767">sl_oc::video::VideoCapture::getGain</a></div><div class="ttdeci">int getGain(CAM_SENS_POS cam)</div><div class="ttdoc">Get the current Gain value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01701">videocapture.cpp:1701</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a52fbfe5616bb1c443d1754c4dce2d767"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a52fbfe5616bb1c443d1754c4dce2d767">sl_oc::video::VideoCapture::getGain</a></div><div class="ttdeci">int getGain(CAM_SENS_POS cam)</div><div class="ttdoc">Get the current Gain value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01781">videocapture.cpp:1781</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a5440fb33106658270076a27196aa8e81"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a5440fb33106658270076a27196aa8e81">sl_oc::video::VideoCapture::resetAutoWhiteBalance</a></div><div class="ttdeci">void resetAutoWhiteBalance()</div><div class="ttdoc">Reset the automatic White Balance control value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01630">videocapture.cpp:1630</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a65dd1900ecf02e11c60ae3cda0b5eb40"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a65dd1900ecf02e11c60ae3cda0b5eb40">sl_oc::video::VideoCapture::getSaturation</a></div><div class="ttdeci">int getSaturation()</div><div class="ttdoc">Get the Saturation value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01601">videocapture.cpp:1601</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a6b1dcb9449f0344bf3f608501e1f60b6"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a6b1dcb9449f0344bf3f608501e1f60b6">sl_oc::video::VideoCapture::getHue</a></div><div class="ttdeci">int getHue()</div><div class="ttdoc">Get the Hue value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01586">videocapture.cpp:1586</a></div></div>
@@ -1912,7 +1993,7 @@ $(function() {
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a7fa74009d7209a5b2cf073beb6a98355"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a7fa74009d7209a5b2cf073beb6a98355">sl_oc::video::VideoCapture::getWhiteBalance</a></div><div class="ttdeci">int getWhiteBalance()</div><div class="ttdoc">Get the White Balance value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01606">videocapture.cpp:1606</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a86e03d1880329e8e8c16ccdc5dd348cf"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a86e03d1880329e8e8c16ccdc5dd348cf">sl_oc::video::VideoCapture::setSharpness</a></div><div class="ttdeci">void setSharpness(int sharpness)</div><div class="ttdoc">Set the Sharpness value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01546">videocapture.cpp:1546</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a89242e4f3d0ad6f3653de4f831ea01b5"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a89242e4f3d0ad6f3653de4f831ea01b5">sl_oc::video::VideoCapture::setWhiteBalance</a></div><div class="ttdeci">void setWhiteBalance(int wb)</div><div class="ttdoc">Set the White Balance value (disable auto White Balance if active)</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01611">videocapture.cpp:1611</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a907f58660df3ee70ba6725c943ba9834"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a907f58660df3ee70ba6725c943ba9834">sl_oc::video::VideoCapture::setExposure</a></div><div class="ttdeci">void setExposure(CAM_SENS_POS cam, int exposure)</div><div class="ttdoc">Set the Exposure value (disable Exposure and Gain control if active)</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01717">videocapture.cpp:1717</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a907f58660df3ee70ba6725c943ba9834"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a907f58660df3ee70ba6725c943ba9834">sl_oc::video::VideoCapture::setExposure</a></div><div class="ttdeci">void setExposure(CAM_SENS_POS cam, int exposure)</div><div class="ttdoc">Set the Exposure value (disable Exposure and Gain control if active)</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01797">videocapture.cpp:1797</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a9988ab7895d0fe69558eb7450f3ea33d"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9988ab7895d0fe69558eb7450f3ea33d">sl_oc::video::VideoCapture::VideoCapture</a></div><div class="ttdeci">VideoCapture(VideoParams params=VideoParams())</div><div class="ttdoc">The default constructor.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l00114">videocapture.cpp:114</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a9ad02dd9c454adf803653b57162cdc1e"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e">sl_oc::video::VideoCapture::initializeVideo</a></div><div class="ttdeci">bool initializeVideo(int devId=-1)</div><div class="ttdoc">Open a ZED camera using the specified ID or searching for the first available.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l00275">videocapture.cpp:275</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a9d776f296292900d9d91ae08478ed984"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9d776f296292900d9d91ae08478ed984">sl_oc::video::VideoCapture::setContrast</a></div><div class="ttdeci">void setContrast(int contrast)</div><div class="ttdoc">Set the Contrast value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01561">videocapture.cpp:1561</a></div></div>
@@ -1921,13 +2002,15 @@ $(function() {
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ab73580b7d17ab1b6b2b7d9cb2c064c52"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ab73580b7d17ab1b6b2b7d9cb2c064c52">sl_oc::video::VideoCapture::resetSaturation</a></div><div class="ttdeci">void resetSaturation()</div><div class="ttdoc">Reset the Saturation value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01596">videocapture.cpp:1596</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ababf44cb142b2790d9b1ea7ebd3040fd"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ababf44cb142b2790d9b1ea7ebd3040fd">sl_oc::video::VideoCapture::resetAECAGC</a></div><div class="ttdeci">void resetAECAGC()</div><div class="ttdoc">Reset the automatic Exposure and Gain control value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01674">videocapture.cpp:1674</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_abd56d8396d5c4e578a508be4c0233323"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abd56d8396d5c4e578a508be4c0233323">sl_oc::video::VideoCapture::~VideoCapture</a></div><div class="ttdeci">virtual ~VideoCapture()</div><div class="ttdoc">The class destructor.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l00145">videocapture.cpp:145</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_abe128c2f45a29dc71d08064e41ed3149"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abe128c2f45a29dc71d08064e41ed3149">sl_oc::video::VideoCapture::getExposure</a></div><div class="ttdeci">int getExposure(CAM_SENS_POS cam)</div><div class="ttdoc">Get the current Exposure value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01743">videocapture.cpp:1743</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_abf275abae3c47fa253b80c7b1bdd6a44"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abf275abae3c47fa253b80c7b1bdd6a44">sl_oc::video::VideoCapture::enableSensorSync</a></div><div class="ttdeci">bool enableSensorSync(sensors::SensorCapture *sensCap=nullptr)</div><div class="ttdoc">Enable synchronizations between Camera frame and Sensors timestamps.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01815">videocapture.cpp:1815</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_abe128c2f45a29dc71d08064e41ed3149"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abe128c2f45a29dc71d08064e41ed3149">sl_oc::video::VideoCapture::getExposure</a></div><div class="ttdeci">int getExposure(CAM_SENS_POS cam)</div><div class="ttdoc">Get the current Exposure value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01823">videocapture.cpp:1823</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_abf275abae3c47fa253b80c7b1bdd6a44"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abf275abae3c47fa253b80c7b1bdd6a44">sl_oc::video::VideoCapture::enableSensorSync</a></div><div class="ttdeci">bool enableSensorSync(sensors::SensorCapture *sensCap=nullptr)</div><div class="ttdoc">Enable synchronizations between Camera frame and Sensors timestamps.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01895">videocapture.cpp:1895</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ac3199bfc9e174bda9c44d0dd5d736950"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ac3199bfc9e174bda9c44d0dd5d736950">sl_oc::video::VideoCapture::getROIforAECAGC</a></div><div class="ttdeci">bool getROIforAECAGC(CAM_SENS_POS side, uint16_t &amp;x, uint16_t &amp;y, uint16_t &amp;w, uint16_t &amp;h)</div><div class="ttdoc">Get the coordinates of the current ROI for AECAGC control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01729">videocapture.cpp:1729</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_acd82662f5474fd577cac4877d25862ae"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#acd82662f5474fd577cac4877d25862ae">sl_oc::video::VideoCapture::setGamma</a></div><div class="ttdeci">void setGamma(int gamma)</div><div class="ttdoc">Set the Gamma value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01635">videocapture.cpp:1635</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ad1459c944c97f7b31d9eded0b1836c37"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad1459c944c97f7b31d9eded0b1836c37">sl_oc::video::VideoCapture::setBrightness</a></div><div class="ttdeci">void setBrightness(int brightness)</div><div class="ttdoc">Set the Brightness value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01531">videocapture.cpp:1531</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ad36ff05e29c628efa82dde68c32661d4"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">sl_oc::video::VideoCapture::getAECAGC</a></div><div class="ttdeci">bool getAECAGC()</div><div class="ttdoc">Get the status of the automatic Exposure and Gain control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01667">videocapture.cpp:1667</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ad96e8492bd5ef82edbfc0bb4ccd981e4"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad96e8492bd5ef82edbfc0bb4ccd981e4">sl_oc::video::VideoCapture::setAutoWhiteBalance</a></div><div class="ttdeci">void setAutoWhiteBalance(bool active)</div><div class="ttdoc">Enable/Disable the automatic White Balance control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01625">videocapture.cpp:1625</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_adbf3d737cb881c39299a09009de58032"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#adbf3d737cb881c39299a09009de58032">sl_oc::video::VideoCapture::setGain</a></div><div class="ttdeci">void setGain(CAM_SENS_POS cam, int gain)</div><div class="ttdoc">Set the Gain value (disable Exposure and Gain control if active)</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01679">videocapture.cpp:1679</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_adbf3d737cb881c39299a09009de58032"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#adbf3d737cb881c39299a09009de58032">sl_oc::video::VideoCapture::setGain</a></div><div class="ttdeci">void setGain(CAM_SENS_POS cam, int gain)</div><div class="ttdoc">Set the Gain value (disable Exposure and Gain control if active)</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01759">videocapture.cpp:1759</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_adfa43f0942c818e0130c1adb75aa8b46"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#adfa43f0942c818e0130c1adb75aa8b46">sl_oc::video::VideoCapture::resetROIforAECAGC</a></div><div class="ttdeci">bool resetROIforAECAGC(CAM_SENS_POS side)</div><div class="ttdoc">Reset the ROI for AECAGC control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01724">videocapture.cpp:1724</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ae1def612a9502f0dd85ff46d5d5f1131"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ae1def612a9502f0dd85ff46d5d5f1131">sl_oc::video::VideoCapture::getSerialNumber</a></div><div class="ttdeci">int getSerialNumber()</div><div class="ttdoc">Retrieve the serial number of the connected camera.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l00540">videocapture.cpp:540</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ae66cc31ee0d0a8ff70b20f4941ab52fd"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ae66cc31ee0d0a8ff70b20f4941ab52fd">sl_oc::video::VideoCapture::resetContrast</a></div><div class="ttdeci">void resetContrast()</div><div class="ttdoc">Reset the Contrast value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01566">videocapture.cpp:1566</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_af970430296542fc9f3a731bad823e7ce"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#af970430296542fc9f3a731bad823e7ce">sl_oc::video::VideoCapture::toggleLED</a></div><div class="ttdeci">int toggleLED(bool *value)</div><div class="ttdoc">Toggle the status of the camera led.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01391">videocapture.cpp:1391</a></div></div>
@@ -1937,6 +2020,8 @@ $(function() {
 <div class="ttc" id="anamespacesl__oc_1_1video_html_a05c2df30a13cdf5ff439ad2a1a18fb09adb4371197d1f58c7d4edb7dcd0565ad1"><div class="ttname"><a href="../../d1/da0/namespacesl__oc_1_1video.html#a05c2df30a13cdf5ff439ad2a1a18fb09adb4371197d1f58c7d4edb7dcd0565ad1">sl_oc::video::RESOLUTION::VGA</a></div><div class="ttdeci">@ VGA</div></div>
 <div class="ttc" id="anamespacesl__oc_1_1video_html_a05c2df30a13cdf5ff439ad2a1a18fb09aebf416754b5b57c91ce22b025015031b"><div class="ttname"><a href="../../d1/da0/namespacesl__oc_1_1video.html#a05c2df30a13cdf5ff439ad2a1a18fb09aebf416754b5b57c91ce22b025015031b">sl_oc::video::RESOLUTION::HD1080</a></div><div class="ttdeci">@ HD1080</div></div>
 <div class="ttc" id="anamespacesl__oc_1_1video_html_a7e6c10d39fd369376814fd736979a176"><div class="ttname"><a href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176">sl_oc::video::CAM_SENS_POS</a></div><div class="ttdeci">CAM_SENS_POS</div><div class="ttdoc">Position of the Camera CMOS sensors.</div><div class="ttdef"><b>Definition:</b> <a href="../../df/ded/videocapture__def_8hpp_source.html#l00071">videocapture_def.hpp:71</a></div></div>
+<div class="ttc" id="anamespacesl__oc_1_1video_html_a7e6c10d39fd369376814fd736979a176a21507b40c80068eda19865706fdc2403"><div class="ttname"><a href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176a21507b40c80068eda19865706fdc2403">sl_oc::video::CAM_SENS_POS::RIGHT</a></div><div class="ttdeci">@ RIGHT</div><div class="ttdoc">The right sensor.</div></div>
+<div class="ttc" id="anamespacesl__oc_1_1video_html_a7e6c10d39fd369376814fd736979a176a684d325a7303f52e64011467ff5c5758"><div class="ttname"><a href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176a684d325a7303f52e64011467ff5c5758">sl_oc::video::CAM_SENS_POS::LEFT</a></div><div class="ttdeci">@ LEFT</div><div class="ttdoc">The left sensor.</div></div>
 <div class="ttc" id="anamespacesl__oc_1_1video_html_ab2154fe3d39373015d1d0c17a6cc5bc4"><div class="ttname"><a href="../../d1/da0/namespacesl__oc_1_1video.html#ab2154fe3d39373015d1d0c17a6cc5bc4">sl_oc::video::PRESET_GAMMA</a></div><div class="ttdeci">const unsigned char PRESET_GAMMA[9][16]</div><div class="ttdef"><b>Definition:</b> <a href="../../df/ded/videocapture__def_8hpp_source.html#l00137">videocapture_def.hpp:137</a></div></div>
 <div class="ttc" id="anamespacesl__oc_1_1video_html_ad7d2d1743872a22ac88a5d938bc9e33f"><div class="ttname"><a href="../../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33f">sl_oc::video::SL_DEVICE</a></div><div class="ttdeci">SL_DEVICE</div><div class="ttdoc">Camera models.</div><div class="ttdef"><b>Definition:</b> <a href="../../df/ded/videocapture__def_8hpp_source.html#l00037">videocapture_def.hpp:37</a></div></div>
 <div class="ttc" id="anamespacesl__oc_1_1video_html_ad7d2d1743872a22ac88a5d938bc9e33fa21e89914d0cc9a5af85bd7c99a847367"><div class="ttname"><a href="../../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33fa21e89914d0cc9a5af85bd7c99a847367">sl_oc::video::SL_DEVICE::ZED_CBS</a></div><div class="ttdeci">@ ZED_CBS</div><div class="ttdoc">ZED new FW.</div></div>

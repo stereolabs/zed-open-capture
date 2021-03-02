@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['res_341',['res',['../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a1a3755ec19e8b2b079e62578f87b9384',1,'sl_oc::video::VideoParams']]],
-  ['rq_5fcmd_5fping_342',['RQ_CMD_PING',['../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a3c0ec8dbf32525ed95d757ede0e3a592',1,'sl_oc::sensors::usb']]]
+  ['origin_5froi_373',['origin_roi',['../d9/d7c/zed__oc__control__example_8cpp.html#a7d866483e8e2157a6b510385116749b2',1,'zed_oc_control_example.cpp']]]
 ];

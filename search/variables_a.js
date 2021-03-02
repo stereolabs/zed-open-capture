@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['preset_5fgamma_339',['PRESET_GAMMA',['../d1/da0/namespacesl__oc_1_1video.html#ab2154fe3d39373015d1d0c17a6cc5bc4',1,'sl_oc::video']]],
-  ['press_340',['press',['../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#a1c17d37b11ed80514b6683622af5b9f2',1,'sl_oc::sensors::data::Environment::press()'],['../db/dd1/structsl__oc_1_1sensors_1_1usb_1_1_raw_data.html#a62ef3bf9724c16d1844ef70a99a85150',1,'sl_oc::sensors::usb::RawData::press()']]]
+  ['mag_5fvalid_368',['mag_valid',['../db/dd1/structsl__oc_1_1sensors_1_1usb_1_1_raw_data.html#af02a1836ac65384be9c5e1968492a81a',1,'sl_oc::sensors::usb::RawData']]],
+  ['mcu_5fsync_5fts_369',['mcu_sync_ts',['../da/d5d/zed__oc__sync__example_8cpp.html#a38cf151a5c361c0ed7d3df6ef162cb05',1,'zed_oc_sync_example.cpp']]],
+  ['mx_370',['mX',['../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a6f7e3eab66b9a65b64045accf0d78328',1,'sl_oc::sensors::data::Magnetometer::mX()'],['../db/dd1/structsl__oc_1_1sensors_1_1usb_1_1_raw_data.html#aabb1fbcd925d08b849f08c462e48ba6a',1,'sl_oc::sensors::usb::RawData::mX()']]],
+  ['my_371',['mY',['../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a0a29c6c3d371dae4448846aa8c6c0746',1,'sl_oc::sensors::data::Magnetometer::mY()'],['../db/dd1/structsl__oc_1_1sensors_1_1usb_1_1_raw_data.html#afaee620d390f5e0a630ce147472cf0d3',1,'sl_oc::sensors::usb::RawData::mY()']]],
+  ['mz_372',['mZ',['../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#ae1845b0f13ae8f77a145a93fa048ac1b',1,'sl_oc::sensors::data::Magnetometer::mZ()'],['../db/dd1/structsl__oc_1_1sensors_1_1usb_1_1_raw_data.html#a994aa4476eb0a61f596c454dd8f18366',1,'sl_oc::sensors::usb::RawData::mZ()']]]
 ];
