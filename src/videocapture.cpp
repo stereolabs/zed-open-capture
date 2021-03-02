@@ -1810,7 +1810,7 @@ void VideoCapture::setExposure(CAM_SENS_POS cam, int exposure)
     if(rawExp<EXP_RAW_MIN)
         rawExp = EXP_RAW_MIN;
 
-    std::cout << "Set Raw Exp: " << rawExp << std::endl;
+    //std::cout << "Set Raw Exp: " << rawExp << std::endl;
 
     int sensorId = static_cast<int>(cam);
 
@@ -1834,7 +1834,7 @@ int VideoCapture::getExposure(CAM_SENS_POS cam)
         return r;
     rawExp = (int) ((val[2] << 12) + (val[1] << 4) + (val[0] >> 4));
 
-    std::cout << "Get Raw Exp: " << rawExp << std::endl;
+    //std::cout << "Get Raw Exp: " << rawExp << std::endl;
 
     int exposure = static_cast<int>(std::round((100.0*rawExp)/mExpoureRawMax));
     return exposure;
