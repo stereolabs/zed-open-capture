@@ -3,7 +3,7 @@
 v0.3.0 - 2020 03 01
 -------------------
 * Add AEC/AGC ROI support
-* Updated the "control example" with AEC/AGC ROI support, drawing ROIs on display image
+* Update the "control example" with AEC/AGC ROI support, drawing ROIs on display image
 
 v0.2.1 - 2020 02 08
 -------------------
