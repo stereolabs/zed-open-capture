@@ -1,5 +1,9 @@
 # Changelog
 
+2020 03 16
+----------
+* Replaced `CMAKE_HOME_DIRECTORY` with `PROJECT_SOURCE_DIR` in `CMakeLists.txt` to be able to import the library as subproject. Thx @pieniacy
+
 v0.3.0 - 2020 03 01
 -------------------
 * Add AEC/AGC ROI support
