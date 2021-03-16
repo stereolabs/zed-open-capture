@@ -34,41 +34,41 @@ option(BUILD_EXAMPLES   "Build the ZED Open Capture examples"                   
 ############################################################################
 # Sources
 set(SRC_VIDEO
-    ${CMAKE_HOME_DIRECTORY}/src/videocapture.cpp
+    ${PROJECT_SOURCE_DIR}/src/videocapture.cpp
 )
 
 set(SRC_SENSORS
-    ${CMAKE_HOME_DIRECTORY}/src/sensorcapture.cpp
+    ${PROJECT_SOURCE_DIR}/src/sensorcapture.cpp
 )
 
 ############################################################################
 # Includes
 set(HEADERS_VIDEO
     # Base
-    ${CMAKE_HOME_DIRECTORY}/include/videocapture.hpp
+    ${PROJECT_SOURCE_DIR}/include/videocapture.hpp
     
     # Defines
-    ${CMAKE_HOME_DIRECTORY}/include/defines.hpp
-    ${CMAKE_HOME_DIRECTORY}/include/videocapture_def.hpp
+    ${PROJECT_SOURCE_DIR}/include/defines.hpp
+    ${PROJECT_SOURCE_DIR}/include/videocapture_def.hpp
 )
 
 set(HEADERS_SENSORS
     # Base
-    ${CMAKE_HOME_DIRECTORY}/include/sensorcapture.hpp
+    ${PROJECT_SOURCE_DIR}/include/sensorcapture.hpp
 
     # Defines
-    ${CMAKE_HOME_DIRECTORY}/include/defines.hpp
-    ${CMAKE_HOME_DIRECTORY}/include/sensorcapture_def.hpp
+    ${PROJECT_SOURCE_DIR}/include/defines.hpp
+    ${PROJECT_SOURCE_DIR}/include/sensorcapture_def.hpp
 )
 
 include_directories(
-    ${CMAKE_HOME_DIRECTORY}/include
+    ${PROJECT_SOURCE_DIR}/include
 )
 
 ############################################################################
 # Required external libraries
 
-list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_SOURCE_DIR}/cmake")
+list(INSERT CMAKE_MODULE_PATH 0 "${PROJECT_SOURCE_DIR}/cmake")
 
 ############################################################################
 # Generate libraries
@@ -129,7 +129,7 @@ if(BUILD_EXAMPLES)
         include_directories(${OpenCV_INCLUDE_DIRS})
 
         ##### Video Example
-        add_executable(${PROJECT_NAME}_video_example "${CMAKE_HOME_DIRECTORY}/examples/zed_oc_video_example.cpp")
+        add_executable(${PROJECT_NAME}_video_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_video_example.cpp")
         set_target_properties(${PROJECT_NAME}_video_example PROPERTIES PREFIX "")
         target_link_libraries(${PROJECT_NAME}_video_example
           ${PROJECT_NAME}
@@ -140,7 +140,7 @@ if(BUILD_EXAMPLES)
         )
 
         ##### Control Example
-        add_executable(${PROJECT_NAME}_control_example "${CMAKE_HOME_DIRECTORY}/examples/zed_oc_control_example.cpp")
+        add_executable(${PROJECT_NAME}_control_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_control_example.cpp")
         set_target_properties(${PROJECT_NAME}_control_example PROPERTIES PREFIX "")
         target_link_libraries(${PROJECT_NAME}_control_example
           ${PROJECT_NAME}
@@ -151,8 +151,8 @@ if(BUILD_EXAMPLES)
         )
 
         ##### Rectify Example
-        include_directories( ${CMAKE_HOME_DIRECTORY}/examples/include)
-        add_executable(${PROJECT_NAME}_rectify_example "${CMAKE_HOME_DIRECTORY}/examples/zed_oc_rectify_example.cpp")
+        include_directories( ${PROJECT_SOURCE_DIR}/examples/include)
+        add_executable(${PROJECT_NAME}_rectify_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_rectify_example.cpp")
         set_target_properties(${PROJECT_NAME}_rectify_example PROPERTIES PREFIX "")
         target_link_libraries(${PROJECT_NAME}_rectify_example
           ${PROJECT_NAME}
@@ -167,7 +167,7 @@ if(BUILD_EXAMPLES)
         message("* Sensors example available")
 
         ##### Sensors Example
-        add_executable(${PROJECT_NAME}_sensors_example "${CMAKE_HOME_DIRECTORY}/examples/zed_oc_sensors_example.cpp")
+        add_executable(${PROJECT_NAME}_sensors_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_sensors_example.cpp")
         set_target_properties(${PROJECT_NAME}_sensors_example PROPERTIES PREFIX "")
         target_link_libraries(${PROJECT_NAME}_sensors_example          
           ${PROJECT_NAME}
@@ -181,7 +181,7 @@ if(BUILD_EXAMPLES)
         message("* Video/Sensors sync example available")
 
         ##### Synchronization Example
-        add_executable(${PROJECT_NAME}_sync_example "${CMAKE_HOME_DIRECTORY}/examples/zed_oc_sync_example.cpp")
+        add_executable(${PROJECT_NAME}_sync_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_sync_example.cpp")
         set_target_properties(${PROJECT_NAME}_sync_example PROPERTIES PREFIX "")
         target_link_libraries(${PROJECT_NAME}_sync_example          
           ${PROJECT_NAME}
