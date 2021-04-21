@@ -48,23 +48,59 @@ CamControl activeControl = Brightness;
 
 // ----> Global functions to control settings
 // Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res );
+static void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res );
 
 // Handle Keyboard
-void handleKeyboard( sl_oc::video::VideoCapture &cap, int key );
+static void handleKeyboard( sl_oc::video::VideoCapture &cap, int key );
+
+// Handle Mouse events
+static void handleMouse(int event, int x, int y, int, void*);
 
 // Change active control
-void setActiveControl( CamControl control );
+static void setActiveControl(sl_oc::video::VideoCapture &cap, CamControl control );
 
 // Set new value for the active control
-void setControlValue( sl_oc::video::VideoCapture &cap, int value );
+static void setControlValue( sl_oc::video::VideoCapture &cap, int value );
 
 // '+' or '-' pressed
-void changeControlValue( sl_oc::video::VideoCapture &cap, bool increase );
+static void changeControlValue( sl_oc::video::VideoCapture &cap, bool increase );
 
 // 'a' or 'A' pressed to enable automatic WhiteBalanse or Gain/Exposure
-void toggleAutomaticControl( sl_oc::video::VideoCapture &cap );
+static void toggleAutomaticControl( sl_oc::video::VideoCapture &cap );
+
+// Retrieve all the control values from the camera
+static void updateAllCtrlValues(sl_oc::video::VideoCapture &cap);
+
+// Reset all the control values to default
+static void resetControls( sl_oc::video::VideoCapture &cap );
 // <---- Global functions to control settings
+
+// ----> Global variables
+cv::String win_name = "Stream RGB";      // Name of the stream window
+bool selectInProgress = false;           // Indicates that an AECAGC ROI is being drawn
+cv::Rect aecagc_roi_left = {0,0,0,0};    // The current agcaec ROI rectangle
+cv::Rect aecagc_roi_right = {0,0,0,0};   // The current agcaec ROI rectangle
+cv::Point origin_roi = {0,0};            // Click point for AECAGC ROI
+double img_resize_factor = 1.0;          // Image resize factor for drawing
+int img_w = 0;                           // Camera image width
+int img_h = 0;                           // Camera image height
+
+uint8_t brightness_val;
+uint8_t contrast_val;
+uint8_t hue_val;
+uint8_t saturation_val;
+uint8_t gain_val_left;
+uint8_t gain_val_right;
+uint8_t exposure_val_left;
+uint8_t exposure_val_right;
+int whiteBalance_val;
+uint8_t sharpness_val;
+uint8_t gamma_val;
+bool autoAECAGC=false;
+bool autoWB=false;
+
+bool applyAECAGCrect=false;
+// <---- Global variables
 
 // The main function
 int main(int argc, char *argv[])
@@ -73,8 +109,8 @@ int main(int argc, char *argv[])
 
     // ----> Set Video parameters
     sl_oc::video::VideoParams params;
-    params.res = sl_oc::video::RESOLUTION::HD2K;
-    params.fps = sl_oc::video::FPS::FPS_15;
+    params.res = sl_oc::video::RESOLUTION::HD1080;
+    params.fps = sl_oc::video::FPS::FPS_30;
     params.verbose = verbose;
     // <---- Set Video parameters
 
@@ -90,8 +126,19 @@ int main(int argc, char *argv[])
     std::cout << "Connected to camera sn: " << cap.getSerialNumber() << std::endl;
     // <---- Create Video Capture
 
+    // ----> Create rendering window
+    cv::namedWindow(win_name);
+    cv::setMouseCallback(win_name, handleMouse);
+    // <---- Create rendering window
+
+    // Reset all the controls to default values
+    resetControls(cap);
+
     // Set the default camera control setting
-    setActiveControl( Brightness );
+    setActiveControl(cap, Brightness );
+
+    // Update the values for all the controls
+    updateAllCtrlValues(cap);
 
     uint64_t last_ts=0;
 
@@ -100,6 +147,20 @@ int main(int argc, char *argv[])
     {
         // 3) Get last available frame
         const sl_oc::video::Frame frame = cap.getLastFrame();
+        img_w = frame.width;
+        img_h = frame.height;
+
+        // 3a) Apply AEC AGC ROI if necessary
+        if(applyAECAGCrect)
+        {
+            applyAECAGCrect = false;
+            cap.setROIforAECAGC( sl_oc::video::CAM_SENS_POS::LEFT,
+                                 aecagc_roi_left.x, aecagc_roi_left.y,
+                                 aecagc_roi_left.width, aecagc_roi_left.height);
+            cap.setROIforAECAGC( sl_oc::video::CAM_SENS_POS::RIGHT,
+                                 aecagc_roi_right.x, aecagc_roi_left.y,
+                                 aecagc_roi_left.width, aecagc_roi_left.height);
+        }
 
         // ----> If the frame is valid we can display it
         if(frame.data!=nullptr && frame.timestamp!=last_ts)
@@ -125,7 +186,7 @@ int main(int argc, char *argv[])
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
 
             // 4.c) Show frame
-            showImage( "Stream RGB", frameBGR, params.res );
+            showImage( win_name, frameBGR, params.res );
         }
         // <---- If the frame is valid we can display it
 
@@ -166,39 +227,39 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
         break;
 
     case 'b':
-        setActiveControl( Brightness );
+        setActiveControl( cap, Brightness );
         break;
 
     case 'S':
-        setActiveControl( Sharpness );
+        setActiveControl( cap, Sharpness );
         break;
 
     case 'c':
-        setActiveControl( Contrast );
+        setActiveControl( cap, Contrast );
         break;
 
-    case 'H':
-        setActiveControl( Hue );
+    case 'h':
+        setActiveControl( cap, Hue );
         break;
 
     case 's':
-        setActiveControl( Saturation );
+        setActiveControl( cap, Saturation );
         break;
 
     case 'w':
-        setActiveControl( WhiteBalance );
+        setActiveControl( cap, WhiteBalance );
         break;
 
     case 'g':
-        setActiveControl( Gamma );
+        setActiveControl( cap, Gamma );
         break;
 
     case 'e':
-        setActiveControl( Exposure );
+        setActiveControl( cap, Exposure );
         break;
 
     case 'G':
-        setActiveControl( Gain );
+        setActiveControl( cap, Gain );
         break;
 
     case 'a':
@@ -207,14 +268,8 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
 
     case 'r':
     case 'R':
-        cap.resetBrightness();
-        cap.resetSharpness();
-        cap.resetContrast();
-        cap.resetHue();
-        cap.resetSaturation();
-        cap.resetGamma();
-        cap.resetAECAGC();
-        cap.resetAutoWhiteBalance();
+        resetControls(cap);
+        updateAllCtrlValues(cap);
 
         std::cout << "All control settings are reset to default values" << std::endl;
         break;
@@ -229,11 +284,10 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
         changeControlValue(cap,false);
         break;
 
-    case 'h':
     case '?':
         std::cout << "COMMANDS HELP" << std::endl;
         std::cout << " * 'q' or 'Q' -> Quit the example" << std::endl;
-        std::cout << " * 'h' or '?' -> This help menu" << std::endl;
+        std::cout << " * '?' -> This help menu" << std::endl;
         std::cout << " * 'l' -> Toggle camera led" << std::endl;
         std::cout << " * 'b' -> Brightness control" << std::endl;
         std::cout << " * 's' -> Saturation control" << std::endl;
@@ -252,8 +306,106 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
     }
 }
 
+void updateAllCtrlValues(sl_oc::video::VideoCapture &cap)
+{
+    brightness_val = cap.getBrightness();
+    sharpness_val = cap.getSharpness();
+    contrast_val = cap.getContrast();
+    hue_val = cap.getHue();
+    saturation_val = cap.getSaturation();
+    gamma_val = cap.getGamma();
+    autoAECAGC = cap.getAECAGC();
+    autoWB = cap.getAutoWhiteBalance();
+    gain_val_left = cap.getGain(sl_oc::video::CAM_SENS_POS::LEFT);
+    gain_val_right = cap.getGain(sl_oc::video::CAM_SENS_POS::RIGHT);
+    whiteBalance_val = cap.getWhiteBalance();
+
+    uint16_t x,y,w,h;
+    cap.getROIforAECAGC(sl_oc::video::CAM_SENS_POS::LEFT, x,y,w,h);
+    aecagc_roi_left.x = x;
+    aecagc_roi_left.y = y;
+    aecagc_roi_left.width = w;
+    aecagc_roi_left.height = h;
+    cap.getROIforAECAGC(sl_oc::video::CAM_SENS_POS::RIGHT, x,y,w,h);
+    aecagc_roi_right.x = x;
+    aecagc_roi_right.y = y;
+    aecagc_roi_right.width = w;
+    aecagc_roi_right.height = h;
+}
+
+void handleMouse(int event, int x, int y, int, void*)
+{
+    switch (event)
+    {
+    case cv::EVENT_LBUTTONDOWN: // AEC AGC ROI drawing started
+    {
+        if(autoAECAGC && (activeControl==Gain || activeControl==Exposure))
+        {
+            origin_roi = cv::Point(x, y);
+            selectInProgress = true;
+        }
+        break;
+    }
+
+    case cv::EVENT_LBUTTONUP: // AECAGC ROI drawing completed
+    {
+        selectInProgress = false;
+
+        if(autoAECAGC && (activeControl==Gain || activeControl==Exposure))
+        {
+            applyAECAGCrect = true;
+        }
+        break;
+    }
+
+    case cv::EVENT_RBUTTONDOWN: // Reset AECAGC ROI with right button
+    {
+        //Reset selection
+        selectInProgress = false;
+        aecagc_roi_left = cv::Rect(0,0,img_w/2,img_h);
+        aecagc_roi_right = cv::Rect(0,0,img_w/2,img_h);
+        applyAECAGCrect = true;
+        break;
+    }
+    }
+
+    if(selectInProgress) // AECAGC ROI drawing in progress
+    {
+        x /= img_resize_factor;
+        y /= img_resize_factor;
+
+        int or_x = origin_roi.x/img_resize_factor;
+        int or_y = origin_roi.y/img_resize_factor;
+
+        y = MAX(y,0);
+        y = MIN(y,img_h);
+        if(or_x<img_w/2) // AECAGC ROI for the left image
+        {
+            x = MAX(x,0);
+            x = MIN(x,img_w/2-1);
+
+            aecagc_roi_left.x = MIN(x, or_x);
+            aecagc_roi_left.y = MIN(y, or_y);
+            aecagc_roi_left.width = abs(x - or_x) + 1;
+            aecagc_roi_left.height = abs(y - or_y) + 1;
+        }
+        else  // AECAGC ROI for the right image
+        {
+            or_x -= img_w/2;
+            x -= img_w/2;
+            x = MAX(x,0);
+            x = MIN(x,img_w/2-1);
+
+            aecagc_roi_right.x = MIN(x, or_x);
+            aecagc_roi_right.y = MIN(y, or_y);
+            aecagc_roi_right.width = abs(x - or_x) + 1;
+            aecagc_roi_right.height = abs(y - or_y) + 1;
+        }
+    }
+}
+
 // Change active control
-void setActiveControl( CamControl control )
+void setActiveControl(sl_oc::video::VideoCapture &cap, CamControl control )
 {
     activeControl = control;
 
@@ -302,6 +454,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case Brightness:
         cap.setBrightness( value );
         newValue = cap.getBrightness();
+        brightness_val = newValue;
 
         std::cout << "New Brightness value: ";
         break;
@@ -309,6 +462,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case Contrast:
         cap.setContrast( value );
         newValue = cap.getContrast();
+        contrast_val = newValue;
 
         std::cout << "New Contrast value: ";
         break;
@@ -316,6 +470,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case Hue:
         cap.setHue( value );
         newValue = cap.getHue();
+        hue_val = newValue;
 
         std::cout << "New Hue value: ";
         break;
@@ -323,6 +478,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case Saturation:
         cap.setSaturation( value );
         newValue = cap.getSaturation();
+        saturation_val = newValue;
 
         std::cout << "New Saturation value: ";
         break;
@@ -330,6 +486,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case WhiteBalance:
         cap.setWhiteBalance( 2800+value*411 );
         newValue = cap.getWhiteBalance();
+        whiteBalance_val = newValue;
 
         std::cout << "New White Balance value: ";
         break;
@@ -337,6 +494,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case Sharpness:
         cap.setSharpness( value );
         newValue = cap.getSharpness();
+        sharpness_val = newValue;
 
         std::cout << "New Sharpness value: ";
         break;
@@ -344,6 +502,7 @@ void setControlValue(sl_oc::video::VideoCapture &cap, int value )
     case Gamma:
         cap.setGamma( value);
         newValue = cap.getGamma();
+        gamma_val = newValue;
 
         std::cout << "New Gamma value: ";
         break;
@@ -366,20 +525,22 @@ void changeControlValue( sl_oc::video::VideoCapture &cap, bool increase )
     {
     case Brightness:
         curValue = cap.getBrightness();
+        brightness_val = curValue;
         break;
 
     case Contrast:
         curValue = cap.getContrast();
+        contrast_val = curValue;
         break;
 
     case Hue:
         curValue = cap.getHue();
-
-        std::cout << "New Hue value: ";
+        hue_val = curValue;
         break;
 
     case Saturation:
         curValue = cap.getSaturation();
+        saturation_val = curValue;
         break;
 
     case Gain:
@@ -398,8 +559,13 @@ void changeControlValue( sl_oc::video::VideoCapture &cap, bool increase )
             cap.setGain(sl_oc::video::CAM_SENS_POS::RIGHT,--curValueRight);;
         }
 
-        std::cout << "New Left Gain value: " << cap.getGain(sl_oc::video::CAM_SENS_POS::LEFT) << std::endl;
-        std::cout << "New Right Gain value: " << cap.getGain(sl_oc::video::CAM_SENS_POS::RIGHT) << std::endl;
+        gain_val_left = cap.getGain(sl_oc::video::CAM_SENS_POS::LEFT);
+        gain_val_right = cap.getGain(sl_oc::video::CAM_SENS_POS::RIGHT);
+
+        std::cout << "New Left Gain value: " << (int)gain_val_left << std::endl;
+        std::cout << "New Right Gain value: " << (int)gain_val_right << std::endl;
+
+        autoAECAGC = cap.getAECAGC();
     }
         break;
 
@@ -419,22 +585,31 @@ void changeControlValue( sl_oc::video::VideoCapture &cap, bool increase )
             cap.setExposure(sl_oc::video::CAM_SENS_POS::RIGHT,--curValueRight);;
         }
 
-        std::cout << "New Left Exposure value: " << cap.getExposure(sl_oc::video::CAM_SENS_POS::LEFT) << std::endl;
-        std::cout << "New Right Exposure value: " << cap.getExposure(sl_oc::video::CAM_SENS_POS::RIGHT) << std::endl;
+        exposure_val_left = cap.getExposure(sl_oc::video::CAM_SENS_POS::LEFT);
+        exposure_val_right = cap.getExposure(sl_oc::video::CAM_SENS_POS::RIGHT);
+
+        std::cout << "New Left Exposure value: " << (int)exposure_val_left << std::endl;
+        std::cout << "New Right Exposure value: " << (int)exposure_val_right << std::endl;
+
+        autoAECAGC = cap.getAECAGC();
     }
         break;
 
     case WhiteBalance:
         cap.setAutoWhiteBalance(false);
         curValue = cap.getWhiteBalance();
+        whiteBalance_val = curValue;
+        autoWB = cap.getAutoWhiteBalance();
         break;
 
     case Sharpness:
         curValue = cap.getSharpness();
+        sharpness_val = curValue;
         break;
 
     case Gamma:
         curValue = cap.getGamma();
+        gamma_val = curValue;
         break;
     }
 
@@ -447,8 +622,8 @@ void changeControlValue( sl_oc::video::VideoCapture &cap, bool increase )
 
         cap.setWhiteBalance( curValue );
 
-        std::cout << "New White Balance value: " << cap.getWhiteBalance() << std::endl;
-
+        whiteBalance_val = cap.getWhiteBalance();
+        std::cout << "New White Balance value: " << whiteBalance_val << std::endl;
     }
     else if(activeControl != Gain && activeControl != Exposure)
     {
@@ -466,6 +641,7 @@ void toggleAutomaticControl( sl_oc::video::VideoCapture &cap )
     {
         bool curValue = cap.getAutoWhiteBalance();
         cap.setAutoWhiteBalance( !curValue );
+        autoWB = cap.getAutoWhiteBalance();
 
         std::cout << "Automatic White Balance control: " << ((!curValue)?"ENABLED":"DISABLED") << std::endl;
     }
@@ -474,6 +650,7 @@ void toggleAutomaticControl( sl_oc::video::VideoCapture &cap )
     {
         bool curValue = cap.getAECAGC();
         cap.setAECAGC( !curValue );
+        autoAECAGC = cap.getAECAGC();
 
         std::cout << "Automatic Exposure and Gain control: " << ((!curValue)?"ENABLED":"DISABLED") << std::endl;
     }
@@ -487,18 +664,133 @@ void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res )
     {
     default:
     case sl_oc::video::RESOLUTION::VGA:
+        img_resize_factor = 1.0;
         resized = img;
         break;
     case sl_oc::video::RESOLUTION::HD720:
         name += " [Resize factor 0.6]";
-        cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
+        img_resize_factor = 0.6;
+        cv::resize( img, resized, cv::Size(), img_resize_factor, img_resize_factor );
         break;
     case sl_oc::video::RESOLUTION::HD1080:
     case sl_oc::video::RESOLUTION::HD2K:
         name += " [Resize factor 0.4]";
-        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
+        img_resize_factor = 0.4;
+        cv::resize( img, resized, cv::Size(), img_resize_factor, img_resize_factor );
         break;
     }
 
-    cv::imshow( name, resized );
+    if(autoAECAGC && (activeControl==Gain || activeControl==Exposure))
+    {
+        // Check that left selection rectangle is valid and draw it on the image
+        if ( (aecagc_roi_left.area()>0) &&
+             (aecagc_roi_left.width-aecagc_roi_left.x)<=img_w/2 &&
+             (aecagc_roi_left.height-aecagc_roi_left.y)<=img_h)
+        {
+            cv::Rect rescaled_roi;
+            rescaled_roi.x = aecagc_roi_left.x*img_resize_factor;
+            rescaled_roi.y = aecagc_roi_left.y*img_resize_factor;
+            rescaled_roi.width = aecagc_roi_left.width*img_resize_factor;
+            rescaled_roi.height = aecagc_roi_left.height*img_resize_factor;
+            cv::rectangle(resized, rescaled_roi, cv::Scalar(220, 180, 20), 2);
+        }
+
+        // Check that right selection rectangle is valid and draw it on the image
+        if ( (aecagc_roi_right.area()>0) &&
+             (aecagc_roi_right.width-aecagc_roi_right.x)<=img_w/2 &&
+             (aecagc_roi_right.height-aecagc_roi_right.y)<=img_h)
+        {
+            cv::Rect rescaled_roi;
+            rescaled_roi.x = (img_w/2+aecagc_roi_right.x)*img_resize_factor;
+            rescaled_roi.y = aecagc_roi_right.y*img_resize_factor;
+            rescaled_roi.width = aecagc_roi_right.width*img_resize_factor;
+            rescaled_roi.height = aecagc_roi_right.height*img_resize_factor;
+            cv::rectangle(resized, rescaled_roi, cv::Scalar(20, 180, 220), 2);
+        }
+    }
+
+    std::string info;
+    switch (activeControl)
+    {
+    case Brightness:
+        info = "Brightness: ";
+        info += std::to_string(brightness_val);
+        break;
+    case Contrast:
+        info = "Contrast: ";
+        info += std::to_string(contrast_val);
+        break;
+    case Hue:
+        info = "Hue: ";
+        info += std::to_string(hue_val);
+        break;
+    case Saturation:
+        info = "Saturation: ";
+        info += std::to_string(saturation_val);
+        break;
+    case Gain:
+        info = "Gain: ";
+        if(autoAECAGC)
+        {
+            info += "AUTO";
+        }
+        else
+        {
+            info += std::to_string(gain_val_left);
+            info += " - ";
+            info += std::to_string(gain_val_right);
+        }
+        break;
+    case Exposure:
+        info = "Exposure: ";
+        if(autoAECAGC)
+        {
+            info += "AUTO";
+        }
+        else
+        {
+            info += std::to_string(exposure_val_left);
+            info += " - ";
+            info += std::to_string(exposure_val_right);
+        }
+        break;
+    case WhiteBalance:
+        info = "WhiteBalance: ";
+        if(autoWB)
+        {
+            info += "AUTO";
+        }
+        else
+        {
+            info += std::to_string(whiteBalance_val);
+        }
+        break;
+    case Sharpness:
+        info = "Sharpness: ";
+        info += std::to_string(sharpness_val);
+        break;
+    case Gamma:
+        info = "Gamma: ";
+        info += std::to_string(gamma_val);
+        break;
+    }
+
+    cv::putText( resized, info, cv::Point(20,40),cv::FONT_HERSHEY_SIMPLEX, 0.75,
+                 cv::Scalar(241,240,236), 2);
+
+    cv::imshow( win_name, resized );
+}
+
+void resetControls( sl_oc::video::VideoCapture &cap )
+{
+    cap.resetBrightness();
+    cap.resetSharpness();
+    cap.resetContrast();
+    cap.resetHue();
+    cap.resetSaturation();
+    cap.resetGamma();
+    cap.resetAECAGC();
+    cap.resetAutoWhiteBalance();
+    cap.resetROIforAECAGC(sl_oc::video::CAM_SENS_POS::LEFT);
+    cap.resetROIforAECAGC(sl_oc::video::CAM_SENS_POS::RIGHT);
 }

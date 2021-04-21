@@ -1,5 +1,14 @@
 # Changelog
 
+2020 03 16
+----------
+* Replaced `CMAKE_HOME_DIRECTORY` with `PROJECT_SOURCE_DIR` in `CMakeLists.txt` to be able to import the library as subproject. Thx @pieniacy
+
+v0.3.0 - 2020 03 01
+-------------------
+* Add AEC/AGC ROI support
+* Update the "control example" with AEC/AGC ROI support, drawing ROIs on display image
+
 v0.2.1 - 2020 02 08
 -------------------
 * Fix FPS issue caused by wrong default timeout in `getLastFrame` function (see #10)
