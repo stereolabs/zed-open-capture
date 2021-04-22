@@ -1926,12 +1926,12 @@ bool VideoCapture::enableAecAgcSensLogging(bool enable, int frame_skip/*=10*/)
     mLogFilenameLeft = getCurrentDateTime(DATE);
     mLogFilenameLeft += "_";
     mLogFilenameLeft += getCurrentDateTime(TIME);
-    mLogFilenameLeft += "_agc_aec_registers-LEFT.log";
+    mLogFilenameLeft += "_agc_aec_registers-LEFT.csv";
 
     mLogFilenameRight = getCurrentDateTime(DATE);
     mLogFilenameRight += "_";
     mLogFilenameRight += getCurrentDateTime(TIME);
-    mLogFilenameRight += "_agc_aec_registers-RIGHT.log";
+    mLogFilenameRight += "_agc_aec_registers-RIGHT.csv";
 
     mLogFileLeft.open(mLogFilenameLeft, std::ofstream::out );
     mLogFileRight.open(mLogFilenameRight, std::ofstream::out );
