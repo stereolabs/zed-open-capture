@@ -8,7 +8,7 @@ project(${PROJECT_NAME} CXX)
 # Flags
 
 # if CMAKE_BUILD_TYPE is not specified, take 'Release' as default
-set(${PROJECT_NAME}_CXX_FLAGS "-std=c++11")
+set(${PROJECT_NAME}_CXX_FLAGS "-std=c++14")
 set(CMAKE_CXX_FLAGS "${${PROJECT_NAME}_CXX_FLAGS} -Wall -pedantic -g")
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -159,6 +159,17 @@ if(BUILD_EXAMPLES)
           ${OpenCV_LIBS}
         )
         install(TARGETS ${PROJECT_NAME}_rectify_example
+            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+        )
+
+        ##### Video with AEG/AGC reisters log
+        add_executable(${PROJECT_NAME}_video_reg_log "${PROJECT_SOURCE_DIR}/examples/zed_oc_video_reg_log.cpp")
+        set_target_properties(${PROJECT_NAME}_video_reg_log PROPERTIES PREFIX "")
+        target_link_libraries(${PROJECT_NAME}_video_reg_log
+          ${PROJECT_NAME}
+          ${OpenCV_LIBS}
+        )
+        install(TARGETS ${PROJECT_NAME}_video_reg_log
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
     endif()

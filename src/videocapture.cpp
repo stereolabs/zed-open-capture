@@ -48,18 +48,18 @@
 #define cbs_xu_unit_id          0x04 //mapped to wIndex 0x0400
 #define cbs_xu_control_selector 0x02 //mapped to wValue 0x0200
 
-#define ISP_LEFT    0x80181033
-#define ISP_RIGHT   0x80181833
+#define ISP_CTRL_LEFT    0x80181033
+#define ISP_CTRL_RIGHT   0x80181833
 
-#define MASK_ON     0x02
-#define MASK_OFF    0xFD
+#define AEG_AGC_MASK_ON     0x02
+#define AEG_AGC_MASK_OFF    0xFD
 
-#define ADD_EXP_H   0x3500
-#define ADD_EXP_M   0x3501
-#define ADD_EXP_L   0x3502
-#define ADD_GAIN_H  0x3507
-#define ADD_GAIN_M  0x3508
-#define ADD_GAIN_L  0x3509
+#define ADDR_EXP_H   0x3500
+#define ADDR_EXP_M   0x3501
+#define ADDR_EXP_L   0x3502
+#define ADDR_GAIN_H  0x3507
+#define ADDR_GAIN_M  0x3508
+#define ADDR_GAIN_L  0x3509
 
 #define XU_TASK_SET     0x50
 #define XU_TASK_GET     0x51
@@ -833,6 +833,19 @@ void VideoCapture::grabThreadFunc()
                 }
 #endif
 
+                // ----> AEC/AGC register logging
+                static int frame_count =0;
+
+                if((++frame_count)==mLogFrameSkip)
+                    frame_count = 0;
+
+                if(frame_count==0)
+                {
+                    saveLogDataLeft();
+                    saveLogDataRight();
+                }
+                // <---- AEC/AGC register logging
+
                 mNewFrame=true;
             }
             mBufMutex.unlock();
@@ -1252,9 +1265,9 @@ int VideoCapture::ll_isp_aecagc_enable(int side, bool enable) {
     uint8_t value = 0;
     int hr = 0;
     if (side == 0)
-        Address = ISP_LEFT; //ISP L
+        Address = ISP_CTRL_LEFT; //ISP L
     else if (side == 1)
-        Address = ISP_RIGHT; //ISP R
+        Address = ISP_CTRL_RIGHT; //ISP R
     else
         return -2;
 
@@ -1263,14 +1276,15 @@ int VideoCapture::ll_isp_aecagc_enable(int side, bool enable) {
 
     // Adjust Value
     if (enable)
-        value = value | MASK_ON;
+        value = value | AEG_AGC_MASK_ON;
     else
-        value = value & MASK_OFF;
+        value = value & AEG_AGC_MASK_OFF;
 
     hr += ll_write_system_register(Address, value);
 
     return hr;
 }
+
 
 int VideoCapture::ll_isp_is_aecagc(int side) {
     uint64_t Address = 0;
@@ -1278,9 +1292,9 @@ int VideoCapture::ll_isp_is_aecagc(int side) {
     int result = 0;
     int hr = 0;
     if (side == 0)
-        Address = ISP_LEFT; //ISP L
+        Address = ISP_CTRL_LEFT; //ISP L
     else if (side == 1)
-        Address = ISP_RIGHT; //ISP R
+        Address = ISP_CTRL_RIGHT; //ISP R
     else
         return -2;
 
@@ -1289,7 +1303,7 @@ int VideoCapture::ll_isp_is_aecagc(int side) {
 
     // Adjust Value
     if (hr == 0)
-        result = ((value & MASK_ON) == MASK_ON); //check that second bit is on
+        result = ((value & AEG_AGC_MASK_ON) == AEG_AGC_MASK_ON); //check that second bit is on
     else
         return hr;
 
@@ -1300,9 +1314,9 @@ int VideoCapture::ll_isp_get_gain(uint8_t *val, uint8_t sensorID) {
     int hr = 0;
     uint8_t buffL, buffM, buffH;
 
-    hr += ll_read_sensor_register(sensorID, 1, ADD_GAIN_H, &buffH);
-    hr += ll_read_sensor_register(sensorID, 1, ADD_GAIN_M, &buffM);
-    hr += ll_read_sensor_register(sensorID, 1, ADD_GAIN_L, &buffL);
+    hr += ll_read_sensor_register(sensorID, 1, ADDR_GAIN_H, &buffH);
+    hr += ll_read_sensor_register(sensorID, 1, ADDR_GAIN_M, &buffM);
+    hr += ll_read_sensor_register(sensorID, 1, ADDR_GAIN_L, &buffL);
 
     *val = buffL;
     *(val + 1) = buffM;
@@ -1314,9 +1328,9 @@ int VideoCapture::ll_isp_get_gain(uint8_t *val, uint8_t sensorID) {
 int VideoCapture::ll_isp_set_gain(unsigned char ucGainH, unsigned char ucGainM, unsigned char ucGainL, int sensorID)
 {
     int hr = 0;
-    hr += ll_write_sensor_register(sensorID, 1, ADD_GAIN_H, ucGainH);
-    hr += ll_write_sensor_register(sensorID, 1, ADD_GAIN_M, ucGainM);
-    hr += ll_write_sensor_register(sensorID, 1, ADD_GAIN_L, ucGainL);
+    hr += ll_write_sensor_register(sensorID, 1, ADDR_GAIN_H, ucGainH);
+    hr += ll_write_sensor_register(sensorID, 1, ADDR_GAIN_M, ucGainM);
+    hr += ll_write_sensor_register(sensorID, 1, ADDR_GAIN_L, ucGainL);
     return hr;
 }
 
@@ -1327,11 +1341,11 @@ int VideoCapture::ll_isp_get_exposure(unsigned char *val, unsigned char sensorID
     uint8_t buffM = 0;
     uint8_t buffH = 0;
 
-    hr += ll_read_sensor_register(sensorID, 1, ADD_EXP_H, (uint8_t*) & buffH);
+    hr += ll_read_sensor_register(sensorID, 1, ADDR_EXP_H, (uint8_t*) & buffH);
     usleep(10);
-    hr += ll_read_sensor_register(sensorID, 1, ADD_EXP_M, (uint8_t*) & buffM);
+    hr += ll_read_sensor_register(sensorID, 1, ADDR_EXP_M, (uint8_t*) & buffM);
     usleep(10);
-    hr += ll_read_sensor_register(sensorID, 1, ADD_EXP_L, (uint8_t*) & buffL);
+    hr += ll_read_sensor_register(sensorID, 1, ADDR_EXP_L, (uint8_t*) & buffL);
 
     *val = buffL;
     *(val + 1) = buffM;
@@ -1343,9 +1357,9 @@ int VideoCapture::ll_isp_get_exposure(unsigned char *val, unsigned char sensorID
 int VideoCapture::ll_isp_set_exposure(unsigned char ucExpH, unsigned char ucExpM, unsigned char ucExpL, int sensorID)
 {
     int hr = 0;
-    hr += ll_write_sensor_register(sensorID, 1, ADD_EXP_H, ucExpH);
-    hr += ll_write_sensor_register(sensorID, 1, ADD_EXP_M, ucExpM);
-    hr += ll_write_sensor_register(sensorID, 1, ADD_EXP_L, ucExpL);
+    hr += ll_write_sensor_register(sensorID, 1, ADDR_EXP_H, ucExpH);
+    hr += ll_write_sensor_register(sensorID, 1, ADDR_EXP_M, ucExpM);
+    hr += ll_write_sensor_register(sensorID, 1, ADDR_EXP_L, ucExpL);
     return hr;
 }
 
@@ -1889,6 +1903,151 @@ int VideoCapture::calcGainValue(int rawGain)
     int gain = static_cast<int>(std::round((100.0*segmentedGain)/mGainSegMax));
 
     return gain;
+}
+
+bool VideoCapture::enableAecAgcSensLogging(bool enable, int frame_skip/*=10*/)
+{
+    if(!enable)
+    {
+        mLogEnable=false;
+        if(mLogFileLeft.is_open())
+        {
+            mLogFileLeft.close();
+        }
+        if(mLogFileRight.is_open())
+        {
+            mLogFileRight.close();
+        }
+        return true;
+    }
+
+    mLogFrameSkip = frame_skip;
+
+    mLogFilenameLeft = getCurrentDateTime(DATE);
+    mLogFilenameLeft += "_";
+    mLogFilenameLeft += getCurrentDateTime(TIME);
+    mLogFilenameLeft += "_agc_aec_registers-LEFT.log";
+
+    mLogFilenameRight = getCurrentDateTime(DATE);
+    mLogFilenameRight += "_";
+    mLogFilenameRight += getCurrentDateTime(TIME);
+    mLogFilenameRight += "_agc_aec_registers-RIGHT.log";
+
+    mLogFileLeft.open(mLogFilenameLeft, std::ofstream::out );
+    mLogFileRight.open(mLogFilenameRight, std::ofstream::out );
+
+    if(mLogFileLeft.bad())
+    {
+        std::cerr << "Logging not started. Error creating the log file: '" << mLogFilenameLeft << "'" << std::endl;
+        mLogEnable = false;
+        return false;
+    }
+
+    if(mLogFileRight.bad())
+    {
+        std::cerr << "Logging not started. Error creating the log file: '" << mLogFilenameRight << "'" << std::endl;
+        mLogEnable = false;
+        mLogFileLeft.close();
+        return false;
+    }
+
+    mLogFileLeft << "TIMESTAMP" << LOG_SEP;
+    mLogFileLeft << "OV580-ISP_EN_HIGH" << LOG_SEP;
+    mLogFileLeft << "OV580-yavg_low" << LOG_SEP;
+    mLogFileLeft << "OV580-yavg_high" << LOG_SEP;
+    mLogFileLeft << "OV580-interrupt_ctrl1";
+
+    mLogFileRight << "TIMESTAMP" << LOG_SEP;
+    mLogFileRight << "OV580-ISP_EN_HIGH" << LOG_SEP;
+    mLogFileRight << "OV580-yavg_low" << LOG_SEP;
+    mLogFileRight << "OV580-yavg_high" << LOG_SEP;
+    mLogFileRight << "OV580-interrupt_ctrl1";
+
+    for (int addr = 0x00; addr <= 0x22; ++addr)
+    {
+         mLogFileLeft << LOG_SEP << "OV580-YAVG[0x" << std::hex << std::setfill('0') << std::setw(2) << addr << "]";
+         mLogFileRight << LOG_SEP << "OV580-YAVG[0x" << std::hex << std::setfill('0') << std::setw(2) << addr << "]";
+    }
+
+    for (int addr = 0x3500; addr <= 0x3515; ++addr)
+    {
+         mLogFileLeft << LOG_SEP << "OV4689-GAIN_EXP[0x" << std::hex << std::setfill('0') << std::setw(4) << addr << "]";
+         mLogFileRight << LOG_SEP << "OV4689-GAIN_EXP[0x" << std::hex << std::setfill('0') << std::setw(4) << addr << "]";
+    }
+
+    mLogFileLeft << std::endl;
+    mLogFileRight << std::endl;
+
+    mLogEnable = true;
+    return true;
+}
+
+void VideoCapture::saveLogDataLeft()
+{
+    const int reg_count = 61;
+    uint8_t values[reg_count];
+    int idx = 0;
+
+    int res = 0;
+    res += ll_read_system_register( 0x80181002, &values[idx++]);
+    res += ll_read_system_register( 0x80181031, &values[idx++]);
+    res += ll_read_system_register( 0x80181032, &values[idx++]);
+    res += ll_read_system_register( 0x80181033, &values[idx++]);
+
+    for(int reg_addr = 0x00; reg_addr <= 0x22; ++reg_addr)
+    {
+        uint64_t addr = 0x801810C0+reg_addr;
+        res += ll_read_system_register( addr, &values[idx++]);
+    }
+
+    for (int addr = 0x3500; addr <= 0x3515; ++addr)
+    {
+        res += ll_read_sensor_register( 0, 1, addr, &values[idx++]);
+    }
+
+    mLogFileLeft << std::dec << mLastFrame.timestamp << LOG_SEP;
+    for(int i=0; i<reg_count; i++)
+    {
+        mLogFileLeft << "0x" << std::hex << std::setfill('0') << std::setw(2) << static_cast<int>(values[i]);
+        if(i==(reg_count-1))
+            mLogFileLeft << std::endl;
+        else
+            mLogFileLeft << LOG_SEP;
+    }
+}
+
+void VideoCapture::saveLogDataRight()
+{
+    const int reg_count = 61;
+    uint8_t values[reg_count];
+    int idx = 0;
+
+    int res = 0;
+    res += ll_read_system_register( 0x80181802, &values[idx++]);
+    res += ll_read_system_register( 0x80181831, &values[idx++]);
+    res += ll_read_system_register( 0x80181832, &values[idx++]);
+    res += ll_read_system_register( 0x80181833, &values[idx++]);
+
+    for(int reg_addr = 0x00; reg_addr <= 0x22; ++reg_addr)
+    {
+        uint64_t addr = 0x801818C0+reg_addr;
+        res += ll_read_system_register( addr, &values[idx++]);
+    }
+
+    for (int addr = 0x3500; addr <= 0x3515; ++addr)
+    {
+        res += ll_read_sensor_register( 1, 1, addr, &values[idx++]);
+    }
+
+    mLogFileRight << std::dec << mLastFrame.timestamp << LOG_SEP;
+    for(int i=0; i<reg_count; i++)
+    {
+        mLogFileRight << "0x" << std::hex << std::setfill('0') << std::setw(2) << static_cast<int>(values[i]);
+        if(i==(reg_count-1))
+            mLogFileRight << std::endl;
+        else
+            mLogFileRight << LOG_SEP;
+    }
 }
 
 #ifdef SENSORS_MOD_AVAILABLE

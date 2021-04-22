@@ -24,6 +24,10 @@
 #include "defines.hpp"
 #include <thread>
 #include <mutex>
+#include <fstream>      // std::ofstream
+#include <iomanip>
+
+#define LOG_SEP ","
 
 #ifdef VIDEO_MOD_AVAILABLE
 
@@ -336,6 +340,14 @@ public:
      */
     int getSerialNumber();
 
+    /*!
+     * \brief Start logging to file of AEG/AGC camera registers
+     * \param enable set to true to enable logging
+     * \param frame_skip number of frames to skip when logging to file
+     * \return true if log file can be correctly created/closed
+     */
+    bool enableAecAgcSensLogging(bool enable, int frame_skip=10);
+
 #ifdef SENSORS_MOD_AVAILABLE
     /*!
      * \brief Enable synchronizations between Camera frame and Sensors timestamps
@@ -369,6 +381,8 @@ private:
     int ll_isp_aecagc_enable(int side, bool enable);
     int ll_isp_is_aecagc(int side);
 
+    uint8_t ll_read_reg(uint64_t addr);
+
     int ll_isp_get_gain(uint8_t *val, uint8_t sensorID);
     int ll_isp_set_gain(unsigned char ucGainH, unsigned char ucGainM, unsigned char ucGainL, int sensorID);
     int ll_isp_get_exposure(unsigned char *val, unsigned char sensorID);
@@ -399,6 +413,30 @@ private:
     SL_DEVICE getCameraModel(std::string dev_name);     //!< Get the connected camera model
     // <---- Connection control functions
 
+    typedef enum _date_time
+    {
+        FULL,
+        DATE,
+        TIME
+    } DateTime;
+
+    static inline std::string getCurrentDateTime( DateTime type ){
+        time_t now = time(0);
+        struct tm  tstruct;
+        char  buf[80];
+        tstruct = *localtime(&now);
+        if(type==FULL)
+            strftime(buf, sizeof(buf), "%Y-%m-%d %X", &tstruct);
+        else if(type==DATE)
+            strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);
+        else if(type==TIME)
+            strftime(buf, sizeof(buf), "%X", &tstruct);
+        return std::string(buf);
+    }
+
+    void saveLogDataLeft();
+    void saveLogDataRight();
+
 private:
     // Flags
     bool mNewFrame=false;               //!< Indicates if a new frame is available
@@ -418,7 +456,7 @@ private:
     int mWidth = 0;                     //!< Frame width
     int mHeight = 0;                    //!< Frame height
     int mChannels = 0;                  //!< Frame channels
-    int mFps=0;                          //!< Frames per seconds
+    int mFps=0;                         //!< Frames per seconds
 
     SL_DEVICE mCameraModel = SL_DEVICE::NONE; //!< The camera model
 
@@ -437,9 +475,19 @@ private:
 
     bool mFirstFrame=true;              //!< Used to initialize the timestamp start point
 
+    // ----> Registers logging
+    bool mLogEnable=false;
+    std::string mLogFilenameLeft;
+    std::string mLogFilenameRight;
+    std::ofstream mLogFileLeft;
+    std::ofstream mLogFileRight;
+    int mLogFrameSkip=10;
+    // <---- Registers logging
+
+
 #ifdef SENSORS_MOD_AVAILABLE
     bool mSyncEnabled=false;            //!< Indicates if a  SensorCapture object is synchronized
-    sensors::SensorCapture* mSensPtr;            //!< Pointer to the synchronized  SensorCapture object
+    sensors::SensorCapture* mSensPtr;   //!< Pointer to the synchronized  SensorCapture object
 
     bool mSensReadyToSync=false;        //!< Indicates if the MCU received a HW sync signal
 #endif
