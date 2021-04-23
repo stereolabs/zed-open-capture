@@ -819,11 +819,11 @@ void VideoCapture::grabThreadFunc()
                 memcpy(mLastFrame.data, (unsigned char*) mBuffers[mCurrentIndex].start, mBuffers[mCurrentIndex].length);
                 mLastFrame.timestamp = mStartTs + rel_ts;
 
-//                static uint64_t last_ts=0;
-//                std::cout << "[Video] Frame TS: " << static_cast<double>(mLastFrame.timestamp)/1e9 << " sec" << std::endl;
-//                double dT = static_cast<double>(mLastFrame.timestamp-last_ts)/1e9;
-//                last_ts = mLastFrame.timestamp;
-//                std::cout << "[Video] Frame FPS: " << 1./dT << std::endl;
+                //                static uint64_t last_ts=0;
+                //                std::cout << "[Video] Frame TS: " << static_cast<double>(mLastFrame.timestamp)/1e9 << " sec" << std::endl;
+                //                double dT = static_cast<double>(mLastFrame.timestamp-last_ts)/1e9;
+                //                last_ts = mLastFrame.timestamp;
+                //                std::cout << "[Video] Frame FPS: " << 1./dT << std::endl;
 
 #ifdef SENSORS_MOD_AVAILABLE
                 if(mSensReadyToSync)
@@ -1965,14 +1965,14 @@ bool VideoCapture::enableAecAgcSensLogging(bool enable, int frame_skip/*=10*/)
 
     for (int addr = 0x00; addr <= 0x22; ++addr)
     {
-         mLogFileLeft << LOG_SEP << "OV580-YAVG[0x" << std::hex << std::setfill('0') << std::setw(2) << addr << "]";
-         mLogFileRight << LOG_SEP << "OV580-YAVG[0x" << std::hex << std::setfill('0') << std::setw(2) << addr << "]";
+        mLogFileLeft << LOG_SEP << "OV580-YAVG[0x" << std::hex << std::setfill('0') << std::setw(2) << addr << "]";
+        mLogFileRight << LOG_SEP << "OV580-YAVG[0x" << std::hex << std::setfill('0') << std::setw(2) << addr << "]";
     }
 
     for (int addr = 0x3500; addr <= 0x3515; ++addr)
     {
-         mLogFileLeft << LOG_SEP << "OV4689-GAIN_EXP[0x" << std::hex << std::setfill('0') << std::setw(4) << addr << "]";
-         mLogFileRight << LOG_SEP << "OV4689-GAIN_EXP[0x" << std::hex << std::setfill('0') << std::setw(4) << addr << "]";
+        mLogFileLeft << LOG_SEP << "OV4689-GAIN_EXP[0x" << std::hex << std::setfill('0') << std::setw(4) << addr << "]";
+        mLogFileRight << LOG_SEP << "OV4689-GAIN_EXP[0x" << std::hex << std::setfill('0') << std::setw(4) << addr << "]";
     }
 
     mLogFileLeft << std::endl;
@@ -1980,6 +1980,47 @@ bool VideoCapture::enableAecAgcSensLogging(bool enable, int frame_skip/*=10*/)
 
     mLogEnable = true;
     return true;
+}
+
+
+void VideoCapture::saveAllISPRegisters(std::string filename)
+{
+    std::ofstream logFile;
+    logFile.open(filename,std::ofstream::out);
+    int res = 0;
+    unsigned long long ulAddrL =  0x80181000;
+    unsigned long long   ulAddrR =  0x80181800;
+
+    for (int p = 0;p<0x800;p++)
+    {
+        uint8_t valL,valR;
+        res += ll_read_system_register( ulAddrL+p, &valL);
+        res += ll_read_system_register( ulAddrR+p, &valR);
+
+        logFile <<"0x" << std::hex << std::setfill('0') << std::setw(8) << static_cast<unsigned long long>(ulAddrL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valR)<<std::endl;
+        usleep(10);
+    }
+
+    logFile.close();
+}
+
+void VideoCapture::saveAllSensorsRegisters(std::string filename)
+{
+    std::ofstream logFile;
+    logFile.open(filename,std::ofstream::out);
+
+    int res = 0;
+    for (int addr = 0x3000; addr <= 0x6000; ++addr)
+    {
+        uint8_t valL,valR;
+        res += ll_read_sensor_register( 0, 1, addr, &valL);
+        res += ll_read_sensor_register( 1, 1, addr, &valR);
+
+        usleep(10);
+        logFile <<"0x" << std::hex << std::setfill('0') << std::setw(8) << static_cast<int>(addr)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valR)<<std::endl;
+    }
+
+    logFile.close();
 }
 
 void VideoCapture::saveLogDataLeft()

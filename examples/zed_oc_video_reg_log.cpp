@@ -58,8 +58,9 @@ int main(int argc, char *argv[])
 #endif
 
     // Enable AGC/AEG registers logging
-    cap.enableAecAgcSensLogging(true);
+    cap.enableAecAgcSensLogging(false);
 
+    int f_count = 0;
     // Infinite video grabbing loop
     while (1)
     {
@@ -87,12 +88,22 @@ int main(int argc, char *argv[])
             lastFrameTs = frame.timestamp;
 #endif
 
+
+            if (f_count%10==0)
+            {
+                cap.saveAllISPRegisters("ov580_lr_"+std::to_string(f_count)+".csv");
+                cap.saveAllSensorsRegisters("ov4689_lr_"+std::to_string(f_count)+".csv");
+                std::cout<<" Save Data for f_count "<<f_count<<std::endl;
+            }
+
+
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
             cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
             cv::Mat frameBGR;
             cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
 
+            f_count++;
             // Show frame
             cv::imshow( "Stream RGB", frameBGR );
         }

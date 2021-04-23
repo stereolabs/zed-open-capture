@@ -348,6 +348,22 @@ public:
      */
     bool enableAecAgcSensLogging(bool enable, int frame_skip=10);
 
+
+    /*!
+     * \brief Save all ISP camera registers into a file
+     * \param filename csv filename
+     * \note CSV file will contain Adress , L value, R value
+     */
+    void saveAllISPRegisters(std::string filename);
+
+    /*!
+     * \brief Save all sensors ctrl register
+     * \param filename csv filename
+     * \note CSV file will contain Adress , L value, R value
+     */
+    void saveAllSensorsRegisters(std::string filename);
+
+
 #ifdef SENSORS_MOD_AVAILABLE
     /*!
      * \brief Enable synchronizations between Camera frame and Sensors timestamps
