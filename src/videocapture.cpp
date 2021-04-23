@@ -2091,6 +2091,17 @@ void VideoCapture::saveLogDataRight()
     }
 }
 
+bool VideoCapture::resetAGCAECregisters() {
+    int res = 0;
+
+    res += ll_write_sensor_register( 0, 1, 0x3503, 0x04);
+    res += ll_write_sensor_register( 1, 1, 0x3503, 0x04);
+    res += ll_write_sensor_register( 0, 1, 0x3505, 0x00);
+    res += ll_write_sensor_register( 1, 1, 0x3505, 0x00);
+
+    return res==0;
+}
+
 #ifdef SENSORS_MOD_AVAILABLE
 bool VideoCapture::enableSensorSync( sensors::SensorCapture* sensCap )
 {

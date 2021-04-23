@@ -111,8 +111,8 @@ int main(int argc, char *argv[])
 
     // ----> Set Video parameters
     sl_oc::video::VideoParams params;
-    params.res = sl_oc::video::RESOLUTION::HD1080;
-    params.fps = sl_oc::video::FPS::FPS_30;
+    params.res = sl_oc::video::RESOLUTION::HD2K;
+    params.fps = sl_oc::video::FPS::FPS_15;
     params.verbose = verbose;
     // <---- Set Video parameters
 
@@ -222,10 +222,19 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
     {
     case 'L':
     {
-        logging = cap.enableAecAgcSensLogging( !logging );
+        logging = cap.enableAecAgcSensLogging( !logging, 5 );
         std::cout << std::string("*** AEC/AGC registers loggin: ") << (logging?std::string("ENABLED"):std::string("DISABLED")) << std::endl;
     }
         break;
+
+    case 'f':
+    case 'F':
+    {
+        bool res = cap.resetAGCAECregisters();
+        std::cout << std::string("*** AEC/AGC registers reset: ") << (res?std::string("OK"):std::string("KO")) << std::endl;
+    }
+        break;
+
     case 'l':
     {
         bool led;
@@ -312,6 +321,7 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
         std::cout << " * '-' -> Decrease the current control value" << std::endl;
         std::cout << " * '0' .. '9' -> Set the current control value" << std::endl;
         std::cout << " * 'L' -> Toggle AGC/AEC registers logging" << std::endl;
+        std::cout << " * 'f' -> Fix AGC/AEC registers" << std::endl;
     }
 }
 
