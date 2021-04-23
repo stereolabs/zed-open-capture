@@ -85,6 +85,8 @@ double img_resize_factor = 1.0;          // Image resize factor for drawing
 int img_w = 0;                           // Camera image width
 int img_h = 0;                           // Camera image height
 
+bool logging = false; // Indicates if AEG/AGC registers logging is enabled
+
 uint8_t brightness_val;
 uint8_t contrast_val;
 uint8_t hue_val;
@@ -218,6 +220,12 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
 
     switch(key)
     {
+    case 'L':
+    {
+        logging = cap.enableAecAgcSensLogging( !logging );
+        std::cout << std::string("*** AEC/AGC registers loggin: ") << (logging?std::string("ENABLED"):std::string("DISABLED")) << std::endl;
+    }
+        break;
     case 'l':
     {
         bool led;
@@ -303,6 +311,7 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
         std::cout << " * '+' -> Increase the current control value" << std::endl;
         std::cout << " * '-' -> Decrease the current control value" << std::endl;
         std::cout << " * '0' .. '9' -> Set the current control value" << std::endl;
+        std::cout << " * 'L' -> Toggle AGC/AEC registers logging" << std::endl;
     }
 }
 
