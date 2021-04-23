@@ -363,6 +363,8 @@ public:
     inline void setReadyToSync(){ mSensReadyToSync=true; }
 #endif
 
+        bool resetAGCAECregisters();
+
 private:
     void grabThreadFunc();  //!< The frame grabbing thread function
 
@@ -436,6 +438,8 @@ private:
 
     void saveLogDataLeft();
     void saveLogDataRight();
+
+
 
 private:
     // Flags
