@@ -1997,7 +1997,7 @@ void VideoCapture::saveAllISPRegisters(std::string filename)
         res += ll_read_system_register( ulAddrL+p, &valL);
         res += ll_read_system_register( ulAddrR+p, &valR);
 
-        logFile <<"0x" << std::hex << std::setfill('0') << std::setw(8) << static_cast<unsigned long long>(ulAddrL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valR)<<std::endl;
+        logFile <<"0x" << std::hex << std::setfill('0') << std::setw(8) << static_cast<unsigned long long>(ulAddrL+p)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valR)<<std::endl;
         usleep(10);
     }
 
