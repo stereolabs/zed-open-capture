@@ -222,8 +222,9 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
     {
     case 'L':
     {
-        logging = cap.enableAecAgcSensLogging( !logging, 5 );
-        std::cout << std::string("*** AEC/AGC registers loggin: ") << (logging?std::string("ENABLED"):std::string("DISABLED")) << std::endl;
+        logging = !logging;
+        cap.enableAecAgcSensLogging( logging, 5 );
+        std::cout << std::string("*** AEC/AGC registers logging: ") << (logging?std::string("ENABLED"):std::string("DISABLED")) << std::endl;
     }
         break;
 
