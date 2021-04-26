@@ -838,6 +838,7 @@ void VideoCapture::grabThreadFunc()
                 {
                     static int frame_count =0;
 
+
                     if((++frame_count)==mLogFrameSkip)
                         frame_count = 0;
 

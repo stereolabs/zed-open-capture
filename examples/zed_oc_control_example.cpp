@@ -78,6 +78,8 @@ static void resetControls( sl_oc::video::VideoCapture &cap );
 // ----> Global variables
 cv::String win_name = "Stream RGB";      // Name of the stream window
 bool selectInProgress = false;           // Indicates that an AECAGC ROI is being drawn
+bool selectLeft = false;
+bool selectRight = false;
 cv::Rect aecagc_roi_left = {0,0,0,0};    // The current agcaec ROI rectangle
 cv::Rect aecagc_roi_right = {0,0,0,0};   // The current agcaec ROI rectangle
 cv::Point origin_roi = {0,0};            // Click point for AECAGC ROI
@@ -101,7 +103,8 @@ uint8_t gamma_val;
 bool autoAECAGC=false;
 bool autoWB=false;
 
-bool applyAECAGCrect=false;
+bool applyAECAGCrectLeft=false;
+bool applyAECAGCrectRight=false;
 // <---- Global variables
 
 // The main function
@@ -153,15 +156,23 @@ int main(int argc, char *argv[])
         img_h = frame.height;
 
         // 3a) Apply AEC AGC ROI if necessary
-        if(applyAECAGCrect)
+        if(applyAECAGCrectLeft)
         {
-            applyAECAGCrect = false;
+            applyAECAGCrectLeft = false;
             cap.setROIforAECAGC( sl_oc::video::CAM_SENS_POS::LEFT,
                                  aecagc_roi_left.x, aecagc_roi_left.y,
                                  aecagc_roi_left.width, aecagc_roi_left.height);
+            selectLeft=false;
+            selectRight=false;
+        }
+        if(applyAECAGCrectRight)
+        {
+            applyAECAGCrectRight = false;
             cap.setROIforAECAGC( sl_oc::video::CAM_SENS_POS::RIGHT,
-                                 aecagc_roi_right.x, aecagc_roi_left.y,
-                                 aecagc_roi_left.width, aecagc_roi_left.height);
+                                 aecagc_roi_right.x, aecagc_roi_right.y,
+                                 aecagc_roi_right.width, aecagc_roi_right.height);
+            selectLeft=false;
+            selectRight=false;
         }
 
         // ----> If the frame is valid we can display it
@@ -373,7 +384,16 @@ void handleMouse(int event, int x, int y, int, void*)
 
         if(autoAECAGC && (activeControl==Gain || activeControl==Exposure))
         {
-            applyAECAGCrect = true;
+            if(selectLeft)
+            {
+                selectLeft=false;
+                applyAECAGCrectLeft = true;
+            }
+            if(selectRight)
+            {
+                selectRight=false;
+                applyAECAGCrectRight = true;
+            }
         }
         break;
     }
@@ -384,7 +404,8 @@ void handleMouse(int event, int x, int y, int, void*)
         selectInProgress = false;
         aecagc_roi_left = cv::Rect(0,0,img_w/2,img_h);
         aecagc_roi_right = cv::Rect(0,0,img_w/2,img_h);
-        applyAECAGCrect = true;
+        applyAECAGCrectLeft = true;
+        applyAECAGCrectRight = true;
         break;
     }
     }
@@ -403,6 +424,7 @@ void handleMouse(int event, int x, int y, int, void*)
         {
             x = MAX(x,0);
             x = MIN(x,img_w/2-1);
+            selectLeft = true;
 
             aecagc_roi_left.x = MIN(x, or_x);
             aecagc_roi_left.y = MIN(y, or_y);
@@ -415,6 +437,7 @@ void handleMouse(int event, int x, int y, int, void*)
             x -= img_w/2;
             x = MAX(x,0);
             x = MIN(x,img_w/2-1);
+            selectRight = true;
 
             aecagc_roi_right.x = MIN(x, or_x);
             aecagc_roi_right.y = MIN(y, or_y);
