@@ -834,15 +834,18 @@ void VideoCapture::grabThreadFunc()
 #endif
 
                 // ----> AEC/AGC register logging
-                static int frame_count =0;
-
-                if((++frame_count)==mLogFrameSkip)
-                    frame_count = 0;
-
-                if(frame_count==0)
+                if(mLogEnable)
                 {
-                    saveLogDataLeft();
-                    saveLogDataRight();
+                    static int frame_count =0;
+
+                    if((++frame_count)==mLogFrameSkip)
+                        frame_count = 0;
+
+                    if(frame_count==0)
+                    {
+                        saveLogDataLeft();
+                        saveLogDataRight();
+                    }
                 }
                 // <---- AEC/AGC register logging
 
