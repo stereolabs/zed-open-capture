@@ -40,6 +40,7 @@ enum class SL_DEVICE {
     ZED_CBS,    //!< ZED new FW
     ZED_M_CBS,  //!< ZED Mini new FW
     ZED_2,      //!< ZED2
+    ZED_2i,      //!< ZED2
     NONE
 };
 

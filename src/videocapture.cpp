@@ -742,6 +742,8 @@ SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
         camera_device = SL_DEVICE::ZED_M_CBS;
     else if (pid == SL_USB_PROD_ZED_2_REVB && vid == SL_USB_VENDOR)
         camera_device = SL_DEVICE::ZED_2;
+    else if (pid == SL_USB_PROD_ZED_2i && vid == SL_USB_VENDOR)
+        camera_device = SL_DEVICE::ZED_2i;
 
     return camera_device;
 }
