@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
 
     // ----> Set Video parameters
     sl_oc::video::VideoParams params;
-    params.res = sl_oc::video::RESOLUTION::VGA;
+    params.res = sl_oc::video::RESOLUTION::HD2K;
     params.fps = sl_oc::video::FPS::FPS_15;
     params.verbose = verbose;
     // <---- Set Video parameters
@@ -146,12 +146,14 @@ int main(int argc, char *argv[])
     updateAllCtrlValues(cap);
 
     uint64_t last_ts=0;
+    uint16_t not_a_new_frame = 0;
+    int frame_timeout_msec = 100;
 
     // Infinite video grabbing loop
     while (1)
     {
         // 3) Get last available frame
-        const sl_oc::video::Frame frame = cap.getLastFrame();
+        const sl_oc::video::Frame frame = cap.getLastFrame(frame_timeout_msec);
         img_w = frame.width;
         img_h = frame.height;
 
@@ -178,6 +180,7 @@ int main(int argc, char *argv[])
         // ----> If the frame is valid we can display it
         if(frame.data!=nullptr && frame.timestamp!=last_ts)
         {
+            not_a_new_frame=0;
 #if 0
             // ----> Video Debug information
 
@@ -200,6 +203,17 @@ int main(int argc, char *argv[])
 
             // 4.c) Show frame
             showImage( win_name, frameBGR, params.res );
+        }
+        else if(frame.timestamp==last_ts)
+        {
+            not_a_new_frame++;
+            std::cout << "Not a new frame #" << not_a_new_frame << std::endl;
+
+            if( not_a_new_frame>=(3000/frame_timeout_msec)) // Lost connection for 5 seconds
+            {
+                std::cout << "Camera connection lost. Closing..." << std::endl;
+                break;
+            }
         }
         // <---- If the frame is valid we can display it
 

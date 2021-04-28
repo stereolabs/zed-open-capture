@@ -390,7 +390,7 @@ bool VideoCapture::openCamera( uint8_t devId )
         if(mParams.verbose)
         {
             std::string msg = std::string("Cannot open '") + mDevName + "': ["
-                    + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
+                    + std::to_string(errno) + std::string("] ") + std::string(strerror(errno));
             ERROR_OUT(mParams.verbose,msg);
         }
 
