@@ -148,9 +148,10 @@ public:
 
     /*!
      * \brief Get the list of the serial number of all the available devices
+     * \param refresh if true USB device tree is parsed to search for modifications (new device connected/disconnected)
      * \return a vector containing the serial number of all the available devices
      */
-    std::vector<int> getDeviceList();
+    std::vector<int> getDeviceList(bool refresh=false);
 
     /*!
      * \brief Open a connection to the MCU of a ZED Mini or a ZED2 camera using the specified serial number or searching
@@ -204,14 +205,16 @@ public:
 #ifdef VIDEO_MOD_AVAILABLE
     void updateTimestampOffset(uint64_t frame_ts);                                 //!< Called by  VideoCapture to update timestamp offset
     inline void setStartTimestamp(uint64_t start_ts){mStartSysTs=start_ts;}        //!< Called by  VideoCapture to sync timestamps reference point
-    inline void setVideoPtr(video::VideoCapture* videoPtr){mVideoPtr=videoPtr;}           //!< Called by  VideoCapture to set the pointer to it
+    inline void setVideoPtr(video::VideoCapture* videoPtr){mVideoPtr=videoPtr;}    //!< Called by  VideoCapture to set the pointer to it
 #endif
 
 private:
     void grabThreadFunc();              //!< The sensor data grabbing thread function
 
     bool startCapture();                //!< Start data capture thread
-    void reset();                       //!< Reset  connection
+
+    bool open(uint16_t pid, int serial_number); //!< Open the USB connection
+    void close();                       //!< Close the USB connection
 
     int enumerateDevices();             //!< Populates the  mSlDevPid map with serial number and PID of the available devices
 

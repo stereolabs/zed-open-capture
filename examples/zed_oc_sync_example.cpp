@@ -52,7 +52,7 @@ uint64_t mcu_sync_ts=0;
 int main(int argc, char *argv[])
 {
     // Set the verbose level
-    sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::ERROR;
+    sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
     // ----> Set the video parameters
     sl_oc::video::VideoParams params;

@@ -1376,7 +1376,6 @@ void VideoCapture::ll_activate_sync()
     uint8_t sync_val_right = 0x0;
 
     // Activate VSYNC output for both camera sensors
-
     if (ll_read_sensor_register(0, 1, 0x3002, &sync_val_left) == 0)
     {
         sync_val_left = sync_val_left | 0x80;
@@ -1388,7 +1387,7 @@ void VideoCapture::ll_activate_sync()
     {
         sync_val_right = sync_val_right | 0x80;
 
-        ll_write_sensor_register(1, 1, 0x3002, sync_val_left);
+        ll_write_sensor_register(1, 1, 0x3002, sync_val_right);
     }
 }
 
