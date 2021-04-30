@@ -60,16 +60,22 @@ int main(int argc, char *argv[])
     // Enable AGC/AEG registers logging
     cap.enableAecAgcSensLogging(false);
 
+    uint64_t last_ts=0;
+    uint16_t not_a_new_frame = 0;
+    int frame_timeout_msec = 100;
+
     int f_count = 0;
     // Infinite video grabbing loop
     while (1)
     {
         // Get last available frame
-        const sl_oc::video::Frame frame = cap.getLastFrame();
+        const sl_oc::video::Frame frame = cap.getLastFrame(frame_timeout_msec);
 
         // ----> If the frame is valid we can display it
-        if(frame.data!=nullptr)
+        if(frame.data!=nullptr && frame.timestamp!=last_ts)
         {
+            last_ts = frame.timestamp;
+            not_a_new_frame=0;
 #ifdef TEST_FPS
             if(lastFrameTs!=0)
             {
@@ -88,13 +94,12 @@ int main(int argc, char *argv[])
             lastFrameTs = frame.timestamp;
 #endif
 
-
-            if (f_count%10==0)
-            {
-                cap.saveAllISPRegisters("ov580_lr_"+std::to_string(f_count)+".csv");
-                cap.saveAllSensorsRegisters("ov4689_lr_"+std::to_string(f_count)+".csv");
-                std::cout<<" Save Data for f_count "<<f_count<<std::endl;
-            }
+//            if (f_count!=0 && f_count%10==0)
+//            {
+//                cap.saveAllISPRegisters("ov580_lr_"+std::to_string(f_count)+".csv");
+//                cap.saveAllSensorsRegisters("ov4689_lr_"+std::to_string(f_count)+".csv");
+//                std::cout<<" Save Data for f_count "<<f_count<<std::endl;
+//            }
 
 
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
@@ -106,6 +111,21 @@ int main(int argc, char *argv[])
             f_count++;
             // Show frame
             cv::imshow( "Stream RGB", frameBGR );
+        }
+        else
+        {
+            not_a_new_frame++;
+            std::cout << "Not a new frame #" << not_a_new_frame << std::endl;
+
+            if( not_a_new_frame>=(1000/frame_timeout_msec)) // Lost connection for 1 seconds
+            {
+                cap.saveAllISPRegisters("ov580_lr_"+std::to_string(f_count)+"_not_a_new _frame.csv");
+                cap.saveAllSensorsRegisters("ov4689_lr_"+std::to_string(f_count)+"_not_a_new _frame.csv");
+                std::cout<<" Save Data for f_count "<<f_count<<std::endl;
+
+                std::cout << "Camera connection lost. Closing..." << std::endl;
+                break;
+            }
         }
         // <---- If the frame is valid we can display it
 

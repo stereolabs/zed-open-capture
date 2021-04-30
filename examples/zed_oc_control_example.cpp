@@ -245,6 +245,7 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
 
     switch(key)
     {
+#ifdef SENSOR_LOG_AVAILABLE
     case 'L':
     {
         logging = !logging;
@@ -260,6 +261,7 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
         std::cout << std::string("*** AEC/AGC registers reset: ") << (res?std::string("OK"):std::string("KO")) << std::endl;
     }
         break;
+#endif
 
     case 'l':
     {
@@ -346,8 +348,10 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
         std::cout << " * '+' -> Increase the current control value" << std::endl;
         std::cout << " * '-' -> Decrease the current control value" << std::endl;
         std::cout << " * '0' .. '9' -> Set the current control value" << std::endl;
+#ifdef SENSOR_LOG_AVAILABLE
         std::cout << " * 'L' -> Toggle AGC/AEC registers logging" << std::endl;
         std::cout << " * 'f' -> Fix AGC/AEC registers" << std::endl;
+#endif
     }
 }
 

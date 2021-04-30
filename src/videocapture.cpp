@@ -40,6 +40,7 @@
 
 #include <cmath>              // for round
 
+#define IOCTL_RETRY 3
 
 #define READ_MODE   1
 #define WRITE_MODE  2
@@ -656,8 +657,6 @@ int VideoCapture::input_set_framerate(int fps)
     return xioctl(mFileDesc, VIDIOC_S_PARM, &streamparm);
 }
 
-#define IOCTL_RETRY 3
-
 int VideoCapture::xioctl(int fd, uint64_t IOCTL_X, void *arg)
 {
     int ret = 0;
@@ -835,6 +834,7 @@ void VideoCapture::grabThreadFunc()
                 }
 #endif
 
+#ifdef SENSOR_LOG_AVAILABLE
                 // ----> AEC/AGC register logging
                 if(mLogEnable)
                 {
@@ -851,6 +851,7 @@ void VideoCapture::grabThreadFunc()
                     }
                 }
                 // <---- AEC/AGC register logging
+#endif
 
                 mNewFrame=true;
             }
@@ -1371,11 +1372,23 @@ int VideoCapture::ll_isp_set_exposure(unsigned char ucExpH, unsigned char ucExpM
 
 void VideoCapture::ll_activate_sync()
 {
-    uint8_t sync_val = 0x0;
-    if (ll_read_sensor_register(0, 1, 0x3002, &sync_val) == 0)
+    uint8_t sync_val_left = 0x0;
+    uint8_t sync_val_right = 0x0;
+
+    // Activate VSYNC output for both camera sensors
+
+    if (ll_read_sensor_register(0, 1, 0x3002, &sync_val_left) == 0)
     {
-        sync_val = sync_val | 0x80;
-        ll_write_sensor_register(0, 1, 0x3002, sync_val);
+        sync_val_left = sync_val_left | 0x80;
+
+        ll_write_sensor_register(0, 1, 0x3002, sync_val_left);
+    }
+
+    if (ll_read_sensor_register(1, 1, 0x3002, &sync_val_right) == 0)
+    {
+        sync_val_right = sync_val_right | 0x80;
+
+        ll_write_sensor_register(1, 1, 0x3002, sync_val_left);
     }
 }
 
@@ -1911,6 +1924,7 @@ int VideoCapture::calcGainValue(int rawGain)
     return gain;
 }
 
+#ifdef SENSOR_LOG_AVAILABLE
 bool VideoCapture::enableAecAgcSensLogging(bool enable, int frame_skip/*=10*/)
 {
     if(!enable)
@@ -2107,6 +2121,7 @@ bool VideoCapture::resetAGCAECregisters() {
 
     return res==0;
 }
+#endif
 
 #ifdef SENSORS_MOD_AVAILABLE
 bool VideoCapture::enableSensorSync( sensors::SensorCapture* sensCap )
