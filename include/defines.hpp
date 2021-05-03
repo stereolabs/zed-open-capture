@@ -77,8 +77,10 @@ static const uint16_t SL_USB_PROD_ZED_M_REVA = 0xf680;       //!< Old ZED-M bina
 static const uint16_t SL_USB_PROD_ZED_REVB = 0xf582;     //!< CBS ZED Firmware Product ID
 static const uint16_t SL_USB_PROD_ZED_M_REVB = 0xf682;   //!< CBS ZED-M Firmware Product ID
 static const uint16_t SL_USB_PROD_ZED_2_REVB = 0xf780;   //!< CBS ZED 2 Firmware Product ID
+static const uint16_t SL_USB_PROD_ZED_2i = 0xf880;   //!< CBS ZED 2i Firmware Product ID
 static const uint16_t SL_USB_PROD_MCU_ZEDM_REVA= 0xf681; //!< MCU sensor device for ZED-M
 static const uint16_t SL_USB_PROD_MCU_ZED2_REVA = 0xf781; //!< MCU sensor device for ZED2
+static const uint16_t SL_USB_PROD_MCU_ZED2i_REVA = 0xf881; //!< MCU sensor device for ZED2i
 
 enum VERBOSITY {
     NONE = 0,

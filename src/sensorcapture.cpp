@@ -50,7 +50,7 @@ SensorCapture::SensorCapture(VERBOSITY verbose_lvl )
 
 SensorCapture::~SensorCapture()
 {
-    reset();
+    close();
 }
 
 int SensorCapture::enumerateDevices()
@@ -85,7 +85,7 @@ int SensorCapture::enumerateDevices()
             smsg << "  Serial_number:   " << sn_str << std::endl;
             smsg << "  Manufacturer:   " << wstr2str(cur_dev->manufacturer_string) << std::endl;
             smsg << "  Product:   " << wstr2str(cur_dev->product_string) << std::endl;
-            smsg << "  Release number:   v" << fw_major << "." << fw_minor << std::endl;
+            smsg << "  Release number:   v" << std::dec << fw_major << "." << fw_minor << std::endl;
             smsg << "***" << std::endl;
 
             INFO_OUT(mVerbose,smsg.str());
@@ -99,9 +99,9 @@ int SensorCapture::enumerateDevices()
     return mSlDevPid.size();
 }
 
-std::vector<int> SensorCapture::getDeviceList()
+std::vector<int> SensorCapture::getDeviceList(bool refresh)
 {
-    if(mSlDevPid.size()==0)
+    if(mSlDevPid.size()==0 || refresh)
         enumerateDevices();
 
     std::vector<int> sn_vec;
@@ -113,6 +113,20 @@ std::vector<int> SensorCapture::getDeviceList()
     return sn_vec;
 }
 
+bool SensorCapture::open( uint16_t pid, int serial_number)
+{
+    std::string sn_str = std::to_string(serial_number);
+    std::wstring wide_sn_string = std::wstring(sn_str.begin(), sn_str.end());
+
+    const wchar_t* wsn = wide_sn_string.c_str();
+
+    mDevHandle = hid_open(SL_USB_VENDOR, pid, wsn );
+
+    if(mDevHandle) mDevSerial = serial_number;
+
+    return mDevHandle!=0;
+}
+
 bool SensorCapture::initializeSensors( int sn )
 {
     if(mSlDevPid.size()==0)
@@ -122,9 +136,7 @@ bool SensorCapture::initializeSensors( int sn )
 
     std::string sn_str;
 
-    if(sn!=-1)
-        sn_str = std::to_string(sn);
-    else
+    if(sn==-1)
     {
         if(mSlDevPid.size()==0)
         {
@@ -138,19 +150,11 @@ bool SensorCapture::initializeSensors( int sn )
         }
 
         sn = mSlDevPid.begin()->first;
-        sn_str = std::to_string(sn);
     }
-
-    mDevSerial = sn;
-
-    std::wstring wide_string = std::wstring(sn_str.begin(), sn_str.end());
-    const wchar_t* wsn = wide_string.c_str();
 
     uint16_t pid = mSlDevPid[sn];
 
-    mDevHandle = hid_open(SL_USB_VENDOR, pid, wsn );
-
-    if (!mDevHandle)
+    if(!open( pid,sn))
     {
         std::string msg = "Connection to device with sn ";
         msg += sn_str;
@@ -269,7 +273,7 @@ bool SensorCapture::startCapture()
     return true;
 }
 
-void SensorCapture::reset()
+void SensorCapture::close()
 {
     mStopCapture = true;
 
@@ -343,7 +347,7 @@ void SensorCapture::grabThreadFunc()
 
         // ----> Received data are correct?
         int target_struct_id = 0;
-        if (mDevPid==SL_USB_PROD_MCU_ZED2_REVA)
+        if (mDevPid==SL_USB_PROD_MCU_ZED2_REVA || mDevPid==SL_USB_PROD_MCU_ZED2i_REVA)
             target_struct_id = usb::REP_ID_SENSOR_DATA;
 
         if( usbBuf[0] != target_struct_id)

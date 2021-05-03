@@ -30,6 +30,7 @@ endif()
 option(BUILD_VIDEO      "Build the ZED Open Capture Video Modules (only for Linux)"   ON)
 option(BUILD_SENSORS    "Build the ZED Open Capture Sensors Modules"                  ON)
 option(BUILD_EXAMPLES   "Build the ZED Open Capture examples"                         ON)
+option(DEBUG_CAM_REG    "Add functions to log the values of the registers of camera"  OFF)
 
 ############################################################################
 # Sources
@@ -72,6 +73,11 @@ list(INSERT CMAKE_MODULE_PATH 0 "${PROJECT_SOURCE_DIR}/cmake")
 
 ############################################################################
 # Generate libraries
+if(DEBUG_CAM_REG)
+    message("* Registers logging available")
+    add_definitions(-DSENSOR_LOG_AVAILABLE)
+endif()
+
 if(BUILD_SENSORS)
     message("* Sensors module available")
     add_definitions(-DSENSORS_MOD_AVAILABLE)
@@ -162,16 +168,18 @@ if(BUILD_EXAMPLES)
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
 
-        ##### Video with AEG/AGC reisters log
-        add_executable(${PROJECT_NAME}_video_reg_log "${PROJECT_SOURCE_DIR}/examples/zed_oc_video_reg_log.cpp")
-        set_target_properties(${PROJECT_NAME}_video_reg_log PROPERTIES PREFIX "")
-        target_link_libraries(${PROJECT_NAME}_video_reg_log
-          ${PROJECT_NAME}
-          ${OpenCV_LIBS}
-        )
-        install(TARGETS ${PROJECT_NAME}_video_reg_log
-            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
-        )
+        if(DEBUG_CAM_REG)
+            ##### Video with AEG/AGC reisters log
+            add_executable(${PROJECT_NAME}_video_reg_log "${PROJECT_SOURCE_DIR}/examples/zed_oc_video_reg_log.cpp")
+            set_target_properties(${PROJECT_NAME}_video_reg_log PROPERTIES PREFIX "")
+            target_link_libraries(${PROJECT_NAME}_video_reg_log
+              ${PROJECT_NAME}
+              ${OpenCV_LIBS}
+            )
+            install(TARGETS ${PROJECT_NAME}_video_reg_log
+                RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+            )
+        endif()
     endif()
 
     if(BUILD_SENSORS)

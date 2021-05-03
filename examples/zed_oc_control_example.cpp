@@ -78,6 +78,8 @@ static void resetControls( sl_oc::video::VideoCapture &cap );
 // ----> Global variables
 cv::String win_name = "Stream RGB";      // Name of the stream window
 bool selectInProgress = false;           // Indicates that an AECAGC ROI is being drawn
+bool selectLeft = false;
+bool selectRight = false;
 cv::Rect aecagc_roi_left = {0,0,0,0};    // The current agcaec ROI rectangle
 cv::Rect aecagc_roi_right = {0,0,0,0};   // The current agcaec ROI rectangle
 cv::Point origin_roi = {0,0};            // Click point for AECAGC ROI
@@ -101,7 +103,8 @@ uint8_t gamma_val;
 bool autoAECAGC=false;
 bool autoWB=false;
 
-bool applyAECAGCrect=false;
+bool applyAECAGCrectLeft=false;
+bool applyAECAGCrectRight=false;
 // <---- Global variables
 
 // The main function
@@ -143,30 +146,41 @@ int main(int argc, char *argv[])
     updateAllCtrlValues(cap);
 
     uint64_t last_ts=0;
+    uint16_t not_a_new_frame = 0;
+    int frame_timeout_msec = 100;
 
     // Infinite video grabbing loop
     while (1)
     {
         // 3) Get last available frame
-        const sl_oc::video::Frame frame = cap.getLastFrame();
+        const sl_oc::video::Frame frame = cap.getLastFrame(frame_timeout_msec);
         img_w = frame.width;
         img_h = frame.height;
 
         // 3a) Apply AEC AGC ROI if necessary
-        if(applyAECAGCrect)
+        if(applyAECAGCrectLeft)
         {
-            applyAECAGCrect = false;
+            applyAECAGCrectLeft = false;
             cap.setROIforAECAGC( sl_oc::video::CAM_SENS_POS::LEFT,
                                  aecagc_roi_left.x, aecagc_roi_left.y,
                                  aecagc_roi_left.width, aecagc_roi_left.height);
+            selectLeft=false;
+            selectRight=false;
+        }
+        if(applyAECAGCrectRight)
+        {
+            applyAECAGCrectRight = false;
             cap.setROIforAECAGC( sl_oc::video::CAM_SENS_POS::RIGHT,
-                                 aecagc_roi_right.x, aecagc_roi_left.y,
-                                 aecagc_roi_left.width, aecagc_roi_left.height);
+                                 aecagc_roi_right.x, aecagc_roi_right.y,
+                                 aecagc_roi_right.width, aecagc_roi_right.height);
+            selectLeft=false;
+            selectRight=false;
         }
 
         // ----> If the frame is valid we can display it
         if(frame.data!=nullptr && frame.timestamp!=last_ts)
         {
+            not_a_new_frame=0;
 #if 0
             // ----> Video Debug information
 
@@ -189,6 +203,17 @@ int main(int argc, char *argv[])
 
             // 4.c) Show frame
             showImage( win_name, frameBGR, params.res );
+        }
+        else if(frame.timestamp==last_ts)
+        {
+            not_a_new_frame++;
+            std::cout << "Not a new frame #" << not_a_new_frame << std::endl;
+
+            if( not_a_new_frame>=(3000/frame_timeout_msec)) // Lost connection for 5 seconds
+            {
+                std::cout << "Camera connection lost. Closing..." << std::endl;
+                break;
+            }
         }
         // <---- If the frame is valid we can display it
 
@@ -220,10 +245,12 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
 
     switch(key)
     {
+#ifdef SENSOR_LOG_AVAILABLE
     case 'L':
     {
-        logging = cap.enableAecAgcSensLogging( !logging, 5 );
-        std::cout << std::string("*** AEC/AGC registers loggin: ") << (logging?std::string("ENABLED"):std::string("DISABLED")) << std::endl;
+        logging = !logging;
+        cap.enableAecAgcSensLogging( logging, 5 );
+        std::cout << std::string("*** AEC/AGC registers logging: ") << (logging?std::string("ENABLED"):std::string("DISABLED")) << std::endl;
     }
         break;
 
@@ -234,6 +261,7 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
         std::cout << std::string("*** AEC/AGC registers reset: ") << (res?std::string("OK"):std::string("KO")) << std::endl;
     }
         break;
+#endif
 
     case 'l':
     {
@@ -320,8 +348,10 @@ void handleKeyboard( sl_oc::video::VideoCapture &cap, int key )
         std::cout << " * '+' -> Increase the current control value" << std::endl;
         std::cout << " * '-' -> Decrease the current control value" << std::endl;
         std::cout << " * '0' .. '9' -> Set the current control value" << std::endl;
+#ifdef SENSOR_LOG_AVAILABLE
         std::cout << " * 'L' -> Toggle AGC/AEC registers logging" << std::endl;
         std::cout << " * 'f' -> Fix AGC/AEC registers" << std::endl;
+#endif
     }
 }
 
@@ -372,7 +402,16 @@ void handleMouse(int event, int x, int y, int, void*)
 
         if(autoAECAGC && (activeControl==Gain || activeControl==Exposure))
         {
-            applyAECAGCrect = true;
+            if(selectLeft)
+            {
+                selectLeft=false;
+                applyAECAGCrectLeft = true;
+            }
+            if(selectRight)
+            {
+                selectRight=false;
+                applyAECAGCrectRight = true;
+            }
         }
         break;
     }
@@ -383,7 +422,8 @@ void handleMouse(int event, int x, int y, int, void*)
         selectInProgress = false;
         aecagc_roi_left = cv::Rect(0,0,img_w/2,img_h);
         aecagc_roi_right = cv::Rect(0,0,img_w/2,img_h);
-        applyAECAGCrect = true;
+        applyAECAGCrectLeft = true;
+        applyAECAGCrectRight = true;
         break;
     }
     }
@@ -402,6 +442,7 @@ void handleMouse(int event, int x, int y, int, void*)
         {
             x = MAX(x,0);
             x = MIN(x,img_w/2-1);
+            selectLeft = true;
 
             aecagc_roi_left.x = MIN(x, or_x);
             aecagc_roi_left.y = MIN(y, or_y);
@@ -414,6 +455,7 @@ void handleMouse(int event, int x, int y, int, void*)
             x -= img_w/2;
             x = MAX(x,0);
             x = MIN(x,img_w/2-1);
+            selectRight = true;
 
             aecagc_roi_right.x = MIN(x, or_x);
             aecagc_roi_right.y = MIN(y, or_y);

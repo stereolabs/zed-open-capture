@@ -341,19 +341,18 @@ public:
     int getSerialNumber();
 
     /*!
+     * \brief Utils fct to set Color Bars on Image
+     */
+    void setColorBars(int side, bool c);
+
+#ifdef SENSOR_LOG_AVAILABLE
+    /*!
      * \brief Start logging to file of AEG/AGC camera registers
      * \param enable set to true to enable logging
      * \param frame_skip number of frames to skip when logging to file
      * \return true if log file can be correctly created/closed
      */
     bool enableAecAgcSensLogging(bool enable, int frame_skip=10);
-
-
-
-    /*!
-     * \brief Utils fct to set Color Bars on Image
-     */
-    void setColorBars(int side, bool c);
 
     /*!
      * \brief Save all ISP camera registers into a file
@@ -368,6 +367,7 @@ public:
      * \note CSV file will contain Adress , L value, R value
      */
     void saveAllSensorsRegisters(std::string filename);
+#endif
 
 
 #ifdef SENSORS_MOD_AVAILABLE
@@ -458,10 +458,10 @@ private:
         return std::string(buf);
     }
 
+#ifdef SENSOR_LOG_AVAILABLE
     void saveLogDataLeft();
     void saveLogDataRight();
-
-
+#endif
 
 private:
     // Flags
@@ -501,6 +501,7 @@ private:
 
     bool mFirstFrame=true;              //!< Used to initialize the timestamp start point
 
+#ifdef SENSOR_LOG_AVAILABLE
     // ----> Registers logging
     bool mLogEnable=false;
     std::string mLogFilenameLeft;
@@ -509,6 +510,7 @@ private:
     std::ofstream mLogFileRight;
     int mLogFrameSkip=10;
     // <---- Registers logging
+#endif
 
 
 #ifdef SENSORS_MOD_AVAILABLE
