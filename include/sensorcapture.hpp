@@ -28,7 +28,6 @@
 #include <map>
 #include <mutex>
 
-
 #ifdef SENSORS_MOD_AVAILABLE
 
 #include "sensorcapture_def.hpp"

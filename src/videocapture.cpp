@@ -399,6 +399,13 @@ bool VideoCapture::openCamera( uint8_t devId )
     }
     // <---- Open
 
+    int sn = getSerialNumber();
+    if(mParams.verbose)
+    {
+        std::string msg = std::string("Opened camera with SN: ") + std::to_string(sn);
+        INFO_OUT(mParams.verbose,msg);
+    }
+
     // ----> Init
     struct v4l2_capability cap;
     memset(&cap, 0, sizeof (v4l2_capability));
@@ -540,8 +547,8 @@ bool VideoCapture::openCamera( uint8_t devId )
 
 int VideoCapture::getSerialNumber()
 {
-    if(!mInitialized)
-        return -1;
+    /*if(!mInitialized)
+        return -1;*/
 
     int ulValue = -1;
 
@@ -553,7 +560,7 @@ int VideoCapture::getSerialNumber()
     int try_count = 0;
     while(res!=0)
     {
-        res = ll_SPI_FlashProgramRead(&UNIQUE_BUF[0], UNIQUE_ID_START, 64);
+        res = ll_SPI_FlashProgramRead(&UNIQUE_BUF[0], UNIQUE_ID_START, 64, true);
 
         //check bytes read
         if (UNIQUE_BUF[0] != 'O') {
@@ -901,12 +908,12 @@ const Frame& VideoCapture::getLastFrame( uint64_t timeout_msec )
     return mLastFrame;
 }
 
-int VideoCapture::ll_VendorControl(uint8_t *buf, int len, int readMode, bool safe)
+int VideoCapture::ll_VendorControl(uint8_t *buf, int len, int readMode, bool safe, bool force)
 {
     if (len > 384)
         return -2;
 
-    if (!mInitialized)
+    if (!force && !mInitialized)
         return -3;
 
     unsigned char tmp[2] = {0};
@@ -1240,7 +1247,7 @@ int VideoCapture::ll_write_sensor_register(int side, int sscb_id, uint64_t addre
     return hr;
 }
 
-int VideoCapture::ll_SPI_FlashProgramRead(uint8_t *pBuf, int Adr, int len) {
+int VideoCapture::ll_SPI_FlashProgramRead(uint8_t *pBuf, int Adr, int len, bool force) {
 
     int hr = -1;
     uint8_t xu_buf[384];
@@ -1262,7 +1269,7 @@ int VideoCapture::ll_SPI_FlashProgramRead(uint8_t *pBuf, int Adr, int len) {
     xu_buf[11] = ((len) >> 8) & 0xff;
     xu_buf[12] = ((len) >> 0) & 0xff;
 
-    hr = ll_VendorControl(xu_buf, len, 1, true);
+    hr = ll_VendorControl(xu_buf, len, 1, true, force);
     memcpy(pBuf, &xu_buf[17], len);
     return hr;
 }

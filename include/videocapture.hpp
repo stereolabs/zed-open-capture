@@ -386,7 +386,7 @@ private:
     void grabThreadFunc();  //!< The frame grabbing thread function
 
     // ----> Low level functions
-    int ll_VendorControl(uint8_t *buf, int len, int readMode, bool safe = false);
+    int ll_VendorControl(uint8_t *buf, int len, int readMode, bool safe = false, bool force=false);
     int ll_get_gpio_value(int gpio_number, uint8_t* value);
     int ll_set_gpio_value(int gpio_number, uint8_t value);
     int ll_set_gpio_direction(int gpio_number, int direction);
@@ -395,7 +395,7 @@ private:
     int ll_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t *value);
     int ll_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value);
 
-    int ll_SPI_FlashProgramRead(uint8_t *pBuf, int Adr, int len);
+    int ll_SPI_FlashProgramRead(uint8_t *pBuf, int Adr, int len, bool force=false);
 
     int ll_isp_aecagc_enable(int side, bool enable);
     int ll_isp_is_aecagc(int side);
