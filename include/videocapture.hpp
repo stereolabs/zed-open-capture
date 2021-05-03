@@ -340,6 +340,11 @@ public:
      */
     int getSerialNumber();
 
+    /*!
+     * \brief Utils fct to set Color Bars on Image
+     */
+    void setColorBars(int side, bool c);
+
 #ifdef SENSOR_LOG_AVAILABLE
     /*!
      * \brief Start logging to file of AEG/AGC camera registers

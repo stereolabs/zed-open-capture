@@ -2008,6 +2008,18 @@ bool VideoCapture::enableAecAgcSensLogging(bool enable, int frame_skip/*=10*/)
     return true;
 }
 
+void VideoCapture::setColorBars(int side, bool c)
+{
+
+
+    unsigned long long ulAddr2 = 0x80181080;
+    if (side==1)
+         ulAddr2 = 0x80181880;
+
+    unsigned char ulValue2 =c?128:0;
+    ll_write_system_register(ulAddr2,ulValue2);
+}
+
 
 void VideoCapture::saveAllISPRegisters(std::string filename)
 {
@@ -2023,7 +2035,7 @@ void VideoCapture::saveAllISPRegisters(std::string filename)
         res += ll_read_system_register( ulAddrL+p, &valL);
         res += ll_read_system_register( ulAddrR+p, &valR);
 
-        logFile <<"0x" << std::hex << std::setfill('0') << std::setw(8) << static_cast<unsigned long long>(ulAddrL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valR)<<std::endl;
+        logFile <<"0x" << std::hex << std::setfill('0') << std::setw(8) << static_cast<unsigned long long>(ulAddrL+p)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valR)<<std::endl;
         usleep(10);
     }
 
