@@ -349,6 +349,12 @@ public:
     bool enableAecAgcSensLogging(bool enable, int frame_skip=10);
 
 
+
+    /*!
+     * \brief Utils fct to set Color Bars on Image
+     */
+    void setColorBars(int side, bool c);
+
     /*!
      * \brief Save all ISP camera registers into a file
      * \param filename csv filename

@@ -91,9 +91,14 @@ int main(int argc, char *argv[])
 
             if (f_count%10==0)
             {
+               /* cap.
                 cap.saveAllISPRegisters("ov580_lr_"+std::to_string(f_count)+".csv");
                 cap.saveAllSensorsRegisters("ov4689_lr_"+std::to_string(f_count)+".csv");
-                std::cout<<" Save Data for f_count "<<f_count<<std::endl;
+                std::cout<<" Save Data for f_count "<<f_count<<std::endl;*/
+                if (f_count%20==0)
+                    cap.setColorBars(0,true);
+                else
+                    cap.setColorBars(0,false);
             }
 
 

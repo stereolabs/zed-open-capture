@@ -1982,6 +1982,18 @@ bool VideoCapture::enableAecAgcSensLogging(bool enable, int frame_skip/*=10*/)
     return true;
 }
 
+void VideoCapture::setColorBars(int side, bool c)
+{
+
+
+    unsigned long long ulAddr2 = 0x80181080;
+    if (side==1)
+         ulAddr2 = 0x80181880;
+
+    unsigned char ulValue2 =c?128:0;
+    ll_write_system_register(ulAddr2,ulValue2);
+}
+
 
 void VideoCapture::saveAllISPRegisters(std::string filename)
 {
