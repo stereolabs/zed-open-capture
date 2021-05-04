@@ -41,10 +41,6 @@ namespace sl_oc {
 namespace sensors {
 
 namespace usb {
-// ----> Command to be used with the REPORT ID "REP_ID_REQUEST_SET"
-// Command to ping the MCU to communicate that host is alive
-const uint8_t RQ_CMD_PING = 0xF2;
-// <---- Command to be used with the REPORT ID "REP_ID_REQUEST_SET"
 
 /*!
  * \brief USB HID communication report IDs
@@ -60,6 +56,14 @@ typedef enum CUSTOMHID_REPORT_ID {
     REP_ID_SENSOR_STREAM_STATUS = 0x32, //!< Stream Status report ID
 
 } CUSTOMHID_REPORT_ID;
+
+/*!
+ * \brief USB HID requests IDs
+ */
+typedef enum CUSTOMHID_REQUEST_ID {
+    RQ_CMD_PING     = 0xF2, //!< Command to ping the MCU to communicate that host is alive
+    RQ_CMD_RST      = 0xE1, //!< Command to reset the MCU
+} CUSTOMHID_REQUEST_ID;
 
 #pragma pack(push)  // push current alignment to stack
 #pragma pack(1)     // set alignment to 1 byte boundary
@@ -163,6 +167,9 @@ const size_t TS_SHIFT_VAL_COUNT = 50; //!< Number of sensor data to use to updat
  */
 inline std::string wstr2str( const wchar_t* wstr)
 {
+    if(wstr==NULL)
+        return std::string();
+
     try
     {
         std::wstring ws( wstr );

@@ -201,6 +201,29 @@ public:
      */
     const data::Temperature& getLastCameraTemperatureData(uint64_t timeout_usec=100);
 
+    /*!
+     * \brief Perform a SW reset of the Sensors Module. To be called in case one of the sensors stops to work correctly.
+     *
+     * \param serial_number The serial number of the device to be reset (0 to reset the first available)
+     * \return true if successful
+     *
+     * \note After the reset a new \ref SensorCapture connection is required
+     * \note The Sensors Module reset automatically performs a reset of the Video Module, so a new \ref VideoCapture
+     *  connection is required
+     */
+    static bool resetSensorModule(int serial_number=0);
+
+    /*!
+     * \brief Perform a reset of the video module without resetting the sensor module. To be called in case the Video
+     * module stops to work correctly.
+     *
+     * \param \param serial_number The serial number of the device to be reset (0 to reset the first available)
+     * \return true if successful
+     *
+     * \note After the reset a new \ref VideoCapture connection is required
+     */
+    static bool resetVideoModule(int serial_number=0);
+
 #ifdef VIDEO_MOD_AVAILABLE
     void updateTimestampOffset(uint64_t frame_ts);                                 //!< Called by  VideoCapture to update timestamp offset
     inline void setStartTimestamp(uint64_t start_ts){mStartSysTs=start_ts;}        //!< Called by  VideoCapture to sync timestamps reference point
@@ -221,10 +244,6 @@ private:
     bool enableDataStream(bool enable); //!< Enable/Disable the data stream
     bool isDataStreamEnabled();         //!< Check if the data stream is enabled
     bool sendPing();                    //!< Send a ping  each second (before 6 seconds) to keep data streaming alive
-
-    //bool resetMCU(); TODO
-    //bool resetUVC(); TODO
-
     // ----> USB commands to MCU
 
 private:

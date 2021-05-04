@@ -32,6 +32,8 @@ int main(int argc, char *argv[])
     // Set the verbose level
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
+    sl_oc::sensors::SensorCapture::resetSensorModule();
+
     // Create a SensorCapture object
     sl_oc::sensors::SensorCapture sens(verbose);
 
@@ -52,7 +54,7 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    std::cout << "Video Capture connected to camera sn: " << sens.getSerialNumber() << std::endl;
+    std::cout << "Sensor Capture connected to camera sn: " << sens.getSerialNumber() << std::endl;
     // <---- Inizialize the sensors
 
     // ----> Get FW version information

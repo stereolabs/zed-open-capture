@@ -2013,6 +2013,7 @@ void VideoCapture::setColorBars(int side, bool c)
 
 
     unsigned long long ulAddr2 = 0x80181080;
+
     if (side==1)
          ulAddr2 = 0x80181880;
 
