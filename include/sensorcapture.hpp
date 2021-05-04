@@ -221,6 +221,10 @@ private:
     bool enableDataStream(bool enable); //!< Enable/Disable the data stream
     bool isDataStreamEnabled();         //!< Check if the data stream is enabled
     bool sendPing();                    //!< Send a ping  each second (before 6 seconds) to keep data streaming alive
+
+    //bool resetMCU(); TODO
+    //bool resetUVC(); TODO
+
     // ----> USB commands to MCU
 
 private:
