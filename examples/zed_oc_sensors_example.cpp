@@ -32,8 +32,6 @@ int main(int argc, char *argv[])
     // Set the verbose level
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
-    sl_oc::sensors::SensorCapture::resetSensorModule();
-
     // Create a SensorCapture object
     sl_oc::sensors::SensorCapture sens(verbose);
 

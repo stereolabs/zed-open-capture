@@ -50,10 +50,13 @@ typedef enum CUSTOMHID_REPORT_ID {
     REP_ID_SENSOR_DATA          = 0x01,  //!< Sensor data report ID
 
     // Generic commands
-    REP_ID_REQUEST_SET          = 0x21, //!< USB Request report ID
+    REP_ID_REQUEST_SET          = 0x21,  //!< USB Request report ID
+
+    // OV580
+    REP_ID_OV580_CMD            = 0x22,	 //!< OV580 control request
 
     // Features Reports
-    REP_ID_SENSOR_STREAM_STATUS = 0x32, //!< Stream Status report ID
+    REP_ID_SENSOR_STREAM_STATUS = 0x32,  //!< Stream Status report ID
 
 } CUSTOMHID_REPORT_ID;
 
@@ -61,8 +64,9 @@ typedef enum CUSTOMHID_REPORT_ID {
  * \brief USB HID requests IDs
  */
 typedef enum CUSTOMHID_REQUEST_ID {
-    RQ_CMD_PING     = 0xF2, //!< Command to ping the MCU to communicate that host is alive
-    RQ_CMD_RST      = 0xE1, //!< Command to reset the MCU
+    RQ_CMD_PING         = 0xF2, //!< Command to ping the MCU to communicate that host is alive
+    RQ_CMD_RST          = 0xE1, //!< Command to reset the MCU
+    OV580_CMD_RESET		= 0x02  //!< Command to reset the OV580 using the MCU
 } CUSTOMHID_REQUEST_ID;
 
 #pragma pack(push)  // push current alignment to stack
@@ -108,6 +112,15 @@ typedef struct StreamStatus {
     uint8_t struct_id;		//!< Struct identifier, it matches the USB HID Report ID
     uint8_t stream_status;	//!< Status of the USB streaming
 } StreamStatus;
+
+/*!
+ *  \brief OV580 control using the MCU
+ */
+typedef struct _ov580_cmd_struct {
+    uint8_t struct_id; 	//!< struct identifier for HID comm
+    uint8_t cmd;		//!< command to be sent to OV580: OV580_RESET
+    uint16_t info;		//!< NOT USED
+} OV580CmdStruct;
 
 #pragma pack(pop) // Restore previous saved alignment
 

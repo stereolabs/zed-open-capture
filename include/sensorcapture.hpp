@@ -231,6 +231,8 @@ public:
 #endif
 
 private:
+    static bool searchForConnectedDev(int* serial_number, unsigned short* found_pid); //!< Search for a device and returns its pid and serial number
+
     void grabThreadFunc();              //!< The sensor data grabbing thread function
 
     bool startCapture();                //!< Start data capture thread

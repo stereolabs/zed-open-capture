@@ -51,8 +51,11 @@ uint64_t mcu_sync_ts=0;
 // The main function
 int main(int argc, char *argv[])
 {
+    sl_oc::sensors::SensorCapture::resetSensorModule();
+    sl_oc::sensors::SensorCapture::resetVideoModule();
+
     // Set the verbose level
-    sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
+    sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::ERROR;
 
     // ----> Set the video parameters
     sl_oc::video::VideoParams params;
