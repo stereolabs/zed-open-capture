@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['streamstatus_405',['StreamStatus',['../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#ad617ae9360aa291658e7b5ecf7893566',1,'sl_oc::sensors::usb']]]
+  ['rawdata_441',['RawData',['../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#adc3f17d07af280d4b432ac6baeae68d6',1,'sl_oc::sensors::usb']]]
 ];

@@ -69,6 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="../../d2/ddd/classsl__oc_1_1sensors_1_1_sensor_capture-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">sl_oc::sensors::SensorCapture Class Reference</div>  </div>
@@ -88,9 +89,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5356fbb520b6860ebf3e55ce3767f6c0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a5356fbb520b6860ebf3e55ce3767f6c0">~SensorCapture</a> ()</td></tr>
 <tr class="memdesc:a5356fbb520b6860ebf3e55ce3767f6c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class destructor.  <a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a5356fbb520b6860ebf3e55ce3767f6c0">More...</a><br /></td></tr>
 <tr class="separator:a5356fbb520b6860ebf3e55ce3767f6c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad568cc655072ec7861beb7dd3e24ce1d"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#ad568cc655072ec7861beb7dd3e24ce1d">getDeviceList</a> ()</td></tr>
-<tr class="memdesc:ad568cc655072ec7861beb7dd3e24ce1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the list of the serial number of all the available devices.  <a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#ad568cc655072ec7861beb7dd3e24ce1d">More...</a><br /></td></tr>
-<tr class="separator:ad568cc655072ec7861beb7dd3e24ce1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ea0b6be6aab39ced2bb436e996070d7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a2ea0b6be6aab39ced2bb436e996070d7">getDeviceList</a> (bool refresh=false)</td></tr>
+<tr class="memdesc:a2ea0b6be6aab39ced2bb436e996070d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the list of the serial number of all the available devices.  <a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a2ea0b6be6aab39ced2bb436e996070d7">More...</a><br /></td></tr>
+<tr class="separator:a2ea0b6be6aab39ced2bb436e996070d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a417ef2121978cba6426519490024f406"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a417ef2121978cba6426519490024f406">initializeSensors</a> (int sn=-1)</td></tr>
 <tr class="memdesc:a417ef2121978cba6426519490024f406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open a connection to the MCU of a ZED Mini or a ZED2 camera using the specified serial number or searching for the first available device.  <a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a417ef2121978cba6426519490024f406">More...</a><br /></td></tr>
 <tr class="separator:a417ef2121978cba6426519490024f406"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,13 +122,22 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a44cd3eb30725cff54ce9269a75ff4db5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a44cd3eb30725cff54ce9269a75ff4db5">setVideoPtr</a> (<a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html">video::VideoCapture</a> *videoPtr)</td></tr>
 <tr class="memdesc:a44cd3eb30725cff54ce9269a75ff4db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by VideoCapture to set the pointer to it.  <a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a44cd3eb30725cff54ce9269a75ff4db5">More...</a><br /></td></tr>
 <tr class="separator:a44cd3eb30725cff54ce9269a75ff4db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:aa35928982528e60908166162cbc917d7"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#aa35928982528e60908166162cbc917d7">resetSensorModule</a> (int serial_number=0)</td></tr>
+<tr class="memdesc:aa35928982528e60908166162cbc917d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a SW reset of the Sensors Module. To be called in case one of the sensors stops to work correctly.  <a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#aa35928982528e60908166162cbc917d7">More...</a><br /></td></tr>
+<tr class="separator:aa35928982528e60908166162cbc917d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9327c20c2a2119a8182f76221eb68ffc"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a9327c20c2a2119a8182f76221eb68ffc">resetVideoModule</a> (int serial_number=0)</td></tr>
+<tr class="memdesc:a9327c20c2a2119a8182f76221eb68ffc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a reset of the video module without resetting the sensor module. To be called in case the Video module stops to work correctly.  <a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a9327c20c2a2119a8182f76221eb68ffc">More...</a><br /></td></tr>
+<tr class="separator:a9327c20c2a2119a8182f76221eb68ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html" title="The SensorCapture class provides sensor grabbing functions for the Stereolabs ZED Mini and ZED2 camer...">SensorCapture</a> class provides sensor grabbing functions for the Stereolabs ZED Mini and ZED2 camera models. </p>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../df/d23/zed_oc_sensors_example_8cpp-example.html#_a2">zed_oc_sensors_example.cpp</a>, and <a class="el" href="../../d1/d14/zed_oc_sync_example_8cpp-example.html#_a1">zed_oc_sync_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d21/sensorcapture_8hpp_source.html#l00133">133</a> of file <a class="el" href="../../d4/d21/sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d21/sensorcapture_8hpp_source.html#l00132">132</a> of file <a class="el" href="../../d4/d21/sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae988c34a113ae0df2b49c01e49cde67f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae988c34a113ae0df2b49c01e49cde67f">&#9670;&nbsp;</a></span>SensorCapture()</h2>
@@ -197,14 +207,14 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00051">51</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;{</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    reset();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    close();</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad568cc655072ec7861beb7dd3e24ce1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad568cc655072ec7861beb7dd3e24ce1d">&#9670;&nbsp;</a></span>getDeviceList()</h2>
+<a id="a2ea0b6be6aab39ced2bb436e996070d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ea0b6be6aab39ced2bb436e996070d7">&#9670;&nbsp;</a></span>getDeviceList()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -212,30 +222,37 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">std::vector&lt; int &gt; sl_oc::sensors::SensorCapture::getDeviceList </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>refresh</em> = <code>false</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Get the list of the serial number of all the available devices. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">refresh</td><td>if true USB device tree is parsed to search for modifications (new device connected/disconnected) </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>a vector containing the serial number of all the available devices </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../df/d23/zed_oc_sensors_example_8cpp-example.html#a3">zed_oc_sensors_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00102">102</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;{</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">if</span>(mSlDevPid.size()==0)</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        enumerateDevices();</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    std::vector&lt;int&gt; sn_vec;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">for</span>(std::map&lt;int,uint16_t&gt;::iterator it = mSlDevPid.begin(); it != mSlDevPid.end(); ++it) {</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        sn_vec.push_back(it-&gt;first);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    }</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordflow">return</span> sn_vec;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00107">107</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;{</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">if</span>(mSlDevPid.size()==0 || refresh)</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        enumerateDevices();</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    std::vector&lt;int&gt; sn_vec;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordflow">for</span>(std::map&lt;int,uint16_t&gt;::iterator it = mSlDevPid.begin(); it != mSlDevPid.end(); ++it) {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        sn_vec.push_back(it-&gt;first);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordflow">return</span> sn_vec;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d7/d28/zed__oc__sensors__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>.</p>
 
@@ -278,16 +295,16 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../df/d23/zed_oc_sensors_example_8cpp-example.html#a6">zed_oc_sensors_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00182">182</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;{</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">if</span>(mDevSerial==-1)</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    uint16_t release = mSlDevFwVer[mDevSerial];</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    fw_major = release&gt;&gt;8;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    fw_minor = release&amp;0x00FF;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00191">191</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;{</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordflow">if</span>(mDevSerial==-1)</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    uint16_t release = mSlDevFwVer[mDevSerial];</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    fw_major = release&gt;&gt;8;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    fw_minor = release&amp;0x00FF;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d7/d28/zed__oc__sensors__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>.</p>
 
@@ -320,31 +337,31 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../df/d23/zed_oc_sensors_example_8cpp-example.html#a35">zed_oc_sensors_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00667">667</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;{</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;    <span class="comment">// ----&gt; Wait for a new frame</span></div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;    uint64_t time_count = (timeout_usec&lt;100?100:timeout_usec)/10;</div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;    <span class="keywordflow">while</span>( !mNewCamTempData )</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;    {</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;        <span class="keywordflow">if</span>(time_count==0)</div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;        {</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;            <span class="keywordflow">if</span>(mLastCamTempData.<a class="code" href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#ad12707aa9cc99dff821bc79de6fd53ea">valid</a>!=<a class="code" href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#a86f4bc6c8526b0f273144c5af42ef903a742732dd64fbf415eb91e0279a497889">data::Temperature::NOT_PRESENT</a>)</div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;                mLastCamTempData.<a class="code" href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#ad12707aa9cc99dff821bc79de6fd53ea">valid</a> = <a class="code" href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#a86f4bc6c8526b0f273144c5af42ef903a7c2420af815dd4dd9489d43e7453d86b">data::Temperature::OLD_VAL</a>;</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;            <span class="keywordflow">return</span> mLastCamTempData;</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;        }</div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;        time_count--;</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;        usleep(10);</div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;    }</div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;    <span class="comment">// &lt;---- Wait for a new frame</span></div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160; </div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;    <span class="comment">// Get the frame mutex</span></div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;    <span class="keyword">const</span> std::lock_guard&lt;std::mutex&gt; lock(mCamTempMutex);</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;    mNewCamTempData = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;    <span class="keywordflow">return</span> mLastCamTempData;</div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;}</div>
-<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_temperature_html_a86f4bc6c8526b0f273144c5af42ef903a742732dd64fbf415eb91e0279a497889"><div class="ttname"><a href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#a86f4bc6c8526b0f273144c5af42ef903a742732dd64fbf415eb91e0279a497889">sl_oc::sensors::data::Temperature::NOT_PRESENT</a></div><div class="ttdeci">@ NOT_PRESENT</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00117">sensorcapture.hpp:117</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_temperature_html_a86f4bc6c8526b0f273144c5af42ef903a7c2420af815dd4dd9489d43e7453d86b"><div class="ttname"><a href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#a86f4bc6c8526b0f273144c5af42ef903a7c2420af815dd4dd9489d43e7453d86b">sl_oc::sensors::data::Temperature::OLD_VAL</a></div><div class="ttdeci">@ OLD_VAL</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00118">sensorcapture.hpp:118</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_temperature_html_ad12707aa9cc99dff821bc79de6fd53ea"><div class="ttname"><a href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#ad12707aa9cc99dff821bc79de6fd53ea">sl_oc::sensors::data::Temperature::valid</a></div><div class="ttdeci">TempStatus valid</div><div class="ttdoc">Indicates if camera temperature data are valid.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00122">sensorcapture.hpp:122</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00853">853</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;{</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;    <span class="comment">// ----&gt; Wait for a new frame</span></div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;    uint64_t time_count = (timeout_usec&lt;100?100:timeout_usec)/10;</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;    <span class="keywordflow">while</span>( !mNewCamTempData )</div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;    {</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;        <span class="keywordflow">if</span>(time_count==0)</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;        {</div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;            <span class="keywordflow">if</span>(mLastCamTempData.<a class="code" href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#ad12707aa9cc99dff821bc79de6fd53ea">valid</a>!=<a class="code" href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#a86f4bc6c8526b0f273144c5af42ef903a742732dd64fbf415eb91e0279a497889">data::Temperature::NOT_PRESENT</a>)</div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;                mLastCamTempData.<a class="code" href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#ad12707aa9cc99dff821bc79de6fd53ea">valid</a> = <a class="code" href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#a86f4bc6c8526b0f273144c5af42ef903a7c2420af815dd4dd9489d43e7453d86b">data::Temperature::OLD_VAL</a>;</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;            <span class="keywordflow">return</span> mLastCamTempData;</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;        }</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;        time_count--;</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;        usleep(10);</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;    }</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;    <span class="comment">// &lt;---- Wait for a new frame</span></div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160; </div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;    <span class="comment">// Get the frame mutex</span></div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;    <span class="keyword">const</span> std::lock_guard&lt;std::mutex&gt; lock(mCamTempMutex);</div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;    mNewCamTempData = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;    <span class="keywordflow">return</span> mLastCamTempData;</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;}</div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_temperature_html_a86f4bc6c8526b0f273144c5af42ef903a742732dd64fbf415eb91e0279a497889"><div class="ttname"><a href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#a86f4bc6c8526b0f273144c5af42ef903a742732dd64fbf415eb91e0279a497889">sl_oc::sensors::data::Temperature::NOT_PRESENT</a></div><div class="ttdeci">@ NOT_PRESENT</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00116">sensorcapture.hpp:116</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_temperature_html_a86f4bc6c8526b0f273144c5af42ef903a7c2420af815dd4dd9489d43e7453d86b"><div class="ttname"><a href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#a86f4bc6c8526b0f273144c5af42ef903a7c2420af815dd4dd9489d43e7453d86b">sl_oc::sensors::data::Temperature::OLD_VAL</a></div><div class="ttdeci">@ OLD_VAL</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00117">sensorcapture.hpp:117</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_temperature_html_ad12707aa9cc99dff821bc79de6fd53ea"><div class="ttname"><a href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#ad12707aa9cc99dff821bc79de6fd53ea">sl_oc::sensors::data::Temperature::valid</a></div><div class="ttdeci">TempStatus valid</div><div class="ttdoc">Indicates if camera temperature data are valid.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00121">sensorcapture.hpp:121</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#a86f4bc6c8526b0f273144c5af42ef903a742732dd64fbf415eb91e0279a497889">sl_oc::sensors::data::Temperature::NOT_PRESENT</a>, <a class="el" href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#a86f4bc6c8526b0f273144c5af42ef903a7c2420af815dd4dd9489d43e7453d86b">sl_oc::sensors::data::Temperature::OLD_VAL</a>, and <a class="el" href="../../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#ad12707aa9cc99dff821bc79de6fd53ea">sl_oc::sensors::data::Temperature::valid</a>.</p>
 
@@ -379,31 +396,31 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../df/d23/zed_oc_sensors_example_8cpp-example.html#a27">zed_oc_sensors_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00644">644</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;{</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;    <span class="comment">// ----&gt; Wait for a new frame</span></div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;    uint64_t time_count = (timeout_usec&lt;100?100:timeout_usec)/10;</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;    <span class="keywordflow">while</span>( !mNewEnvData )</div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;    {</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;        <span class="keywordflow">if</span>(time_count==0)</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;        {</div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;            <span class="keywordflow">if</span>(mLastEnvData.<a class="code" href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#aa710f0d4a1518118b9646c95417c9bb7">valid</a>!=<a class="code" href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#a312b61aa7d24fc18a7c3dd50e87dfaaba5c581191439b8471351437700c1fd323">data::Environment::NOT_PRESENT</a>)</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;                mLastEnvData.<a class="code" href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#aa710f0d4a1518118b9646c95417c9bb7">valid</a> = <a class="code" href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#a312b61aa7d24fc18a7c3dd50e87dfaaba6f0775f6b0d9201a7f6f5352929544d3">data::Environment::OLD_VAL</a>;</div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;            <span class="keywordflow">return</span> mLastEnvData;</div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;        }</div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;        time_count--;</div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;        usleep(10);</div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;    }</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;    <span class="comment">// &lt;---- Wait for a new frame</span></div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160; </div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;    <span class="comment">// Get the frame mutex</span></div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;    <span class="keyword">const</span> std::lock_guard&lt;std::mutex&gt; lock(mEnvMutex);</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;    mNewEnvData = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;    <span class="keywordflow">return</span> mLastEnvData;</div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;}</div>
-<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_environment_html_a312b61aa7d24fc18a7c3dd50e87dfaaba5c581191439b8471351437700c1fd323"><div class="ttname"><a href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#a312b61aa7d24fc18a7c3dd50e87dfaaba5c581191439b8471351437700c1fd323">sl_oc::sensors::data::Environment::NOT_PRESENT</a></div><div class="ttdeci">@ NOT_PRESENT</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00099">sensorcapture.hpp:99</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_environment_html_a312b61aa7d24fc18a7c3dd50e87dfaaba6f0775f6b0d9201a7f6f5352929544d3"><div class="ttname"><a href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#a312b61aa7d24fc18a7c3dd50e87dfaaba6f0775f6b0d9201a7f6f5352929544d3">sl_oc::sensors::data::Environment::OLD_VAL</a></div><div class="ttdeci">@ OLD_VAL</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00100">sensorcapture.hpp:100</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_environment_html_aa710f0d4a1518118b9646c95417c9bb7"><div class="ttname"><a href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#aa710f0d4a1518118b9646c95417c9bb7">sl_oc::sensors::data::Environment::valid</a></div><div class="ttdeci">EnvStatus valid</div><div class="ttdoc">Indicates if Environmental data are valid.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00104">sensorcapture.hpp:104</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00830">830</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;{</div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;    <span class="comment">// ----&gt; Wait for a new frame</span></div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;    uint64_t time_count = (timeout_usec&lt;100?100:timeout_usec)/10;</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;    <span class="keywordflow">while</span>( !mNewEnvData )</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;    {</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;        <span class="keywordflow">if</span>(time_count==0)</div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;        {</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;            <span class="keywordflow">if</span>(mLastEnvData.<a class="code" href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#aa710f0d4a1518118b9646c95417c9bb7">valid</a>!=<a class="code" href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#a312b61aa7d24fc18a7c3dd50e87dfaaba5c581191439b8471351437700c1fd323">data::Environment::NOT_PRESENT</a>)</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;                mLastEnvData.<a class="code" href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#aa710f0d4a1518118b9646c95417c9bb7">valid</a> = <a class="code" href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#a312b61aa7d24fc18a7c3dd50e87dfaaba6f0775f6b0d9201a7f6f5352929544d3">data::Environment::OLD_VAL</a>;</div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;            <span class="keywordflow">return</span> mLastEnvData;</div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;        }</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;        time_count--;</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;        usleep(10);</div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;    }</div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;    <span class="comment">// &lt;---- Wait for a new frame</span></div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160; </div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;    <span class="comment">// Get the frame mutex</span></div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;    <span class="keyword">const</span> std::lock_guard&lt;std::mutex&gt; lock(mEnvMutex);</div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;    mNewEnvData = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;    <span class="keywordflow">return</span> mLastEnvData;</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;}</div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_environment_html_a312b61aa7d24fc18a7c3dd50e87dfaaba5c581191439b8471351437700c1fd323"><div class="ttname"><a href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#a312b61aa7d24fc18a7c3dd50e87dfaaba5c581191439b8471351437700c1fd323">sl_oc::sensors::data::Environment::NOT_PRESENT</a></div><div class="ttdeci">@ NOT_PRESENT</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00098">sensorcapture.hpp:98</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_environment_html_a312b61aa7d24fc18a7c3dd50e87dfaaba6f0775f6b0d9201a7f6f5352929544d3"><div class="ttname"><a href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#a312b61aa7d24fc18a7c3dd50e87dfaaba6f0775f6b0d9201a7f6f5352929544d3">sl_oc::sensors::data::Environment::OLD_VAL</a></div><div class="ttdeci">@ OLD_VAL</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00099">sensorcapture.hpp:99</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_environment_html_aa710f0d4a1518118b9646c95417c9bb7"><div class="ttname"><a href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#aa710f0d4a1518118b9646c95417c9bb7">sl_oc::sensors::data::Environment::valid</a></div><div class="ttdeci">EnvStatus valid</div><div class="ttdoc">Indicates if Environmental data are valid.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00103">sensorcapture.hpp:103</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#a312b61aa7d24fc18a7c3dd50e87dfaaba5c581191439b8471351437700c1fd323">sl_oc::sensors::data::Environment::NOT_PRESENT</a>, <a class="el" href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#a312b61aa7d24fc18a7c3dd50e87dfaaba6f0775f6b0d9201a7f6f5352929544d3">sl_oc::sensors::data::Environment::OLD_VAL</a>, and <a class="el" href="../../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#aa710f0d4a1518118b9646c95417c9bb7">sl_oc::sensors::data::Environment::valid</a>.</p>
 
@@ -438,31 +455,31 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../df/d23/zed_oc_sensors_example_8cpp-example.html#a8">zed_oc_sensors_example.cpp</a>, and <a class="el" href="../../d1/d14/zed_oc_sync_example_8cpp-example.html#a27">zed_oc_sync_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00598">598</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;{</div>
-<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;    <span class="comment">// ----&gt; Wait for a new frame</span></div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;    uint64_t time_count = (timeout_usec&lt;100?100:timeout_usec)/100;</div>
-<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;    <span class="keywordflow">while</span>( !mNewIMUData )</div>
-<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;    {</div>
-<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;        <span class="keywordflow">if</span>(time_count==0)</div>
-<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;        {</div>
-<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;            <span class="keywordflow">if</span>(mLastIMUData.<a class="code" href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#a48cad54c3e7f030da2a30822c6656426">valid</a>!=<a class="code" href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#af693bc97b5ba3079728322d8f377d21aada3ee82e434799b8fda53537f6c35418">data::Imu::NOT_PRESENT</a>)</div>
-<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;                mLastIMUData.<a class="code" href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#a48cad54c3e7f030da2a30822c6656426">valid</a> = <a class="code" href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#af693bc97b5ba3079728322d8f377d21aa80ba9bcb17433154d23d93c96d1aa721">data::Imu::OLD_VAL</a>;</div>
-<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;            <span class="keywordflow">return</span> mLastIMUData;</div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;        }</div>
-<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;        time_count--;</div>
-<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;        usleep(100);</div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;    }</div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;    <span class="comment">// &lt;---- Wait for a new frame</span></div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160; </div>
-<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;    <span class="comment">// Get the frame mutex</span></div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;    <span class="keyword">const</span> std::lock_guard&lt;std::mutex&gt; lock(mIMUMutex);</div>
-<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;    mNewIMUData = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;    <span class="keywordflow">return</span> mLastIMUData;</div>
-<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;}</div>
-<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_imu_html_a48cad54c3e7f030da2a30822c6656426"><div class="ttname"><a href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#a48cad54c3e7f030da2a30822c6656426">sl_oc::sensors::data::Imu::valid</a></div><div class="ttdeci">ImuStatus valid</div><div class="ttdoc">Indicates if IMU data are valid.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00061">sensorcapture.hpp:61</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_imu_html_af693bc97b5ba3079728322d8f377d21aa80ba9bcb17433154d23d93c96d1aa721"><div class="ttname"><a href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#af693bc97b5ba3079728322d8f377d21aa80ba9bcb17433154d23d93c96d1aa721">sl_oc::sensors::data::Imu::OLD_VAL</a></div><div class="ttdeci">@ OLD_VAL</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00057">sensorcapture.hpp:57</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_imu_html_af693bc97b5ba3079728322d8f377d21aada3ee82e434799b8fda53537f6c35418"><div class="ttname"><a href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#af693bc97b5ba3079728322d8f377d21aada3ee82e434799b8fda53537f6c35418">sl_oc::sensors::data::Imu::NOT_PRESENT</a></div><div class="ttdeci">@ NOT_PRESENT</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00056">sensorcapture.hpp:56</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00784">784</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;{</div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;    <span class="comment">// ----&gt; Wait for a new frame</span></div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;    uint64_t time_count = (timeout_usec&lt;100?100:timeout_usec)/100;</div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;    <span class="keywordflow">while</span>( !mNewIMUData )</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;    {</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;        <span class="keywordflow">if</span>(time_count==0)</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;        {</div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;            <span class="keywordflow">if</span>(mLastIMUData.<a class="code" href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#a48cad54c3e7f030da2a30822c6656426">valid</a>!=<a class="code" href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#af693bc97b5ba3079728322d8f377d21aada3ee82e434799b8fda53537f6c35418">data::Imu::NOT_PRESENT</a>)</div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;                mLastIMUData.<a class="code" href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#a48cad54c3e7f030da2a30822c6656426">valid</a> = <a class="code" href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#af693bc97b5ba3079728322d8f377d21aa80ba9bcb17433154d23d93c96d1aa721">data::Imu::OLD_VAL</a>;</div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;            <span class="keywordflow">return</span> mLastIMUData;</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;        }</div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;        time_count--;</div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;        usleep(100);</div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;    }</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;    <span class="comment">// &lt;---- Wait for a new frame</span></div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160; </div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;    <span class="comment">// Get the frame mutex</span></div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;    <span class="keyword">const</span> std::lock_guard&lt;std::mutex&gt; lock(mIMUMutex);</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;    mNewIMUData = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;    <span class="keywordflow">return</span> mLastIMUData;</div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;}</div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_imu_html_a48cad54c3e7f030da2a30822c6656426"><div class="ttname"><a href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#a48cad54c3e7f030da2a30822c6656426">sl_oc::sensors::data::Imu::valid</a></div><div class="ttdeci">ImuStatus valid</div><div class="ttdoc">Indicates if IMU data are valid.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00060">sensorcapture.hpp:60</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_imu_html_af693bc97b5ba3079728322d8f377d21aa80ba9bcb17433154d23d93c96d1aa721"><div class="ttname"><a href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#af693bc97b5ba3079728322d8f377d21aa80ba9bcb17433154d23d93c96d1aa721">sl_oc::sensors::data::Imu::OLD_VAL</a></div><div class="ttdeci">@ OLD_VAL</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00056">sensorcapture.hpp:56</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_imu_html_af693bc97b5ba3079728322d8f377d21aada3ee82e434799b8fda53537f6c35418"><div class="ttname"><a href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#af693bc97b5ba3079728322d8f377d21aada3ee82e434799b8fda53537f6c35418">sl_oc::sensors::data::Imu::NOT_PRESENT</a></div><div class="ttdeci">@ NOT_PRESENT</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00055">sensorcapture.hpp:55</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#af693bc97b5ba3079728322d8f377d21aada3ee82e434799b8fda53537f6c35418">sl_oc::sensors::data::Imu::NOT_PRESENT</a>, <a class="el" href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#af693bc97b5ba3079728322d8f377d21aa80ba9bcb17433154d23d93c96d1aa721">sl_oc::sensors::data::Imu::OLD_VAL</a>, and <a class="el" href="../../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#a48cad54c3e7f030da2a30822c6656426">sl_oc::sensors::data::Imu::valid</a>.</p>
 
@@ -497,31 +514,31 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../df/d23/zed_oc_sensors_example_8cpp-example.html#a19">zed_oc_sensors_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00621">621</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;{</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;    <span class="comment">// ----&gt; Wait for a new frame</span></div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;    uint64_t time_count = (timeout_usec&lt;100?100:timeout_usec)/10;</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;    <span class="keywordflow">while</span>( !mNewMagData )</div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;    {</div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;        <span class="keywordflow">if</span>(time_count==0)</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;        {</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;            <span class="keywordflow">if</span>(mLastMagData.<a class="code" href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a6f802e1178a0567caccdc589e2b5e5e2">valid</a>!=<a class="code" href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a8df66f0a64fdddef00e7b11366461758ac4cc1783200b0e3d819355dde0fdf574">data::Magnetometer::NOT_PRESENT</a>)</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;                mLastMagData.<a class="code" href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a6f802e1178a0567caccdc589e2b5e5e2">valid</a>=<a class="code" href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a8df66f0a64fdddef00e7b11366461758ad49a85361939dfca2a99fa0fe288d6c0">data::Magnetometer::OLD_VAL</a>;</div>
-<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;            <span class="keywordflow">return</span> mLastMagData;</div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;        }</div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;        time_count--;</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;        usleep(10);</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;    }</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;    <span class="comment">// &lt;---- Wait for a new frame</span></div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160; </div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;    <span class="comment">// Get the frame mutex</span></div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;    <span class="keyword">const</span> std::lock_guard&lt;std::mutex&gt; lock(mMagMutex);</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;    mNewMagData = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;    <span class="keywordflow">return</span> mLastMagData;</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;}</div>
-<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_magnetometer_html_a6f802e1178a0567caccdc589e2b5e5e2"><div class="ttname"><a href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a6f802e1178a0567caccdc589e2b5e5e2">sl_oc::sensors::data::Magnetometer::valid</a></div><div class="ttdeci">MagStatus valid</div><div class="ttdoc">Indicates if Magnetometer data are valid.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00085">sensorcapture.hpp:85</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_magnetometer_html_a8df66f0a64fdddef00e7b11366461758ac4cc1783200b0e3d819355dde0fdf574"><div class="ttname"><a href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a8df66f0a64fdddef00e7b11366461758ac4cc1783200b0e3d819355dde0fdf574">sl_oc::sensors::data::Magnetometer::NOT_PRESENT</a></div><div class="ttdeci">@ NOT_PRESENT</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00080">sensorcapture.hpp:80</a></div></div>
-<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_magnetometer_html_a8df66f0a64fdddef00e7b11366461758ad49a85361939dfca2a99fa0fe288d6c0"><div class="ttname"><a href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a8df66f0a64fdddef00e7b11366461758ad49a85361939dfca2a99fa0fe288d6c0">sl_oc::sensors::data::Magnetometer::OLD_VAL</a></div><div class="ttdeci">@ OLD_VAL</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00081">sensorcapture.hpp:81</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00807">807</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;{</div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;    <span class="comment">// ----&gt; Wait for a new frame</span></div>
+<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;    uint64_t time_count = (timeout_usec&lt;100?100:timeout_usec)/10;</div>
+<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;    <span class="keywordflow">while</span>( !mNewMagData )</div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;    {</div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;        <span class="keywordflow">if</span>(time_count==0)</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;        {</div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;            <span class="keywordflow">if</span>(mLastMagData.<a class="code" href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a6f802e1178a0567caccdc589e2b5e5e2">valid</a>!=<a class="code" href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a8df66f0a64fdddef00e7b11366461758ac4cc1783200b0e3d819355dde0fdf574">data::Magnetometer::NOT_PRESENT</a>)</div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;                mLastMagData.<a class="code" href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a6f802e1178a0567caccdc589e2b5e5e2">valid</a>=<a class="code" href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a8df66f0a64fdddef00e7b11366461758ad49a85361939dfca2a99fa0fe288d6c0">data::Magnetometer::OLD_VAL</a>;</div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;            <span class="keywordflow">return</span> mLastMagData;</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;        }</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;        time_count--;</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;        usleep(10);</div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;    }</div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;    <span class="comment">// &lt;---- Wait for a new frame</span></div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160; </div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;    <span class="comment">// Get the frame mutex</span></div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;    <span class="keyword">const</span> std::lock_guard&lt;std::mutex&gt; lock(mMagMutex);</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;    mNewMagData = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;    <span class="keywordflow">return</span> mLastMagData;</div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;}</div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_magnetometer_html_a6f802e1178a0567caccdc589e2b5e5e2"><div class="ttname"><a href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a6f802e1178a0567caccdc589e2b5e5e2">sl_oc::sensors::data::Magnetometer::valid</a></div><div class="ttdeci">MagStatus valid</div><div class="ttdoc">Indicates if Magnetometer data are valid.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00084">sensorcapture.hpp:84</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_magnetometer_html_a8df66f0a64fdddef00e7b11366461758ac4cc1783200b0e3d819355dde0fdf574"><div class="ttname"><a href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a8df66f0a64fdddef00e7b11366461758ac4cc1783200b0e3d819355dde0fdf574">sl_oc::sensors::data::Magnetometer::NOT_PRESENT</a></div><div class="ttdeci">@ NOT_PRESENT</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00079">sensorcapture.hpp:79</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1data_1_1_magnetometer_html_a8df66f0a64fdddef00e7b11366461758ad49a85361939dfca2a99fa0fe288d6c0"><div class="ttname"><a href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a8df66f0a64fdddef00e7b11366461758ad49a85361939dfca2a99fa0fe288d6c0">sl_oc::sensors::data::Magnetometer::OLD_VAL</a></div><div class="ttdeci">@ OLD_VAL</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00080">sensorcapture.hpp:80</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a8df66f0a64fdddef00e7b11366461758ac4cc1783200b0e3d819355dde0fdf574">sl_oc::sensors::data::Magnetometer::NOT_PRESENT</a>, <a class="el" href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a8df66f0a64fdddef00e7b11366461758ad49a85361939dfca2a99fa0fe288d6c0">sl_oc::sensors::data::Magnetometer::OLD_VAL</a>, and <a class="el" href="../../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a6f802e1178a0567caccdc589e2b5e5e2">sl_oc::sensors::data::Magnetometer::valid</a>.</p>
 
@@ -549,13 +566,13 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../df/d23/zed_oc_sensors_example_8cpp-example.html#a5">zed_oc_sensors_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00193">193</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;{</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keywordflow">if</span>(mDevSerial==-1)</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordflow">return</span> mDevSerial;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00202">202</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;{</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keywordflow">if</span>(mDevSerial==-1)</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordflow">return</span> mDevSerial;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d7/d28/zed__oc__sensors__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>.</p>
 
@@ -588,74 +605,253 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../df/d23/zed_oc_sensors_example_8cpp-example.html#a4">zed_oc_sensors_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00116">116</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;{</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordflow">if</span>(mSlDevPid.size()==0)</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        enumerateDevices();</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    std::string sn_str;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordflow">if</span>(sn!=-1)</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        sn_str = std::to_string(sn);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    {</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordflow">if</span>(mSlDevPid.size()==0)</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        {</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            enumerateDevices();</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        }</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keywordflow">if</span>(mSlDevPid.size()==0)</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        {</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            ERROR_OUT(mVerbose,<span class="stringliteral">&quot;No available ZED Mini or ZED2 cameras&quot;</span>);</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        }</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        sn = mSlDevPid.begin()-&gt;first;</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        sn_str = std::to_string(sn);</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00135">135</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;{</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="keywordflow">if</span>(mSlDevPid.size()==0)</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    {</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        enumerateDevices();</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    }</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    std::string sn_str;</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    mDevSerial = sn;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    std::wstring wide_string = std::wstring(sn_str.begin(), sn_str.end());</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">wchar_t</span>* wsn = wide_string.c_str();</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    uint16_t pid = mSlDevPid[sn];</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keywordflow">if</span>(sn==-1)</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    {</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        <span class="keywordflow">if</span>(mSlDevPid.size()==0)</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        {</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            enumerateDevices();</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        }</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    mDevHandle = hid_open(SL_USB_VENDOR, pid, wsn );</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordflow">if</span> (!mDevHandle)</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    {</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        std::string msg = <span class="stringliteral">&quot;Connection to device with sn &quot;</span>;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        msg += sn_str;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        msg += <span class="stringliteral">&quot; failed&quot;</span>;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        ERROR_OUT(mVerbose,msg);</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        mDevFwVer = -1;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        mDevSerial = -1;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    }</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordflow">if</span>(mVerbose)</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    {</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        std::string msg = <span class="stringliteral">&quot;Connected to device with sn &quot;</span>;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        msg += sn_str;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        INFO_OUT(mVerbose,msg);</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    }</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    mDevFwVer = mSlDevFwVer[sn];</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    mDevPid = pid;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    mInitialized = startCapture();</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;}</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keywordflow">if</span>(mSlDevPid.size()==0)</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        {</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            ERROR_OUT(mVerbose,<span class="stringliteral">&quot;No available ZED Mini or ZED2 cameras&quot;</span>);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        }</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        sn = mSlDevPid.begin()-&gt;first;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    uint16_t pid = mSlDevPid[sn];</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keywordflow">if</span>(!open( pid,sn))</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    {</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        std::string msg = <span class="stringliteral">&quot;Connection to device with sn &quot;</span>;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        msg += std::to_string(sn);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        msg += <span class="stringliteral">&quot; failed&quot;</span>;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        ERROR_OUT(mVerbose,msg);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        mDevFwVer = -1;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        mDevSerial = -1;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    }</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="keywordflow">if</span>(mVerbose)</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    {</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        std::string msg = <span class="stringliteral">&quot;Connected to device with sn &quot;</span>;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        msg += std::to_string(sn);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        INFO_OUT(mVerbose,msg);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    }</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    mDevFwVer = mSlDevFwVer[sn];</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    mDevPid = pid;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    mInitialized = startCapture();</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d7/d28/zed__oc__sensors__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>.</p>
 
+</div>
+</div>
+<a id="aa35928982528e60908166162cbc917d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa35928982528e60908166162cbc917d7">&#9670;&nbsp;</a></span>resetSensorModule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool sl_oc::sensors::SensorCapture::resetSensorModule </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>serial_number</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform a SW reset of the Sensors Module. To be called in case one of the sensors stops to work correctly. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">serial_number</td><td>The serial number of the device to be reset (0 to reset the first available) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if successful</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>After the reset a new <a class="el" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html">SensorCapture</a> connection is required </dd>
+<dd>
+The Sensors Module reset automatically performs a reset of the Video Module, so a new VideoCapture connection is required </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00673">673</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;{</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;    <span class="keywordtype">int</span> found_sn = serial_number;</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> pid;</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;    <span class="keywordtype">bool</span> res = searchForConnectedDev(&amp;found_sn, &amp;pid);</div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;    <span class="keywordflow">if</span>(!res)</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;    {</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;        std::string msg;</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;        <span class="keywordflow">if</span>(serial_number!=0)</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;        {</div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;            msg = <span class="stringliteral">&quot;[sl_oc::sensors::SensorCapture] WARNING: Sensors Module reset failed. Unable to find the Sensor Module with serial number &quot;</span>;</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;            msg += std::to_string(serial_number);</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;        }</div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;        {</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;            msg = <span class="stringliteral">&quot;[sl_oc::sensors::SensorCapture] WARNING: Sensors Module reset failed. Unable to find the Sensor Module of a ZED2 camera. Please verify the USB connection.&quot;</span>;</div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;        }</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160; </div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;        std::cerr &lt;&lt; msg &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160; </div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;    }</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160; </div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;    std::string sn_str = std::to_string(found_sn);</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;    std::wstring wide_sn_string = std::wstring(sn_str.begin(), sn_str.end());</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">wchar_t</span>* wsn = wide_sn_string.c_str();</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160; </div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;    hid_device* devHandle = hid_open(SL_USB_VENDOR, pid, wsn );</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160; </div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;    <span class="keywordflow">if</span>(!devHandle)</div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;    {</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;        std::string msg = <span class="stringliteral">&quot;Unable to open the MCU HID device&quot;</span>;</div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;        std::cerr &lt;&lt; msg &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160; </div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;    }</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160; </div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>  buf[65];</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;    buf[0] = <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span><span class="keyword">&gt;</span>(<a class="code" href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a860df0fb107d9fc83134647b192af0d5aca34a4cb508e0107967eb3f077921c4f">usb::REP_ID_REQUEST_SET</a>);</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;    buf[1] = <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span><span class="keyword">&gt;</span>(<a class="code" href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a31ab9392a74d84590af56941d889770faed00ef83697c28ef43c1a7edaee1f4c8">usb::RQ_CMD_RST</a>);</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160; </div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;    hid_send_feature_report(devHandle, buf, 2);</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;    <span class="comment">// Note: cannot verify the return value of the `hid_send_feature_report` command because the MCU is suddenly reset</span></div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;    <span class="comment">// and it cannot return a valid value</span></div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160; </div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;    sleep(2); <span class="comment">// Wait for MCU and OV580 to reboot</span></div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160; </div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;    std::cerr &lt;&lt; <span class="stringliteral">&quot;[sl_oc::sensors::SensorCapture] INFO: Sensors Module reset successful&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160; </div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;}</div>
+<div class="ttc" id="anamespacesl__oc_1_1sensors_1_1usb_html_a31ab9392a74d84590af56941d889770faed00ef83697c28ef43c1a7edaee1f4c8"><div class="ttname"><a href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a31ab9392a74d84590af56941d889770faed00ef83697c28ef43c1a7edaee1f4c8">sl_oc::sensors::usb::RQ_CMD_RST</a></div><div class="ttdeci">@ RQ_CMD_RST</div><div class="ttdoc">Command to reset the MCU.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/da5/sensorcapture__def_8hpp_source.html#l00068">sensorcapture_def.hpp:68</a></div></div>
+<div class="ttc" id="anamespacesl__oc_1_1sensors_1_1usb_html_a860df0fb107d9fc83134647b192af0d5aca34a4cb508e0107967eb3f077921c4f"><div class="ttname"><a href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a860df0fb107d9fc83134647b192af0d5aca34a4cb508e0107967eb3f077921c4f">sl_oc::sensors::usb::REP_ID_REQUEST_SET</a></div><div class="ttdeci">@ REP_ID_REQUEST_SET</div><div class="ttdoc">USB Request report ID.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/da5/sensorcapture__def_8hpp_source.html#l00053">sensorcapture_def.hpp:53</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a9327c20c2a2119a8182f76221eb68ffc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9327c20c2a2119a8182f76221eb68ffc">&#9670;&nbsp;</a></span>resetVideoModule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool sl_oc::sensors::SensorCapture::resetVideoModule </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>serial_number</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform a reset of the video module without resetting the sensor module. To be called in case the Video module stops to work correctly. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00725">725</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;{</div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;    <span class="keywordtype">int</span> found_sn = serial_number;</div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> pid;</div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;    <span class="keywordtype">bool</span> res = searchForConnectedDev(&amp;found_sn, &amp;pid);</div>
+<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;    <span class="keywordflow">if</span>(!res)</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;    {</div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;        std::string msg;</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;        <span class="keywordflow">if</span>(serial_number!=0)</div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;        {</div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;            msg = <span class="stringliteral">&quot;[sl_oc::sensors::SensorCapture] WARNING: Video Module reset failed. Unable to find the Sensor Module with serial number &quot;</span>;</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;            msg += std::to_string(serial_number);</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;        }</div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;        {</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;            msg = <span class="stringliteral">&quot;[sl_oc::sensors::SensorCapture] WARNING: Video Module reset failed. Unable to find the Sensor Module of a ZED2 camera. Please verify the USB connection.&quot;</span>;</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;        }</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160; </div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;        std::cerr &lt;&lt; msg &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160; </div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;    }</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160; </div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;    std::string sn_str = std::to_string(found_sn);</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;    std::wstring wide_sn_string = std::wstring(sn_str.begin(), sn_str.end());</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">wchar_t</span>* wsn = wide_sn_string.c_str();</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160; </div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;    hid_device* devHandle = hid_open(SL_USB_VENDOR, pid, wsn );</div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160; </div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;    <span class="keywordflow">if</span>(!devHandle)</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;    {</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;        std::string msg = <span class="stringliteral">&quot;Unable to open the MCU HID device&quot;</span>;</div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;        std::cerr &lt;&lt; msg &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160; </div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;    }</div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160; </div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;    <a class="code" href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a783cc259cc2880e147317911b9579cea">usb::OV580CmdStruct</a> cmd;</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;    cmd.<a class="code" href="../../d2/deb/structsl__oc_1_1sensors_1_1usb_1_1__ov580__cmd__struct.html#a6b90984fb7f9edacaf2b18e4eec8d58d">struct_id</a> = <a class="code" href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a860df0fb107d9fc83134647b192af0d5a5fc950b8b7be06301ba1ecd9ceb475f0">usb::REP_ID_OV580_CMD</a>;</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;    cmd.cmd = <a class="code" href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a31ab9392a74d84590af56941d889770fae1f05bfc0ec675504c099aa60f56e400">usb::OV580_CMD_RESET</a>;</div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;    cmd.info=0;</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160; </div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> buf[65];</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;    memcpy(buf, &amp;(cmd.struct_id), <span class="keyword">sizeof</span>(<a class="code" href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a783cc259cc2880e147317911b9579cea">usb::OV580CmdStruct</a>));</div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160; </div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;    <span class="keywordtype">int</span> ret = hid_send_feature_report(devHandle, buf, <span class="keyword">sizeof</span>(<a class="code" href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a783cc259cc2880e147317911b9579cea">usb::OV580CmdStruct</a>));</div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;    hid_close(devHandle);</div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160; </div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;    <span class="keywordflow">if</span>(ret!=<span class="keyword">sizeof</span>(<a class="code" href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a783cc259cc2880e147317911b9579cea">usb::OV580CmdStruct</a>)) {</div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;        std::cerr &lt;&lt; <span class="stringliteral">&quot;[sl_oc::sensors::SensorCapture] INFO: Video Module reset failed&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;    }</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160; </div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;    sleep(2); <span class="comment">// Wait for OV580 to reboot</span></div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160; </div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;    std::cerr &lt;&lt; <span class="stringliteral">&quot;[sl_oc::sensors::SensorCapture] INFO: Video Module reset successful&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;}</div>
+<div class="ttc" id="anamespacesl__oc_1_1sensors_1_1usb_html_a31ab9392a74d84590af56941d889770fae1f05bfc0ec675504c099aa60f56e400"><div class="ttname"><a href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a31ab9392a74d84590af56941d889770fae1f05bfc0ec675504c099aa60f56e400">sl_oc::sensors::usb::OV580_CMD_RESET</a></div><div class="ttdeci">@ OV580_CMD_RESET</div><div class="ttdoc">Command to reset the OV580 using the MCU.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/da5/sensorcapture__def_8hpp_source.html#l00070">sensorcapture_def.hpp:69</a></div></div>
+<div class="ttc" id="anamespacesl__oc_1_1sensors_1_1usb_html_a783cc259cc2880e147317911b9579cea"><div class="ttname"><a href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a783cc259cc2880e147317911b9579cea">sl_oc::sensors::usb::OV580CmdStruct</a></div><div class="ttdeci">struct sl_oc::sensors::usb::_ov580_cmd_struct OV580CmdStruct</div><div class="ttdoc">OV580 control using the MCU.</div></div>
+<div class="ttc" id="anamespacesl__oc_1_1sensors_1_1usb_html_a860df0fb107d9fc83134647b192af0d5a5fc950b8b7be06301ba1ecd9ceb475f0"><div class="ttname"><a href="../../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a860df0fb107d9fc83134647b192af0d5a5fc950b8b7be06301ba1ecd9ceb475f0">sl_oc::sensors::usb::REP_ID_OV580_CMD</a></div><div class="ttdeci">@ REP_ID_OV580_CMD</div><div class="ttdoc">OV580 control request.</div><div class="ttdef"><b>Definition:</b> <a href="../../da/da5/sensorcapture__def_8hpp_source.html#l00056">sensorcapture_def.hpp:56</a></div></div>
+<div class="ttc" id="astructsl__oc_1_1sensors_1_1usb_1_1__ov580__cmd__struct_html_a6b90984fb7f9edacaf2b18e4eec8d58d"><div class="ttname"><a href="../../d2/deb/structsl__oc_1_1sensors_1_1usb_1_1__ov580__cmd__struct.html#a6b90984fb7f9edacaf2b18e4eec8d58d">sl_oc::sensors::usb::_ov580_cmd_struct::struct_id</a></div><div class="ttdeci">uint8_t struct_id</div><div class="ttdoc">struct identifier for HID comm</div><div class="ttdef"><b>Definition:</b> <a href="../../da/da5/sensorcapture__def_8hpp_source.html#l00120">sensorcapture_def.hpp:120</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a9324a7f63677953410949f093cc1578d"></a>
@@ -684,7 +880,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Called by VideoCapture to sync timestamps reference point. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d21/sensorcapture_8hpp_source.html#l00206">206</a> of file <a class="el" href="../../d4/d21/sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d21/sensorcapture_8hpp_source.html#l00229">229</a> of file <a class="el" href="../../d4/d21/sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
 
 </div>
 </div>
@@ -714,7 +910,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Called by VideoCapture to set the pointer to it. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d21/sensorcapture_8hpp_source.html#l00207">207</a> of file <a class="el" href="../../d4/d21/sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d21/sensorcapture_8hpp_source.html#l00230">230</a> of file <a class="el" href="../../d4/d21/sensorcapture_8hpp_source.html">sensorcapture.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abf275abae3c47fa253b80c7b1bdd6a44">sl_oc::video::VideoCapture::enableSensorSync()</a>.</p>
 
@@ -738,26 +934,26 @@ Public Member Functions</h2></td></tr>
 
 <p>Called by VideoCapture to update timestamp offset. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00554">554</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;{</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;    <span class="keyword">static</span> int64_t offset_sum = 0;</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> count = 0;</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;    offset_sum += (<span class="keyword">static_cast&lt;</span>int64_t<span class="keyword">&gt;</span>(mSyncTs) - <span class="keyword">static_cast&lt;</span>int64_t<span class="keyword">&gt;</span>(frame_ts));</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;    count++;</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160; </div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;    <span class="keywordflow">if</span>(count==3)</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;    {</div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;        int64_t offset = offset_sum/count;</div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;        mSyncOffset += offset;</div>
-<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;<span class="preprocessor">#if 0</span></div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;        std::cout &lt;&lt; <span class="stringliteral">&quot;Offset: &quot;</span> &lt;&lt; offset &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;        std::cout &lt;&lt; <span class="stringliteral">&quot;mSyncOffset: &quot;</span> &lt;&lt; mSyncOffset &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;<span class="preprocessor">#endif</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00563">563</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;{</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;    <span class="keyword">static</span> int64_t offset_sum = 0;</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> count = 0;</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;    offset_sum += (<span class="keyword">static_cast&lt;</span>int64_t<span class="keyword">&gt;</span>(mSyncTs) - <span class="keyword">static_cast&lt;</span>int64_t<span class="keyword">&gt;</span>(frame_ts));</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;    count++;</div>
 <div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160; </div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;        offset_sum = 0;</div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;        count=0;</div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;    }</div>
-<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;}</div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;    <span class="keywordflow">if</span>(count==3)</div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;    {</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;        int64_t offset = offset_sum/count;</div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;        mSyncOffset += offset;</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;<span class="preprocessor">#if 0</span></div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;        std::cout &lt;&lt; <span class="stringliteral">&quot;Offset: &quot;</span> &lt;&lt; offset &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;        std::cout &lt;&lt; <span class="stringliteral">&quot;mSyncOffset: &quot;</span> &lt;&lt; mSyncOffset &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160; </div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;        offset_sum = 0;</div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;        count=0;</div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;    }</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rawdata_404',['RawData',['../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#adc3f17d07af280d4b432ac6baeae68d6',1,'sl_oc::sensors::usb']]]
+  ['ov580cmdstruct_440',['OV580CmdStruct',['../d8/df0/namespacesl__oc_1_1sensors_1_1usb.html#a783cc259cc2880e147317911b9579cea',1,'sl_oc::sensors::usb']]]
 ];
