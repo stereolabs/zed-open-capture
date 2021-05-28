@@ -1,8 +1,11 @@
 # Changelog
 
-2020 03 16
-----------
-* Replaced `CMAKE_HOME_DIRECTORY` with `PROJECT_SOURCE_DIR` in `CMakeLists.txt` to be able to import the library as subproject. Thx @pieniacy
+v0.4.0 - 2021 05 28
+-------------------
+* Replace `CMAKE_HOME_DIRECTORY` with `PROJECT_SOURCE_DIR` in `CMakeLists.txt` to be able to import the library as subproject. Thx @pieniacy
+* Add support for the new "ZED 2i" camera model
+* Improve AEC/AGC ROI support
+
 
 v0.3.0 - 2020 03 01
 -------------------
