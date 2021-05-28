@@ -15,7 +15,7 @@ The coordinate system is only used for sensors data (especially for IMU). The gi
 
 ### Prerequisites
 
- * A Stereolabs camera: [ZED](https://www.stereolabs.com/zed/), [ZED Mini](https://www.stereolabs.com/zed-mini/), [ZED2](https://www.stereolabs.com/zed-2/)
+ * A Stereolabs camera: [ZED](https://www.stereolabs.com/zed/), [ZED Mini](https://www.stereolabs.com/zed-mini/), [ZED2](https://www.stereolabs.com/zed-2/), [ZED2i](https://www.stereolabs.com/zed-2i/)
  * Linux OS [Tested on Ubuntu 16.04, 18.04 and 20.04]
  * GCC compiler [at least v7.5]
  * CMake build system [at least v3.1] 
