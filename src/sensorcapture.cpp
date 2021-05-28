@@ -627,8 +627,8 @@ bool SensorCapture::searchForConnectedDev(int* serial_number, unsigned short* fo
     std::string sn_str;
 
     while (cur_dev) {
-        int fw_major = cur_dev->release_number>>8;
-        int fw_minor = cur_dev->release_number&0x00FF;
+        //int fw_major = cur_dev->release_number>>8;
+        //int fw_minor = cur_dev->release_number&0x00FF;
         pid = cur_dev->product_id;
         sn_str = wstr2str( cur_dev->serial_number );
         int sn = std::stoi( sn_str );
