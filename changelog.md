@@ -1,8 +1,12 @@
 # Changelog
 
+v0.4.1 - 2021 05 28
+-------------------
+* Fix udev rules to access the sensors module of the new ZED2i
+
 v0.4.0 - 2021 05 28
 -------------------
-* Replace `CMAKE_HOME_DIRECTORY` with `PROJECT_SOURCE_DIR` in `CMakeLists.txt` to be able to import the library as subproject. Thx @pieniacy
+* Replace `CMAKE_HOME_DIRECTORY` with `PROJECT_SOURCE_DIR` in `CMakeLists.txt` to be able to import the library as subproject. Thx pieniacy
 * Add support for the new "ZED 2i" camera model
 * Improve AEC/AGC ROI support
 
