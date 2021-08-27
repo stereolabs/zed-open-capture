@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['imu_0',['Imu',['../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html',1,'sl_oc::sensors::data']]]
+  ['filewriter_364',['FileWriter',['../d2/d15/class_c_simple_ini_templ_1_1_file_writer.html',1,'CSimpleIniTempl']]],
+  ['frame_365',['Frame',['../de/d91/structsl__oc_1_1video_1_1_frame.html',1,'sl_oc::video']]]
 ];

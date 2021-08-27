@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['warning_0',['WARNING',['../d8/dcf/namespacesl__oc.html#a5f9ed77b6fa4bdd3d7cd9666242d4eb1acb7138919b1b6ee000324ecd77330190',1,'sl_oc']]],
-  ['whitebalance_1',['WhiteBalance',['../d9/d7c/zed__oc__control__example_8cpp.html#a05023a52b3438ad1ebf7eb5f028b82c3a30f2b113342084af880c5818f6bc6b7a',1,'zed_oc_control_example.cpp']]],
-  ['whitebalance_5fval_2',['whiteBalance_val',['../d9/d7c/zed__oc__control__example_8cpp.html#a62c7442f478eddacaabe9c43f6f294c5',1,'zed_oc_control_example.cpp']]],
-  ['width_3',['width',['../de/d91/structsl__oc_1_1video_1_1_frame.html#aeb2b160926f10fb19c9c6e1c015e4681',1,'sl_oc::video::Frame::width()'],['../de/da1/structsl__oc_1_1video_1_1_resolution.html#ab12ce7eb561d6ff96124133ee37cd2b9',1,'sl_oc::video::Resolution::width()']]],
-  ['win_5fname_4',['win_name',['../d9/d7c/zed__oc__control__example_8cpp.html#a4529a7aa1d5feaed69df3eb97c6c84bb',1,'zed_oc_control_example.cpp']]],
-  ['wstr2str_5',['wstr2str',['../da/da5/sensorcapture__def_8hpp.html#a9b634eb903d1afbc226f3415ec162669',1,'sensorcapture_def.hpp']]]
+  ['valid_320',['valid',['../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#a48cad54c3e7f030da2a30822c6656426',1,'sl_oc::sensors::data::Imu::valid()'],['../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a6f802e1178a0567caccdc589e2b5e5e2',1,'sl_oc::sensors::data::Magnetometer::valid()'],['../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#aa710f0d4a1518118b9646c95417c9bb7',1,'sl_oc::sensors::data::Environment::valid()'],['../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#ad12707aa9cc99dff821bc79de6fd53ea',1,'sl_oc::sensors::data::Temperature::valid()']]],
+  ['verbose_321',['verbose',['../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a6152f12db5f03c917aa9ca3017cb2246',1,'sl_oc::video::VideoParams']]],
+  ['verbosity_322',['VERBOSITY',['../d8/dcf/namespacesl__oc.html#a5f9ed77b6fa4bdd3d7cd9666242d4eb1',1,'sl_oc']]],
+  ['vga_323',['VGA',['../d1/da0/namespacesl__oc_1_1video.html#a05c2df30a13cdf5ff439ad2a1a18fb09adb4371197d1f58c7d4edb7dcd0565ad1',1,'sl_oc::video']]],
+  ['videocapture_324',['VideoCapture',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html',1,'sl_oc::video::VideoCapture'],['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9988ab7895d0fe69558eb7450f3ea33d',1,'sl_oc::video::VideoCapture::VideoCapture()']]],
+  ['videocapture_2ecpp_325',['videocapture.cpp',['../d6/d19/videocapture_8cpp.html',1,'']]],
+  ['videocapture_2ehpp_326',['videocapture.hpp',['../d6/dd4/videocapture_8hpp.html',1,'']]],
+  ['videocapture_5fdef_2ehpp_327',['videocapture_def.hpp',['../df/ded/videocapture__def_8hpp.html',1,'']]],
+  ['videoparams_328',['VideoParams',['../d1/ded/structsl__oc_1_1video_1_1_video_params.html',1,'sl_oc::video::VideoParams'],['../d1/ded/structsl__oc_1_1video_1_1_video_params.html#adc4654229dce636b2d2d6a471a841d10',1,'sl_oc::video::VideoParams::VideoParams()'],['../d1/da0/namespacesl__oc_1_1video.html#a2ea4cd892c21be73f3e63eb966433d75',1,'sl_oc::video::VideoParams()']]]
 ];

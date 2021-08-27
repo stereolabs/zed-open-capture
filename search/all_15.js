@@ -1,17 +1,10 @@
 var searchData=
 [
-  ['zed_0',['ZED',['../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33fa70e519e34a6d0625129508391ceed654',1,'sl_oc::video']]],
-  ['zed_5f2_1',['ZED_2',['../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33fa603368901fe048d35e42ea73a0a2bfda',1,'sl_oc::video']]],
-  ['zed_5f2_5ffw_2',['ZED_2_FW',['../df/dd8/namespacesl__oc_1_1sensors.html#aa5bbc0cb62bf6c1fe09c6b36f14958ac',1,'sl_oc::sensors']]],
-  ['zed_5f2i_3',['ZED_2i',['../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33fa6ed7ef1ff4831027012d79c6b5f8ad5f',1,'sl_oc::video']]],
-  ['zed_5fcbs_4',['ZED_CBS',['../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33fa21e89914d0cc9a5af85bd7c99a847367',1,'sl_oc::video']]],
-  ['zed_5fm_5',['ZED_M',['../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33faccc49115bf464e05db413e56744704b9',1,'sl_oc::video']]],
-  ['zed_5fm_5fcbs_6',['ZED_M_CBS',['../d1/da0/namespacesl__oc_1_1video.html#ad7d2d1743872a22ac88a5d938bc9e33facbb340102fa8ec2211efa8775cdc97e4',1,'sl_oc::video']]],
-  ['zed_5fm_5ffw_7',['ZED_M_FW',['../df/dd8/namespacesl__oc_1_1sensors.html#aa45170560065abceff1ae3c6418a0068',1,'sl_oc::sensors']]],
-  ['zed_5foc_5fcontrol_5fexample_2ecpp_8',['zed_oc_control_example.cpp',['../d9/d7c/zed__oc__control__example_8cpp.html',1,'']]],
-  ['zed_5foc_5frectify_5fexample_2ecpp_9',['zed_oc_rectify_example.cpp',['../d7/df6/zed__oc__rectify__example_8cpp.html',1,'']]],
-  ['zed_5foc_5fsensors_5fexample_2ecpp_10',['zed_oc_sensors_example.cpp',['../d7/d28/zed__oc__sensors__example_8cpp.html',1,'']]],
-  ['zed_5foc_5fsync_5fexample_2ecpp_11',['zed_oc_sync_example.cpp',['../da/d5d/zed__oc__sync__example_8cpp.html',1,'']]],
-  ['zed_5foc_5fvideo_5fexample_2ecpp_12',['zed_oc_video_example.cpp',['../d7/d54/zed__oc__video__example_8cpp.html',1,'']]],
-  ['zed_5foc_5fvideo_5freg_5flog_2ecpp_13',['zed_oc_video_reg_log.cpp',['../d3/df8/zed__oc__video__reg__log_8cpp.html',1,'']]]
+  ['warning_329',['WARNING',['../d8/dcf/namespacesl__oc.html#a5f9ed77b6fa4bdd3d7cd9666242d4eb1acb7138919b1b6ee000324ecd77330190',1,'sl_oc']]],
+  ['whitebalance_330',['WhiteBalance',['../d9/d7c/zed__oc__control__example_8cpp.html#a05023a52b3438ad1ebf7eb5f028b82c3a30f2b113342084af880c5818f6bc6b7a',1,'zed_oc_control_example.cpp']]],
+  ['whitebalance_5fval_331',['whiteBalance_val',['../d9/d7c/zed__oc__control__example_8cpp.html#a62c7442f478eddacaabe9c43f6f294c5',1,'zed_oc_control_example.cpp']]],
+  ['width_332',['width',['../de/d91/structsl__oc_1_1video_1_1_frame.html#aeb2b160926f10fb19c9c6e1c015e4681',1,'sl_oc::video::Frame::width()'],['../de/da1/structsl__oc_1_1video_1_1_resolution.html#ab12ce7eb561d6ff96124133ee37cd2b9',1,'sl_oc::video::Resolution::width()']]],
+  ['win_5fname_333',['win_name',['../d9/d7c/zed__oc__control__example_8cpp.html#a4529a7aa1d5feaed69df3eb97c6c84bb',1,'zed_oc_control_example.cpp']]],
+  ['write_334',['Write',['../d7/dee/class_c_simple_ini_templ_1_1_output_writer.html#a48e5905a9defbe96d14f3068a383463d',1,'CSimpleIniTempl::OutputWriter::Write()'],['../d2/d15/class_c_simple_ini_templ_1_1_file_writer.html#ae8885b97884ef9dd5bf074bc4f011373',1,'CSimpleIniTempl::FileWriter::Write()'],['../d1/d3a/class_c_simple_ini_templ_1_1_string_writer.html#afdfd0dfe71278ea7490a9d4ef6bffadc',1,'CSimpleIniTempl::StringWriter::Write()'],['../dd/df3/class_c_simple_ini_templ_1_1_stream_writer.html#a89dedd34303ac9a5dd18e80cb156dbec',1,'CSimpleIniTempl::StreamWriter::Write()']]],
+  ['wstr2str_335',['wstr2str',['../da/da5/sensorcapture__def_8hpp.html#a9b634eb903d1afbc226f3415ec162669',1,'sensorcapture_def.hpp']]]
 ];

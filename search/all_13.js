@@ -1,12 +1,9 @@
 var searchData=
 [
-  ['valid_0',['valid',['../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#a48cad54c3e7f030da2a30822c6656426',1,'sl_oc::sensors::data::Imu::valid()'],['../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a6f802e1178a0567caccdc589e2b5e5e2',1,'sl_oc::sensors::data::Magnetometer::valid()'],['../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#aa710f0d4a1518118b9646c95417c9bb7',1,'sl_oc::sensors::data::Environment::valid()'],['../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#ad12707aa9cc99dff821bc79de6fd53ea',1,'sl_oc::sensors::data::Temperature::valid()']]],
-  ['verbose_1',['verbose',['../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a6152f12db5f03c917aa9ca3017cb2246',1,'sl_oc::video::VideoParams']]],
-  ['verbosity_2',['VERBOSITY',['../d8/dcf/namespacesl__oc.html#a5f9ed77b6fa4bdd3d7cd9666242d4eb1',1,'sl_oc']]],
-  ['vga_3',['VGA',['../d1/da0/namespacesl__oc_1_1video.html#a05c2df30a13cdf5ff439ad2a1a18fb09adb4371197d1f58c7d4edb7dcd0565ad1',1,'sl_oc::video']]],
-  ['videocapture_4',['VideoCapture',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html',1,'sl_oc::video::VideoCapture'],['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9988ab7895d0fe69558eb7450f3ea33d',1,'sl_oc::video::VideoCapture::VideoCapture()']]],
-  ['videocapture_2ecpp_5',['videocapture.cpp',['../d6/d19/videocapture_8cpp.html',1,'']]],
-  ['videocapture_2ehpp_6',['videocapture.hpp',['../d6/dd4/videocapture_8hpp.html',1,'']]],
-  ['videocapture_5fdef_2ehpp_7',['videocapture_def.hpp',['../df/ded/videocapture__def_8hpp.html',1,'']]],
-  ['videoparams_8',['VideoParams',['../d1/ded/structsl__oc_1_1video_1_1_video_params.html',1,'sl_oc::video::VideoParams'],['../d1/ded/structsl__oc_1_1video_1_1_video_params.html#adc4654229dce636b2d2d6a471a841d10',1,'sl_oc::video::VideoParams::VideoParams()'],['../d1/da0/namespacesl__oc_1_1video.html#a2ea4cd892c21be73f3e63eb966433d75',1,'sl_oc::video::VideoParams()']]]
+  ['updatetimestampoffset_314',['updateTimestampOffset',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a2d4db59f9e4aa5b84ec48902985a2bd2',1,'sl_oc::sensors::SensorCapture']]],
+  ['usingspaces_315',['UsingSpaces',['../d5/de5/class_c_simple_ini_templ.html#a92203e0c21f8d71e5d1621a18ee0be50',1,'CSimpleIniTempl']]],
+  ['utf16_316',['UTF16',['../d2/dfd/calibration_8hpp.html#a50b71724cb39637be87babb9ddbd5822',1,'calibration.hpp']]],
+  ['utf32_317',['UTF32',['../d2/dfd/calibration_8hpp.html#a951534ad6418b24a7cf3eadbe887b1ef',1,'calibration.hpp']]],
+  ['utf8_318',['UTF8',['../d2/dfd/calibration_8hpp.html#aafe543c40e242c865f970b57a29122ab',1,'calibration.hpp']]],
+  ['uvcbuffer_319',['UVCBuffer',['../da/d3a/structsl__oc_1_1video_1_1_u_v_c_buffer.html',1,'sl_oc::video']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['whitebalance_5fval_0',['whiteBalance_val',['../d9/d7c/zed__oc__control__example_8cpp.html#a62c7442f478eddacaabe9c43f6f294c5',1,'zed_oc_control_example.cpp']]],
-  ['width_1',['width',['../de/d91/structsl__oc_1_1video_1_1_frame.html#aeb2b160926f10fb19c9c6e1c015e4681',1,'sl_oc::video::Frame::width()'],['../de/da1/structsl__oc_1_1video_1_1_resolution.html#ab12ce7eb561d6ff96124133ee37cd2b9',1,'sl_oc::video::Resolution::width()']]],
-  ['win_5fname_2',['win_name',['../d9/d7c/zed__oc__control__example_8cpp.html#a4529a7aa1d5feaed69df3eb97c6c84bb',1,'zed_oc_control_example.cpp']]]
+  ['valid_624',['valid',['../d2/d2c/structsl__oc_1_1sensors_1_1data_1_1_imu.html#a48cad54c3e7f030da2a30822c6656426',1,'sl_oc::sensors::data::Imu::valid()'],['../da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html#a6f802e1178a0567caccdc589e2b5e5e2',1,'sl_oc::sensors::data::Magnetometer::valid()'],['../de/d02/structsl__oc_1_1sensors_1_1data_1_1_environment.html#aa710f0d4a1518118b9646c95417c9bb7',1,'sl_oc::sensors::data::Environment::valid()'],['../d8/dc7/structsl__oc_1_1sensors_1_1data_1_1_temperature.html#ad12707aa9cc99dff821bc79de6fd53ea',1,'sl_oc::sensors::data::Temperature::valid()']]],
+  ['verbose_625',['verbose',['../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a6152f12db5f03c917aa9ca3017cb2246',1,'sl_oc::video::VideoParams']]]
 ];
