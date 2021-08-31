@@ -27,14 +27,22 @@
 
 // OpenCV includes
 #include <opencv2/opencv.hpp>
+#include "opencv2/ximgproc.hpp"
 
 // Sample includes
 #include "calibration.hpp"
+#include "stopwatch.hpp"
 // <---- Includes
+
+#define USE_OCV_TAPI
+//#define USE_OCV_STEREOSGBM // Comment to use StereoBM
 
 // ----> Global functions
 // Rescale the images according to the selected resolution to better display them on screen
 void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res );
+#ifdef USE_OCV_TAPI
+void showImage( std::string name, cv::UMat& img, sl_oc::video::RESOLUTION res );
+#endif
 
 int main(int argc, char** argv) {
 
@@ -42,8 +50,8 @@ int main(int argc, char** argv) {
 
     // ----> Set Video parameters
     sl_oc::video::VideoParams params;
-    params.res = sl_oc::video::RESOLUTION::HD2K;
-    params.fps = sl_oc::video::FPS::FPS_15;
+    params.res = sl_oc::video::RESOLUTION::HD720;
+    params.fps = sl_oc::video::FPS::FPS_60;
     params.verbose = verbose;
     // <---- Set Video parameters
 
@@ -82,15 +90,53 @@ int main(int argc, char** argv) {
     cv::Mat map_right_x, map_right_y;
     cv::Mat cameraMatrix_left, cameraMatrix_right;
     sl_oc::tools::initCalibration(calibration_file, cv::Size(w/2,h), map_left_x, map_left_y, map_right_x, map_right_y,
-                    cameraMatrix_left, cameraMatrix_right);
+                                  cameraMatrix_left, cameraMatrix_right);
 
     std::cout << " Camera Matrix L: \n" << cameraMatrix_left << std::endl << std::endl;
     std::cout << " Camera Matrix R: \n" << cameraMatrix_right << std::endl << std::endl;
     // ----> Initialize calibration
 
-    cv::Mat frameBGR, left_raw, left_rect, right_raw, right_rect;
+#ifdef USE_OCV_TAPI
+    cv::UMat frameYUV(cv::USAGE_ALLOCATE_HOST_MEMORY);  // Full frame side-by-side in YUV 4:2:2 format
+    cv::UMat frameBGR(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Full frame side-by-side in BGR format
+    cv::UMat left_raw(cv::USAGE_ALLOCATE_DEVICE_MEMORY);
+    cv::UMat right_raw(cv::USAGE_ALLOCATE_DEVICE_MEMORY);
+    cv::UMat left_rect(cv::USAGE_ALLOCATE_HOST_MEMORY);
+    cv::UMat right_rect(cv::USAGE_ALLOCATE_HOST_MEMORY);
+    cv::UMat left_for_matcher(cv::USAGE_ALLOCATE_HOST_MEMORY);
+    cv::UMat right_for_matcher(cv::USAGE_ALLOCATE_HOST_MEMORY);
+    cv::UMat left_disp(cv::USAGE_ALLOCATE_HOST_MEMORY);
+    cv::Mat left_disp_vis;
+#else
+    cv::Mat frameBGR, left_raw, left_rect, right_raw, right_rect, frameYUV, left_for_matcher, right_for_matcher, left_disp, left_disp_vis;
+#endif
 
-    uint64_t last_ts=0;
+    // ----> Stereo matcher initialization
+    cv::Ptr<cv::ximgproc::DisparityWLSFilter> wls_filter;
+    int max_disp = 64;
+    int wsize = -1;
+    if(max_disp<=0 || max_disp%16!=0)
+    {
+        std::cerr<<"Incorrect max_disparity value: it should be positive and divisible by 16";
+        return EXIT_FAILURE;
+    }
+
+#ifndef USE_OCV_STEREOSGBM
+    wsize = 15;
+    cv::Ptr<cv::StereoBM> left_matcher = cv::StereoBM::create(max_disp,wsize);
+#else
+    wsize=3;
+    cv::Ptr<cv::StereoSGBM> left_matcher  = cv::StereoSGBM::create(0,max_disp,wsize);
+    left_matcher->setP1(24*wsize*wsize);
+    left_matcher->setP2(96*wsize*wsize);
+    left_matcher->setPreFilterCap(63);
+    left_matcher->setMode(cv::StereoSGBM::MODE_SGBM_3WAY);
+#endif
+    wls_filter = cv::ximgproc::createDisparityWLSFilter(left_matcher);
+    // <---- Stereo matcher initialization
+
+
+    uint64_t last_ts=0; // Used to check new frame arrival
 
     // Infinite video grabbing loop
     while (1)
@@ -104,25 +150,41 @@ int main(int argc, char** argv) {
             last_ts = frame.timestamp;
 
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
-            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
+#ifdef USE_OCV_TAPI
+            cv::Mat frameYUV_tmp = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
+            frameYUV = frameYUV_tmp.getUMat(cv::ACCESS_READ,cv::USAGE_ALLOCATE_HOST_MEMORY);
+#else
+            frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
+#endif
             cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
 
             // ----> Extract left and right images from side-by-side
             left_raw = frameBGR(cv::Rect(0, 0, frameBGR.cols / 2, frameBGR.rows));
             right_raw = frameBGR(cv::Rect(frameBGR.cols / 2, 0, frameBGR.cols / 2, frameBGR.rows));
-            // Display images
-            showImage("left RAW", left_raw, params.res);
-            showImage("right RAW", right_raw, params.res);
             // <---- Extract left and right images from side-by-side
 
             // ----> Apply rectification
             cv::remap(left_raw, left_rect, map_left_x, map_left_y, cv::INTER_LINEAR );
             cv::remap(right_raw, right_rect, map_right_x, map_right_y, cv::INTER_LINEAR );
 
-            showImage("right RECT", right_rect, params.res);
-            showImage("left RECT", left_rect, params.res);
+            showImage("Right rect.", right_rect, params.res);
+            showImage("Left rect.", left_rect, params.res);
             // <---- Apply rectification
+
+            // ----> Stereo matching
+            sl_oc::tools::StopWatch stereo_clock;
+            cv::cvtColor(left_rect,  left_for_matcher,  cv::COLOR_BGR2GRAY);
+            cv::cvtColor(right_rect, right_for_matcher, cv::COLOR_BGR2GRAY);
+            left_matcher->compute(left_for_matcher, right_for_matcher,left_disp);
+            double elapsed = stereo_clock.toc();
+            std::cout << "Stereo processing: " << elapsed << " sec - Freq: " << 1./elapsed << std::endl;
+            // <---- Stereo matching
+
+            // ----> Show disparity
+            cv::ximgproc::getDisparityVis(left_disp,left_disp_vis);
+            showImage("Disparity", left_disp_vis, params.res);
+            // <---- Show disparity
         }
 
         // ----> Keyboard handling
@@ -134,6 +196,31 @@ int main(int argc, char** argv) {
 
     return EXIT_SUCCESS;
 }
+
+#ifdef USE_OCV_TAPI
+void showImage( std::string name, cv::UMat& img, sl_oc::video::RESOLUTION res )
+{
+    cv::UMat resized;
+    switch(res)
+    {
+    default:
+    case sl_oc::video::RESOLUTION::VGA:
+        resized = img;
+        break;
+    case sl_oc::video::RESOLUTION::HD720:
+        name += " [Resize factor 0.6]";
+        cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
+        break;
+    case sl_oc::video::RESOLUTION::HD1080:
+    case sl_oc::video::RESOLUTION::HD2K:
+        name += " [Resize factor 0.4]";
+        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
+        break;
+    }
+
+    cv::imshow( name, resized );
+}
+#endif
 
 // Rescale the images according to the selected resolution to better display them on screen
 void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res )

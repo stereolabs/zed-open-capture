@@ -168,8 +168,20 @@ if(BUILD_EXAMPLES)
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
 
+        ##### Depth Example
+        include_directories( ${PROJECT_SOURCE_DIR}/examples/include)
+        add_executable(${PROJECT_NAME}_depth_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_depth_example.cpp")
+        set_target_properties(${PROJECT_NAME}_depth_example PROPERTIES PREFIX "")
+        target_link_libraries(${PROJECT_NAME}_depth_example
+          ${PROJECT_NAME}
+          ${OpenCV_LIBS}
+        )
+        install(TARGETS ${PROJECT_NAME}_depth_example
+            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+        )
+
         if(DEBUG_CAM_REG)
-            ##### Video with AEG/AGC reisters log
+            ##### Video with AEG/AGC registers log
             add_executable(${PROJECT_NAME}_video_reg_log "${PROJECT_SOURCE_DIR}/examples/zed_oc_video_reg_log.cpp")
             set_target_properties(${PROJECT_NAME}_video_reg_log PROPERTIES PREFIX "")
             target_link_libraries(${PROJECT_NAME}_video_reg_log

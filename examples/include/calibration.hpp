@@ -87,6 +87,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 #define SI_ASSERT(x)
 #endif
 
+namespace sl_oc {
+namespace tools {
+
 enum SI_Error {
     SI_OK = 0, //!< No error
     SI_UPDATED = 1, //!< An existing value was updated
@@ -4286,6 +4289,9 @@ bool initCalibration(std::string calibration_file, cv::Size2i image_size, cv::Ma
 
     return 1;
 }
+
+} // namespace oc_tools
+} // namespace sl_oc
 
 
 #endif // CONF_MANAGER_HPP
