@@ -40,9 +40,9 @@
 
 // ----> Global functions
 // Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res );
+void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res, std::string info="" );
 #ifdef USE_OCV_TAPI
-void showImage( std::string name, cv::UMat& img, sl_oc::video::RESOLUTION res );
+void showImage( std::string name, cv::UMat& img, sl_oc::video::RESOLUTION res, std::string info="" );
 #endif
 
 int main(int argc, char** argv) {
@@ -134,6 +134,8 @@ int main(int argc, char** argv) {
     left_matcher->setUniquenessRatio(stereoPar.uniquenessRatio);
     left_matcher->setSpeckleWindowSize(stereoPar.speckleWindowSize);
     left_matcher->setSpeckleRange(stereoPar.speckleRange);
+
+    stereoPar.print();
     // <---- Stereo matcher initialization
 
     uint64_t last_ts=0; // Used to check new frame arrival
@@ -193,13 +195,14 @@ int main(int argc, char** argv) {
 #endif
 
             double elapsed = stereo_clock.toc();
-            std::cout << "Stereo processing: " << elapsed << " sec - Freq: " << 1./elapsed << std::endl;
+            std::stringstream stereoElabInfo;
+            stereoElabInfo << "Stereo processing: " << elapsed << " sec - Freq: " << 1./elapsed;
             // <---- Stereo matching
 
             // ----> Show disparity
             //cv::ximgproc::getDisparityVis(left_disp,left_disp_vis,3.0);
             cv::normalize(left_disp, left_disp_vis, 0, 255, cv::NORM_MINMAX, CV_8UC1);
-            showImage("Disparity", left_disp_vis, params.res);
+            showImage("Disparity", left_disp_vis, params.res, stereoElabInfo.str());
             // <---- Show disparity
         }
 
@@ -214,7 +217,7 @@ int main(int argc, char** argv) {
 }
 
 #ifdef USE_OCV_TAPI
-void showImage( std::string name, cv::UMat& img, sl_oc::video::RESOLUTION res )
+void showImage( std::string name, cv::UMat& img, sl_oc::video::RESOLUTION res, std::string info  )
 {
     cv::UMat resized;
     switch(res)
@@ -234,12 +237,18 @@ void showImage( std::string name, cv::UMat& img, sl_oc::video::RESOLUTION res )
         break;
     }
 
+    if(!info.empty())
+    {
+        cv::putText( resized, info, cv::Point(20,40),cv::FONT_HERSHEY_SIMPLEX, 0.75,
+                 cv::Scalar(100,100,100), 2);
+    }
+
     cv::imshow( name, resized );
 }
 #endif
 
 // Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res )
+void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res, std::string info )
 {
     cv::Mat resized;
     switch(res)
@@ -257,6 +266,12 @@ void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res )
         name += " [Resize factor 0.4]";
         cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
         break;
+    }
+
+    if(!info.empty())
+    {
+        cv::putText( resized, info, cv::Point(20,40),cv::FONT_HERSHEY_SIMPLEX, 0.75,
+                 cv::Scalar(100,100,100), 2);
     }
 
     cv::imshow( name, resized );
