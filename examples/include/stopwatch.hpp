@@ -18,6 +18,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
+#ifndef STOPWATCH_HPP
+#define STOPWATCH_HPP
+
 #include <chrono>
 
 namespace sl_oc {
@@ -61,3 +64,4 @@ private:
 } // namespace oc_tools
 } // namespace sl_oc
 
+#endif //STOPWATCH_HPP

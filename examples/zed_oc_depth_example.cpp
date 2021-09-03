@@ -32,10 +32,11 @@
 // Sample includes
 #include "calibration.hpp"
 #include "stopwatch.hpp"
+#include "stereo.hpp"
 // <---- Includes
 
 #define USE_OCV_TAPI
-//#define USE_OCV_STEREOSGBM // Comment to use StereoBM
+#define USE_HALF_SIZE_DISP
 
 // ----> Global functions
 // Rescale the images according to the selected resolution to better display them on screen
@@ -97,44 +98,43 @@ int main(int argc, char** argv) {
     // ----> Initialize calibration
 
 #ifdef USE_OCV_TAPI
-    cv::UMat frameYUV(cv::USAGE_ALLOCATE_HOST_MEMORY);  // Full frame side-by-side in YUV 4:2:2 format
+    cv::UMat frameYUV(cv::USAGE_ALLOCATE_DEVICE_MEMORY);  // Full frame side-by-side in YUV 4:2:2 format
     cv::UMat frameBGR(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Full frame side-by-side in BGR format
-    cv::UMat left_raw(cv::USAGE_ALLOCATE_DEVICE_MEMORY);
-    cv::UMat right_raw(cv::USAGE_ALLOCATE_DEVICE_MEMORY);
-    cv::UMat left_rect(cv::USAGE_ALLOCATE_HOST_MEMORY);
-    cv::UMat right_rect(cv::USAGE_ALLOCATE_HOST_MEMORY);
-    cv::UMat left_for_matcher(cv::USAGE_ALLOCATE_HOST_MEMORY);
-    cv::UMat right_for_matcher(cv::USAGE_ALLOCATE_HOST_MEMORY);
-    cv::UMat left_disp(cv::USAGE_ALLOCATE_HOST_MEMORY);
-    cv::Mat left_disp_vis;
+    cv::UMat left_raw(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Left unrectified image
+    cv::UMat right_raw(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Right unrectified image
+    cv::UMat left_rect(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Left rectified image
+    cv::UMat right_rect(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Right rectified image
+    cv::UMat left_for_matcher(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Left image for the stereo matcher
+    cv::UMat right_for_matcher(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Right image for the stereo matcher
+    cv::UMat left_disp_half(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Half sized disparity map
+    cv::Mat left_disp; // Final disparity map
+    cv::Mat left_disp_vis; // Normalized disparity map to be displayed
 #else
     cv::Mat frameBGR, left_raw, left_rect, right_raw, right_rect, frameYUV, left_for_matcher, right_for_matcher, left_disp, left_disp_vis;
 #endif
 
     // ----> Stereo matcher initialization
-    cv::Ptr<cv::ximgproc::DisparityWLSFilter> wls_filter;
-    int max_disp = 64;
-    int wsize = -1;
-    if(max_disp<=0 || max_disp%16!=0)
+    sl_oc::tools::StereoSgbmPar stereoPar;
+
+    //Note: you can use the tool 'zed_open_capture_depth_tune_stereo' to tune the parameters and save them to YAML
+    if(!stereoPar.load())
     {
-        std::cerr<<"Incorrect max_disparity value: it should be positive and divisible by 16";
-        return EXIT_FAILURE;
+        stereoPar.save(); // Save default parameters.
     }
 
-#ifndef USE_OCV_STEREOSGBM
-    wsize = 15;
-    cv::Ptr<cv::StereoBM> left_matcher = cv::StereoBM::create(max_disp,wsize);
-#else
-    wsize=3;
-    cv::Ptr<cv::StereoSGBM> left_matcher  = cv::StereoSGBM::create(0,max_disp,wsize);
-    left_matcher->setP1(24*wsize*wsize);
-    left_matcher->setP2(96*wsize*wsize);
-    left_matcher->setPreFilterCap(63);
-    left_matcher->setMode(cv::StereoSGBM::MODE_SGBM_3WAY);
-#endif
-    wls_filter = cv::ximgproc::createDisparityWLSFilter(left_matcher);
+    cv::Ptr<cv::StereoSGBM> left_matcher = cv::StereoSGBM::create();
+    left_matcher->setMinDisparity(stereoPar.minDisparity);
+    left_matcher->setNumDisparities(stereoPar.numDisparities);
+    left_matcher->setBlockSize(stereoPar.blockSize);
+    left_matcher->setP1(stereoPar.P1);
+    left_matcher->setP2(stereoPar.P2);
+    left_matcher->setDisp12MaxDiff(-stereoPar.disp12MaxDiff);
+    left_matcher->setMode(stereoPar.mode);
+    left_matcher->setPreFilterCap(stereoPar.preFilterCap);
+    left_matcher->setUniquenessRatio(stereoPar.uniquenessRatio);
+    left_matcher->setSpeckleWindowSize(stereoPar.speckleWindowSize);
+    left_matcher->setSpeckleRange(stereoPar.speckleRange);
     // <---- Stereo matcher initialization
-
 
     uint64_t last_ts=0; // Used to check new frame arrival
 
@@ -174,15 +174,31 @@ int main(int argc, char** argv) {
 
             // ----> Stereo matching
             sl_oc::tools::StopWatch stereo_clock;
-            cv::cvtColor(left_rect,  left_for_matcher,  cv::COLOR_BGR2GRAY);
-            cv::cvtColor(right_rect, right_for_matcher, cv::COLOR_BGR2GRAY);
-            left_matcher->compute(left_for_matcher, right_for_matcher,left_disp);
+#ifdef USE_HALF_SIZE_DISP
+            cv::resize(left_rect,  left_for_matcher,  cv::Size(), 0.5, 0.5);
+            cv::resize(right_rect, right_for_matcher, cv::Size(), 0.5, 0.5);
+#else
+            left_for_matcher = left_rect; // No data copy
+            right_for_matcher = right_rect; // No data copy
+#endif
+
+            //std::cout << "Start stereo matching..." << std::endl;
+            left_matcher->compute(left_for_matcher, right_for_matcher,left_disp_half);
+            //std::cout << "... finished stereo matching" << std::endl;
+
+#ifdef USE_HALF_SIZE_DISP
+            cv::resize(left_disp_half, left_disp, cv::Size(), 2.0, 2.0);
+#else
+            left_disp = left_disp_half.getMat(cv::ACCESS_READ);
+#endif
+
             double elapsed = stereo_clock.toc();
             std::cout << "Stereo processing: " << elapsed << " sec - Freq: " << 1./elapsed << std::endl;
             // <---- Stereo matching
 
             // ----> Show disparity
-            cv::ximgproc::getDisparityVis(left_disp,left_disp_vis);
+            //cv::ximgproc::getDisparityVis(left_disp,left_disp_vis,3.0);
+            cv::normalize(left_disp, left_disp_vis, 0, 255, cv::NORM_MINMAX, CV_8UC1);
             showImage("Disparity", left_disp_vis, params.res);
             // <---- Show disparity
         }

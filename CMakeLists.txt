@@ -135,48 +135,65 @@ if(BUILD_EXAMPLES)
         include_directories(${OpenCV_INCLUDE_DIRS})
 
         ##### Video Example
-        add_executable(${PROJECT_NAME}_video_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_video_example.cpp")
-        set_target_properties(${PROJECT_NAME}_video_example PROPERTIES PREFIX "")
-        target_link_libraries(${PROJECT_NAME}_video_example
+        set(VIDEO_EXAMPLE ${PROJECT_NAME}_video_example)
+        add_executable(${VIDEO_EXAMPLE} "${PROJECT_SOURCE_DIR}/examples/zed_oc_video_example.cpp")
+        set_target_properties(${VIDEO_EXAMPLE} PROPERTIES PREFIX "")
+        target_link_libraries(${VIDEO_EXAMPLE}
           ${PROJECT_NAME}
           ${OpenCV_LIBS}
         )
-        install(TARGETS ${PROJECT_NAME}_video_example
+        install(TARGETS ${VIDEO_EXAMPLE}
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
 
         ##### Control Example
-        add_executable(${PROJECT_NAME}_control_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_control_example.cpp")
-        set_target_properties(${PROJECT_NAME}_control_example PROPERTIES PREFIX "")
-        target_link_libraries(${PROJECT_NAME}_control_example
+        set(CONTROL_EXAMPLE ${PROJECT_NAME}_control_example)
+        add_executable(${CONTROL_EXAMPLE} "${PROJECT_SOURCE_DIR}/examples/zed_oc_control_example.cpp")
+        set_target_properties(${CONTROL_EXAMPLE} PROPERTIES PREFIX "")
+        target_link_libraries(${CONTROL_EXAMPLE}
           ${PROJECT_NAME}
           ${OpenCV_LIBS}
         )
-        install(TARGETS ${PROJECT_NAME}_control_example
+        install(TARGETS ${CONTROL_EXAMPLE}
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
 
         ##### Rectify Example
+        set(RECTIFY_EXAMPLE ${PROJECT_NAME}_rectify_example)
         include_directories( ${PROJECT_SOURCE_DIR}/examples/include)
-        add_executable(${PROJECT_NAME}_rectify_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_rectify_example.cpp")
-        set_target_properties(${PROJECT_NAME}_rectify_example PROPERTIES PREFIX "")
-        target_link_libraries(${PROJECT_NAME}_rectify_example
+        add_executable(${RECTIFY_EXAMPLE} "${PROJECT_SOURCE_DIR}/examples/zed_oc_rectify_example.cpp")
+        set_target_properties(${RECTIFY_EXAMPLE} PROPERTIES PREFIX "")
+        target_link_libraries(${RECTIFY_EXAMPLE}
           ${PROJECT_NAME}
           ${OpenCV_LIBS}
         )
-        install(TARGETS ${PROJECT_NAME}_rectify_example
+        install(TARGETS ${RECTIFY_EXAMPLE}
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
 
         ##### Depth Example
+        set(DEPTH_EXAMPLE ${PROJECT_NAME}_depth_example)
         include_directories( ${PROJECT_SOURCE_DIR}/examples/include)
-        add_executable(${PROJECT_NAME}_depth_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_depth_example.cpp")
-        set_target_properties(${PROJECT_NAME}_depth_example PROPERTIES PREFIX "")
-        target_link_libraries(${PROJECT_NAME}_depth_example
+        add_executable(${DEPTH_EXAMPLE} "${PROJECT_SOURCE_DIR}/examples/zed_oc_depth_example.cpp")
+        set_target_properties(${DEPTH_EXAMPLE} PROPERTIES PREFIX "")
+        target_link_libraries(${DEPTH_EXAMPLE}
           ${PROJECT_NAME}
           ${OpenCV_LIBS}
         )
-        install(TARGETS ${PROJECT_NAME}_depth_example
+        install(TARGETS ${DEPTH_EXAMPLE}
+            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+        )
+
+        ##### Depth Tune Stereo
+        set(STEREO_TUNE_APP ${PROJECT_NAME}_depth_tune_stereo)
+        include_directories( ${PROJECT_SOURCE_DIR}/examples/include)
+        add_executable(${STEREO_TUNE_APP} "${PROJECT_SOURCE_DIR}/examples/tools/zed_oc_tune_stereo_sgbm.cpp")
+        set_target_properties(${STEREO_TUNE_APP} PROPERTIES PREFIX "")
+        target_link_libraries(${STEREO_TUNE_APP}
+          ${PROJECT_NAME}
+          ${OpenCV_LIBS}
+        )
+        install(TARGETS ${STEREO_TUNE_APP}
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
 
