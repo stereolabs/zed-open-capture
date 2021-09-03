@@ -212,6 +212,8 @@ int main(int argc, char** argv) {
     left_matcher->setSpeckleWindowSize(stereoPar.speckleWindowSize);
     left_matcher->setSpeckleRange(stereoPar.speckleRange);
 
+    stereoPar.print();
+
     params_initialized=true;
     // <---- Stereo matcher initialization
 
@@ -274,9 +276,27 @@ int main(int argc, char** argv) {
                 applyStereoMatching();
             }
         }
-        if(key=='s' || key=='S') //  load parameters)
+
+        if(key=='s' || key=='S') //  load parameters
         {
             stereoPar.save();
+        }
+
+        if(key=='r' || key=='R') //  reset default parameters
+        {
+            stereoPar.setDefaultValues();
+            // ----> Update GUI value
+            cv::setTrackbarPos( "blockSize", preFiltDispWinName, stereoPar.blockSize );
+            cv::setTrackbarPos( "numDisparities", preFiltDispWinName, stereoPar.numDisparities );
+            cv::setTrackbarPos( "minDisparity", preFiltDispWinName, stereoPar.minDisparity );
+            cv::setTrackbarPos( "mode", preFiltDispWinName, stereoPar.mode );
+            cv::setTrackbarPos( "disp12MaxDiff", preFiltDispWinName, stereoPar.disp12MaxDiff );
+            cv::setTrackbarPos( "preFilterCap", preFiltDispWinName, stereoPar.preFilterCap );
+            cv::setTrackbarPos( "uniquenessRatio", preFiltDispWinName, stereoPar.uniquenessRatio );
+            cv::setTrackbarPos( "speckleWindowSize", preFiltDispWinName, stereoPar.speckleWindowSize );
+            cv::setTrackbarPos( "speckleRange", preFiltDispWinName, stereoPar.speckleRange );
+            // <---- Update GUI value
+            applyStereoMatching();
         }
 
         // <---- Keyboard handling
