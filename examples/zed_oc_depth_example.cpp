@@ -35,15 +35,17 @@
 #include "stereo.hpp"
 // <---- Includes
 
-#define USE_OCV_TAPI
-#define USE_HALF_SIZE_DISP
+#define USE_OCV_TAPI // Comment to use "normal" cv::Mat instead of CV::UMat
+#define USE_HALF_SIZE_DISP // Comment to compute depth matching on full image frames
 
 // ----> Global functions
-// Rescale the images according to the selected resolution to better display them on screen
+/// Rescale the images according to the selected resolution to better display them on screen
 void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res, std::string info="" );
 #ifdef USE_OCV_TAPI
+/// Rescale the images [cv::UMat] according to the selected resolution to better display them on screen
 void showImage( std::string name, cv::UMat& img, sl_oc::video::RESOLUTION res, std::string info="" );
 #endif
+// <---- Global functions
 
 int main(int argc, char** argv) {
 
@@ -95,10 +97,18 @@ int main(int argc, char** argv) {
 
     std::cout << " Camera Matrix L: \n" << cameraMatrix_left << std::endl << std::endl;
     std::cout << " Camera Matrix R: \n" << cameraMatrix_right << std::endl << std::endl;
-    // ----> Initialize calibration
 
 #ifdef USE_OCV_TAPI
-    cv::UMat frameYUV(cv::USAGE_ALLOCATE_DEVICE_MEMORY);  // Full frame side-by-side in YUV 4:2:2 format
+    cv::UMat map_left_x_gpu = map_left_x.getUMat(cv::ACCESS_READ,cv::USAGE_ALLOCATE_DEVICE_MEMORY);
+    cv::UMat map_left_y_gpu = map_left_y.getUMat(cv::ACCESS_READ,cv::USAGE_ALLOCATE_DEVICE_MEMORY);
+    cv::UMat map_right_x_gpu = map_right_x.getUMat(cv::ACCESS_READ,cv::USAGE_ALLOCATE_DEVICE_MEMORY);
+    cv::UMat map_right_y_gpu = map_right_y.getUMat(cv::ACCESS_READ,cv::USAGE_ALLOCATE_DEVICE_MEMORY);
+#endif
+    // ----> Initialize calibration
+
+    // ----> Declare OpenCV images
+#ifdef USE_OCV_TAPI
+    cv::UMat frameYUV;  // Full frame side-by-side in YUV 4:2:2 format
     cv::UMat frameBGR(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Full frame side-by-side in BGR format
     cv::UMat left_raw(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Left unrectified image
     cv::UMat right_raw(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Right unrectified image
@@ -107,11 +117,13 @@ int main(int argc, char** argv) {
     cv::UMat left_for_matcher(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Left image for the stereo matcher
     cv::UMat right_for_matcher(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Right image for the stereo matcher
     cv::UMat left_disp_half(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Half sized disparity map
-    cv::Mat left_disp; // Final disparity map
-    cv::Mat left_disp_vis; // Normalized disparity map to be displayed
+    cv::UMat left_disp(cv::USAGE_ALLOCATE_DEVICE_MEMORY);
+    cv::UMat left_disp_float(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Final disparity map
+    cv::UMat left_disp_vis(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Normalized disparity map to be displayed
 #else
-    cv::Mat frameBGR, left_raw, left_rect, right_raw, right_rect, frameYUV, left_for_matcher, right_for_matcher, left_disp, left_disp_vis;
+    cv::Mat frameBGR, left_raw, left_rect, right_raw, right_rect, frameYUV, left_for_matcher, right_for_matcher, left_disp_half,left_disp,left_disp_float, left_disp_vis;
 #endif
+    // <---- Declare OpenCV images
 
     // ----> Stereo matcher initialization
     sl_oc::tools::StereoSgbmPar stereoPar;
@@ -153,8 +165,8 @@ int main(int argc, char** argv) {
 
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
 #ifdef USE_OCV_TAPI
-            cv::Mat frameYUV_tmp = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
-            frameYUV = frameYUV_tmp.getUMat(cv::ACCESS_READ,cv::USAGE_ALLOCATE_HOST_MEMORY);
+            cv::Mat frameYUV_cpu = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
+            frameYUV = frameYUV_cpu.getUMat(cv::ACCESS_READ,cv::USAGE_ALLOCATE_HOST_MEMORY);
 #else
             frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
 #endif
@@ -167,41 +179,60 @@ int main(int argc, char** argv) {
             // <---- Extract left and right images from side-by-side
 
             // ----> Apply rectification
+            sl_oc::tools::StopWatch remap_clock;
+#ifdef USE_OCV_TAPI
+            cv::remap(left_raw, left_rect, map_left_x_gpu, map_left_y_gpu, cv::INTER_LINEAR );
+            cv::remap(right_raw, right_rect, map_right_x_gpu, map_right_y_gpu, cv::INTER_LINEAR );
+#else
             cv::remap(left_raw, left_rect, map_left_x, map_left_y, cv::INTER_LINEAR );
             cv::remap(right_raw, right_rect, map_right_x, map_right_y, cv::INTER_LINEAR );
-
-            showImage("Right rect.", right_rect, params.res);
-            showImage("Left rect.", left_rect, params.res);
+#endif
+            double remap_elapsed = remap_clock.toc();
+            std::stringstream remapElabInfo;
+            remapElabInfo << "Rectif. processing: " << remap_elapsed << " sec - Freq: " << 1./remap_elapsed;
             // <---- Apply rectification
 
             // ----> Stereo matching
             sl_oc::tools::StopWatch stereo_clock;
 #ifdef USE_HALF_SIZE_DISP
+            // Resize the original images to improve performances
             cv::resize(left_rect,  left_for_matcher,  cv::Size(), 0.5, 0.5);
             cv::resize(right_rect, right_for_matcher, cv::Size(), 0.5, 0.5);
 #else
             left_for_matcher = left_rect; // No data copy
             right_for_matcher = right_rect; // No data copy
 #endif
-
-            //std::cout << "Start stereo matching..." << std::endl;
+            // Apply stereo matching
             left_matcher->compute(left_for_matcher, right_for_matcher,left_disp_half);
-            //std::cout << "... finished stereo matching" << std::endl;
+
+//            double minVal,maxVal;
+//            cv::minMaxIdx(left_disp_half, &minVal, &maxVal );
+//            std::cout << "Original Disparity range: " << minVal << " , " << maxVal << std::endl;
+
+            left_disp_half.convertTo(left_disp_float,CV_32FC1);
+            cv::multiply(left_disp_float,1.f/16.f,left_disp_float); // Last 4 bits of SGBM disparity are decimal
 
 #ifdef USE_HALF_SIZE_DISP
-            cv::resize(left_disp_half, left_disp, cv::Size(), 2.0, 2.0);
+            cv::resize(left_disp_float, left_disp_float, cv::Size(), 2.0, 2.0, cv::INTER_LINEAR);
 #else
-            left_disp = left_disp_half.getMat(cv::ACCESS_READ);
+            left_disp = left_disp_float;
 #endif
+
 
             double elapsed = stereo_clock.toc();
             std::stringstream stereoElabInfo;
             stereoElabInfo << "Stereo processing: " << elapsed << " sec - Freq: " << 1./elapsed;
             // <---- Stereo matching
 
+            // ----> Show frames
+            showImage("Right rect.", right_rect, params.res, remapElabInfo.str());
+            showImage("Left rect.", left_rect, params.res, remapElabInfo.str());
+            // <---- Show frames
+
             // ----> Show disparity
-            //cv::ximgproc::getDisparityVis(left_disp,left_disp_vis,3.0);
-            cv::normalize(left_disp, left_disp_vis, 0, 255, cv::NORM_MINMAX, CV_8UC1);
+            cv::add(left_disp_float,-static_cast<float>(stereoPar.minDisparity-1),left_disp_float); // Minimum disparity offset correction
+            cv::multiply(left_disp_float,1.f/stereoPar.numDisparities,left_disp_vis,255., CV_8UC1 ); // Normalization and rescaling
+            cv::applyColorMap(left_disp_vis,left_disp_vis,cv::COLORMAP_INFERNO);
             showImage("Disparity", left_disp_vis, params.res, stereoElabInfo.str());
             // <---- Show disparity
         }

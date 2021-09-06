@@ -28,27 +28,27 @@ public:
     void print();
 
 public:
-    int blockSize = 9;
-    int minDisparity = -48;
-    int numDisparities = 96;
-    int mode = cv::StereoSGBM::MODE_SGBM_3WAY; // MODE_SGBM = 0, MODE_HH   = 1, MODE_SGBM_3WAY = 2, MODE_HH4  = 3
+    int blockSize;
+    int minDisparity;
+    int numDisparities;
+    int mode;
     int P1;
     int P2;
-    int disp12MaxDiff = 0;
-    int preFilterCap = 63;
-    int uniquenessRatio = 5;
-    int speckleWindowSize = 255;
-    int speckleRange = 1;
+    int disp12MaxDiff;
+    int preFilterCap;
+    int uniquenessRatio;
+    int speckleWindowSize;
+    int speckleRange;
 };
 
 void StereoSgbmPar::setDefaultValues()
 {
-    blockSize = 9;
-    minDisparity = -48;
+    blockSize = 3;
+    minDisparity = 0;
     numDisparities = 96;
     mode = cv::StereoSGBM::MODE_SGBM_3WAY; // MODE_SGBM = 0, MODE_HH   = 1, MODE_SGBM_3WAY = 2, MODE_HH4  = 3
     P1 = 24*blockSize*blockSize;
-    P2 = 96*blockSize*blockSize;
+    P2 = 4*P1;
     disp12MaxDiff = 0;
     preFilterCap = 63;
     uniquenessRatio = 5;
