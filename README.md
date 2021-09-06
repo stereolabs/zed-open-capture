@@ -39,6 +39,8 @@
     - Stereo rectification
     - IMU, magnetometer and barometer data capture
     - Video and sensors synchronization
+    - Disparity/Depth extraction using OpenCV Transparent API
+    - Depth tuning using OpenCV control GUI
 
 ## Description
 
