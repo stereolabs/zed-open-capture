@@ -4180,7 +4180,7 @@ bool downloadCalibrationFile(unsigned int serial_number, std::string &calibratio
 #include <opencv2/opencv.hpp>
 
 bool initCalibration(std::string calibration_file, cv::Size2i image_size, cv::Mat &map_left_x, cv::Mat &map_left_y,
-        cv::Mat &map_right_x, cv::Mat &map_right_y, cv::Mat &cameraMatrix_left, cv::Mat &cameraMatrix_right) {
+        cv::Mat &map_right_x, cv::Mat &map_right_y, cv::Mat &cameraMatrix_left, cv::Mat &cameraMatrix_right, double *baseline=nullptr) {
 
     if (!checkFile(calibration_file)) {
         std::cout << "Calibration file missing." << std::endl;
@@ -4216,6 +4216,8 @@ bool initCalibration(std::string calibration_file, cv::Size2i image_size, cv::Ma
     T_[0] = camerareader.getValue("stereo:baseline", 0.0f);
     T_[1] = camerareader.getValue("stereo:ty_" + resolution_str, 0.f);
     T_[2] = camerareader.getValue("stereo:tz_" + resolution_str, 0.f);
+
+    if(baseline) *baseline=T_[0];
 
     // Get left parameters
     float left_cam_cx = camerareader.getValue("left_cam_" + resolution_str + ":cx", 0.0f);

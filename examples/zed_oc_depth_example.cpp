@@ -92,8 +92,9 @@ int main(int argc, char** argv) {
     cv::Mat map_left_x, map_left_y;
     cv::Mat map_right_x, map_right_y;
     cv::Mat cameraMatrix_left, cameraMatrix_right;
+    double baseline;
     sl_oc::tools::initCalibration(calibration_file, cv::Size(w/2,h), map_left_x, map_left_y, map_right_x, map_right_y,
-                                  cameraMatrix_left, cameraMatrix_right);
+                                  cameraMatrix_left, cameraMatrix_right, &baseline);
 
     std::cout << " Camera Matrix L: \n" << cameraMatrix_left << std::endl << std::endl;
     std::cout << " Camera Matrix R: \n" << cameraMatrix_right << std::endl << std::endl;
@@ -117,9 +118,10 @@ int main(int argc, char** argv) {
     cv::UMat left_for_matcher(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Left image for the stereo matcher
     cv::UMat right_for_matcher(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Right image for the stereo matcher
     cv::UMat left_disp_half(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Half sized disparity map
-    cv::UMat left_disp(cv::USAGE_ALLOCATE_DEVICE_MEMORY);
-    cv::UMat left_disp_float(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Final disparity map
-    cv::UMat left_disp_vis(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Normalized disparity map to be displayed
+    cv::UMat left_disp(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Full output disparity
+    cv::UMat left_disp_float(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Final disparity map in float32
+    cv::UMat left_disp_image(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Normalized and color remapped disparity map to be displayed
+    cv::UMat left_depth_map(cv::USAGE_ALLOCATE_DEVICE_MEMORY); // Depth map in float32
 #else
     cv::Mat frameBGR, left_raw, left_rect, right_raw, right_rect, frameYUV, left_for_matcher, right_for_matcher, left_disp_half,left_disp,left_disp_float, left_disp_vis;
 #endif
@@ -194,10 +196,12 @@ int main(int argc, char** argv) {
 
             // ----> Stereo matching
             sl_oc::tools::StopWatch stereo_clock;
+            float resize_fact = 1.0f;
 #ifdef USE_HALF_SIZE_DISP
+            resize_fact = 0.5f;
             // Resize the original images to improve performances
-            cv::resize(left_rect,  left_for_matcher,  cv::Size(), 0.5, 0.5);
-            cv::resize(right_rect, right_for_matcher, cv::Size(), 0.5, 0.5);
+            cv::resize(left_rect,  left_for_matcher,  cv::Size(), resize_fact, resize_fact);
+            cv::resize(right_rect, right_for_matcher, cv::Size(), resize_fact, resize_fact);
 #else
             left_for_matcher = left_rect; // No data copy
             right_for_matcher = right_rect; // No data copy
@@ -213,7 +217,7 @@ int main(int argc, char** argv) {
             cv::multiply(left_disp_float,1.f/16.f,left_disp_float); // Last 4 bits of SGBM disparity are decimal
 
 #ifdef USE_HALF_SIZE_DISP
-            cv::resize(left_disp_float, left_disp_float, cv::Size(), 2.0, 2.0, cv::INTER_LINEAR);
+            cv::resize(left_disp_float, left_disp_float, cv::Size(), 1./resize_fact, 1./resize_fact, cv::INTER_LINEAR);
 #else
             left_disp = left_disp_float;
 #endif
@@ -229,12 +233,25 @@ int main(int argc, char** argv) {
             showImage("Left rect.", left_rect, params.res, remapElabInfo.str());
             // <---- Show frames
 
-            // ----> Show disparity
+            // ----> Show disparity image
             cv::add(left_disp_float,-static_cast<float>(stereoPar.minDisparity-1),left_disp_float); // Minimum disparity offset correction
-            cv::multiply(left_disp_float,1.f/stereoPar.numDisparities,left_disp_vis,255., CV_8UC1 ); // Normalization and rescaling
-            cv::applyColorMap(left_disp_vis,left_disp_vis,cv::COLORMAP_INFERNO);
-            showImage("Disparity", left_disp_vis, params.res, stereoElabInfo.str());
-            // <---- Show disparity
+            cv::multiply(left_disp_float,1.f/stereoPar.numDisparities,left_disp_image,255., CV_8UC1 ); // Normalization and rescaling
+            cv::applyColorMap(left_disp_image,left_disp_image,cv::COLORMAP_INFERNO);
+            showImage("Disparity", left_disp_image, params.res, stereoElabInfo.str());
+            // <---- Show disparity image
+
+            // ----> Extract Depth map
+            // The DISPARITY MAP can be now transformed in DEPTH MAP using the formula
+            // depth = (f * B) / disparity
+            // where 'f' is the camera focal, 'B' is the camera baseline, 'disparity' is the pixel disparity
+
+            double f = cameraMatrix_left.at<double>(0,0);
+            float num = static_cast<float>(f*baseline)*resize_fact;
+            cv::divide(num,left_disp_float,left_depth_map);
+
+            float depth = left_depth_map.getMat(cv::ACCESS_READ).at<float>(left_depth_map.rows/2, left_depth_map.cols/2 );
+            std::cout << "Central depth [1]: " << depth << " mm" << std::endl;
+            // <---- Extract Depth map
         }
 
         // ----> Keyboard handling
