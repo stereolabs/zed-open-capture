@@ -27,7 +27,6 @@
 
 // OpenCV includes
 #include <opencv2/opencv.hpp>
-#include "opencv2/ximgproc.hpp"
 
 // Sample includes
 #include "calibration.hpp"
@@ -92,9 +91,14 @@ int main(int argc, char** argv) {
     cv::Mat map_left_x, map_left_y;
     cv::Mat map_right_x, map_right_y;
     cv::Mat cameraMatrix_left, cameraMatrix_right;
-    double baseline;
+    double baseline=0;
     sl_oc::tools::initCalibration(calibration_file, cv::Size(w/2,h), map_left_x, map_left_y, map_right_x, map_right_y,
                                   cameraMatrix_left, cameraMatrix_right, &baseline);
+
+    double fx = cameraMatrix_left.at<double>(0,0);
+    double fy = cameraMatrix_left.at<double>(1,1);
+    double cx = cameraMatrix_left.at<double>(0,2);
+    double cy = cameraMatrix_left.at<double>(1,2);
 
     std::cout << " Camera Matrix L: \n" << cameraMatrix_left << std::endl << std::endl;
     std::cout << " Camera Matrix R: \n" << cameraMatrix_right << std::endl << std::endl;
@@ -152,6 +156,16 @@ int main(int argc, char** argv) {
     stereoPar.print();
     // <---- Stereo matcher initialization
 
+    // ----> Point Cloud
+    cv::viz::Viz3d pc_viewer;
+    cv::Mat cloudMat;
+
+    pc_viewer = cv::viz::Viz3d( "Point Cloud" );
+
+    //clip(17.014472,17014.472203) focal(559.523504,-315.214938,1610.880333) pos(-1169.916676,-762.722711,-3607.243924) view(0.013426,-0.996622,0.081021) angle(0.523599) winsz(1864,720) winpos(66,109)
+
+    // <---- Point Cloud
+
     uint64_t last_ts=0; // Used to check new frame arrival
 
     // Infinite video grabbing loop
@@ -200,8 +214,8 @@ int main(int argc, char** argv) {
 #ifdef USE_HALF_SIZE_DISP
             resize_fact = 0.5f;
             // Resize the original images to improve performances
-            cv::resize(left_rect,  left_for_matcher,  cv::Size(), resize_fact, resize_fact);
-            cv::resize(right_rect, right_for_matcher, cv::Size(), resize_fact, resize_fact);
+            cv::resize(left_rect,  left_for_matcher,  cv::Size(), resize_fact, resize_fact, cv::INTER_AREA);
+            cv::resize(right_rect, right_for_matcher, cv::Size(), resize_fact, resize_fact, cv::INTER_AREA);
 #else
             left_for_matcher = left_rect; // No data copy
             right_for_matcher = right_rect; // No data copy
@@ -209,15 +223,11 @@ int main(int argc, char** argv) {
             // Apply stereo matching
             left_matcher->compute(left_for_matcher, right_for_matcher,left_disp_half);
 
-//            double minVal,maxVal;
-//            cv::minMaxIdx(left_disp_half, &minVal, &maxVal );
-//            std::cout << "Original Disparity range: " << minVal << " , " << maxVal << std::endl;
-
             left_disp_half.convertTo(left_disp_float,CV_32FC1);
             cv::multiply(left_disp_float,1.f/16.f,left_disp_float); // Last 4 bits of SGBM disparity are decimal
 
 #ifdef USE_HALF_SIZE_DISP
-            cv::resize(left_disp_float, left_disp_float, cv::Size(), 1./resize_fact, 1./resize_fact, cv::INTER_LINEAR);
+            cv::resize(left_disp_float, left_disp_float, cv::Size(), 1./resize_fact, 1./resize_fact, cv::INTER_AREA);
 #else
             left_disp = left_disp_float;
 #endif
@@ -234,7 +244,7 @@ int main(int argc, char** argv) {
             // <---- Show frames
 
             // ----> Show disparity image
-            cv::add(left_disp_float,-static_cast<float>(stereoPar.minDisparity-1),left_disp_float); // Minimum disparity offset correction
+            cv::add(left_disp_float,-static_cast<float>(stereoPar.minDisparity),left_disp_float); // Minimum disparity offset correction
             cv::multiply(left_disp_float,1.f/stereoPar.numDisparities,left_disp_image,255., CV_8UC1 ); // Normalization and rescaling
             cv::applyColorMap(left_disp_image,left_disp_image,cv::COLORMAP_INFERNO);
             showImage("Disparity", left_disp_image, params.res, stereoElabInfo.str());
@@ -245,13 +255,37 @@ int main(int argc, char** argv) {
             // depth = (f * B) / disparity
             // where 'f' is the camera focal, 'B' is the camera baseline, 'disparity' is the pixel disparity
 
-            double f = cameraMatrix_left.at<double>(0,0);
-            float num = static_cast<float>(f*baseline)*resize_fact;
+            float num = static_cast<float>(fx*baseline);
+            num*=resize_fact;
             cv::divide(num,left_disp_float,left_depth_map);
 
-            float depth = left_depth_map.getMat(cv::ACCESS_READ).at<float>(left_depth_map.rows/2, left_depth_map.cols/2 );
-            std::cout << "Central depth [1]: " << depth << " mm" << std::endl;
+            float central_depth = left_depth_map.getMat(cv::ACCESS_READ).at<float>(left_depth_map.rows/2, left_depth_map.cols/2 );
+            std::cout << "Depth of the central pixel: " << central_depth << " mm" << std::endl;
             // <---- Extract Depth map
+
+            // ----> Create Point Cloud
+            std::vector<cv::Vec3f> buffer( left_depth_map.cols * left_depth_map.rows, cv::Vec3f::all( std::numeric_limits<float>::quiet_NaN() ) );
+            int idx = 0;
+            cv::Mat depth_map_cpu = left_depth_map.getMat(cv::ACCESS_READ);
+            float* depth_vec = (float*)(&(depth_map_cpu.data[0]));
+#pragma omp parallel for
+            for(int c = 0; c < left_depth_map.cols; ++c)
+            {
+#pragma omp parallel for
+                for(int r = 0; r < left_depth_map.rows; ++r)
+                {
+                    idx = r*left_depth_map.cols + c;
+                    float depth = depth_vec[idx];
+                    if(!isinf(depth) && depth > 100 && depth < 10000)
+                    {
+                        buffer[idx].val[2] = depth; // Z
+                        buffer[idx].val[0] = (c-cx)*depth/fx; // X
+                        buffer[idx].val[1] = (r-cy)*depth/fy; // Y
+                    }
+                }
+            }
+            cloudMat = cv::Mat( left_depth_map.rows, left_depth_map.cols, CV_32FC3, &buffer[0] ).clone();
+            // <---- Create Point Cloud
         }
 
         // ----> Keyboard handling
@@ -259,6 +293,16 @@ int main(int argc, char** argv) {
         if(key=='q' || key=='Q') // Quit
             break;
         // <---- Keyboard handling
+
+        // ----> Show Point Cloud
+        cv::viz::WCloud cloudWidget( cloudMat, left_rect );
+        cloudWidget.setRenderingProperty( cv::viz::POINT_SIZE, 1 );
+        pc_viewer.showWidget( "Point Cloud", cloudWidget );
+        pc_viewer.spinOnce();
+
+        if(pc_viewer.wasStopped())
+            break;
+        // <---- Show Point Cloud
     }
 
     return EXIT_SUCCESS;
@@ -288,7 +332,7 @@ void showImage( std::string name, cv::UMat& img, sl_oc::video::RESOLUTION res, s
     if(!info.empty())
     {
         cv::putText( resized, info, cv::Point(20,40),cv::FONT_HERSHEY_SIMPLEX, 0.75,
-                 cv::Scalar(100,100,100), 2);
+                     cv::Scalar(100,100,100), 2);
     }
 
     cv::imshow( name, resized );
@@ -319,7 +363,7 @@ void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res, st
     if(!info.empty())
     {
         cv::putText( resized, info, cv::Point(20,40),cv::FONT_HERSHEY_SIMPLEX, 0.75,
-                 cv::Scalar(100,100,100), 2);
+                     cv::Scalar(100,100,100), 2);
     }
 
     cv::imshow( name, resized );

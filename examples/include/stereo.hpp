@@ -15,8 +15,7 @@ class StereoSgbmPar
 public:
     StereoSgbmPar()
     {
-        P1 = 24*blockSize*blockSize;
-        P2 = 96*blockSize*blockSize;
+        setDefaultValues();
     }
 
     virtual ~StereoSgbmPar(){;}
