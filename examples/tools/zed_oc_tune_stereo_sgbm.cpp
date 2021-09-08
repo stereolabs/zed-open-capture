@@ -122,8 +122,6 @@ int main(int argc, char** argv) {
     std::cout << " Camera Matrix R: \n" << cameraMatrix_right << std::endl << std::endl;
     // <---- Initialize calibration
 
-    uint64_t last_ts=0; // Used to check new frame arrival
-
     // Grab first valid frame couple
     while (1)
     {
@@ -131,10 +129,8 @@ int main(int argc, char** argv) {
         const sl_oc::video::Frame frame = cap.getLastFrame();
 
         // ----> If the frame is valid we can convert, rectify and display it
-        if(frame.data!=nullptr && frame.timestamp!=last_ts)
+        if(frame.data!=nullptr)
         {
-            last_ts = frame.timestamp;
-
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
             frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
             cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
@@ -180,7 +176,7 @@ int main(int argc, char** argv) {
     cv::setTrackbarMin( "mode", preFiltDispWinName, 0 );
 
     cv::createTrackbar( "disp12MaxDiff", preFiltDispWinName, nullptr, maxMaxDisp, on_trackbar_disp12MaxDiff);
-    cv::setTrackbarMin( "disp12MaxDiff", preFiltDispWinName, 0 );
+    cv::setTrackbarMin( "disp12MaxDiff", preFiltDispWinName, -1 );
 
     cv::createTrackbar( "preFilterCap", preFiltDispWinName, nullptr, 1024, on_trackbar_preFilterCap);
     cv::setTrackbarMin( "preFilterCap", preFiltDispWinName, 0 );
@@ -205,7 +201,7 @@ int main(int argc, char** argv) {
     left_matcher->setBlockSize(stereoPar.blockSize);
     left_matcher->setP1(stereoPar.P1);
     left_matcher->setP2(stereoPar.P2);
-    left_matcher->setDisp12MaxDiff(-(stereoPar.disp12MaxDiff-1));
+    left_matcher->setDisp12MaxDiff(stereoPar.disp12MaxDiff);
     left_matcher->setMode(stereoPar.mode);
     left_matcher->setPreFilterCap(stereoPar.preFilterCap);
     left_matcher->setUniquenessRatio(stereoPar.uniquenessRatio);
@@ -314,8 +310,8 @@ void applyStereoMatching()
     sl_oc::tools::StopWatch stereo_clock;
 
 #ifdef USE_HALF_SIZE_DISPARITY
-    cv::resize(left_rect,  left_for_matcher,  cv::Size(), 0.5, 0.5);
-    cv::resize(right_rect, right_for_matcher, cv::Size(), 0.5, 0.5);
+    cv::resize(left_rect,  left_for_matcher,  cv::Size(), 0.5, 0.5, cv::INTER_LINEAR_EXACT);
+    cv::resize(right_rect, right_for_matcher, cv::Size(), 0.5, 0.5, cv::INTER_LINEAR_EXACT);
 #else
     left_for_matcher = left_rect.clone();
     right_for_matcher = right_rect.clone();
@@ -326,12 +322,15 @@ void applyStereoMatching()
     left_matcher->setBlockSize(stereoPar.blockSize);
     left_matcher->setP1(stereoPar.P1);
     left_matcher->setP2(stereoPar.P2);
-    left_matcher->setDisp12MaxDiff(-(stereoPar.disp12MaxDiff-1));
+    left_matcher->setDisp12MaxDiff(stereoPar.disp12MaxDiff);
     left_matcher->setMode(stereoPar.mode);
     left_matcher->setPreFilterCap(stereoPar.preFilterCap);
     left_matcher->setUniquenessRatio(stereoPar.uniquenessRatio);
     left_matcher->setSpeckleWindowSize(stereoPar.speckleWindowSize);
     left_matcher->setSpeckleRange(stereoPar.speckleRange);
+#ifdef USE_HALF_SIZE_DISPARITY
+    left_disp*=2;
+#endif
 
     std::cout << "Start stereo matching..." << std::endl;
     left_matcher->compute(left_for_matcher, right_for_matcher, left_disp);
@@ -345,7 +344,7 @@ void applyStereoMatching()
     //cv::ximgproc::getDisparityVis(left_disp,left_disp_vis,3.0);
     cv::normalize(left_disp, left_disp_vis, 0, 255, cv::NORM_MINMAX, CV_8UC1);
 #ifdef USE_HALF_SIZE_DISPARITY
-    cv::resize(left_disp_vis, left_disp_vis, cv::Size(), 2.0, 2.0);
+    cv::resize(left_disp_vis, left_disp_vis, cv::Size(), 2.0, 2.0, cv::INTER_LINEAR_EXACT);
 #endif
     showImage(preFiltDispWinName, left_disp_vis, params.res, false);
     // <---- Show disparity

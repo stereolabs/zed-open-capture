@@ -38,6 +38,9 @@ public:
     int uniquenessRatio;
     int speckleWindowSize;
     int speckleRange;
+
+    float minDepth_mm;
+    float maxDepth_mm;
 };
 
 void StereoSgbmPar::setDefaultValues()
@@ -53,6 +56,9 @@ void StereoSgbmPar::setDefaultValues()
     uniquenessRatio = 5;
     speckleWindowSize = 255;
     speckleRange = 1;
+
+    minDepth_mm = 300.f;
+    maxDepth_mm = 10000.f;
 }
 
 bool StereoSgbmPar::load()
@@ -79,6 +85,9 @@ bool StereoSgbmPar::load()
     fs["speckleRange"] >> speckleRange;
     P1 = 24*blockSize*blockSize;
     P2 = 96*blockSize*blockSize;
+
+    fs["minDepth_mm"] >> minDepth_mm;
+    fs["maxDepth_mm"] >> maxDepth_mm;
 
     std::cout << "Stereo parameters load done: " << par_file << std::endl << std::endl;
 
@@ -107,6 +116,9 @@ bool StereoSgbmPar::save()
     fs << "speckleWindowSize" << speckleWindowSize;
     fs << "speckleRange" << speckleRange;
 
+    fs << "minDepth_mm" << minDepth_mm;
+    fs << "maxDepth_mm" << maxDepth_mm;
+
     std::cout << "Stereo parameters write done: " << par_file << std::endl << std::endl;
 
     return true;
@@ -127,6 +139,9 @@ void StereoSgbmPar::print()
     std::cout << "speckleRange:\t" << speckleRange << std::endl;
     std::cout << "P1:\t\t" << P1 << " [Calculated]" << std::endl;
     std::cout << "P2:\t\t" << P2 << " [Calculated]" << std::endl;
+
+    std::cout << "minDepth_mm:\t\t" << minDepth_mm << std::endl;
+    std::cout << "maxDepth_mm:\t\t" << maxDepth_mm << std::endl;
     std::cout << "------------------------------------------" << std::endl << std::endl;
 }
 

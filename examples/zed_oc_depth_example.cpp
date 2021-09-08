@@ -22,6 +22,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <omp.h>
 
 #include "videocapture.hpp"
 
@@ -146,7 +147,7 @@ int main(int argc, char** argv) {
     left_matcher->setBlockSize(stereoPar.blockSize);
     left_matcher->setP1(stereoPar.P1);
     left_matcher->setP2(stereoPar.P2);
-    left_matcher->setDisp12MaxDiff(-stereoPar.disp12MaxDiff);
+    left_matcher->setDisp12MaxDiff(stereoPar.disp12MaxDiff);
     left_matcher->setMode(stereoPar.mode);
     left_matcher->setPreFilterCap(stereoPar.preFilterCap);
     left_matcher->setUniquenessRatio(stereoPar.uniquenessRatio);
@@ -197,11 +198,11 @@ int main(int argc, char** argv) {
             // ----> Apply rectification
             sl_oc::tools::StopWatch remap_clock;
 #ifdef USE_OCV_TAPI
-            cv::remap(left_raw, left_rect, map_left_x_gpu, map_left_y_gpu, cv::INTER_LINEAR );
-            cv::remap(right_raw, right_rect, map_right_x_gpu, map_right_y_gpu, cv::INTER_LINEAR );
+            cv::remap(left_raw, left_rect, map_left_x_gpu, map_left_y_gpu, cv::INTER_AREA );
+            cv::remap(right_raw, right_rect, map_right_x_gpu, map_right_y_gpu, cv::INTER_AREA );
 #else
-            cv::remap(left_raw, left_rect, map_left_x, map_left_y, cv::INTER_LINEAR );
-            cv::remap(right_raw, right_rect, map_right_x, map_right_y, cv::INTER_LINEAR );
+            cv::remap(left_raw, left_rect, map_left_x, map_left_y, cv::INTER_AREA );
+            cv::remap(right_raw, right_rect, map_right_x, map_right_y, cv::INTER_AREA );
 #endif
             double remap_elapsed = remap_clock.toc();
             std::stringstream remapElabInfo;
@@ -227,6 +228,7 @@ int main(int argc, char** argv) {
             cv::multiply(left_disp_float,1.f/16.f,left_disp_float); // Last 4 bits of SGBM disparity are decimal
 
 #ifdef USE_HALF_SIZE_DISP
+            cv::multiply(left_disp_float,2.f,left_disp_float); // Last 4 bits of SGBM disparity are decimal
             cv::resize(left_disp_float, left_disp_float, cv::Size(), 1./resize_fact, 1./resize_fact, cv::INTER_AREA);
 #else
             left_disp = left_disp_float;
@@ -244,7 +246,7 @@ int main(int argc, char** argv) {
             // <---- Show frames
 
             // ----> Show disparity image
-            cv::add(left_disp_float,-static_cast<float>(stereoPar.minDisparity),left_disp_float); // Minimum disparity offset correction
+            cv::add(left_disp_float,-static_cast<float>(stereoPar.minDisparity-1),left_disp_float); // Minimum disparity offset correction
             cv::multiply(left_disp_float,1.f/stereoPar.numDisparities,left_disp_image,255., CV_8UC1 ); // Normalization and rescaling
             cv::applyColorMap(left_disp_image,left_disp_image,cv::COLORMAP_INFERNO);
             showImage("Disparity", left_disp_image, params.res, stereoElabInfo.str());
@@ -256,7 +258,6 @@ int main(int argc, char** argv) {
             // where 'f' is the camera focal, 'B' is the camera baseline, 'disparity' is the pixel disparity
 
             float num = static_cast<float>(fx*baseline);
-            num*=resize_fact;
             cv::divide(num,left_disp_float,left_depth_map);
 
             float central_depth = left_depth_map.getMat(cv::ACCESS_READ).at<float>(left_depth_map.rows/2, left_depth_map.cols/2 );
@@ -264,27 +265,33 @@ int main(int argc, char** argv) {
             // <---- Extract Depth map
 
             // ----> Create Point Cloud
-            std::vector<cv::Vec3f> buffer( left_depth_map.cols * left_depth_map.rows, cv::Vec3f::all( std::numeric_limits<float>::quiet_NaN() ) );
-            int idx = 0;
+            sl_oc::tools::StopWatch pc_clock;
+            int buf_size = left_depth_map.cols * left_depth_map.rows;
+            std::vector<cv::Vec3f> buffer( buf_size, cv::Vec3f::all( std::numeric_limits<float>::quiet_NaN() ) );
             cv::Mat depth_map_cpu = left_depth_map.getMat(cv::ACCESS_READ);
             float* depth_vec = (float*)(&(depth_map_cpu.data[0]));
+
 #pragma omp parallel for
-            for(int c = 0; c < left_depth_map.cols; ++c)
+            for(int idx=0; idx<buf_size;idx++ )
             {
-#pragma omp parallel for
-                for(int r = 0; r < left_depth_map.rows; ++r)
+                int r = idx/left_depth_map.cols;
+                int c = idx%left_depth_map.cols;
+                float depth = depth_vec[idx];
+                if(!isinf(depth) && depth >=0 && depth > stereoPar.minDepth_mm && depth < stereoPar.maxDepth_mm)
                 {
-                    idx = r*left_depth_map.cols + c;
-                    float depth = depth_vec[idx];
-                    if(!isinf(depth) && depth > 100 && depth < 10000)
-                    {
-                        buffer[idx].val[2] = depth; // Z
-                        buffer[idx].val[0] = (c-cx)*depth/fx; // X
-                        buffer[idx].val[1] = (r-cy)*depth/fy; // Y
-                    }
+                    buffer[idx].val[2] = depth; // Z
+                    buffer[idx].val[0] = (c-cx)*depth/fx; // X
+                    buffer[idx].val[1] = (r-cy)*depth/fy; // Y
+                    //printf("r = %d, c= %d, threadId = %d \n", r, c, omp_get_thread_num());
                 }
             }
+
             cloudMat = cv::Mat( left_depth_map.rows, left_depth_map.cols, CV_32FC3, &buffer[0] ).clone();
+
+            double pc_elapsed = stereo_clock.toc();
+            std::stringstream pcElabInfo;
+            pcElabInfo << "Point cloud processing: " << pc_elapsed << " sec - Freq: " << 1./pc_elapsed;
+            std::cout << pcElabInfo.str() << std::endl;
             // <---- Create Point Cloud
         }
 
@@ -298,7 +305,7 @@ int main(int argc, char** argv) {
         cv::viz::WCloud cloudWidget( cloudMat, left_rect );
         cloudWidget.setRenderingProperty( cv::viz::POINT_SIZE, 1 );
         pc_viewer.showWidget( "Point Cloud", cloudWidget );
-        pc_viewer.spinOnce();
+        pc_viewer.spinOnce(1);
 
         if(pc_viewer.wasStopped())
             break;
