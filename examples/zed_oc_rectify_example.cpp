@@ -30,12 +30,10 @@
 
 // Sample includes
 #include "calibration.hpp"
+#include "ocv_display.hpp"
 // <---- Includes
 
 // ----> Global functions
-// Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res );
-
 int main(int argc, char** argv) {
 
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
@@ -112,16 +110,16 @@ int main(int argc, char** argv) {
             left_raw = frameBGR(cv::Rect(0, 0, frameBGR.cols / 2, frameBGR.rows));
             right_raw = frameBGR(cv::Rect(frameBGR.cols / 2, 0, frameBGR.cols / 2, frameBGR.rows));
             // Display images
-            showImage("left RAW", left_raw, params.res);
-            showImage("right RAW", right_raw, params.res);
+            sl_oc::tools::showImage("left RAW", left_raw, params.res);
+            sl_oc::tools::showImage("right RAW", right_raw, params.res);
             // <---- Extract left and right images from side-by-side
 
             // ----> Apply rectification
             cv::remap(left_raw, left_rect, map_left_x, map_left_y, cv::INTER_LINEAR );
             cv::remap(right_raw, right_rect, map_right_x, map_right_y, cv::INTER_LINEAR );
 
-            showImage("right RECT", right_rect, params.res);
-            showImage("left RECT", left_rect, params.res);
+            sl_oc::tools::showImage("right RECT", right_rect, params.res);
+            sl_oc::tools::showImage("left RECT", left_rect, params.res);
             // <---- Apply rectification
         }
 
@@ -135,26 +133,3 @@ int main(int argc, char** argv) {
     return EXIT_SUCCESS;
 }
 
-// Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res )
-{
-    cv::Mat resized;
-    switch(res)
-    {
-    default:
-    case sl_oc::video::RESOLUTION::VGA:
-        resized = img;
-        break;
-    case sl_oc::video::RESOLUTION::HD720:
-        name += " [Resize factor 0.6]";
-        cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
-        break;
-    case sl_oc::video::RESOLUTION::HD1080:
-    case sl_oc::video::RESOLUTION::HD2K:
-        name += " [Resize factor 0.4]";
-        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
-        break;
-    }
-
-    cv::imshow( name, resized );
-}

@@ -28,9 +28,7 @@
 #include <thread>
 #include <mutex>
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
 // <---- Includes
 
 // ----> Functions
@@ -203,7 +201,7 @@ int main(int argc, char *argv[])
             // Resize Image for display
             cv::resize(frameBGR, frameBGRDisplay, display_resolution);
             // Display image
-            cv::imshow( "Stream RGB", frameDisplay );
+            cv::imshow( "Stream RGB", frameDisplay);
         }
         // <---- Display frame with info
 

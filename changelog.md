@@ -1,5 +1,12 @@
 # Changelog
 
+v0.5.0 - 2021 09 10
+-------------------
+* Add example to extract disparity map, depth map and point cloud using OpenCV and T-API (OpenCL) 
+  `cv::StereoSGBM` algorithm based on the paper "Heiko Hirschmuller. Stereo processing by semiglobal matching and mutual information. Pattern Analysis and Machine Intelligence, IEEE Transactions on, 30(2):328–341, 2008."
+* Add example to tune disparity map creation
+* Add tool to load/save StereoSGBM depth matching parameters
+
 v0.4.1 - 2021 05 28
 -------------------
 * Fix udev rules to access the sensors module of the new ZED2i

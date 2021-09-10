@@ -7,6 +7,8 @@ project(${PROJECT_NAME} CXX)
 ############################################################################
 # Flags
 
+cmake_policy(SET CMP0054 NEW)
+
 # if CMAKE_BUILD_TYPE is not specified, take 'Release' as default
 set(${PROJECT_NAME}_CXX_FLAGS "-std=c++14")
 set(CMAKE_CXX_FLAGS "${${PROJECT_NAME}_CXX_FLAGS} -Wall -pedantic -g")
@@ -24,6 +26,8 @@ else()
     set(CMAKE_CXX_FLAGS_RELEASE "-O2 -s -flto") # File size optimization
     message("* Release mode")
 endif()
+
+
 
 ############################################################################
 # Options
@@ -173,6 +177,7 @@ if(BUILD_EXAMPLES)
 
         ##### Depth Example
         find_package(OpenMP)
+
         set(DEPTH_EXAMPLE ${PROJECT_NAME}_depth_example)
         include_directories( ${PROJECT_SOURCE_DIR}/examples/include)
         add_executable(${DEPTH_EXAMPLE} "${PROJECT_SOURCE_DIR}/examples/zed_oc_depth_example.cpp")
@@ -180,12 +185,12 @@ if(BUILD_EXAMPLES)
 
         if(OpenMP_CXX_FOUND)
             include_directories(${OpenMP_CXX_INCLUDE_DIRS})
+            SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
             target_link_libraries(${DEPTH_EXAMPLE}
               OpenMP::OpenMP_CXX
               ${PROJECT_NAME}
               ${OpenCV_LIBS}
             )
-            message("Using OpenMP for Point cloud generation")
         else()
             target_link_libraries(${DEPTH_EXAMPLE}
               ${PROJECT_NAME}

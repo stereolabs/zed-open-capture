@@ -405,7 +405,7 @@ public:
     }
 
     /** Should spaces be added around the equals sign when writing key/value
-        pairs out. When true, the result will be "key = value". When false, 
+        pairs out. When true, the result will be "key = value". When false,
         the result will be "key=value". This value may be changed at any time.
 
         \param a_bSpaces     Add spaces around the equals sign?
@@ -493,9 +493,6 @@ public:
             );
 
     /*-----------------------------------------------------------------------*/
-    /** @}
-        @{ @name Saving INI Data */
-
     /** Save an INI file from memory to disk
 
         @param a_pszFile    Path of the file to be saved. This will be passed
@@ -625,9 +622,6 @@ public:
     }
 
     /*-----------------------------------------------------------------------*/
-    /** @}
-        @{ @name Accessing INI Data */
-
     /** Retrieve all section names. The list is returned as an STL vector of
         names and can be iterated or searched as necessary. Note that the
         sort order of the returned strings is NOT DEFINED. You can sort
@@ -647,8 +641,8 @@ public:
             ) const;
 
     /** Retrieve all unique key names in a section. The sort order of the
-        returned strings is NOT DEFINED. You can sort the names into the load 
-        order if desired. Search this file for ".sort" for an example. Only 
+        returned strings is NOT DEFINED. You can sort the names into the load
+        order if desired. Search this file for ".sort" for an example. Only
         unique key names are returned.
 
         NOTE! This structure contains only pointers to strings. The actual
@@ -669,8 +663,8 @@ public:
             ) const;
 
     /** Retrieve all values for a specific key. This method can be used when
-        multiple keys are both enabled and disabled. Note that the sort order 
-        of the returned strings is NOT DEFINED. You can sort the names into 
+        multiple keys are both enabled and disabled. Note that the sort order
+        of the returned strings is NOT DEFINED. You can sort the names into
         the load order if desired. Search this file for ".sort" for an example.
 
         NOTE! The returned values are pointers to string data stored in memory
@@ -791,7 +785,7 @@ public:
 
         Strings starting with "t", "y", "on" or "1" are returned as logically true.
         Strings starting with "f", "n", "of" or "0" are returned as logically false.
-        For all other values the default is returned. Character comparisons are 
+        For all other values the default is returned. Character comparisons are
         case-insensitive.
 
         @param a_pSection       Section to search
@@ -830,9 +824,9 @@ public:
                             character starting every line).
         @param a_bForceReplace  Should all existing values in a multi-key INI
                             file be replaced with this entry. This option has
-                            no effect if not using multi-key files. The 
+                            no effect if not using multi-key files. The
                             difference between Delete/SetValue and SetValue
-                            with a_bForceReplace = true, is that the load 
+                            with a_bForceReplace = true, is that the load
                             order and comment will be preserved this way.
 
         @return SI_Error    See error definitions
@@ -853,19 +847,19 @@ public:
         when multiple keys are enabled.
 
         @param a_pSection   Section to add or update
-        @param a_pKey       Key to add or update. 
-        @param a_nValue     Value to set. 
-        @param a_pComment   Comment to be associated with the key. See the 
+        @param a_pKey       Key to add or update.
+        @param a_nValue     Value to set.
+        @param a_pComment   Comment to be associated with the key. See the
                             notes on SetValue() for comments.
-        @param a_bUseHex    By default the value will be written to the file 
-                            in decimal format. Set this to true to write it 
+        @param a_bUseHex    By default the value will be written to the file
+                            in decimal format. Set this to true to write it
                             as hexadecimal.
         @param a_bForceReplace  Should all existing values in a multi-key INI
                             file be replaced with this entry. This option has
-                            no effect if not using multi-key files. The 
-                            difference between Delete/SetLongValue and 
-                            SetLongValue with a_bForceReplace = true, is that 
-                            the load order and comment will be preserved this 
+                            no effect if not using multi-key files. The
+                            difference between Delete/SetLongValue and
+                            SetLongValue with a_bForceReplace = true, is that
+                            the load order and comment will be preserved this
                             way.
 
         @return SI_Error    See error definitions
@@ -885,16 +879,16 @@ public:
         when multiple keys are enabled.
 
         @param a_pSection   Section to add or update
-        @param a_pKey       Key to add or update. 
-        @param a_nValue     Value to set. 
-        @param a_pComment   Comment to be associated with the key. See the 
+        @param a_pKey       Key to add or update.
+        @param a_nValue     Value to set.
+        @param a_pComment   Comment to be associated with the key. See the
                             notes on SetValue() for comments.
         @param a_bForceReplace  Should all existing values in a multi-key INI
                             file be replaced with this entry. This option has
-                            no effect if not using multi-key files. The 
-                            difference between Delete/SetDoubleValue and 
-                            SetDoubleValue with a_bForceReplace = true, is that 
-                            the load order and comment will be preserved this 
+                            no effect if not using multi-key files. The
+                            difference between Delete/SetDoubleValue and
+                            SetDoubleValue with a_bForceReplace = true, is that
+                            the load order and comment will be preserved this
                             way.
 
         @return SI_Error    See error definitions
@@ -913,16 +907,16 @@ public:
         when multiple keys are enabled.
 
         @param a_pSection   Section to add or update
-        @param a_pKey       Key to add or update. 
-        @param a_bValue     Value to set. 
-        @param a_pComment   Comment to be associated with the key. See the 
+        @param a_pKey       Key to add or update.
+        @param a_bValue     Value to set.
+        @param a_pComment   Comment to be associated with the key. See the
                             notes on SetValue() for comments.
         @param a_bForceReplace  Should all existing values in a multi-key INI
                             file be replaced with this entry. This option has
-                            no effect if not using multi-key files. The 
-                            difference between Delete/SetBoolValue and 
-                            SetBoolValue with a_bForceReplace = true, is that 
-                            the load order and comment will be preserved this 
+                            no effect if not using multi-key files. The
+                            difference between Delete/SetBoolValue and
+                            SetBoolValue with a_bForceReplace = true, is that
+                            the load order and comment will be preserved this
                             way.
 
         @return SI_Error    See error definitions
@@ -989,9 +983,6 @@ public:
             );
 
     /*-----------------------------------------------------------------------*/
-    /** @}
-        @{ @name Converter */
-
     /** Return a conversion object to convert text to the same encoding
         as is used by the Save(), SaveFile() and SaveString() functions.
         Use this to prepare the strings that you wish to append or prepend
@@ -1002,7 +993,6 @@ public:
     }
 
     /*-----------------------------------------------------------------------*/
-    /** @} */
 
 private:
     // copying is not permitted
@@ -1043,9 +1033,9 @@ private:
                             comment character starting every line).
         @param a_bForceReplace  Should all existing values in a multi-key INI
                             file be replaced with this entry. This option has
-                            no effect if not using multi-key files. The 
+                            no effect if not using multi-key files. The
                             difference between Delete/AddEntry and AddEntry
-                            with a_bForceReplace = true, is that the load 
+                            with a_bForceReplace = true, is that the load
                             order and comment will be preserved this way.
         @param a_bCopyStrings   Should copies of the strings be made or not.
                             If false then the pointers will be used as is.
@@ -2688,9 +2678,9 @@ public:
 //#include "ConvertUTF.hpp"
 /*
  * Copyright 2001-2004 Unicode, Inc.
- * 
+ *
  * Disclaimer
- * 
+ *
  * This source code is provided as is by Unicode, Inc. No claims are
  * made as to fitness for any particular purpose. No warranties of any
  * kind are expressed or implied. The recipient agrees to determine
@@ -2698,9 +2688,9 @@ public:
  * purchased on magnetic or optical media from Unicode, Inc., the
  * sole remedy for any claim will be exchange of defective media
  * within 90 days of receipt.
- * 
+ *
  * Limitations on Rights to Redistribute This Code
- * 
+ *
  * Unicode, Inc. hereby grants the right to freely use the information
  * supplied in this file in the creation of products supporting the
  * Unicode Standard, and to make copies of this file in any form
@@ -2721,7 +2711,7 @@ public:
 
     Each routine converts the text between *sourceStart and sourceEnd,
     putting the result into the buffer between *targetStart and
-    targetEnd. Note: the end pointers are *after* the last item: e.g. 
+    targetEnd. Note: the end pointers are *after* the last item: e.g.
  *(sourceEnd - 1) is the last item.
 
     The return result indicates whether the conversion was successful,
@@ -2759,7 +2749,7 @@ public:
         sequence is malformed.  When "sourceIllegal" is returned, the source
         value will point to the illegal value that caused the problem. E.g.,
         in UTF-8 when a sequence is malformed, it points to the start of the
-        malformed sequence.  
+        malformed sequence.
 
     Author: Mark E. Davis, 1994.
     Rev History: Rick McGowan, fixes & updates May 2001.
@@ -3732,7 +3722,7 @@ public:
      *                      terminating NULL character.
      * @param a_pOutputData Pointer to the buffer to receive the converted
      *                      string.
-     * @param a_pOutputDataSize Size of the output buffer in char.
+     * @param a_uOutputDataSize Size of the output buffer in char.
      * @return              true if all of the input data, including the
      *                      terminating NULL character was successfully
      *                      converted.
@@ -3917,7 +3907,7 @@ public:
      *                      terminating NULL character.
      * @param a_pOutputData Pointer to the buffer to receive the converted
      *                      string.
-     * @param a_pOutputDataSize Size of the output buffer in char.
+     * @param a_uOutputDataSize Size of the output buffer in char.
      * @return              true if all of the input data, including the
      *                      terminating NULL character was successfully
      *                      converted.

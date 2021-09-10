@@ -528,7 +528,7 @@ private:
 
 /** \example zed_oc_video_example.cpp
  * Example of how to use the VideoCapture class to get raw video frames and show the stream on screen using the
- * OpenCV library
+ * OpenCV library.
  */
 
 /** \example zed_oc_control_example.cpp
@@ -538,7 +538,18 @@ private:
 
 /** \example zed_oc_rectify_example.cpp
  * Example of how to use the VideoCapture class to get and rectify raw video frames downloading
- * calibration parameters from Stereolabs servers
+ * calibration parameters from Stereolabs servers.
+ */
+
+/** \example zed_oc_depth_example.cpp
+ * Example of how to use the VideoCapture class to get and rectify raw video frames downloading
+ * calibration parameters from Stereolabs servers and then use OpenCV and T-API to extract the
+ * disparity map, the depth map, and finally generate the RGB point cloud.
+ */
+
+/** \example zed_oc_tune_stereo_sgbm.cpp
+ * Example of how to use the VideoCapture class and OpenCV GUI controls to tune the depth
+ * extraction process.
  */
 
 #endif // VIDEOCAPTURE_HPP

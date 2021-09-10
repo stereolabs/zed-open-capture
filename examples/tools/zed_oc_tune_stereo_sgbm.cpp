@@ -33,6 +33,7 @@
 #include "calibration.hpp"
 #include "stopwatch.hpp"
 #include "stereo.hpp"
+#include "ocv_display.hpp"
 // <---- Includes
 
 // ----> MACROS
@@ -55,9 +56,6 @@ bool params_initialized=false;
 // <---- Global variables
 
 // ----> Global functions
-// Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res, bool change_name=true );
-
 void applyStereoMatching();
 
 void on_trackbar_block_size( int newBlockSize, void* );
@@ -145,8 +143,8 @@ int main(int argc, char** argv) {
             cv::remap(left_raw, left_rect, map_left_x, map_left_y, cv::INTER_LINEAR );
             cv::remap(right_raw, right_rect, map_right_x, map_right_y, cv::INTER_LINEAR );
 
-            showImage("Right rect.", right_rect, params.res);
-            showImage("Left rect.", left_rect, params.res);
+            sl_oc::tools::showImage("Right rect.", right_rect, params.res);
+            sl_oc::tools::showImage("Left rect.", left_rect, params.res);
             // <---- Apply rectification
 
             break;
@@ -346,33 +344,10 @@ void applyStereoMatching()
 #ifdef USE_HALF_SIZE_DISPARITY
     cv::resize(left_disp_vis, left_disp_vis, cv::Size(), 2.0, 2.0, cv::INTER_LINEAR_EXACT);
 #endif
-    showImage(preFiltDispWinName, left_disp_vis, params.res, false);
+    sl_oc::tools::showImage(preFiltDispWinName, left_disp_vis, params.res, false);
     // <---- Show disparity
 }
 
-// Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res, bool change_name )
-{
-    cv::Mat resized;
-    switch(res)
-    {
-    default:
-    case sl_oc::video::RESOLUTION::VGA:
-        resized = img;
-        break;
-    case sl_oc::video::RESOLUTION::HD720:
-        if(change_name) name += " [Resize factor 0.6]";
-        cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
-        break;
-    case sl_oc::video::RESOLUTION::HD1080:
-    case sl_oc::video::RESOLUTION::HD2K:
-        if(change_name) name += " [Resize factor 0.4]";
-        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
-        break;
-    }
-
-    cv::imshow( name, resized );
-}
 
 void on_trackbar_block_size( int newBlockSize, void* )
 {
@@ -529,5 +504,3 @@ void on_trackbar_speckleRange(int newSpeckleRange, void* )
     std::cout << "New 'speckleRange' value: " << stereoPar.speckleRange << std::endl;
     applyStereoMatching();
 }
-
-

@@ -1,4 +1,4 @@
-# Doxyfile 1.9.3
+# Doxyfile 1.9.2
 
 # This file describes the settings to be used by the documentation system
 # doxygen (www.doxygen.org) for a project.
@@ -38,7 +38,7 @@ PROJECT_NAME           = "ZED Open Capture"
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = v0.4.1
+PROJECT_NUMBER         = v0.5.0
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -874,6 +874,8 @@ WARN_LOGFILE           =
 INPUT                  = ../../src \
                          ../../include \
                          ../../examples \
+                         ../../examples/include \
+                         ../../examples/tools \
                          . \
                          main_page.md
 
@@ -955,21 +957,25 @@ EXCLUDE_SYMBOLS        =
 # that contain example code fragments that are included (see the \include
 # command).
 
-EXAMPLE_PATH           = ../../examples
+EXAMPLE_PATH           = ../../examples \
+                         ../../examples/include \
+                         ../../examples/tools \
+                         ../../examples/zed_oc_depth_example.cpp \
+                         ../../examples/tools/zed_oc_tune_stereo_sgbm.cpp
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and
 # *.h) to filter out the source-files in the directories. If left blank all
 # files are included.
 
-EXAMPLE_PATTERNS       = *
+EXAMPLE_PATTERNS       =
 
 # If the EXAMPLE_RECURSIVE tag is set to YES then subdirectories will be
 # searched for input files to be used with the \include or \dontinclude commands
 # irrespective of the value of the RECURSIVE tag.
 # The default value is: NO.
 
-EXAMPLE_RECURSIVE      = NO
+EXAMPLE_RECURSIVE      = YES
 
 # The IMAGE_PATH tag can be used to specify one or more files or directories
 # that contain images that are to be included in the documentation (see the
@@ -2273,6 +2279,15 @@ EXTERNAL_PAGES         = YES
 # Configuration options related to the dot tool
 #---------------------------------------------------------------------------
 
+# If the CLASS_DIAGRAMS tag is set to YES, doxygen will generate a class diagram
+# (in HTML and LaTeX) for classes with base or super classes. Setting the tag to
+# NO turns the diagrams off. Note that this option also works with HAVE_DOT
+# disabled, but it is recommended to install and use dot, since it yields more
+# powerful graphs.
+# The default value is: YES.
+
+CLASS_DIAGRAMS         = YES
+
 # You can include diagrams made with dia in doxygen documentation. Doxygen will
 # then run dia to produce the diagram and insert it in the documentation. The
 # DIA_PATH tag allows you to specify the directory where the dia binary resides.
@@ -2329,14 +2344,11 @@ DOT_FONTSIZE           = 10
 
 DOT_FONTPATH           =
 
-# If the CLASS_GRAPH tag is set to YES (or GRAPH) then doxygen will generate a
-# graph for each documented class showing the direct and indirect inheritance
-# relations. In case HAVE_DOT is set as well dot will be used to draw the graph,
-# otherwise the built-in generator will be used. If the CLASS_GRAPH tag is set
-# to TEXT the direct and indirect inheritance relations will be shown as texts /
-# links.
-# Possible values are: NO, YES, TEXT and GRAPH.
+# If the CLASS_GRAPH tag is set to YES then doxygen will generate a graph for
+# each documented class showing the direct and indirect inheritance relations.
+# Setting this tag to YES will force the CLASS_DIAGRAMS tag to NO.
 # The default value is: YES.
+# This tag requires that the tag HAVE_DOT is set to YES.
 
 CLASS_GRAPH            = YES
 

@@ -43,7 +43,8 @@ public:
     /**
      * @brief Set the beginning time of the time measurement.
      */
-    void tic(){
+    void tic()
+    {
         mStartTime = std::chrono::steady_clock::now(); // Set the start time point
     }
 
@@ -51,7 +52,8 @@ public:
      * @brief Calculates the seconds elapsed from the last tic.
      * @returns the seconds elapsed from the last @ref tic with microseconds resolution.
      */
-    double toc(){
+    double toc()
+    {
         auto now = std::chrono::steady_clock::now();
         double elapsed_usec = std::chrono::duration_cast<std::chrono::microseconds>(now - mStartTime).count();
         return elapsed_usec/1e6;

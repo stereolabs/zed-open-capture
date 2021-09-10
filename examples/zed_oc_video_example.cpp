@@ -20,13 +20,12 @@
 
 // ----> Includes
 #include "videocapture.hpp"
+#include "ocv_display.hpp"
 
 #include <iostream>
 #include <iomanip>
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
 // <---- Includes
 
 // #define TEST_FPS 1
@@ -93,7 +92,7 @@ int main(int argc, char *argv[])
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
 
             // Show frame
-            cv::imshow( "Stream RGB", frameBGR );
+            sl_oc::tools::showImage( "Stream RGB", frameBGR, params.res  );
         }
         // <---- If the frame is valid we can display it
 

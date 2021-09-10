@@ -22,7 +22,6 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <omp.h>
 
 #include "videocapture.hpp"
 
@@ -33,19 +32,11 @@
 #include "calibration.hpp"
 #include "stopwatch.hpp"
 #include "stereo.hpp"
+#include "ocv_display.hpp"
 // <---- Includes
 
 #define USE_OCV_TAPI // Comment to use "normal" cv::Mat instead of CV::UMat
 #define USE_HALF_SIZE_DISP // Comment to compute depth matching on full image frames
-
-// ----> Global functions
-/// Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res, std::string info="" );
-#ifdef USE_OCV_TAPI
-/// Rescale the images [cv::UMat] according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::UMat& img, sl_oc::video::RESOLUTION res, std::string info="" );
-#endif
-// <---- Global functions
 
 int main(int argc, char** argv) {
 
@@ -54,7 +45,7 @@ int main(int argc, char** argv) {
     // ----> Set Video parameters
     sl_oc::video::VideoParams params;
     params.res = sl_oc::video::RESOLUTION::HD720;
-    params.fps = sl_oc::video::FPS::FPS_60;
+    params.fps = sl_oc::video::FPS::FPS_30;
     params.verbose = verbose;
     // <---- Set Video parameters
 
@@ -157,15 +148,15 @@ int main(int argc, char** argv) {
     stereoPar.print();
     // <---- Stereo matcher initialization
 
+
     // ----> Point Cloud
-    cv::viz::Viz3d pc_viewer;
     cv::Mat cloudMat;
 
-    pc_viewer = cv::viz::Viz3d( "Point Cloud" );
-
-    //clip(17.014472,17014.472203) focal(559.523504,-315.214938,1610.880333) pos(-1169.916676,-762.722711,-3607.243924) view(0.013426,-0.996622,0.081021) angle(0.523599) winsz(1864,720) winpos(66,109)
-
+#ifdef HAVE_OPENCV_VIZ
+    cv::viz::Viz3d pc_viewer = cv::viz::Viz3d( "Point Cloud" );
+#endif
     // <---- Point Cloud
+
 
     uint64_t last_ts=0; // Used to check new frame arrival
 
@@ -241,15 +232,15 @@ int main(int argc, char** argv) {
             // <---- Stereo matching
 
             // ----> Show frames
-            showImage("Right rect.", right_rect, params.res, remapElabInfo.str());
-            showImage("Left rect.", left_rect, params.res, remapElabInfo.str());
+            sl_oc::tools::showImage("Right rect.", right_rect, params.res,true, remapElabInfo.str());
+            sl_oc::tools::showImage("Left rect.", left_rect, params.res,true, remapElabInfo.str());
             // <---- Show frames
 
             // ----> Show disparity image
             cv::add(left_disp_float,-static_cast<float>(stereoPar.minDisparity-1),left_disp_float); // Minimum disparity offset correction
             cv::multiply(left_disp_float,1.f/stereoPar.numDisparities,left_disp_image,255., CV_8UC1 ); // Normalization and rescaling
             cv::applyColorMap(left_disp_image,left_disp_image,cv::COLORMAP_INFERNO);
-            showImage("Disparity", left_disp_image, params.res, stereoElabInfo.str());
+            sl_oc::tools::showImage("Disparity", left_disp_image, params.res,true, stereoElabInfo.str());
             // <---- Show disparity image
 
             // ----> Extract Depth map
@@ -282,7 +273,6 @@ int main(int argc, char** argv) {
                     buffer[idx].val[2] = depth; // Z
                     buffer[idx].val[0] = (c-cx)*depth/fx; // X
                     buffer[idx].val[1] = (r-cy)*depth/fy; // Y
-                    //printf("r = %d, c= %d, threadId = %d \n", r, c, omp_get_thread_num());
                 }
             }
 
@@ -291,9 +281,10 @@ int main(int argc, char** argv) {
             double pc_elapsed = stereo_clock.toc();
             std::stringstream pcElabInfo;
             pcElabInfo << "Point cloud processing: " << pc_elapsed << " sec - Freq: " << 1./pc_elapsed;
-            std::cout << pcElabInfo.str() << std::endl;
+            //std::cout << pcElabInfo.str() << std::endl;
             // <---- Create Point Cloud
         }
+
 
         // ----> Keyboard handling
         int key = cv::waitKey( 5 );
@@ -301,6 +292,7 @@ int main(int argc, char** argv) {
             break;
         // <---- Keyboard handling
 
+#ifdef HAVE_OPENCV_VIZ
         // ----> Show Point Cloud
         cv::viz::WCloud cloudWidget( cloudMat, left_rect );
         cloudWidget.setRenderingProperty( cv::viz::POINT_SIZE, 1 );
@@ -310,68 +302,10 @@ int main(int argc, char** argv) {
         if(pc_viewer.wasStopped())
             break;
         // <---- Show Point Cloud
+#endif
     }
 
     return EXIT_SUCCESS;
 }
 
-#ifdef USE_OCV_TAPI
-void showImage( std::string name, cv::UMat& img, sl_oc::video::RESOLUTION res, std::string info  )
-{
-    cv::UMat resized;
-    switch(res)
-    {
-    default:
-    case sl_oc::video::RESOLUTION::VGA:
-        resized = img;
-        break;
-    case sl_oc::video::RESOLUTION::HD720:
-        name += " [Resize factor 0.6]";
-        cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
-        break;
-    case sl_oc::video::RESOLUTION::HD1080:
-    case sl_oc::video::RESOLUTION::HD2K:
-        name += " [Resize factor 0.4]";
-        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
-        break;
-    }
 
-    if(!info.empty())
-    {
-        cv::putText( resized, info, cv::Point(20,40),cv::FONT_HERSHEY_SIMPLEX, 0.75,
-                     cv::Scalar(100,100,100), 2);
-    }
-
-    cv::imshow( name, resized );
-}
-#endif
-
-// Rescale the images according to the selected resolution to better display them on screen
-void showImage( std::string name, cv::Mat& img, sl_oc::video::RESOLUTION res, std::string info )
-{
-    cv::Mat resized;
-    switch(res)
-    {
-    default:
-    case sl_oc::video::RESOLUTION::VGA:
-        resized = img;
-        break;
-    case sl_oc::video::RESOLUTION::HD720:
-        name += " [Resize factor 0.6]";
-        cv::resize( img, resized, cv::Size(), 0.6, 0.6 );
-        break;
-    case sl_oc::video::RESOLUTION::HD1080:
-    case sl_oc::video::RESOLUTION::HD2K:
-        name += " [Resize factor 0.4]";
-        cv::resize( img, resized, cv::Size(), 0.4, 0.4 );
-        break;
-    }
-
-    if(!info.empty())
-    {
-        cv::putText( resized, info, cv::Point(20,40),cv::FONT_HERSHEY_SIMPLEX, 0.75,
-                     cv::Scalar(100,100,100), 2);
-    }
-
-    cv::imshow( name, resized );
-}
