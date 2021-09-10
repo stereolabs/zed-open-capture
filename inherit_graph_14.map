@@ -1,3 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$da/d29/structsl__oc_1_1sensors_1_1data_1_1_magnetometer.html" title="Contains the acquired Magnetometer data." alt="" coords="5,5,141,47"/>
+<area shape="rect" id="node1" href="$d5/ddb/classsl__oc_1_1tools_1_1_c_simple_ini_templ_1_1_output_writer.html" title=" " alt="" coords="5,85,223,141"/>
+<area shape="rect" id="node2" href="$d5/dcf/classsl__oc_1_1tools_1_1_c_simple_ini_templ_1_1_file_writer.html" title=" " alt="" coords="271,5,489,61"/>
+<area shape="rect" id="node3" href="$d2/ded/classsl__oc_1_1tools_1_1_c_simple_ini_templ_1_1_stream_writer.html" title=" " alt="" coords="271,85,489,141"/>
+<area shape="rect" id="node4" href="$d3/dd4/classsl__oc_1_1tools_1_1_c_simple_ini_templ_1_1_string_writer.html" title=" " alt="" coords="271,165,489,221"/>
 </map>

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['updatetimestampoffset_535',['updateTimestampOffset',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a2d4db59f9e4aa5b84ec48902985a2bd2',1,'sl_oc::sensors::SensorCapture']]],
-  ['usingspaces_536',['UsingSpaces',['../d5/de5/class_c_simple_ini_templ.html#a92203e0c21f8d71e5d1621a18ee0be50',1,'CSimpleIniTempl']]]
+  ['tic_614',['tic',['../d5/da7/classsl__oc_1_1tools_1_1_stop_watch.html#af62e9a532e48e61c51a980d8e76045a1',1,'sl_oc::tools::StopWatch']]],
+  ['toc_615',['toc',['../d5/da7/classsl__oc_1_1tools_1_1_stop_watch.html#a913ff2996256810c57eabe436665c630',1,'sl_oc::tools::StopWatch']]],
+  ['toggleled_616',['toggleLED',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#af970430296542fc9f3a731bad823e7ce',1,'sl_oc::video::VideoCapture']]]
 ];

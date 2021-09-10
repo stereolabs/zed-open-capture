@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="Picto+STEREOLABS_Black.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ZED Open Capture
-   &#160;<span id="projectnumber">v0.4.1</span>
+   &#160;<span id="projectnumber">v0.5.0</span>
    </div>
    <div id="projectbrief">Low level camera driver for the ZED stereo camera family</div>
   </td>
@@ -65,29 +65,8 @@ $(function() {
 
 <div class="contents">
 &#160;<ul>
-<li>checkFile()
-: <a class="el" href="d2/dfd/calibration_8hpp.html#ac540cb2a043adacd9d228ca16fa59600">calibration.hpp</a>
-</li>
-<li>ConvertUTF16toUTF32()
-: <a class="el" href="d2/dfd/calibration_8hpp.html#aed6b82a676f820ac62410612e6dffa44">calibration.hpp</a>
-</li>
-<li>ConvertUTF16toUTF8()
-: <a class="el" href="d2/dfd/calibration_8hpp.html#aac4f4c7a40bf37b26159fb498faf74b7">calibration.hpp</a>
-</li>
-<li>ConvertUTF32toUTF16()
-: <a class="el" href="d2/dfd/calibration_8hpp.html#a09b6433eaa10eda9bcbcaba175ad20d2">calibration.hpp</a>
-</li>
-<li>ConvertUTF32toUTF8()
-: <a class="el" href="d2/dfd/calibration_8hpp.html#ad1c6ec7ea9caa4e69abbd57ad801f1b3">calibration.hpp</a>
-</li>
-<li>ConvertUTF8toUTF16()
-: <a class="el" href="d2/dfd/calibration_8hpp.html#a741e622980b476dff14e7b04828f662f">calibration.hpp</a>
-</li>
-<li>ConvertUTF8toUTF32()
-: <a class="el" href="d2/dfd/calibration_8hpp.html#a41eac02a22186fe9d0e7f0de369377d7">calibration.hpp</a>
-</li>
-<li>downloadCalibrationFile()
-: <a class="el" href="d2/dfd/calibration_8hpp.html#ae7560db8d17a08640fd06c17dc1e07d4">calibration.hpp</a>
+<li>applyStereoMatching()
+: <a class="el" href="dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a664b6a2f26d55a8a08015f35803a0c09">zed_oc_tune_stereo_sgbm.cpp</a>
 </li>
 <li>getSensorThreadFunc()
 : <a class="el" href="da/d5d/zed__oc__sync__example_8cpp.html#afbc7c8c8f7147191eab6bb5a47862ff4">zed_oc_sync_example.cpp</a>
@@ -98,25 +77,42 @@ $(function() {
 <li>getWallTimestamp()
 : <a class="el" href="db/df8/defines_8hpp.html#abaa6ff2bb60843da4683abd7710ded22">defines.hpp</a>
 </li>
-<li>initCalibration()
-: <a class="el" href="d2/dfd/calibration_8hpp.html#a84803a1974121b776f5069ba36bb8cda">calibration.hpp</a>
-</li>
-<li>isLegalUTF8Sequence()
-: <a class="el" href="d2/dfd/calibration_8hpp.html#ab4dfc94fba9df51495d8ca2f23f641c2">calibration.hpp</a>
-</li>
 <li>main()
-: <a class="el" href="d9/d7c/zed__oc__control__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">zed_oc_control_example.cpp</a>
+: <a class="el" href="dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">zed_oc_tune_stereo_sgbm.cpp</a>
+, <a class="el" href="d9/d7c/zed__oc__control__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">zed_oc_control_example.cpp</a>
+, <a class="el" href="d3/d6f/zed__oc__depth__example_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">zed_oc_depth_example.cpp</a>
 , <a class="el" href="d7/df6/zed__oc__rectify__example_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">zed_oc_rectify_example.cpp</a>
 , <a class="el" href="d7/d28/zed__oc__sensors__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">zed_oc_sensors_example.cpp</a>
 , <a class="el" href="da/d5d/zed__oc__sync__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">zed_oc_sync_example.cpp</a>
 , <a class="el" href="d7/d54/zed__oc__video__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">zed_oc_video_example.cpp</a>
 , <a class="el" href="d3/df8/zed__oc__video__reg__log_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">zed_oc_video_reg_log.cpp</a>
 </li>
-<li>showImage()
-: <a class="el" href="d7/df6/zed__oc__rectify__example_8cpp.html#a5d9ab53d9b3a02b05eaddcaefd2ca057">zed_oc_rectify_example.cpp</a>
+<li>on_trackbar_block_size()
+: <a class="el" href="dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#ac5327d311a15b74d18a9cf6814ef0f3a">zed_oc_tune_stereo_sgbm.cpp</a>
 </li>
-<li>split()
-: <a class="el" href="d2/dfd/calibration_8hpp.html#a7e8c005cbce86b3a6b65bcfb106b2825">calibration.hpp</a>
+<li>on_trackbar_disp12MaxDiff()
+: <a class="el" href="dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#aa842951fdcbe5df120ae322c9cb7e23a">zed_oc_tune_stereo_sgbm.cpp</a>
+</li>
+<li>on_trackbar_min_disparities()
+: <a class="el" href="dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a82517c11e00f0a36850d6fbedf117d3b">zed_oc_tune_stereo_sgbm.cpp</a>
+</li>
+<li>on_trackbar_mode()
+: <a class="el" href="dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a39f135afd34ef49c27c20e9a518fb1d3">zed_oc_tune_stereo_sgbm.cpp</a>
+</li>
+<li>on_trackbar_num_disparities()
+: <a class="el" href="dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a49f4b4f07ab5931c85849bfa65b9a36a">zed_oc_tune_stereo_sgbm.cpp</a>
+</li>
+<li>on_trackbar_preFilterCap()
+: <a class="el" href="dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a884a81315b630ca989af86aa098105f6">zed_oc_tune_stereo_sgbm.cpp</a>
+</li>
+<li>on_trackbar_speckleRange()
+: <a class="el" href="dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a46bbedee465b5c69ece677560f9efc80">zed_oc_tune_stereo_sgbm.cpp</a>
+</li>
+<li>on_trackbar_speckleWindowSize()
+: <a class="el" href="dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#ad97b4f0f662ff3912e80509b39dffede">zed_oc_tune_stereo_sgbm.cpp</a>
+</li>
+<li>on_trackbar_uniquenessRatio()
+: <a class="el" href="dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#ac957cb251c12912a45b8ef1f1b4d5102">zed_oc_tune_stereo_sgbm.cpp</a>
 </li>
 <li>wstr2str()
 : <a class="el" href="da/da5/sensorcapture__def_8hpp.html#a9b634eb903d1afbc226f3415ec162669">sensorcapture_def.hpp</a>

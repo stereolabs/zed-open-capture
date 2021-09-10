@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['_7econfmanager_351',['~ConfManager',['../df/d6d/class_conf_manager.html#a6b9b153b626970bd563d290cdf5181c7',1,'ConfManager']]],
-  ['_7ecsimpleinitempl_352',['~CSimpleIniTempl',['../d5/de5/class_c_simple_ini_templ.html#a8c933adc1d46bb663caeb6f9dee5aa12',1,'CSimpleIniTempl']]],
-  ['_7eoutputwriter_353',['~OutputWriter',['../d7/dee/class_c_simple_ini_templ_1_1_output_writer.html#a16dc43ae7dda48ec652a4f6e6b5ab6f4',1,'CSimpleIniTempl::OutputWriter']]],
-  ['_7esensorcapture_354',['~SensorCapture',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a5356fbb520b6860ebf3e55ce3767f6c0',1,'sl_oc::sensors::SensorCapture']]],
-  ['_7esi_5fconvertw_355',['~SI_ConvertW',['../d8/d1e/class_s_i___convert_w.html#a45248038540a13bed015983234364897',1,'SI_ConvertW']]],
-  ['_7evideocapture_356',['~VideoCapture',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abd56d8396d5c4e578a508be4c0233323',1,'sl_oc::video::VideoCapture']]]
+  ['_7econfmanager_405',['~ConfManager',['../d2/d53/classsl__oc_1_1tools_1_1_conf_manager.html#a3468e7c2c46e72dc3d39b71827dad6fd',1,'sl_oc::tools::ConfManager']]],
+  ['_7ecsimpleinitempl_406',['~CSimpleIniTempl',['../dc/d0b/classsl__oc_1_1tools_1_1_c_simple_ini_templ.html#a9a5646ac0cdff27d200452b39a2ee840',1,'sl_oc::tools::CSimpleIniTempl']]],
+  ['_7eoutputwriter_407',['~OutputWriter',['../d5/ddb/classsl__oc_1_1tools_1_1_c_simple_ini_templ_1_1_output_writer.html#af26a8b051fb4f5d5aa5b997ca6b65fc8',1,'sl_oc::tools::CSimpleIniTempl::OutputWriter']]],
+  ['_7esensorcapture_408',['~SensorCapture',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a5356fbb520b6860ebf3e55ce3767f6c0',1,'sl_oc::sensors::SensorCapture']]],
+  ['_7esi_5fconvertw_409',['~SI_ConvertW',['../d2/d6c/classsl__oc_1_1tools_1_1_s_i___convert_w.html#a40aef8f4f53cdadac1e2bfd9a67d083a',1,'sl_oc::tools::SI_ConvertW']]],
+  ['_7estopwatch_410',['~StopWatch',['../d5/da7/classsl__oc_1_1tools_1_1_stop_watch.html#a510cd453b742d921739a7b54eadc4830',1,'sl_oc::tools::StopWatch']]],
+  ['_7evideocapture_411',['~VideoCapture',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abd56d8396d5c4e578a508be4c0233323',1,'sl_oc::video::VideoCapture']]]
 ];

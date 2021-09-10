@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['norder_599',['nOrder',['../d2/ddd/struct_c_simple_ini_templ_1_1_entry.html#ac08ed1fec5743b35aebfa8635e1bdb5a',1,'CSimpleIniTempl::Entry']]]
+  ['norder_697',['nOrder',['../d1/d55/structsl__oc_1_1tools_1_1_c_simple_ini_templ_1_1_entry.html#a67578aba4c433b54a4e4f8dc0b396931',1,'sl_oc::tools::CSimpleIniTempl::Entry']]],
+  ['numdisparities_698',['numDisparities',['../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a820c8202f76be0c1b331fbc1ad191173',1,'sl_oc::tools::StereoSgbmPar']]]
 ];

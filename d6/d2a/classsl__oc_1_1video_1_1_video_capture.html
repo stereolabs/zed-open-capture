@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../Picto+STEREOLABS_Black.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ZED Open Capture
-   &#160;<span id="projectnumber">v0.4.1</span>
+   &#160;<span id="projectnumber">v0.5.0</span>
    </div>
    <div id="projectbrief">Low level camera driver for the ZED stereo camera family</div>
   </td>
@@ -83,7 +83,7 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9988ab7895d0fe69558eb7450f3ea33d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9988ab7895d0fe69558eb7450f3ea33d">VideoCapture</a> (<a class="el" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html">VideoParams</a> params=<a class="el" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html">VideoParams</a>())</td></tr>
+<tr class="memitem:a9988ab7895d0fe69558eb7450f3ea33d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9988ab7895d0fe69558eb7450f3ea33d">VideoCapture</a> (<a class="el" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html">VideoParams</a> <a class="el" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>=<a class="el" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html">VideoParams</a>())</td></tr>
 <tr class="memdesc:a9988ab7895d0fe69558eb7450f3ea33d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor.  <a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9988ab7895d0fe69558eb7450f3ea33d">More...</a><br /></td></tr>
 <tr class="separator:a9988ab7895d0fe69558eb7450f3ea33d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd56d8396d5c4e578a508be4c0233323"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#abd56d8396d5c4e578a508be4c0233323">~VideoCapture</a> ()</td></tr>
@@ -232,7 +232,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html" title="The VideoCapture class provides image grabbing functions and settings control for all the Stereolabs ...">VideoCapture</a> class provides image grabbing functions and settings control for all the Stereolabs camera models. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#_a12">zed_oc_control_example.cpp</a>, <a class="el" href="../../da/d7d/zed_oc_rectify_example_8cpp-example.html#_a9">zed_oc_rectify_example.cpp</a>, <a class="el" href="../../d1/d14/zed_oc_sync_example_8cpp-example.html#_a16">zed_oc_sync_example.cpp</a>, and <a class="el" href="../../dd/dc0/zed_oc_video_example_8cpp-example.html#_a6">zed_oc_video_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#_a11">zed_oc_control_example.cpp</a>, <a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#_a9">zed_oc_depth_example.cpp</a>, <a class="el" href="../../da/d7d/zed_oc_rectify_example_8cpp-example.html#_a9">zed_oc_rectify_example.cpp</a>, <a class="el" href="../../d1/d14/zed_oc_sync_example_8cpp-example.html#_a17">zed_oc_sync_example.cpp</a>, <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#_a35">zed_oc_tune_stereo_sgbm.cpp</a>, and <a class="el" href="../../dd/dc0/zed_oc_video_example_8cpp-example.html#_a7">zed_oc_video_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/dd4/videocapture_8hpp_source.html#l00064">64</a> of file <a class="el" href="../../d6/dd4/videocapture_8hpp_source.html">videocapture.hpp</a>.</p>
@@ -266,7 +266,7 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l00115">115</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;{</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    memcpy( &amp;mParams, &amp;params, <span class="keyword">sizeof</span>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a2ea4cd892c21be73f3e63eb966433d75">VideoParams</a>) );</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    memcpy( &amp;mParams, &amp;<a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>, <span class="keyword">sizeof</span>(<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a2ea4cd892c21be73f3e63eb966433d75">VideoParams</a>) );</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordflow">if</span>( mParams.<a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a6152f12db5f03c917aa9ca3017cb2246">verbose</a> )</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    {</div>
@@ -296,8 +296,9 @@ Public Member Functions</h2></td></tr>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;}</div>
 <div class="ttc" id="anamespacesl__oc_1_1video_html_a2ea4cd892c21be73f3e63eb966433d75"><div class="ttname"><a href="../../d1/da0/namespacesl__oc_1_1video.html#a2ea4cd892c21be73f3e63eb966433d75">sl_oc::video::VideoParams</a></div><div class="ttdeci">struct sl_oc::video::VideoParams VideoParams</div><div class="ttdoc">The camera configuration parameters.</div></div>
 <div class="ttc" id="astructsl__oc_1_1video_1_1_video_params_html_a6152f12db5f03c917aa9ca3017cb2246"><div class="ttname"><a href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a6152f12db5f03c917aa9ca3017cb2246">sl_oc::video::VideoParams::verbose</a></div><div class="ttdeci">int verbose</div><div class="ttdoc">Verbose mode.</div><div class="ttdef"><b>Definition:</b> <a href="../../df/ded/videocapture__def_8hpp_source.html#l00094">videocapture_def.hpp:94</a></div></div>
+<div class="ttc" id="azed__oc__tune__stereo__sgbm_8cpp_html_a4b496d75beef9d34a7bb1e63ad9b68d0"><div class="ttname"><a href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a></div><div class="ttdeci">sl_oc::video::VideoParams params</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp_source.html#l00044">zed_oc_tune_stereo_sgbm.cpp:44</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a6152f12db5f03c917aa9ca3017cb2246">sl_oc::video::VideoParams::verbose</a>.</p>
+<p class="reference">References <a class="el" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>, and <a class="el" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a6152f12db5f03c917aa9ca3017cb2246">sl_oc::video::VideoParams::verbose</a>.</p>
 
 </div>
 </div>
@@ -369,7 +370,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if log file can be correctly created/closed </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a55">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a57">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01934">1934</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -518,7 +519,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the status of the automatic Exposure and Gain control. </p>
 <dl class="section return"><dt>Returns</dt><dd>the status of the automatic Exposure and Gain control </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a64">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a66">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01706">1706</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -549,7 +550,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the status of the automatic White Balance control. </p>
 <dl class="section return"><dt>Returns</dt><dd>the status of the automatic White Balance control </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a65">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a67">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01659">1659</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -578,7 +579,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the Brightness value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current Brightness value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a58">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a60">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01580">1580</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -605,7 +606,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the Contrast value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current Contrast value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a60">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a62">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01610">1610</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -639,7 +640,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the current Exposure value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a77">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a79">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01862">1862</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -706,11 +707,13 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a13">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../da/d7d/zed_oc_rectify_example_8cpp-example.html#a13">zed_oc_rectify_example.cpp</a>.</dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/dd4/videocapture_8hpp_source.html#l00105">105</a> of file <a class="el" href="../../d6/dd4/videocapture_8hpp_source.html">videocapture.hpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;{width=mWidth;height=mHeight;}</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="../../d7/df6/zed__oc__rectify__example_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d3/d6f/zed__oc__depth__example_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main()</a>.</p>
 
 </div>
 </div>
@@ -738,7 +741,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the current Gain value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a66">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a68">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01820">1820</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -776,7 +779,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the Gamma value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current Gamma value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a63">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a65">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01694">1694</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -803,7 +806,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the Hue value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current Hue value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a61">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a63">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01625">1625</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -840,7 +843,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>To check if a new frame is available it is possible to compare the timestamp of the returned frame with the timestamp of the previous valid frame</dd>
 <dd>
 <a class="el" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html" title="The Frame struct containing the acquired video frames.">Frame</a> received will contains the RAW buffer from the camera, in YUV4:2:2 color format and in side by side mode. Images must then be converted to RGB for proper display and will not be rectified. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../dd/dc0/zed_oc_video_example_8cpp-example.html#a11">zed_oc_video_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a43">zed_oc_depth_example.cpp</a>, <a class="el" href="../../da/d7d/zed_oc_rectify_example_8cpp-example.html#a21">zed_oc_rectify_example.cpp</a>, and <a class="el" href="../../dd/dc0/zed_oc_video_example_8cpp-example.html#a12">zed_oc_video_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l00890">890</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -864,7 +867,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;    <span class="keywordflow">return</span> mLastFrame;</div>
 <div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="../../d7/df6/zed__oc__rectify__example_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d3/d6f/zed__oc__depth__example_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main()</a>.</p>
 
 </div>
 </div>
@@ -967,7 +970,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns true if no errors occurred </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a68">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a70">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01768">1768</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1019,7 +1022,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the Saturation value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current Saturation value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a62">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a64">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01640">1640</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1046,7 +1049,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Retrieve the serial number of the connected camera. </p>
 <dl class="section return"><dt>Returns</dt><dd>the serial number of the connected camera </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../dd/dc0/zed_oc_video_example_8cpp-example.html#a8">zed_oc_video_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a11">zed_oc_depth_example.cpp</a>, <a class="el" href="../../da/d7d/zed_oc_rectify_example_8cpp-example.html#a11">zed_oc_rectify_example.cpp</a>, and <a class="el" href="../../dd/dc0/zed_oc_video_example_8cpp-example.html#a9">zed_oc_video_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l00548">548</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1120,7 +1123,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the Sharpness value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current Sharpness value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a59">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a61">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01595">1595</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1147,7 +1150,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the White Balance value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the current White Balance value </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a67">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a69">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01645">1645</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1181,7 +1184,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns true if the camera is correctly opened </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../dd/dc0/zed_oc_video_example_8cpp-example.html#a7">zed_oc_video_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a10">zed_oc_depth_example.cpp</a>, <a class="el" href="../../da/d7d/zed_oc_rectify_example_8cpp-example.html#a10">zed_oc_rectify_example.cpp</a>, and <a class="el" href="../../dd/dc0/zed_oc_video_example_8cpp-example.html#a8">zed_oc_video_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l00276">276</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1262,7 +1265,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the automatic Exposure and Gain control value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a90">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a92">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01713">1713</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1291,7 +1294,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a56">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a58">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l02133">2133</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1324,7 +1327,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the automatic White Balance control value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a91">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a93">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01669">1669</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1355,7 +1358,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the Brightness value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a84">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a86">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01575">1575</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1383,7 +1386,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the Contrast value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a86">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a88">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01605">1605</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1411,7 +1414,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the Gamma value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a89">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a91">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01686">1686</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1442,7 +1445,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the Hue value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a87">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a89">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01620">1620</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1478,7 +1481,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns true if the ROI has been correctly reset </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a92">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a94">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01763">1763</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1507,7 +1510,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the Saturation value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a88">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a90">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01635">1635</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1535,7 +1538,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the Sharpness value to default value. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a85">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a87">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01590">1590</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1668,7 +1671,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a80">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a82">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01698">1698</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1706,7 +1709,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a79">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a81">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01664">1664</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1741,7 +1744,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a69">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a71">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01570">1570</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1819,7 +1822,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a70">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a72">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01600">1600</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1863,7 +1866,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a78">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a80">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01836">1836</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1931,7 +1934,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a76">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a78">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01798">1798</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -1983,7 +1986,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a75">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a77">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01674">1674</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -2023,7 +2026,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a71">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a73">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01615">1615</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -2240,7 +2243,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a72">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a74">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01630">1630</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -2273,7 +2276,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a74">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a76">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01585">1585</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -2306,7 +2309,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a73">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a75">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01650">1650</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -2347,7 +2350,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns a negative value if an error occurred </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a57">zed_oc_control_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a59">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01430">1430</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>

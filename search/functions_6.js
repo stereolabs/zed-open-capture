@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['initcalibration_463',['initCalibration',['../d2/dfd/calibration_8hpp.html#a84803a1974121b776f5069ba36bb8cda',1,'calibration.hpp']]],
-  ['initializesensors_464',['initializeSensors',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a417ef2121978cba6426519490024f406',1,'sl_oc::sensors::SensorCapture']]],
-  ['initializevideo_465',['initializeVideo',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e',1,'sl_oc::video::VideoCapture']]],
-  ['isempty_466',['IsEmpty',['../d5/de5/class_c_simple_ini_templ.html#a54bbe9727db17b368a0a75abd5e52d1c',1,'CSimpleIniTempl']]],
-  ['islegalutf8sequence_467',['isLegalUTF8Sequence',['../d2/dfd/calibration_8hpp.html#ab4dfc94fba9df51495d8ca2f23f641c2',1,'calibration.hpp']]],
-  ['ismultikey_468',['IsMultiKey',['../d5/de5/class_c_simple_ini_templ.html#a494b30fbdda5e78afdb25451743df935',1,'CSimpleIniTempl']]],
-  ['ismultiline_469',['IsMultiLine',['../d5/de5/class_c_simple_ini_templ.html#afadd3818363ec7e66ca369ef486ec979',1,'CSimpleIniTempl']]],
-  ['isopened_470',['isOpened',['../df/d6d/class_conf_manager.html#af8604325dd41f14548cee65ba1774048',1,'ConfManager']]],
-  ['isunicode_471',['IsUnicode',['../d5/de5/class_c_simple_ini_templ.html#a40b4ee04251bd343ada5c4a4c508cd43',1,'CSimpleIniTempl']]]
+  ['initcalibration_527',['initCalibration',['../d2/d69/namespacesl__oc_1_1tools.html#a080f90de48a271e995bd4934fc9dc490',1,'sl_oc::tools']]],
+  ['initializesensors_528',['initializeSensors',['../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a417ef2121978cba6426519490024f406',1,'sl_oc::sensors::SensorCapture']]],
+  ['initializevideo_529',['initializeVideo',['../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e',1,'sl_oc::video::VideoCapture']]],
+  ['isempty_530',['IsEmpty',['../dc/d0b/classsl__oc_1_1tools_1_1_c_simple_ini_templ.html#a07177ed6aa10d6db56e5fdaf7882f940',1,'sl_oc::tools::CSimpleIniTempl']]],
+  ['islegalutf8sequence_531',['isLegalUTF8Sequence',['../d2/d69/namespacesl__oc_1_1tools.html#acef2a34205d0a61d44338b8e7b89b1c8',1,'sl_oc::tools']]],
+  ['ismultikey_532',['IsMultiKey',['../dc/d0b/classsl__oc_1_1tools_1_1_c_simple_ini_templ.html#af2492c7ec1bda909e4990c5bfeffeed8',1,'sl_oc::tools::CSimpleIniTempl']]],
+  ['ismultiline_533',['IsMultiLine',['../dc/d0b/classsl__oc_1_1tools_1_1_c_simple_ini_templ.html#a5e0f080f3399308da4a060adbdf601ce',1,'sl_oc::tools::CSimpleIniTempl']]],
+  ['isopened_534',['isOpened',['../d2/d53/classsl__oc_1_1tools_1_1_conf_manager.html#aa4d158e9b127c31a4dea3a9e45a500bf',1,'sl_oc::tools::ConfManager']]],
+  ['isunicode_535',['IsUnicode',['../dc/d0b/classsl__oc_1_1tools_1_1_c_simple_ini_templ.html#ad38534a2b3ff37fbf8d7a40482e86655',1,'sl_oc::tools::CSimpleIniTempl']]]
 ];

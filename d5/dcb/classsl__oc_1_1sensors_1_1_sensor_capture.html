@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../Picto+STEREOLABS_Black.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ZED Open Capture
-   &#160;<span id="projectnumber">v0.4.1</span>
+   &#160;<span id="projectnumber">v0.5.0</span>
    </div>
    <div id="projectbrief">Low level camera driver for the ZED stereo camera family</div>
   </td>
@@ -453,7 +453,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns a reference to the last received data. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../df/d23/zed_oc_sensors_example_8cpp-example.html#a8">zed_oc_sensors_example.cpp</a>, and <a class="el" href="../../d1/d14/zed_oc_sync_example_8cpp-example.html#a27">zed_oc_sync_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../df/d23/zed_oc_sensors_example_8cpp-example.html#a8">zed_oc_sensors_example.cpp</a>, and <a class="el" href="../../d1/d14/zed_oc_sync_example_8cpp-example.html#a30">zed_oc_sync_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00784">784</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
@@ -700,7 +700,7 @@ Static Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if successful</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>After the reset a new <a class="el" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html">SensorCapture</a> connection is required </dd>
 <dd>
-The Sensors Module reset automatically performs a reset of the Video Module, so a new VideoCapture connection is required </dd></dl>
+The Sensors Module reset automatically performs a reset of the Video Module, so a new <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html">video::VideoCapture</a> connection is required </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00673">673</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;{</div>
@@ -785,10 +785,12 @@ The Sensors Module reset automatically performs a reset of the Video Module, so 
 <p>Perform a reset of the video module without resetting the sensor module. To be called in case the Video module stops to work correctly. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">serial_number</td><td>The serial number of the device to be reset (0 to reset the first available) </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>true if successful</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>After the reset a new <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html">video::VideoCapture</a> connection is required </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html#l00725">725</a> of file <a class="el" href="../../d0/d67/sensorcapture_8cpp_source.html">sensorcapture.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;{</div>

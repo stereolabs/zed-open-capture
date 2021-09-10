@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['videocapture_2ecpp_397',['videocapture.cpp',['../d6/d19/videocapture_8cpp.html',1,'']]],
-  ['videocapture_2ehpp_398',['videocapture.hpp',['../d6/dd4/videocapture_8hpp.html',1,'']]],
-  ['videocapture_5fdef_2ehpp_399',['videocapture_def.hpp',['../df/ded/videocapture__def_8hpp.html',1,'']]]
+  ['sensorcapture_2ecpp_453',['sensorcapture.cpp',['../d0/d67/sensorcapture_8cpp.html',1,'']]],
+  ['sensorcapture_2ehpp_454',['sensorcapture.hpp',['../d4/d21/sensorcapture_8hpp.html',1,'']]],
+  ['sensorcapture_5fdef_2ehpp_455',['sensorcapture_def.hpp',['../da/da5/sensorcapture__def_8hpp.html',1,'']]],
+  ['stereo_2ehpp_456',['stereo.hpp',['../d0/d24/stereo_8hpp.html',1,'']]],
+  ['stopwatch_2ehpp_457',['stopwatch.hpp',['../dd/d41/stopwatch_8hpp.html',1,'']]]
 ];

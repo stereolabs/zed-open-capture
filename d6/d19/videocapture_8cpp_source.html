@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../Picto+STEREOLABS_Black.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ZED Open Capture
-   &#160;<span id="projectnumber">v0.4.1</span>
+   &#160;<span id="projectnumber">v0.5.0</span>
    </div>
    <div id="projectbrief">Low level camera driver for the ZED stereo camera family</div>
   </td>
@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="../../d6/d19/videocapture_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2020, STEREOLABS.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2021, STEREOLABS.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">// All rights reserved.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">//</span></div>
@@ -184,9 +184,9 @@ $(function() {
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
 <div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="../../d1/da0/namespacesl__oc_1_1video.html">  113</a></span>&#160;<span class="keyword">namespace </span>video {</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9988ab7895d0fe69558eb7450f3ea33d">  115</a></span>&#160;<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9988ab7895d0fe69558eb7450f3ea33d">VideoCapture::VideoCapture</a>(<a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html">VideoParams</a> params)</div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9988ab7895d0fe69558eb7450f3ea33d">  115</a></span>&#160;<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9988ab7895d0fe69558eb7450f3ea33d">VideoCapture::VideoCapture</a>(<a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html">VideoParams</a> <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>)</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;{</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    memcpy( &amp;mParams, &amp;params, <span class="keyword">sizeof</span>(<a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html">VideoParams</a>) );</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    memcpy( &amp;mParams, &amp;<a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>, <span class="keyword">sizeof</span>(<a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html">VideoParams</a>) );</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordflow">if</span>( mParams.<a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a6152f12db5f03c917aa9ca3017cb2246">verbose</a> )</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    {</div>
@@ -2305,6 +2305,7 @@ $(function() {
 <div class="ttc" id="astructsl__oc_1_1video_1_1_video_params_html_a26ec82468284b8311039e7075e5e7d5e"><div class="ttname"><a href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a26ec82468284b8311039e7075e5e7d5e">sl_oc::video::VideoParams::fps</a></div><div class="ttdeci">FPS fps</div><div class="ttdoc">Frames per second.</div><div class="ttdef"><b>Definition:</b> <a href="../../df/ded/videocapture__def_8hpp_source.html#l00093">videocapture_def.hpp:93</a></div></div>
 <div class="ttc" id="astructsl__oc_1_1video_1_1_video_params_html_a6152f12db5f03c917aa9ca3017cb2246"><div class="ttname"><a href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a6152f12db5f03c917aa9ca3017cb2246">sl_oc::video::VideoParams::verbose</a></div><div class="ttdeci">int verbose</div><div class="ttdoc">Verbose mode.</div><div class="ttdef"><b>Definition:</b> <a href="../../df/ded/videocapture__def_8hpp_source.html#l00094">videocapture_def.hpp:94</a></div></div>
 <div class="ttc" id="avideocapture_8hpp_html"><div class="ttname"><a href="../../d6/dd4/videocapture_8hpp.html">videocapture.hpp</a></div></div>
+<div class="ttc" id="azed__oc__tune__stereo__sgbm_8cpp_html_a4b496d75beef9d34a7bb1e63ad9b68d0"><div class="ttname"><a href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a></div><div class="ttdeci">sl_oc::video::VideoParams params</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp_source.html#l00044">zed_oc_tune_stereo_sgbm.cpp:44</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
