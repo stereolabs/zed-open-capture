@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 2020, STEREOLABS.
+// Copyright (c) 2021, STEREOLABS.
 //
 // All rights reserved.
 //
@@ -208,7 +208,7 @@ public:
      * \return true if successful
      *
      * \note After the reset a new \ref SensorCapture connection is required
-     * \note The Sensors Module reset automatically performs a reset of the Video Module, so a new \ref VideoCapture
+     * \note The Sensors Module reset automatically performs a reset of the Video Module, so a new \ref video::VideoCapture
      *  connection is required
      */
     static bool resetSensorModule(int serial_number=0);
@@ -217,10 +217,10 @@ public:
      * \brief Perform a reset of the video module without resetting the sensor module. To be called in case the Video
      * module stops to work correctly.
      *
-     * \param \param serial_number The serial number of the device to be reset (0 to reset the first available)
+     * \param serial_number The serial number of the device to be reset (0 to reset the first available)
      * \return true if successful
      *
-     * \note After the reset a new \ref VideoCapture connection is required
+     * \note After the reset a new \ref video::VideoCapture connection is required
      */
     static bool resetVideoModule(int serial_number=0);
 

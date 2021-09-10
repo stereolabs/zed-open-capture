@@ -7,6 +7,8 @@ project(${PROJECT_NAME} CXX)
 ############################################################################
 # Flags
 
+cmake_policy(SET CMP0054 NEW)
+
 # if CMAKE_BUILD_TYPE is not specified, take 'Release' as default
 set(${PROJECT_NAME}_CXX_FLAGS "-std=c++14")
 set(CMAKE_CXX_FLAGS "${${PROJECT_NAME}_CXX_FLAGS} -Wall -pedantic -g")
@@ -24,6 +26,8 @@ else()
     set(CMAKE_CXX_FLAGS_RELEASE "-O2 -s -flto") # File size optimization
     message("* Release mode")
 endif()
+
+
 
 ############################################################################
 # Options
@@ -135,41 +139,80 @@ if(BUILD_EXAMPLES)
         include_directories(${OpenCV_INCLUDE_DIRS})
 
         ##### Video Example
-        add_executable(${PROJECT_NAME}_video_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_video_example.cpp")
-        set_target_properties(${PROJECT_NAME}_video_example PROPERTIES PREFIX "")
-        target_link_libraries(${PROJECT_NAME}_video_example
+        set(VIDEO_EXAMPLE ${PROJECT_NAME}_video_example)
+        add_executable(${VIDEO_EXAMPLE} "${PROJECT_SOURCE_DIR}/examples/zed_oc_video_example.cpp")
+        set_target_properties(${VIDEO_EXAMPLE} PROPERTIES PREFIX "")
+        target_link_libraries(${VIDEO_EXAMPLE}
           ${PROJECT_NAME}
           ${OpenCV_LIBS}
         )
-        install(TARGETS ${PROJECT_NAME}_video_example
+        install(TARGETS ${VIDEO_EXAMPLE}
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
 
         ##### Control Example
-        add_executable(${PROJECT_NAME}_control_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_control_example.cpp")
-        set_target_properties(${PROJECT_NAME}_control_example PROPERTIES PREFIX "")
-        target_link_libraries(${PROJECT_NAME}_control_example
+        set(CONTROL_EXAMPLE ${PROJECT_NAME}_control_example)
+        add_executable(${CONTROL_EXAMPLE} "${PROJECT_SOURCE_DIR}/examples/zed_oc_control_example.cpp")
+        set_target_properties(${CONTROL_EXAMPLE} PROPERTIES PREFIX "")
+        target_link_libraries(${CONTROL_EXAMPLE}
           ${PROJECT_NAME}
           ${OpenCV_LIBS}
         )
-        install(TARGETS ${PROJECT_NAME}_control_example
+        install(TARGETS ${CONTROL_EXAMPLE}
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
 
         ##### Rectify Example
+        set(RECTIFY_EXAMPLE ${PROJECT_NAME}_rectify_example)
         include_directories( ${PROJECT_SOURCE_DIR}/examples/include)
-        add_executable(${PROJECT_NAME}_rectify_example "${PROJECT_SOURCE_DIR}/examples/zed_oc_rectify_example.cpp")
-        set_target_properties(${PROJECT_NAME}_rectify_example PROPERTIES PREFIX "")
-        target_link_libraries(${PROJECT_NAME}_rectify_example
+        add_executable(${RECTIFY_EXAMPLE} "${PROJECT_SOURCE_DIR}/examples/zed_oc_rectify_example.cpp")
+        set_target_properties(${RECTIFY_EXAMPLE} PROPERTIES PREFIX "")
+        target_link_libraries(${RECTIFY_EXAMPLE}
           ${PROJECT_NAME}
           ${OpenCV_LIBS}
         )
-        install(TARGETS ${PROJECT_NAME}_rectify_example
+        install(TARGETS ${RECTIFY_EXAMPLE}
+            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+        )
+
+        ##### Depth Example
+        find_package(OpenMP)
+
+        set(DEPTH_EXAMPLE ${PROJECT_NAME}_depth_example)
+        include_directories( ${PROJECT_SOURCE_DIR}/examples/include)
+        add_executable(${DEPTH_EXAMPLE} "${PROJECT_SOURCE_DIR}/examples/zed_oc_depth_example.cpp")
+        set_target_properties(${DEPTH_EXAMPLE} PROPERTIES PREFIX "")
+
+        if(OpenMP_CXX_FOUND)
+            include_directories(${OpenMP_CXX_INCLUDE_DIRS})
+            SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+            target_link_libraries(${DEPTH_EXAMPLE}
+              OpenMP::OpenMP_CXX
+              ${PROJECT_NAME}
+              ${OpenCV_LIBS}
+            )
+        else()
+            target_link_libraries(${DEPTH_EXAMPLE}
+              ${PROJECT_NAME}
+              ${OpenCV_LIBS}
+            )
+        endif()
+
+        ##### Depth Tune Stereo
+        set(STEREO_TUNE_APP ${PROJECT_NAME}_depth_tune_stereo)
+        include_directories( ${PROJECT_SOURCE_DIR}/examples/include)
+        add_executable(${STEREO_TUNE_APP} "${PROJECT_SOURCE_DIR}/examples/tools/zed_oc_tune_stereo_sgbm.cpp")
+        set_target_properties(${STEREO_TUNE_APP} PROPERTIES PREFIX "")
+        target_link_libraries(${STEREO_TUNE_APP}
+          ${PROJECT_NAME}
+          ${OpenCV_LIBS}
+        )
+        install(TARGETS ${STEREO_TUNE_APP}
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
 
         if(DEBUG_CAM_REG)
-            ##### Video with AEG/AGC reisters log
+            ##### Video with AEG/AGC registers log
             add_executable(${PROJECT_NAME}_video_reg_log "${PROJECT_SOURCE_DIR}/examples/zed_oc_video_reg_log.cpp")
             set_target_properties(${PROJECT_NAME}_video_reg_log PROPERTIES PREFIX "")
             target_link_libraries(${PROJECT_NAME}_video_reg_log

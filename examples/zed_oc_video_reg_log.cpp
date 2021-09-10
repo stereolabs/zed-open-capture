@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 2020, STEREOLABS.
+// Copyright (c) 2021, STEREOLABS.
 //
 // All rights reserved.
 //
@@ -24,9 +24,9 @@
 #include <iostream>
 #include <iomanip>
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
+
+#include "ocv_display.hpp"
 // <---- Includes
 
 // #define TEST_FPS 1
@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 
             f_count++;
             // Show frame
-            cv::imshow( "Stream RGB", frameBGR );
+            showImage( "Stream RGB", frameBGR, params.res );
         }
         else
         {
