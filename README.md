@@ -76,7 +76,7 @@ The open-source library provides methods to access raw video frames, calibration
 
 * Install OpenCV to build the examples (optional)
 
-    `$ sudo apt install opencv-dev`
+    `$ sudo apt install opencv-dev libopencv-viz-dev`
 
 ### Clone the repository
 
