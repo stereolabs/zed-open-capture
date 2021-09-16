@@ -27,7 +27,18 @@ else()
     message("* Release mode")
 endif()
 
+# Allows to start application by double clicking the icon on Ubuntu
+set ( CMAKE_CXX_FLAGS "-no-pie" )
 
+# CPU information
+message("Processor: ${CMAKE_SYSTEM_PROCESSOR}")
+
+# Raspberry Pi 4
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
+  message("* Optimizing for ${CMAKE_SYSTEM_PROCESSOR}")
+  add_compile_options(-mtune=cortex-a72 -mcpu=cortex-a72)
+  add_definitions(-DEMBEDDED_ARM)
+endif()
 
 ############################################################################
 # Options
@@ -142,6 +153,7 @@ if(BUILD_EXAMPLES)
         set(VIDEO_EXAMPLE ${PROJECT_NAME}_video_example)
         add_executable(${VIDEO_EXAMPLE} "${PROJECT_SOURCE_DIR}/examples/zed_oc_video_example.cpp")
         set_target_properties(${VIDEO_EXAMPLE} PROPERTIES PREFIX "")
+        set_property(TARGET ${VIDEO_EXAMPLE} PROPERTY POSITION_INDEPENDENT_CODE ON)
         target_link_libraries(${VIDEO_EXAMPLE}
           ${PROJECT_NAME}
           ${OpenCV_LIBS}

@@ -50,6 +50,21 @@ The open-source library provides methods to access raw video frames, calibration
 
 **Note:** While in the ZED SDK all output data is calibrated and compensated, here the extracted raw data is not corrected by the camera and sensor calibration parameters. You can retrieve camera and sensor calibration data using the [ZED SDK](https://www.stereolabs.com/docs/video/camera-calibration/) to correct your camera data [see `zed_open_capture_rectify_example` example].
 
+## Known issues
+
+### OpenGL version
+On some embedded devices, like Raspberry pi 4, the depth extraction example can crash with the following error:
+
+`vtkShaderProgram.cxx:438    ERR| vtkShaderProgram (0x23a611c0): 0:1(10): error: GLSL 1.50 is not supported. Supported versions are: 1.10, 1.20, 1.00 ES, and 3.00 ES`
+
+to correctly execute the example application it is necessary to change the default OpenGL version:
+
+```
+export MESA_GL_VERSION_OVERRIDE=3.2
+```
+
+you can permanently add this configuration by adding the above command as last line of the `~/.bashrc` file.
+
 ## Build
 
 ### Prerequisites

@@ -108,6 +108,11 @@ bool applyAECAGCrectRight=false;
 // The main function
 int main(int argc, char *argv[])
 {
+    // ----> Silence unused warning
+    (void)argc;
+    (void)argv;
+    // <---- Silence unused warning
+
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
     // ----> Set Video parameters

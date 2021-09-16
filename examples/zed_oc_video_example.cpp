@@ -33,6 +33,11 @@
 // The main function
 int main(int argc, char *argv[])
 {
+    // ----> Silence unused warning
+    (void)argc;
+    (void)argv;
+    // <---- Silence unused warning
+
     // ----> Create Video Capture
     sl_oc::video::VideoParams params;
     params.res = sl_oc::video::RESOLUTION::HD720;

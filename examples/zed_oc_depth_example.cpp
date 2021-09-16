@@ -28,6 +28,13 @@
 // OpenCV includes
 #include <opencv2/opencv.hpp>
 
+//#undef HAVE_OPENCV_VIZ // Uncomment if cannot use Viz3D for point cloud rendering
+
+#ifdef HAVE_OPENCV_VIZ
+#include <opencv2/viz.hpp>
+#include <opencv2/viz/viz3d.hpp>
+#endif
+
 // Sample includes
 #include "calibration.hpp"
 #include "stopwatch.hpp"
@@ -38,13 +45,22 @@
 #define USE_OCV_TAPI // Comment to use "normal" cv::Mat instead of CV::UMat
 #define USE_HALF_SIZE_DISP // Comment to compute depth matching on full image frames
 
-int main(int argc, char** argv) {
+int main(int argc, char *argv[])
+{
+    // ----> Silence unused warning
+    (void)argc;
+    (void)argv;
+    // <---- Silence unused warning
 
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
     // ----> Set Video parameters
     sl_oc::video::VideoParams params;
+#ifdef EMBEDDED_ARM
+    params.res = sl_oc::video::RESOLUTION::VGA;
+#else
     params.res = sl_oc::video::RESOLUTION::HD720;
+#endif
     params.fps = sl_oc::video::FPS::FPS_30;
     params.verbose = verbose;
     // <---- Set Video parameters

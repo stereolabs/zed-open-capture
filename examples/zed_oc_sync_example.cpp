@@ -49,6 +49,11 @@ uint64_t mcu_sync_ts=0;
 // The main function
 int main(int argc, char *argv[])
 {
+    // ----> Silence unused warning
+    (void)argc;
+    (void)argv;
+    // <---- Silence unused warning
+
     //sl_oc::sensors::SensorCapture::resetSensorModule();
     //sl_oc::sensors::SensorCapture::resetVideoModule();
 

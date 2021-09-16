@@ -69,7 +69,12 @@ void on_trackbar_speckleWindowSize(int newSpeckleWindowSize, void* );
 void on_trackbar_speckleRange(int newSpeckleRange, void* );
 // <---- Global functions
 
-int main(int argc, char** argv) {
+int main(int argc, char *argv[])
+{
+    // ----> Silence unused warning
+    (void)argc;
+    (void)argv;
+    // <---- Silence unused warning
 
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 

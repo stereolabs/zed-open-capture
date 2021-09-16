@@ -29,6 +29,11 @@
 // The main function
 int main(int argc, char *argv[])
 {
+    // ----> Silence unused warning
+    (void)argc;
+    (void)argv;
+    // <---- Silence unused warning
+
     // Set the verbose level
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
