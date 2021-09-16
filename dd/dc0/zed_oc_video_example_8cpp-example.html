@@ -102,6 +102,11 @@ $(function() {
 <div class="line"><span class="comment">// The main function</span></div>
 <div class="line"><span class="keywordtype">int</span> <a name="a0"></a><a class="code" href="../../d7/d54/zed__oc__video__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
 <div class="line">{</div>
+<div class="line">    <span class="comment">// ----&gt; Silence unused warning</span></div>
+<div class="line">    (void)argc;</div>
+<div class="line">    (void)argv;</div>
+<div class="line">    <span class="comment">// &lt;---- Silence unused warning</span></div>
+<div class="line"> </div>
 <div class="line">    <span class="comment">// ----&gt; Create Video Capture</span></div>
 <div class="line">    <a name="_a1"></a><a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html">sl_oc::video::VideoParams</a> <a name="a2"></a><a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>;</div>
 <div class="line">    <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>.<a name="a3"></a><a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a1a3755ec19e8b2b079e62578f87b9384">res</a> = <a name="a4"></a><a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a05c2df30a13cdf5ff439ad2a1a18fb09a4cdfd6b884ead99d46d935f580246f0e">sl_oc::video::RESOLUTION::HD720</a>;</div>

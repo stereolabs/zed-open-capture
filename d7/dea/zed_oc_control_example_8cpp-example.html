@@ -177,6 +177,11 @@ $(function() {
 <div class="line"><span class="comment">// The main function</span></div>
 <div class="line"><span class="keywordtype">int</span> <a name="a38"></a><a class="code" href="../../d9/d7c/zed__oc__control__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
 <div class="line">{</div>
+<div class="line">    <span class="comment">// ----&gt; Silence unused warning</span></div>
+<div class="line">    (void)argc;</div>
+<div class="line">    (void)argv;</div>
+<div class="line">    <span class="comment">// &lt;---- Silence unused warning</span></div>
+<div class="line"> </div>
 <div class="line">    <a class="code" href="../../d8/dcf/namespacesl__oc.html#a5f9ed77b6fa4bdd3d7cd9666242d4eb1">sl_oc::VERBOSITY</a> verbose = <a name="a39"></a><a class="code" href="../../d8/dcf/namespacesl__oc.html#a5f9ed77b6fa4bdd3d7cd9666242d4eb1a3cc3a1d5afd9cf352f080f0357552489">sl_oc::VERBOSITY::INFO</a>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// ----&gt; Set Video parameters</span></div>

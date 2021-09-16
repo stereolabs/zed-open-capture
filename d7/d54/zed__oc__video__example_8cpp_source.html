@@ -105,80 +105,85 @@ $(function() {
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">// The main function</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="../../d7/d54/zed__oc__video__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">   34</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="../../d7/d54/zed__oc__video__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment">// ----&gt; Create Video Capture</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html">sl_oc::video::VideoParams</a> <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>.<a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a1a3755ec19e8b2b079e62578f87b9384">res</a> = <a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a05c2df30a13cdf5ff439ad2a1a18fb09a4cdfd6b884ead99d46d935f580246f0e">sl_oc::video::RESOLUTION::HD720</a>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>.<a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a26ec82468284b8311039e7075e5e7d5e">fps</a> = <a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a422befca5974cb7ccb89919c0eec3662a97ca268671aa69223171bb0b4aa1461d">sl_oc::video::FPS::FPS_60</a>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment">// ----&gt; Silence unused warning</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    (void)argc;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    (void)argv;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="comment">// &lt;---- Silence unused warning</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html">sl_oc::video::VideoCapture</a> cap(<a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">if</span>( !cap.<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e">initializeVideo</a>() )</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        std::cerr &lt;&lt; <span class="stringliteral">&quot;Cannot open camera video capture&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        std::cerr &lt;&lt; <span class="stringliteral">&quot;See verbosity level for more details.&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">return</span> EXIT_FAILURE;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;Connected to camera sn: &quot;</span> &lt;&lt; cap.<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ae1def612a9502f0dd85ff46d5d5f1131">getSerialNumber</a>() &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="comment">// &lt;---- Create Video Capture</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="comment">// ----&gt; Create Video Capture</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html">sl_oc::video::VideoParams</a> <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>.<a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a1a3755ec19e8b2b079e62578f87b9384">res</a> = <a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a05c2df30a13cdf5ff439ad2a1a18fb09a4cdfd6b884ead99d46d935f580246f0e">sl_oc::video::RESOLUTION::HD720</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>.<a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a26ec82468284b8311039e7075e5e7d5e">fps</a> = <a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a422befca5974cb7ccb89919c0eec3662a97ca268671aa69223171bb0b4aa1461d">sl_oc::video::FPS::FPS_60</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html">sl_oc::video::VideoCapture</a> cap(<a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">if</span>( !cap.<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e">initializeVideo</a>() )</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        std::cerr &lt;&lt; <span class="stringliteral">&quot;Cannot open camera video capture&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        std::cerr &lt;&lt; <span class="stringliteral">&quot;See verbosity level for more details.&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#ifdef TEST_FPS</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="comment">// Timestamp to check FPS</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">double</span> lastTime = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code" href="../../db/df8/defines_8hpp.html#a7655773641067c1b3945975cd79b4fdb">getSteadyTimestamp</a>())/1e9;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="comment">// Frame timestamp to check FPS</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    uint64_t lastFrameTs = 0;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="comment">// Infinite video grabbing loop</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">while</span> (1)</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="comment">// Get last available frame</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">const</span> <a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html">sl_oc::video::Frame</a> frame = cap.<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a16d2238b0c34d6d1dfbdebe97f656759">getLastFrame</a>();</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="comment">// ----&gt; If the frame is valid we can display it</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">if</span>(frame.<a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html#af36c0963ec7389ff6eb283a544812cad">data</a>!=<span class="keyword">nullptr</span>)</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#ifdef TEST_FPS</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keywordflow">if</span>(lastFrameTs!=0)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                <span class="comment">// ----&gt; System time</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                <span class="keywordtype">double</span> now = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code" href="../../db/df8/defines_8hpp.html#a7655773641067c1b3945975cd79b4fdb">getSteadyTimestamp</a>())/1e9;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                <span class="keywordtype">double</span> elapsed_sec = now - lastTime;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                lastTime = now;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                std::cout &lt;&lt; <span class="stringliteral">&quot;[System] Frame period: &quot;</span> &lt;&lt; elapsed_sec &lt;&lt; <span class="stringliteral">&quot;sec - Freq: &quot;</span> &lt;&lt; 1./elapsed_sec &lt;&lt; <span class="stringliteral">&quot; Hz&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                <span class="comment">// &lt;---- System time</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                <span class="comment">// ----&gt; Frame time</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                <span class="keywordtype">double</span> frame_dT = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(frame.<a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html#a50a2bd124cfecc69e507712b53cfedb9">timestamp</a>-lastFrameTs)/1e9;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                std::cout &lt;&lt; <span class="stringliteral">&quot;[Camera] Frame period: &quot;</span> &lt;&lt; frame_dT &lt;&lt; <span class="stringliteral">&quot;sec - Freq: &quot;</span> &lt;&lt; 1./frame_dT &lt;&lt; <span class="stringliteral">&quot; Hz&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                <span class="comment">// &lt;---- Frame time</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            lastFrameTs = frame.<a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html#a50a2bd124cfecc69e507712b53cfedb9">timestamp</a>;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="comment">// ----&gt; Conversion from YUV 4:2:2 to BGR for visualization</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            cv::Mat <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#ac47996431e55ab1dc5bd3b05643d44bf">frameYUV</a> = cv::Mat( frame.<a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html#a8711d7e484d3cedb4ad706417f8ef526">height</a>, frame.<a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html#aeb2b160926f10fb19c9c6e1c015e4681">width</a>, CV_8UC2, frame.<a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html#af36c0963ec7389ff6eb283a544812cad">data</a> );</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            cv::Mat <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a3b8415e111033b681a6e5229a44ec492">frameBGR</a>;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            cv::cvtColor(<a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#ac47996431e55ab1dc5bd3b05643d44bf">frameYUV</a>,<a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a3b8415e111033b681a6e5229a44ec492">frameBGR</a>,cv::COLOR_YUV2BGR_YUYV);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            <span class="comment">// &lt;---- Conversion from YUV 4:2:2 to BGR for visualization</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="comment">// Show frame</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <a class="code" href="../../d2/d69/namespacesl__oc_1_1tools.html#a35f9e533cc3d146bad0a5e81b11438b6">sl_oc::tools::showImage</a>( <span class="stringliteral">&quot;Stream RGB&quot;</span>, <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a3b8415e111033b681a6e5229a44ec492">frameBGR</a>, <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>.<a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a1a3755ec19e8b2b079e62578f87b9384">res</a>  );</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        }</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="comment">// &lt;---- If the frame is valid we can display it</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordflow">return</span> EXIT_FAILURE;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    }</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;Connected to camera sn: &quot;</span> &lt;&lt; cap.<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ae1def612a9502f0dd85ff46d5d5f1131">getSerialNumber</a>() &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="comment">// &lt;---- Create Video Capture</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#ifdef TEST_FPS</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="comment">// Timestamp to check FPS</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">double</span> lastTime = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code" href="../../db/df8/defines_8hpp.html#a7655773641067c1b3945975cd79b4fdb">getSteadyTimestamp</a>())/1e9;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="comment">// Frame timestamp to check FPS</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    uint64_t lastFrameTs = 0;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="comment">// Infinite video grabbing loop</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">while</span> (1)</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="comment">// Get last available frame</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keyword">const</span> <a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html">sl_oc::video::Frame</a> frame = cap.<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a16d2238b0c34d6d1dfbdebe97f656759">getLastFrame</a>();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="comment">// ----&gt; If the frame is valid we can display it</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">if</span>(frame.<a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html#af36c0963ec7389ff6eb283a544812cad">data</a>!=<span class="keyword">nullptr</span>)</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#ifdef TEST_FPS</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keywordflow">if</span>(lastFrameTs!=0)</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                <span class="comment">// ----&gt; System time</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                <span class="keywordtype">double</span> now = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code" href="../../db/df8/defines_8hpp.html#a7655773641067c1b3945975cd79b4fdb">getSteadyTimestamp</a>())/1e9;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                <span class="keywordtype">double</span> elapsed_sec = now - lastTime;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                lastTime = now;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                std::cout &lt;&lt; <span class="stringliteral">&quot;[System] Frame period: &quot;</span> &lt;&lt; elapsed_sec &lt;&lt; <span class="stringliteral">&quot;sec - Freq: &quot;</span> &lt;&lt; 1./elapsed_sec &lt;&lt; <span class="stringliteral">&quot; Hz&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                <span class="comment">// &lt;---- System time</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                <span class="comment">// ----&gt; Frame time</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                <span class="keywordtype">double</span> frame_dT = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(frame.<a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html#a50a2bd124cfecc69e507712b53cfedb9">timestamp</a>-lastFrameTs)/1e9;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                std::cout &lt;&lt; <span class="stringliteral">&quot;[Camera] Frame period: &quot;</span> &lt;&lt; frame_dT &lt;&lt; <span class="stringliteral">&quot;sec - Freq: &quot;</span> &lt;&lt; 1./frame_dT &lt;&lt; <span class="stringliteral">&quot; Hz&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                <span class="comment">// &lt;---- Frame time</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            lastFrameTs = frame.<a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html#a50a2bd124cfecc69e507712b53cfedb9">timestamp</a>;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <span class="comment">// ----&gt; Conversion from YUV 4:2:2 to BGR for visualization</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            cv::Mat <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#ac47996431e55ab1dc5bd3b05643d44bf">frameYUV</a> = cv::Mat( frame.<a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html#a8711d7e484d3cedb4ad706417f8ef526">height</a>, frame.<a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html#aeb2b160926f10fb19c9c6e1c015e4681">width</a>, CV_8UC2, frame.<a class="code" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html#af36c0963ec7389ff6eb283a544812cad">data</a> );</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            cv::Mat <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a3b8415e111033b681a6e5229a44ec492">frameBGR</a>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            cv::cvtColor(<a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#ac47996431e55ab1dc5bd3b05643d44bf">frameYUV</a>,<a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a3b8415e111033b681a6e5229a44ec492">frameBGR</a>,cv::COLOR_YUV2BGR_YUYV);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="comment">// &lt;---- Conversion from YUV 4:2:2 to BGR for visualization</span></div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="comment">// ----&gt; Keyboard handling</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordtype">int</span> key = cv::waitKey( 5 );</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">if</span>(key==<span class="charliteral">&#39;q&#39;</span> || key==<span class="charliteral">&#39;Q&#39;</span>) <span class="comment">// Quit</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="comment">// &lt;---- Keyboard handling</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="comment">// Show frame</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <a class="code" href="../../d2/d69/namespacesl__oc_1_1tools.html#a35f9e533cc3d146bad0a5e81b11438b6">sl_oc::tools::showImage</a>( <span class="stringliteral">&quot;Stream RGB&quot;</span>, <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a3b8415e111033b681a6e5229a44ec492">frameBGR</a>, <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a4b496d75beef9d34a7bb1e63ad9b68d0">params</a>.<a class="code" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a1a3755ec19e8b2b079e62578f87b9384">res</a>  );</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="comment">// &lt;---- If the frame is valid we can display it</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="comment">// ----&gt; Keyboard handling</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordtype">int</span> key = cv::waitKey( 5 );</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">if</span>(key==<span class="charliteral">&#39;q&#39;</span> || key==<span class="charliteral">&#39;Q&#39;</span>) <span class="comment">// Quit</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="comment">// &lt;---- Keyboard handling</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    }</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html">sl_oc::video::VideoCapture</a></div><div class="ttdoc">The VideoCapture class provides image grabbing functions and settings control for all the Stereolabs ...</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/dd4/videocapture_8hpp_source.html#l00064">videocapture.hpp:65</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a16d2238b0c34d6d1dfbdebe97f656759"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a16d2238b0c34d6d1dfbdebe97f656759">sl_oc::video::VideoCapture::getLastFrame</a></div><div class="ttdeci">const Frame &amp; getLastFrame(uint64_t timeout_msec=100)</div><div class="ttdoc">Get the last received camera image.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l00890">videocapture.cpp:890</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a9ad02dd9c454adf803653b57162cdc1e"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e">sl_oc::video::VideoCapture::initializeVideo</a></div><div class="ttdeci">bool initializeVideo(int devId=-1)</div><div class="ttdoc">Open a ZED camera using the specified ID or searching for the first available.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l00276">videocapture.cpp:276</a></div></div>
