@@ -308,8 +308,8 @@ void applyStereoMatching()
     sl_oc::tools::StopWatch stereo_clock;
 
 #ifdef USE_HALF_SIZE_DISPARITY
-    cv::resize(left_rect,  left_for_matcher,  cv::Size(), 0.5, 0.5, cv::INTER_LINEAR_EXACT);
-    cv::resize(right_rect, right_for_matcher, cv::Size(), 0.5, 0.5, cv::INTER_LINEAR_EXACT);
+    cv::resize(left_rect,  left_for_matcher,  cv::Size(), 0.5, 0.5, cv::INTER_AREA);
+    cv::resize(right_rect, right_for_matcher, cv::Size(), 0.5, 0.5, cv::INTER_AREA);
 #else
     left_for_matcher = left_rect.clone();
     right_for_matcher = right_rect.clone();
@@ -342,7 +342,7 @@ void applyStereoMatching()
     //cv::ximgproc::getDisparityVis(left_disp,left_disp_vis,3.0);
     cv::normalize(left_disp, left_disp_vis, 0, 255, cv::NORM_MINMAX, CV_8UC1);
 #ifdef USE_HALF_SIZE_DISPARITY
-    cv::resize(left_disp_vis, left_disp_vis, cv::Size(), 2.0, 2.0, cv::INTER_LINEAR_EXACT);
+    cv::resize(left_disp_vis, left_disp_vis, cv::Size(), 2.0, 2.0, cv::INTER_AREA);
 #endif
     sl_oc::tools::showImage(preFiltDispWinName, left_disp_vis, params.res, false);
     // <---- Show disparity
