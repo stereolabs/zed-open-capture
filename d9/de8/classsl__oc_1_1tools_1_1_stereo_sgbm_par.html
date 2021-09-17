@@ -135,12 +135,12 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:aa0e78c35bc4cfee3561e0312a7c8b9c1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">speckleRange</a></td></tr>
 <tr class="memdesc:aa0e78c35bc4cfee3561e0312a7c8b9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">[default: 1] Maximum disparity variation within each connected component. If you do speckle filtering, set the parameter to a positive value, it will be implicitly multiplied by 16. Normally, 1 or 2 is good enough.  <a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">More...</a><br /></td></tr>
 <tr class="separator:aa0e78c35bc4cfee3561e0312a7c8b9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a574cb2d80b00884c71bb01449f329d45"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a574cb2d80b00884c71bb01449f329d45">minDepth_mm</a></td></tr>
-<tr class="memdesc:a574cb2d80b00884c71bb01449f329d45"><td class="mdescLeft">&#160;</td><td class="mdescRight">[default: 300] Minimum value of depth for the extracted depth map  <a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a574cb2d80b00884c71bb01449f329d45">More...</a><br /></td></tr>
-<tr class="separator:a574cb2d80b00884c71bb01449f329d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebc8ccac34204d3ce0bf1ea4cf0c23d8"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aebc8ccac34204d3ce0bf1ea4cf0c23d8">maxDepth_mm</a></td></tr>
-<tr class="memdesc:aebc8ccac34204d3ce0bf1ea4cf0c23d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">[default: 10000] Maximum value of depth for the extracted depth map  <a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aebc8ccac34204d3ce0bf1ea4cf0c23d8">More...</a><br /></td></tr>
-<tr class="separator:aebc8ccac34204d3ce0bf1ea4cf0c23d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46c3af7e5fe0625cddc3dcf7a3315dc8"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">minDepth_mm</a></td></tr>
+<tr class="memdesc:a46c3af7e5fe0625cddc3dcf7a3315dc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">[default: 300] Minimum value of depth for the extracted depth map  <a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">More...</a><br /></td></tr>
+<tr class="separator:a46c3af7e5fe0625cddc3dcf7a3315dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7583f2a31dad1def370a0c6b66f3a84"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">maxDepth_mm</a></td></tr>
+<tr class="memdesc:ac7583f2a31dad1def370a0c6b66f3a84"><td class="mdescLeft">&#160;</td><td class="mdescRight">[default: 10000] Maximum value of depth for the extracted depth map  <a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">More...</a><br /></td></tr>
+<tr class="separator:ac7583f2a31dad1def370a0c6b66f3a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html" title="The StereoSgbmPar class is used to store/retrieve the stereo matching parameters.">StereoSgbmPar</a> class is used to store/retrieve the stereo matching parameters. </p>
@@ -202,7 +202,7 @@ Public Attributes</h2></td></tr>
 
 <p>load stereo matching parameters </p>
 <dl class="section return"><dt>Returns</dt><dd>true if a configuration file exists </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a28">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a43">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a28">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a44">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00087">87</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -230,8 +230,8 @@ Public Attributes</h2></td></tr>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a03dfe8f51eef2a9b3f5d7554083ecc8a">P1</a> = 24*<a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">blockSize</a>*<a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">blockSize</a>;</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#af20a2c2c64e6c17cae349ec7830bdc26">P2</a> = 96*<a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">blockSize</a>*<a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">blockSize</a>;</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    fs[<span class="stringliteral">&quot;minDepth_mm&quot;</span>] &gt;&gt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a574cb2d80b00884c71bb01449f329d45">minDepth_mm</a>;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    fs[<span class="stringliteral">&quot;maxDepth_mm&quot;</span>] &gt;&gt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aebc8ccac34204d3ce0bf1ea4cf0c23d8">maxDepth_mm</a>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    fs[<span class="stringliteral">&quot;minDepth_mm&quot;</span>] &gt;&gt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">minDepth_mm</a>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    fs[<span class="stringliteral">&quot;maxDepth_mm&quot;</span>] &gt;&gt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">maxDepth_mm</a>;</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;Stereo parameters load done: &quot;</span> &lt;&lt; par_file &lt;&lt; std::endl &lt;&lt; std::endl;</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
@@ -241,18 +241,18 @@ Public Attributes</h2></td></tr>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_a05ecc80b15ed462a44954cb388a7b809"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a05ecc80b15ed462a44954cb388a7b809">sl_oc::tools::StereoSgbmPar::disp12MaxDiff</a></div><div class="ttdeci">int disp12MaxDiff</div><div class="ttdoc">[default: 96] Maximum allowed difference (in integer pixel units) in the left-right disparity check....</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00059">stereo.hpp:59</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_a1f30bba144157391d44bcec8cfbbcea2"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a1f30bba144157391d44bcec8cfbbcea2">sl_oc::tools::StereoSgbmPar::speckleWindowSize</a></div><div class="ttdeci">int speckleWindowSize</div><div class="ttdoc">[default: 255] Maximum size of smooth disparity regions to consider their noise speckles and invalida...</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00062">stereo.hpp:62</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_a305f8d7b70e3e6f320c2ce0b315a3ae6"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a305f8d7b70e3e6f320c2ce0b315a3ae6">sl_oc::tools::StereoSgbmPar::uniquenessRatio</a></div><div class="ttdeci">int uniquenessRatio</div><div class="ttdoc">[default: 5] Margin in percentage by which the best (minimum) computed cost function value should &quot;wi...</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00061">stereo.hpp:61</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_a46c3af7e5fe0625cddc3dcf7a3315dc8"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">sl_oc::tools::StereoSgbmPar::minDepth_mm</a></div><div class="ttdeci">double minDepth_mm</div><div class="ttdoc">[default: 300] Minimum value of depth for the extracted depth map</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00065">stereo.hpp:65</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_a47e39722f042eb7c1498fca47084a708"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a47e39722f042eb7c1498fca47084a708">sl_oc::tools::StereoSgbmPar::minDisparity</a></div><div class="ttdeci">int minDisparity</div><div class="ttdoc">[default: 0] Minimum possible disparity value. Normally, it is zero but sometimes rectification algor...</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00054">stereo.hpp:54</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_a574cb2d80b00884c71bb01449f329d45"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a574cb2d80b00884c71bb01449f329d45">sl_oc::tools::StereoSgbmPar::minDepth_mm</a></div><div class="ttdeci">float minDepth_mm</div><div class="ttdoc">[default: 300] Minimum value of depth for the extracted depth map</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00065">stereo.hpp:65</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_a820c8202f76be0c1b331fbc1ad191173"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a820c8202f76be0c1b331fbc1ad191173">sl_oc::tools::StereoSgbmPar::numDisparities</a></div><div class="ttdeci">int numDisparities</div><div class="ttdoc">[default: 96] Maximum disparity minus minimum disparity. The value is always greater than zero....</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00055">stereo.hpp:55</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_a8f2720be5b8bfbda04bf5940c5ac6512"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a8f2720be5b8bfbda04bf5940c5ac6512">sl_oc::tools::StereoSgbmPar::mode</a></div><div class="ttdeci">int mode</div><div class="ttdoc">Set it to StereoSGBM::MODE_HH to run the full-scale two-pass dynamic programming algorithm....</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00056">stereo.hpp:56</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_aa0e78c35bc4cfee3561e0312a7c8b9c1"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">sl_oc::tools::StereoSgbmPar::speckleRange</a></div><div class="ttdeci">int speckleRange</div><div class="ttdoc">[default: 1] Maximum disparity variation within each connected component. If you do speckle filtering...</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00063">stereo.hpp:63</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_aa7d3ef84e3fc7072c76c2d1bf60bcf2a"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">sl_oc::tools::StereoSgbmPar::blockSize</a></div><div class="ttdeci">int blockSize</div><div class="ttdoc">[default: 3] Matched block size. It must be an odd number &gt;=1 . Normally, it should be somewhere in t...</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00053">stereo.hpp:53</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_ac7583f2a31dad1def370a0c6b66f3a84"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">sl_oc::tools::StereoSgbmPar::maxDepth_mm</a></div><div class="ttdeci">double maxDepth_mm</div><div class="ttdoc">[default: 10000] Maximum value of depth for the extracted depth map</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00066">stereo.hpp:66</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_ad9fe928df5078a66415374cfc2bad989"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ad9fe928df5078a66415374cfc2bad989">sl_oc::tools::StereoSgbmPar::preFilterCap</a></div><div class="ttdeci">int preFilterCap</div><div class="ttdoc">[default: 63] Truncation value for the prefiltered image pixels. The algorithm first computes x-deriv...</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00060">stereo.hpp:60</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_aebc8ccac34204d3ce0bf1ea4cf0c23d8"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aebc8ccac34204d3ce0bf1ea4cf0c23d8">sl_oc::tools::StereoSgbmPar::maxDepth_mm</a></div><div class="ttdeci">float maxDepth_mm</div><div class="ttdoc">[default: 10000] Maximum value of depth for the extracted depth map</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00066">stereo.hpp:66</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_af20a2c2c64e6c17cae349ec7830bdc26"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#af20a2c2c64e6c17cae349ec7830bdc26">sl_oc::tools::StereoSgbmPar::P2</a></div><div class="ttdeci">int P2</div><div class="ttdoc">[default: 4*PI]The second parameter controlling the disparity smoothness. The larger the values are,...</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00058">stereo.hpp:58</a></div></div>
 <div class="ttc" id="anamespacesl__oc_1_1tools_html_ae1d2f3b1e614750a77b952e3407327b4"><div class="ttname"><a href="../../d2/d69/namespacesl__oc_1_1tools.html#ae1d2f3b1e614750a77b952e3407327b4">sl_oc::tools::STEREO_PAR_FILENAME</a></div><div class="ttdeci">const std::string STEREO_PAR_FILENAME</div><div class="ttdoc">STEREO_PAR_FILENAME default stereo parameter configuration file.</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00014">stereo.hpp:14</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">blockSize</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a05ecc80b15ed462a44954cb388a7b809">disp12MaxDiff</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aebc8ccac34204d3ce0bf1ea4cf0c23d8">maxDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a574cb2d80b00884c71bb01449f329d45">minDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a47e39722f042eb7c1498fca47084a708">minDisparity</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a8f2720be5b8bfbda04bf5940c5ac6512">mode</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a820c8202f76be0c1b331fbc1ad191173">numDisparities</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a03dfe8f51eef2a9b3f5d7554083ecc8a">P1</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#af20a2c2c64e6c17cae349ec7830bdc26">P2</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ad9fe928df5078a66415374cfc2bad989">preFilterCap</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a57d6a62f6cb05020255b2011205dbc9c">setDefaultValues()</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">speckleRange</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a1f30bba144157391d44bcec8cfbbcea2">speckleWindowSize</a>, <a class="el" href="../../d2/d69/namespacesl__oc_1_1tools.html#ae1d2f3b1e614750a77b952e3407327b4">sl_oc::tools::STEREO_PAR_FILENAME</a>, and <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a305f8d7b70e3e6f320c2ce0b315a3ae6">uniquenessRatio</a>.</p>
+<p class="reference">References <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">blockSize</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a05ecc80b15ed462a44954cb388a7b809">disp12MaxDiff</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">maxDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">minDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a47e39722f042eb7c1498fca47084a708">minDisparity</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a8f2720be5b8bfbda04bf5940c5ac6512">mode</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a820c8202f76be0c1b331fbc1ad191173">numDisparities</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a03dfe8f51eef2a9b3f5d7554083ecc8a">P1</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#af20a2c2c64e6c17cae349ec7830bdc26">P2</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ad9fe928df5078a66415374cfc2bad989">preFilterCap</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a57d6a62f6cb05020255b2011205dbc9c">setDefaultValues()</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">speckleRange</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a1f30bba144157391d44bcec8cfbbcea2">speckleWindowSize</a>, <a class="el" href="../../d2/d69/namespacesl__oc_1_1tools.html#ae1d2f3b1e614750a77b952e3407327b4">sl_oc::tools::STEREO_PAR_FILENAME</a>, and <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a305f8d7b70e3e6f320c2ce0b315a3ae6">uniquenessRatio</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../d3/d6f/zed__oc__depth__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>.</p>
 
@@ -274,7 +274,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>print the current stereo matching parameters on standard output </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a42">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a55">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a42">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a56">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00150">150</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -293,12 +293,12 @@ Public Attributes</h2></td></tr>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;P1:\t\t&quot;</span> &lt;&lt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a03dfe8f51eef2a9b3f5d7554083ecc8a">P1</a> &lt;&lt; <span class="stringliteral">&quot; [Calculated]&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;P2:\t\t&quot;</span> &lt;&lt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#af20a2c2c64e6c17cae349ec7830bdc26">P2</a> &lt;&lt; <span class="stringliteral">&quot; [Calculated]&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;minDepth_mm:\t&quot;</span> &lt;&lt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a574cb2d80b00884c71bb01449f329d45">minDepth_mm</a> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;maxDepth_mm:\t&quot;</span> &lt;&lt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aebc8ccac34204d3ce0bf1ea4cf0c23d8">maxDepth_mm</a> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;minDepth_mm:\t&quot;</span> &lt;&lt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">minDepth_mm</a> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;maxDepth_mm:\t&quot;</span> &lt;&lt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">maxDepth_mm</a> &lt;&lt; std::endl;</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;------------------------------------------&quot;</span> &lt;&lt; std::endl &lt;&lt; std::endl;</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">blockSize</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a05ecc80b15ed462a44954cb388a7b809">disp12MaxDiff</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aebc8ccac34204d3ce0bf1ea4cf0c23d8">maxDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a574cb2d80b00884c71bb01449f329d45">minDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a47e39722f042eb7c1498fca47084a708">minDisparity</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a8f2720be5b8bfbda04bf5940c5ac6512">mode</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a820c8202f76be0c1b331fbc1ad191173">numDisparities</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a03dfe8f51eef2a9b3f5d7554083ecc8a">P1</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#af20a2c2c64e6c17cae349ec7830bdc26">P2</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ad9fe928df5078a66415374cfc2bad989">preFilterCap</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">speckleRange</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a1f30bba144157391d44bcec8cfbbcea2">speckleWindowSize</a>, and <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a305f8d7b70e3e6f320c2ce0b315a3ae6">uniquenessRatio</a>.</p>
+<p class="reference">References <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">blockSize</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a05ecc80b15ed462a44954cb388a7b809">disp12MaxDiff</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">maxDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">minDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a47e39722f042eb7c1498fca47084a708">minDisparity</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a8f2720be5b8bfbda04bf5940c5ac6512">mode</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a820c8202f76be0c1b331fbc1ad191173">numDisparities</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a03dfe8f51eef2a9b3f5d7554083ecc8a">P1</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#af20a2c2c64e6c17cae349ec7830bdc26">P2</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ad9fe928df5078a66415374cfc2bad989">preFilterCap</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">speckleRange</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a1f30bba144157391d44bcec8cfbbcea2">speckleWindowSize</a>, and <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a305f8d7b70e3e6f320c2ce0b315a3ae6">uniquenessRatio</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../d3/d6f/zed__oc__depth__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>.</p>
 
@@ -321,7 +321,7 @@ Public Attributes</h2></td></tr>
 
 <p>save stereo matching parameters </p>
 <dl class="section return"><dt>Returns</dt><dd>true if a configuration file has been correctly created </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a29">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a56">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a29">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a57">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00120">120</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -346,15 +346,15 @@ Public Attributes</h2></td></tr>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    fs &lt;&lt; <span class="stringliteral">&quot;speckleWindowSize&quot;</span> &lt;&lt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a1f30bba144157391d44bcec8cfbbcea2">speckleWindowSize</a>;</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    fs &lt;&lt; <span class="stringliteral">&quot;speckleRange&quot;</span> &lt;&lt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">speckleRange</a>;</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    fs &lt;&lt; <span class="stringliteral">&quot;minDepth_mm&quot;</span> &lt;&lt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a574cb2d80b00884c71bb01449f329d45">minDepth_mm</a>;</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    fs &lt;&lt; <span class="stringliteral">&quot;maxDepth_mm&quot;</span> &lt;&lt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aebc8ccac34204d3ce0bf1ea4cf0c23d8">maxDepth_mm</a>;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    fs &lt;&lt; <span class="stringliteral">&quot;minDepth_mm&quot;</span> &lt;&lt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">minDepth_mm</a>;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    fs &lt;&lt; <span class="stringliteral">&quot;maxDepth_mm&quot;</span> &lt;&lt; <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">maxDepth_mm</a>;</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;Stereo parameters write done: &quot;</span> &lt;&lt; par_file &lt;&lt; std::endl &lt;&lt; std::endl;</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">blockSize</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a05ecc80b15ed462a44954cb388a7b809">disp12MaxDiff</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aebc8ccac34204d3ce0bf1ea4cf0c23d8">maxDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a574cb2d80b00884c71bb01449f329d45">minDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a47e39722f042eb7c1498fca47084a708">minDisparity</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a8f2720be5b8bfbda04bf5940c5ac6512">mode</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a820c8202f76be0c1b331fbc1ad191173">numDisparities</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ad9fe928df5078a66415374cfc2bad989">preFilterCap</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">speckleRange</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a1f30bba144157391d44bcec8cfbbcea2">speckleWindowSize</a>, <a class="el" href="../../d2/d69/namespacesl__oc_1_1tools.html#ae1d2f3b1e614750a77b952e3407327b4">sl_oc::tools::STEREO_PAR_FILENAME</a>, and <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a305f8d7b70e3e6f320c2ce0b315a3ae6">uniquenessRatio</a>.</p>
+<p class="reference">References <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">blockSize</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a05ecc80b15ed462a44954cb388a7b809">disp12MaxDiff</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">maxDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">minDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a47e39722f042eb7c1498fca47084a708">minDisparity</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a8f2720be5b8bfbda04bf5940c5ac6512">mode</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a820c8202f76be0c1b331fbc1ad191173">numDisparities</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ad9fe928df5078a66415374cfc2bad989">preFilterCap</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">speckleRange</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a1f30bba144157391d44bcec8cfbbcea2">speckleWindowSize</a>, <a class="el" href="../../d2/d69/namespacesl__oc_1_1tools.html#ae1d2f3b1e614750a77b952e3407327b4">sl_oc::tools::STEREO_PAR_FILENAME</a>, and <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a305f8d7b70e3e6f320c2ce0b315a3ae6">uniquenessRatio</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../d3/d6f/zed__oc__depth__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>.</p>
 
@@ -376,7 +376,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>set default stereo matching parameters </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a57">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a58">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00069">69</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -393,11 +393,11 @@ Public Attributes</h2></td></tr>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a1f30bba144157391d44bcec8cfbbcea2">speckleWindowSize</a> = 255;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">speckleRange</a> = 1;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a574cb2d80b00884c71bb01449f329d45">minDepth_mm</a> = 300.f;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aebc8ccac34204d3ce0bf1ea4cf0c23d8">maxDepth_mm</a> = 10000.f;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">minDepth_mm</a> = 300.;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">maxDepth_mm</a> = 10000.;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">blockSize</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a05ecc80b15ed462a44954cb388a7b809">disp12MaxDiff</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aebc8ccac34204d3ce0bf1ea4cf0c23d8">maxDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a574cb2d80b00884c71bb01449f329d45">minDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a47e39722f042eb7c1498fca47084a708">minDisparity</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a8f2720be5b8bfbda04bf5940c5ac6512">mode</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a820c8202f76be0c1b331fbc1ad191173">numDisparities</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a03dfe8f51eef2a9b3f5d7554083ecc8a">P1</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#af20a2c2c64e6c17cae349ec7830bdc26">P2</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ad9fe928df5078a66415374cfc2bad989">preFilterCap</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">speckleRange</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a1f30bba144157391d44bcec8cfbbcea2">speckleWindowSize</a>, and <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a305f8d7b70e3e6f320c2ce0b315a3ae6">uniquenessRatio</a>.</p>
+<p class="reference">References <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa7d3ef84e3fc7072c76c2d1bf60bcf2a">blockSize</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a05ecc80b15ed462a44954cb388a7b809">disp12MaxDiff</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">maxDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">minDepth_mm</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a47e39722f042eb7c1498fca47084a708">minDisparity</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a8f2720be5b8bfbda04bf5940c5ac6512">mode</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a820c8202f76be0c1b331fbc1ad191173">numDisparities</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a03dfe8f51eef2a9b3f5d7554083ecc8a">P1</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#af20a2c2c64e6c17cae349ec7830bdc26">P2</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ad9fe928df5078a66415374cfc2bad989">preFilterCap</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa0e78c35bc4cfee3561e0312a7c8b9c1">speckleRange</a>, <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a1f30bba144157391d44bcec8cfbbcea2">speckleWindowSize</a>, and <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a305f8d7b70e3e6f320c2ce0b315a3ae6">uniquenessRatio</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a6ae5104d33d44bf74150ce1fae60353e">load()</a>, <a class="el" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>, and <a class="el" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#aa65405946a82812a2e3ff53383f5099c">StereoSgbmPar()</a>.</p>
 
@@ -417,7 +417,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>[default: 3] Matched block size. It must be an odd number &gt;=1 . Normally, it should be somewhere in the 3..11 range. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a33">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a46">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a33">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a47">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00053">53</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -439,7 +439,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>[default: 96] Maximum allowed difference (in integer pixel units) in the left-right disparity check. Set it to a non-positive value to disable the check. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a36">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a49">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a36">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a50">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00059">59</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -448,14 +448,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aebc8ccac34204d3ce0bf1ea4cf0c23d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aebc8ccac34204d3ce0bf1ea4cf0c23d8">&#9670;&nbsp;</a></span>maxDepth_mm</h2>
+<a id="ac7583f2a31dad1def370a0c6b66f3a84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7583f2a31dad1def370a0c6b66f3a84">&#9670;&nbsp;</a></span>maxDepth_mm</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float sl_oc::tools::StereoSgbmPar::maxDepth_mm</td>
+          <td class="memname">double sl_oc::tools::StereoSgbmPar::maxDepth_mm</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -470,14 +470,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a574cb2d80b00884c71bb01449f329d45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a574cb2d80b00884c71bb01449f329d45">&#9670;&nbsp;</a></span>minDepth_mm</h2>
+<a id="a46c3af7e5fe0625cddc3dcf7a3315dc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46c3af7e5fe0625cddc3dcf7a3315dc8">&#9670;&nbsp;</a></span>minDepth_mm</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float sl_oc::tools::StereoSgbmPar::minDepth_mm</td>
+          <td class="memname">double sl_oc::tools::StereoSgbmPar::minDepth_mm</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -505,7 +505,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>[default: 0] Minimum possible disparity value. Normally, it is zero but sometimes rectification algorithms can shift images, so this parameter needs to be adjusted accordingly. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a31">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a44">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a31">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a45">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00054">54</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -527,7 +527,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set it to StereoSGBM::MODE_HH to run the full-scale two-pass dynamic programming algorithm. It will consume O(W*H*numDisparities) bytes, which is large for 640x480 stereo and huge for HD-size pictures. By default, it is set to <code>cv::StereoSGBM::MODE_SGBM_3WAY</code>. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a37">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a50">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a37">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a51">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00056">56</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -549,7 +549,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>[default: 96] Maximum disparity minus minimum disparity. The value is always greater than zero. In the current implementation, this parameter must be divisible by 16. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a32">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a45">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a32">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a46">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00055">55</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -571,7 +571,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>[default: 24*blockSize*blockSize] The first parameter controlling the disparity smoothness. See below. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a34">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a47">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a34">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a48">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00057">57</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -593,7 +593,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>[default: 4*PI]The second parameter controlling the disparity smoothness. The larger the values are, the smoother the disparity is. P1 is the penalty on the disparity change by plus or minus 1 between neighbor pixels. P2 is the penalty on the disparity change by more than 1 between neighbor pixels. The algorithm requires P2 &gt; P1 . See stereo_match.cpp sample where some reasonably good P1 and P2 values are shown (like 8*number_of_image_channels*blockSize*blockSize and 32*number_of_image_channels*blockSize*blockSize , respectively). </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a35">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a48">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a35">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a49">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00058">58</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -615,7 +615,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>[default: 63] Truncation value for the prefiltered image pixels. The algorithm first computes x-derivative at each pixel and clips its value by [-preFilterCap, preFilterCap] interval. The result values are passed to the Birchfield-Tomasi pixel cost function. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a38">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a51">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a38">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a52">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00060">60</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -637,7 +637,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>[default: 1] Maximum disparity variation within each connected component. If you do speckle filtering, set the parameter to a positive value, it will be implicitly multiplied by 16. Normally, 1 or 2 is good enough. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a41">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a54">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a41">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a55">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00063">63</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -659,7 +659,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>[default: 255] Maximum size of smooth disparity regions to consider their noise speckles and invalidate. Set it to 0 to disable speckle filtering. Otherwise, set it somewhere in the 50-200 range. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a40">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a53">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a40">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a54">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00062">62</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
@@ -681,7 +681,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>[default: 5] Margin in percentage by which the best (minimum) computed cost function value should "win" the second best value to consider the found match correct. Normally, a value within the 5-15 range is good enough. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a39">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a52">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a39">zed_oc_depth_example.cpp</a>, and <a class="el" href="../../d4/d2e/zed_oc_tune_stereo_sgbm_8cpp-example.html#a53">zed_oc_tune_stereo_sgbm.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d0/d24/stereo_8hpp_source.html#l00061">61</a> of file <a class="el" href="../../d0/d24/stereo_8hpp_source.html">stereo.hpp</a>.</p>
