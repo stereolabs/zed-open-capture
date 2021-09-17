@@ -97,7 +97,7 @@ $(function() {
 <div class="line"><span class="comment">// OpenCV includes</span></div>
 <div class="line"><span class="preprocessor">#include &lt;opencv2/opencv.hpp&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#undef HAVE_OPENCV_VIZ </span><span class="comment">// Uncomment if cannot use Viz3D for point cloud rendering</span></div>
+<div class="line"><span class="comment">//#undef HAVE_OPENCV_VIZ // Uncomment if cannot use Viz3D for point cloud rendering</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifdef HAVE_OPENCV_VIZ</span></div>
 <div class="line"><span class="preprocessor">#include &lt;opencv2/viz.hpp&gt;</span></div>
@@ -305,7 +305,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifdef USE_HALF_SIZE_DISP</span></div>
 <div class="line">            cv::multiply(left_disp_float,2.,left_disp_float); <span class="comment">// Last 4 bits of SGBM disparity are decimal</span></div>
-<div class="line">            cv::UMat tmp = left_disp_float;</div>
+<div class="line">            cv::UMat tmp = left_disp_float; <span class="comment">// Required for OpenCV 3.2</span></div>
 <div class="line">            cv::resize(tmp, left_disp_float, cv::Size(), 1./resize_fact, 1./resize_fact, cv::INTER_AREA);</div>
 <div class="line"><span class="preprocessor">#else</span></div>
 <div class="line">            <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#ad9dff05ca211fe77810119496166f310">left_disp</a> = left_disp_float;</div>
@@ -356,6 +356,7 @@ $(function() {
 <div class="line">                <span class="keywordtype">size_t</span> r = idx/left_depth_map.cols;</div>
 <div class="line">                <span class="keywordtype">size_t</span> c = idx%left_depth_map.cols;</div>
 <div class="line">                <span class="keywordtype">double</span> depth = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(depth_vec[idx]);</div>
+<div class="line">                <span class="comment">//std::cout &lt;&lt; depth &lt;&lt; &quot; &quot;;</span></div>
 <div class="line">                <span class="keywordflow">if</span>(!isinf(depth) &amp;&amp; depth &gt;=0 &amp;&amp; depth &gt; <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a1678a77b5f7f54111e7ef59eeb6c8191">stereoPar</a>.<a name="a52"></a><a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">minDepth_mm</a> &amp;&amp; depth &lt; <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a1678a77b5f7f54111e7ef59eeb6c8191">stereoPar</a>.<a name="a53"></a><a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">maxDepth_mm</a>)</div>
 <div class="line">                {</div>
 <div class="line">                    buffer[idx].val[2] = depth; <span class="comment">// Z</span></div>
@@ -364,11 +365,11 @@ $(function() {
 <div class="line">                }</div>
 <div class="line">            }</div>
 <div class="line"> </div>
-<div class="line">            cloudMat = cv::Mat( left_depth_map.rows, left_depth_map.cols, CV_32FC3, &amp;buffer[0] ).clone();</div>
+<div class="line">            cloudMat = cv::Mat( left_depth_map.rows, left_depth_map.cols, CV_64FC3, &amp;buffer[0] ).clone();</div>
 <div class="line"> </div>
 <div class="line">            <span class="keywordtype">double</span> pc_elapsed = stereo_clock.<a class="code" href="../../d5/da7/classsl__oc_1_1tools_1_1_stop_watch.html#a913ff2996256810c57eabe436665c630">toc</a>();</div>
 <div class="line">            std::stringstream pcElabInfo;</div>
-<div class="line">            pcElabInfo &lt;&lt; <span class="stringliteral">&quot;Point cloud processing: &quot;</span> &lt;&lt; pc_elapsed &lt;&lt; <span class="stringliteral">&quot; sec - Freq: &quot;</span> &lt;&lt; 1./pc_elapsed;</div>
+<div class="line"><span class="comment">//            pcElabInfo &lt;&lt; &quot;Point cloud processing: &quot; &lt;&lt; pc_elapsed &lt;&lt; &quot; sec - Freq: &quot; &lt;&lt; 1./pc_elapsed;</span></div>
 <div class="line">            <span class="comment">//std::cout &lt;&lt; pcElabInfo.str() &lt;&lt; std::endl;</span></div>
 <div class="line">            <span class="comment">// &lt;---- Create Point Cloud</span></div>
 <div class="line">        }</div>

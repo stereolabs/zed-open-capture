@@ -302,7 +302,7 @@ Functions</h2></td></tr>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor">#ifdef USE_HALF_SIZE_DISP</span></div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            cv::multiply(left_disp_float,2.,left_disp_float); <span class="comment">// Last 4 bits of SGBM disparity are decimal</span></div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            cv::UMat tmp = left_disp_float;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            cv::UMat tmp = left_disp_float; <span class="comment">// Required for OpenCV 3.2</span></div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;            cv::resize(tmp, left_disp_float, cv::Size(), 1./resize_fact, 1./resize_fact, cv::INTER_AREA);</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;            <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#ad9dff05ca211fe77810119496166f310">left_disp</a> = left_disp_float;</div>
@@ -353,45 +353,46 @@ Functions</h2></td></tr>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;                <span class="keywordtype">size_t</span> r = idx/left_depth_map.cols;</div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;                <span class="keywordtype">size_t</span> c = idx%left_depth_map.cols;</div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                <span class="keywordtype">double</span> depth = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(depth_vec[idx]);</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                <span class="keywordflow">if</span>(!isinf(depth) &amp;&amp; depth &gt;=0 &amp;&amp; depth &gt; <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a1678a77b5f7f54111e7ef59eeb6c8191">stereoPar</a>.<a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">minDepth_mm</a> &amp;&amp; depth &lt; <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a1678a77b5f7f54111e7ef59eeb6c8191">stereoPar</a>.<a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">maxDepth_mm</a>)</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                {</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;                    buffer[idx].val[2] = depth; <span class="comment">// Z</span></div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;                    buffer[idx].val[0] = (c-cx)*depth/fx; <span class="comment">// X</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                    buffer[idx].val[1] = (r-cy)*depth/fy; <span class="comment">// Y</span></div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                }</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;            }</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;            cloudMat = cv::Mat( left_depth_map.rows, left_depth_map.cols, CV_32FC3, &amp;buffer[0] ).clone();</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;            <span class="keywordtype">double</span> pc_elapsed = stereo_clock.<a class="code" href="../../d5/da7/classsl__oc_1_1tools_1_1_stop_watch.html#a913ff2996256810c57eabe436665c630">toc</a>();</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;            std::stringstream pcElabInfo;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;            pcElabInfo &lt;&lt; <span class="stringliteral">&quot;Point cloud processing: &quot;</span> &lt;&lt; pc_elapsed &lt;&lt; <span class="stringliteral">&quot; sec - Freq: &quot;</span> &lt;&lt; 1./pc_elapsed;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;            <span class="comment">//std::cout &lt;&lt; pcElabInfo.str() &lt;&lt; std::endl;</span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;            <span class="comment">// &lt;---- Create Point Cloud</span></div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        }</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                <span class="comment">//std::cout &lt;&lt; depth &lt;&lt; &quot; &quot;;</span></div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                <span class="keywordflow">if</span>(!isinf(depth) &amp;&amp; depth &gt;=0 &amp;&amp; depth &gt; <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a1678a77b5f7f54111e7ef59eeb6c8191">stereoPar</a>.<a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a46c3af7e5fe0625cddc3dcf7a3315dc8">minDepth_mm</a> &amp;&amp; depth &lt; <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#a1678a77b5f7f54111e7ef59eeb6c8191">stereoPar</a>.<a class="code" href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#ac7583f2a31dad1def370a0c6b66f3a84">maxDepth_mm</a>)</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;                {</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;                    buffer[idx].val[2] = depth; <span class="comment">// Z</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                    buffer[idx].val[0] = (c-cx)*depth/fx; <span class="comment">// X</span></div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                    buffer[idx].val[1] = (r-cy)*depth/fy; <span class="comment">// Y</span></div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                }</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;            }</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;            cloudMat = cv::Mat( left_depth_map.rows, left_depth_map.cols, CV_64FC3, &amp;buffer[0] ).clone();</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160; </div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;            <span class="keywordtype">double</span> pc_elapsed = stereo_clock.<a class="code" href="../../d5/da7/classsl__oc_1_1tools_1_1_stop_watch.html#a913ff2996256810c57eabe436665c630">toc</a>();</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;            std::stringstream pcElabInfo;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="comment">//            pcElabInfo &lt;&lt; &quot;Point cloud processing: &quot; &lt;&lt; pc_elapsed &lt;&lt; &quot; sec - Freq: &quot; &lt;&lt; 1./pc_elapsed;</span></div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;            <span class="comment">//std::cout &lt;&lt; pcElabInfo.str() &lt;&lt; std::endl;</span></div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;            <span class="comment">// &lt;---- Create Point Cloud</span></div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        }</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        <span class="comment">// ----&gt; Keyboard handling</span></div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;        <span class="keywordtype">int</span> key = cv::waitKey( 5 );</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        <span class="keywordflow">if</span>(key==<span class="charliteral">&#39;q&#39;</span> || key==<span class="charliteral">&#39;Q&#39;</span>) <span class="comment">// Quit</span></div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        <span class="comment">// &lt;---- Keyboard handling</span></div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="preprocessor">#ifdef HAVE_OPENCV_VIZ</span></div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        <span class="comment">// ----&gt; Show Point Cloud</span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        cv::viz::WCloud cloudWidget( cloudMat, <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#ac947f77f229b3c14cc01ee67d813237f">left_rect</a> );</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        cloudWidget.setRenderingProperty( cv::viz::POINT_SIZE, 1 );</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        pc_viewer.showWidget( <span class="stringliteral">&quot;Point Cloud&quot;</span>, cloudWidget );</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        pc_viewer.spinOnce(1);</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160; </div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="keywordflow">if</span>(pc_viewer.wasStopped())</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        <span class="comment">// &lt;---- Show Point Cloud</span></div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    }</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160; </div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;}</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;        <span class="comment">// ----&gt; Keyboard handling</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        <span class="keywordtype">int</span> key = cv::waitKey( 5 );</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        <span class="keywordflow">if</span>(key==<span class="charliteral">&#39;q&#39;</span> || key==<span class="charliteral">&#39;Q&#39;</span>) <span class="comment">// Quit</span></div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        <span class="comment">// &lt;---- Keyboard handling</span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="preprocessor">#ifdef HAVE_OPENCV_VIZ</span></div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        <span class="comment">// ----&gt; Show Point Cloud</span></div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        cv::viz::WCloud cloudWidget( cloudMat, <a class="code" href="../../dc/d2e/zed__oc__tune__stereo__sgbm_8cpp.html#ac947f77f229b3c14cc01ee67d813237f">left_rect</a> );</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        cloudWidget.setRenderingProperty( cv::viz::POINT_SIZE, 1 );</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        pc_viewer.showWidget( <span class="stringliteral">&quot;Point Cloud&quot;</span>, cloudWidget );</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        pc_viewer.spinOnce(1);</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160; </div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        <span class="keywordflow">if</span>(pc_viewer.wasStopped())</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;        <span class="comment">// &lt;---- Show Point Cloud</span></div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    }</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;}</div>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html">sl_oc::tools::StereoSgbmPar</a></div><div class="ttdoc">The StereoSgbmPar class is used to store/retrieve the stereo matching parameters.</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00019">stereo.hpp:20</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_a03dfe8f51eef2a9b3f5d7554083ecc8a"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a03dfe8f51eef2a9b3f5d7554083ecc8a">sl_oc::tools::StereoSgbmPar::P1</a></div><div class="ttdeci">int P1</div><div class="ttdoc">[default: 24*blockSize*blockSize] The first parameter controlling the disparity smoothness....</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00057">stereo.hpp:57</a></div></div>
 <div class="ttc" id="aclasssl__oc_1_1tools_1_1_stereo_sgbm_par_html_a05ecc80b15ed462a44954cb388a7b809"><div class="ttname"><a href="../../d9/de8/classsl__oc_1_1tools_1_1_stereo_sgbm_par.html#a05ecc80b15ed462a44954cb388a7b809">sl_oc::tools::StereoSgbmPar::disp12MaxDiff</a></div><div class="ttdeci">int disp12MaxDiff</div><div class="ttdoc">[default: 96] Maximum allowed difference (in integer pixel units) in the left-right disparity check....</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d24/stereo_8hpp_source.html#l00059">stereo.hpp:59</a></div></div>
