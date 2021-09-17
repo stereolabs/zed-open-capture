@@ -33,12 +33,21 @@ set ( CMAKE_CXX_FLAGS "-no-pie" )
 # CPU information
 message("Processor: ${CMAKE_SYSTEM_PROCESSOR}")
 
-# Raspberry Pi 4
+# Raspberry Pi 4 - OS 64bit
 if(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
   message("* Optimizing for ${CMAKE_SYSTEM_PROCESSOR}")
   add_compile_options(-mtune=cortex-a72 -mcpu=cortex-a72)
   add_definitions(-DEMBEDDED_ARM)
 endif()
+
+# Raspberry Pi 4 - OS 32bit
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "armv7l")
+  message("* Optimizing for ${CMAKE_SYSTEM_PROCESSOR}")
+  # add_compile_options(-mcpu=cortex-a72 -mfloat-abi=hard -mfpu=neon-fp-armv8 -mneon-for-64bits -mtune=cortex-a72)
+  add_compile_options(-mfloat-abi=hard -mfpu=neon-fp-armv8 -mneon-for-64bits -mtune=cortex-a72)
+  add_definitions(-DEMBEDDED_ARM)
+endif()
+
 
 ############################################################################
 # Options

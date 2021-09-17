@@ -28,7 +28,7 @@
 // OpenCV includes
 #include <opencv2/opencv.hpp>
 
-//#undef HAVE_OPENCV_VIZ // Uncomment if cannot use Viz3D for point cloud rendering
+#undef HAVE_OPENCV_VIZ // Uncomment if cannot use Viz3D for point cloud rendering
 
 #ifdef HAVE_OPENCV_VIZ
 #include <opencv2/viz.hpp>
@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
         stereoPar.save(); // Save default parameters.
     }
 
-    cv::Ptr<cv::StereoSGBM> left_matcher = cv::StereoSGBM::create();
+    cv::Ptr<cv::StereoSGBM> left_matcher = cv::StereoSGBM::create(stereoPar.minDisparity,stereoPar.numDisparities,stereoPar.blockSize);
     left_matcher->setMinDisparity(stereoPar.minDisparity);
     left_matcher->setNumDisparities(stereoPar.numDisparities);
     left_matcher->setBlockSize(stereoPar.blockSize);
@@ -218,9 +218,9 @@ int main(int argc, char *argv[])
 
             // ----> Stereo matching
             sl_oc::tools::StopWatch stereo_clock;
-            float resize_fact = 1.0f;
+            double resize_fact = 1.0;
 #ifdef USE_HALF_SIZE_DISP
-            resize_fact = 0.5f;
+            resize_fact = 0.5;
             // Resize the original images to improve performances
             cv::resize(left_rect,  left_for_matcher,  cv::Size(), resize_fact, resize_fact, cv::INTER_AREA);
             cv::resize(right_rect, right_for_matcher, cv::Size(), resize_fact, resize_fact, cv::INTER_AREA);
@@ -232,11 +232,12 @@ int main(int argc, char *argv[])
             left_matcher->compute(left_for_matcher, right_for_matcher,left_disp_half);
 
             left_disp_half.convertTo(left_disp_float,CV_32FC1);
-            cv::multiply(left_disp_float,1.f/16.f,left_disp_float); // Last 4 bits of SGBM disparity are decimal
+            cv::multiply(left_disp_float,1./16.,left_disp_float); // Last 4 bits of SGBM disparity are decimal
 
 #ifdef USE_HALF_SIZE_DISP
-            cv::multiply(left_disp_float,2.f,left_disp_float); // Last 4 bits of SGBM disparity are decimal
-            cv::resize(left_disp_float, left_disp_float, cv::Size(), 1./resize_fact, 1./resize_fact, cv::INTER_AREA);
+            cv::multiply(left_disp_float,2.,left_disp_float); // Last 4 bits of SGBM disparity are decimal
+            cv::UMat tmp = left_disp_float;
+            cv::resize(tmp, left_disp_float, cv::Size(), 1./resize_fact, 1./resize_fact, cv::INTER_AREA);
 #else
             left_disp = left_disp_float;
 #endif
@@ -253,9 +254,11 @@ int main(int argc, char *argv[])
             // <---- Show frames
 
             // ----> Show disparity image
-            cv::add(left_disp_float,-static_cast<float>(stereoPar.minDisparity-1),left_disp_float); // Minimum disparity offset correction
-            cv::multiply(left_disp_float,1.f/stereoPar.numDisparities,left_disp_image,255., CV_8UC1 ); // Normalization and rescaling
-            cv::applyColorMap(left_disp_image,left_disp_image,cv::COLORMAP_INFERNO);
+            cv::add(left_disp_float,-static_cast<double>(stereoPar.minDisparity-1),left_disp_float); // Minimum disparity offset correction
+            cv::multiply(left_disp_float,1./stereoPar.numDisparities,left_disp_image,255., CV_8UC1 ); // Normalization and rescaling
+
+            cv::applyColorMap(left_disp_image,left_disp_image,cv::COLORMAP_JET); // COLORMAP_INFERNO is better, but it's only available starting from OpenCV v4.1.0
+
             sl_oc::tools::showImage("Disparity", left_disp_image, params.res,true, stereoElabInfo.str());
             // <---- Show disparity image
 
@@ -264,7 +267,7 @@ int main(int argc, char *argv[])
             // depth = (f * B) / disparity
             // where 'f' is the camera focal, 'B' is the camera baseline, 'disparity' is the pixel disparity
 
-            float num = static_cast<float>(fx*baseline);
+            double num = static_cast<double>(fx*baseline);
             cv::divide(num,left_disp_float,left_depth_map);
 
             float central_depth = left_depth_map.getMat(cv::ACCESS_READ).at<float>(left_depth_map.rows/2, left_depth_map.cols/2 );
@@ -273,17 +276,17 @@ int main(int argc, char *argv[])
 
             // ----> Create Point Cloud
             sl_oc::tools::StopWatch pc_clock;
-            int buf_size = left_depth_map.cols * left_depth_map.rows;
-            std::vector<cv::Vec3f> buffer( buf_size, cv::Vec3f::all( std::numeric_limits<float>::quiet_NaN() ) );
+            size_t buf_size = static_cast<size_t>(left_depth_map.cols * left_depth_map.rows);
+            std::vector<cv::Vec3d> buffer( buf_size, cv::Vec3f::all( std::numeric_limits<float>::quiet_NaN() ) );
             cv::Mat depth_map_cpu = left_depth_map.getMat(cv::ACCESS_READ);
             float* depth_vec = (float*)(&(depth_map_cpu.data[0]));
 
 #pragma omp parallel for
-            for(int idx=0; idx<buf_size;idx++ )
+            for(size_t idx=0; idx<buf_size;idx++ )
             {
-                int r = idx/left_depth_map.cols;
-                int c = idx%left_depth_map.cols;
-                float depth = depth_vec[idx];
+                size_t r = idx/left_depth_map.cols;
+                size_t c = idx%left_depth_map.cols;
+                double depth = static_cast<double>(depth_vec[idx]);
                 if(!isinf(depth) && depth >=0 && depth > stereoPar.minDepth_mm && depth < stereoPar.maxDepth_mm)
                 {
                     buffer[idx].val[2] = depth; // Z

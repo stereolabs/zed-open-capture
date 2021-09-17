@@ -79,8 +79,12 @@ int main(int argc, char *argv[])
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
     // ----> Set Video parameters
+#ifdef EMBEDDED_ARM
+    params.res = sl_oc::video::RESOLUTION::VGA;
+#else
     params.res = sl_oc::video::RESOLUTION::HD720;
-    params.fps = sl_oc::video::FPS::FPS_60;
+#endif
+    params.fps = sl_oc::video::FPS::FPS_30;
     params.verbose = verbose;
     // <---- Set Video parameters
 
@@ -198,7 +202,7 @@ int main(int argc, char *argv[])
     // ----> Stereo matcher initialization
     stereoPar.load();
 
-    left_matcher = cv::StereoSGBM::create();
+    left_matcher = cv::StereoSGBM::create(stereoPar.minDisparity,stereoPar.numDisparities,stereoPar.blockSize);
     left_matcher->setMinDisparity(stereoPar.minDisparity);
     left_matcher->setNumDisparities(stereoPar.numDisparities);
     left_matcher->setBlockSize(stereoPar.blockSize);
@@ -313,8 +317,8 @@ void applyStereoMatching()
     sl_oc::tools::StopWatch stereo_clock;
 
 #ifdef USE_HALF_SIZE_DISPARITY
-    cv::resize(left_rect,  left_for_matcher,  cv::Size(), 0.5, 0.5, cv::INTER_LINEAR_EXACT);
-    cv::resize(right_rect, right_for_matcher, cv::Size(), 0.5, 0.5, cv::INTER_LINEAR_EXACT);
+    cv::resize(left_rect,  left_for_matcher,  cv::Size(), 0.5, 0.5, cv::INTER_AREA);
+    cv::resize(right_rect, right_for_matcher, cv::Size(), 0.5, 0.5, cv::INTER_AREA);
 #else
     left_for_matcher = left_rect.clone();
     right_for_matcher = right_rect.clone();
@@ -347,7 +351,7 @@ void applyStereoMatching()
     //cv::ximgproc::getDisparityVis(left_disp,left_disp_vis,3.0);
     cv::normalize(left_disp, left_disp_vis, 0, 255, cv::NORM_MINMAX, CV_8UC1);
 #ifdef USE_HALF_SIZE_DISPARITY
-    cv::resize(left_disp_vis, left_disp_vis, cv::Size(), 2.0, 2.0, cv::INTER_LINEAR_EXACT);
+    cv::resize(left_disp_vis, left_disp_vis, cv::Size(), 2.0, 2.0, cv::INTER_AREA);
 #endif
     sl_oc::tools::showImage(preFiltDispWinName, left_disp_vis, params.res, false);
     // <---- Show disparity

@@ -62,8 +62,8 @@ public:
     int speckleWindowSize; //!< [default: 255] Maximum size of smooth disparity regions to consider their noise speckles and invalidate. Set it to 0 to disable speckle filtering. Otherwise, set it somewhere in the 50-200 range.
     int speckleRange; //!< [default: 1] Maximum disparity variation within each connected component. If you do speckle filtering, set the parameter to a positive value, it will be implicitly multiplied by 16. Normally, 1 or 2 is good enough.
 
-    float minDepth_mm; //!< [default: 300] Minimum value of depth for the extracted depth map
-    float maxDepth_mm; //!< [default: 10000] Maximum value of depth for the extracted depth map
+    double minDepth_mm; //!< [default: 300] Minimum value of depth for the extracted depth map
+    double maxDepth_mm; //!< [default: 10000] Maximum value of depth for the extracted depth map
 };
 
 void StereoSgbmPar::setDefaultValues()
@@ -80,8 +80,8 @@ void StereoSgbmPar::setDefaultValues()
     speckleWindowSize = 255;
     speckleRange = 1;
 
-    minDepth_mm = 300.f;
-    maxDepth_mm = 10000.f;
+    minDepth_mm = 300.;
+    maxDepth_mm = 10000.;
 }
 
 bool StereoSgbmPar::load()
