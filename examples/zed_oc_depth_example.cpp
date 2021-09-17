@@ -28,7 +28,7 @@
 // OpenCV includes
 #include <opencv2/opencv.hpp>
 
-#undef HAVE_OPENCV_VIZ // Uncomment if cannot use Viz3D for point cloud rendering
+//#undef HAVE_OPENCV_VIZ // Uncomment if cannot use Viz3D for point cloud rendering
 
 #ifdef HAVE_OPENCV_VIZ
 #include <opencv2/viz.hpp>
@@ -236,7 +236,7 @@ int main(int argc, char *argv[])
 
 #ifdef USE_HALF_SIZE_DISP
             cv::multiply(left_disp_float,2.,left_disp_float); // Last 4 bits of SGBM disparity are decimal
-            cv::UMat tmp = left_disp_float;
+            cv::UMat tmp = left_disp_float; // Required for OpenCV 3.2
             cv::resize(tmp, left_disp_float, cv::Size(), 1./resize_fact, 1./resize_fact, cv::INTER_AREA);
 #else
             left_disp = left_disp_float;
@@ -287,6 +287,7 @@ int main(int argc, char *argv[])
                 size_t r = idx/left_depth_map.cols;
                 size_t c = idx%left_depth_map.cols;
                 double depth = static_cast<double>(depth_vec[idx]);
+                //std::cout << depth << " ";
                 if(!isinf(depth) && depth >=0 && depth > stereoPar.minDepth_mm && depth < stereoPar.maxDepth_mm)
                 {
                     buffer[idx].val[2] = depth; // Z
@@ -295,11 +296,11 @@ int main(int argc, char *argv[])
                 }
             }
 
-            cloudMat = cv::Mat( left_depth_map.rows, left_depth_map.cols, CV_32FC3, &buffer[0] ).clone();
+            cloudMat = cv::Mat( left_depth_map.rows, left_depth_map.cols, CV_64FC3, &buffer[0] ).clone();
 
             double pc_elapsed = stereo_clock.toc();
             std::stringstream pcElabInfo;
-            pcElabInfo << "Point cloud processing: " << pc_elapsed << " sec - Freq: " << 1./pc_elapsed;
+//            pcElabInfo << "Point cloud processing: " << pc_elapsed << " sec - Freq: " << 1./pc_elapsed;
             //std::cout << pcElabInfo.str() << std::endl;
             // <---- Create Point Cloud
         }
