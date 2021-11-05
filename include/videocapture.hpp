@@ -487,7 +487,7 @@ private:
     SL_DEVICE mCameraModel = SL_DEVICE::NONE; //!< The camera model
 
     Frame mLastFrame;                   //!< Last grabbed frame
-    uint8_t mBufCount = 2;              //!< UVC buffer count
+    uint8_t mBufCount = 1;              //!< UVC buffer count
     uint8_t mCurrentIndex = 0;          //!< The index of the currect UVC buffer
     struct UVCBuffer *mBuffers = nullptr;  //!< UVC buffers
 
