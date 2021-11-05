@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 2020, STEREOLABS.
+// Copyright (c) 2021, STEREOLABS.
 //
 // All rights reserved.
 //
@@ -44,8 +44,8 @@
 
 //// SDK VERSION NUMBER
 #define ZED_OC_MAJOR_VERSION 0
-#define ZED_OC_MINOR_VERSION 2
-#define ZED_OC_PATCH_VERSION 0
+#define ZED_OC_MINOR_VERSION 5
+#define ZED_OC_PATCH_VERSION 1
 
 #define ZED_OC_VERSION_ATTRIBUTE private: uint32_t mMajorVer = ZED_OC_MAJOR_VERSION, mMinorVer = ZED_OC_MINOR_VERSION, mPatchVer = ZED_OC_PATCH_VERSION
 
@@ -73,15 +73,16 @@ namespace sl_oc {
 static const uint16_t SL_USB_VENDOR = 0x2b03;           //!< Stereolabs Vendor ID
 static const uint16_t OV_USB_VENDOR = 0x05a9;           //!< OmniVision Vendor ID
 
-static const uint16_t SL_USB_PROD_ZED_REVA = 0xf580;      //!< Old ZED firmware Product ID
-static const uint16_t SL_USB_PROD_ZED_M_REVA = 0xf680;    //!< Old ZED-M binary modified firmware Product ID
-static const uint16_t SL_USB_PROD_ZED_REVB = 0xf582;      //!< CBS ZED Firmware Product ID
-static const uint16_t SL_USB_PROD_ZED_M_REVB = 0xf682;    //!< CBS ZED-M Firmware Product ID
-static const uint16_t SL_USB_PROD_ZED_2_REVB = 0xf780;    //!< CBS ZED 2 Firmware Product ID
-static const uint16_t SL_USB_PROD_MCU_ZEDM_REVA= 0xf681;  //!< MCU sensor device for ZED-M
+static const uint16_t SL_USB_PROD_ZED_REVA = 0xf580;         //!< Old ZED firmware Product ID
+static const uint16_t SL_USB_PROD_ZED_M_REVA = 0xf680;       //!< Old ZED-M binary modified firmware Product ID
+static const uint16_t SL_USB_PROD_ZED_REVB = 0xf582;     //!< CBS ZED Firmware Product ID
+static const uint16_t SL_USB_PROD_ZED_M_REVB = 0xf682;   //!< CBS ZED-M Firmware Product ID
+static const uint16_t SL_USB_PROD_ZED_2_REVB = 0xf780;   //!< CBS ZED 2 Firmware Product ID
+static const uint16_t SL_USB_PROD_ZED_2i = 0xf880;   //!< CBS ZED 2i Firmware Product ID
+static const uint16_t SL_USB_PROD_MCU_ZEDM_REVA= 0xf681; //!< MCU sensor device for ZED-M
 static const uint16_t SL_USB_PROD_MCU_ZED2_REVA = 0xf781; //!< MCU sensor device for ZED2
+static const uint16_t SL_USB_PROD_MCU_ZED2i_REVA = 0xf881; //!< MCU sensor device for ZED2i
 static const uint16_t OV_USB_PROD_GS = 0x0581; //!< OmniVision 580 for GS
-
 
 enum VERBOSITY {
     NONE = 0,

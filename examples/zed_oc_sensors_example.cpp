@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 2020, STEREOLABS.
+// Copyright (c) 2021, STEREOLABS.
 //
 // All rights reserved.
 //
@@ -29,6 +29,11 @@
 // The main function
 int main(int argc, char *argv[])
 {
+    // ----> Silence unused warning
+    (void)argc;
+    (void)argv;
+    // <---- Silence unused warning
+
     // Set the verbose level
     sl_oc::VERBOSITY verbose = sl_oc::VERBOSITY::INFO;
 
@@ -52,7 +57,7 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    std::cout << "Video Capture connected to camera sn: " << sens.getSerialNumber() << std::endl;
+    std::cout << "Sensor Capture connected to camera sn: " << sens.getSerialNumber() << std::endl;
     // <---- Inizialize the sensors
 
     // ----> Get FW version information

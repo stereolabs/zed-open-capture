@@ -20,12 +20,13 @@
 
 // ----> Includes
 #include "videocapture.hpp"
-#include "ocv_display.hpp"
 
 #include <iostream>
 #include <iomanip>
 
 #include <opencv2/opencv.hpp>
+
+#include "ocv_display.hpp"
 // <---- Includes
 
 // #define TEST_FPS 1
@@ -33,21 +34,10 @@
 // The main function
 int main(int argc, char *argv[])
 {
-    // ----> Silence unused warning
-    (void)argc;
-    (void)argv;
-    // <---- Silence unused warning
-
     // ----> Create Video Capture
     sl_oc::video::VideoParams params;
-
-    params.fps = sl_oc::video::FPS::FPS_100;
-    params.res = sl_oc::video::RESOLUTION::GS_HIGH;
-    params.verbose = sl_oc::VERBOSITY::ERROR;
-
-    //params.res = sl_oc::video::RESOLUTION::HD720;
-    //params.fps = sl_oc::video::FPS::FPS_60;
-
+    params.res = sl_oc::video::RESOLUTION::HD720;
+    params.fps = sl_oc::video::FPS::FPS_60;
 
     sl_oc::video::VideoCapture cap(params);
     if( !cap.initializeVideo() )
@@ -60,8 +50,6 @@ int main(int argc, char *argv[])
     std::cout << "Connected to camera sn: " << cap.getSerialNumber() << std::endl;
     // <---- Create Video Capture
 
-
-
 #ifdef TEST_FPS
     // Timestamp to check FPS
     double lastTime = static_cast<double>(getSteadyTimestamp())/1e9;
@@ -69,30 +57,25 @@ int main(int argc, char *argv[])
     uint64_t lastFrameTs = 0;
 #endif
 
+    // Enable AGC/AEG registers logging
+    cap.enableAecAgcSensLogging(false);
+
+    uint64_t last_ts=0;
+    uint16_t not_a_new_frame = 0;
+    int frame_timeout_msec = 100;
+
+    int f_count = 0;
     // Infinite video grabbing loop
     while (1)
     {
         // Get last available frame
-        const sl_oc::video::Frame frame = cap.getLastFrame();
+        const sl_oc::video::Frame frame = cap.getLastFrame(frame_timeout_msec);
 
         // ----> If the frame is valid we can display it
-        if(frame.data!=nullptr)
+        if(frame.data!=nullptr && frame.timestamp!=last_ts)
         {
-
-            //            // ----> Conversion from YUV 4:2:2 to BGR for visualization
-            //            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
-            //            cv::Mat frameBayer;
-            //            cv::Mat frameBGR;
-            //            cv::cvtColor(frameYUV,frameBayer,cv::COLOR_YUV2GRAY_Y422);
-            //            cv::cvtColor(frameBayer,frameBGR,cv::COLOR_BayerRG2BGR);
-            //            // <---- Conversion from YUV 4:2:2 to BGR for visualization
-
-            //            // Show frame
-            //            cv::imshow( "Stream Bayer", frameBayer );
-            //            cv::imshow( "Stream RGB", frameBGR );
-            cv::Mat frameRAW8 = cv::Mat( frame.height, frame.width*2, CV_8UC1, frame.data );
-            cv::imshow( "Stream Bayer", frameRAW8 );
-
+            last_ts = frame.timestamp;
+            not_a_new_frame=0;
 #ifdef TEST_FPS
             if(lastFrameTs!=0)
             {
@@ -111,18 +94,53 @@ int main(int argc, char *argv[])
             lastFrameTs = frame.timestamp;
 #endif
 
+
+
+            if (f_count%10==0)
+            {
+               /* cap.
+                cap.saveAllISPRegisters("ov580_lr_"+std::to_string(f_count)+".csv");
+                cap.saveAllSensorsRegisters("ov4689_lr_"+std::to_string(f_count)+".csv");
+                std::cout<<" Save Data for f_count "<<f_count<<std::endl;*/
+                if (f_count%20==0)
+                    cap.setColorBars(0,true);
+                else
+                    cap.setColorBars(0,false);
+            }
+
+            //            if (f_count!=0 && f_count%10==0)
+//            {
+//                cap.saveAllISPRegisters("ov580_lr_"+std::to_string(f_count)+".csv");
+//                cap.saveAllSensorsRegisters("ov4689_lr_"+std::to_string(f_count)+".csv");
+//                std::cout<<" Save Data for f_count "<<f_count<<std::endl;
+//            }
+
+
+
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
-            //cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
-
+            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
             cv::Mat frameBGR;
-            cv::cvtColor(frameRAW8,frameBGR,cv::COLOR_BayerRG2BGR);
+            cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
+            // <---- Conversion from YUV 4:2:2 to BGR for visualization
 
+            f_count++;
             // Show frame
-            cv::imshow( "Stream Bayer", frameRAW8 );
-            cv::imshow( "Stream RGB", frameBGR );
+            showImage( "Stream RGB", frameBGR, params.res );
+        }
+        else
+        {
+            not_a_new_frame++;
+            std::cout << "Not a new frame #" << not_a_new_frame << std::endl;
 
-            //sl_oc::tools::showImage( "Stream RGB", frameBGR, params.res  );
+            if( not_a_new_frame>=(1000/frame_timeout_msec)) // Lost connection for 1 seconds
+            {
+                cap.saveAllISPRegisters("ov580_lr_"+std::to_string(f_count)+"_not_a_new _frame.csv");
+                cap.saveAllSensorsRegisters("ov4689_lr_"+std::to_string(f_count)+"_not_a_new _frame.csv");
+                std::cout<<" Save Data for f_count "<<f_count<<std::endl;
 
+                std::cout << "Camera connection lost. Closing..." << std::endl;
+                break;
+            }
         }
         // <---- If the frame is valid we can display it
 
@@ -132,6 +150,9 @@ int main(int argc, char *argv[])
             break;
         // <---- Keyboard handling
     }
+
+    // Disable AGC/AEG registers logging
+    cap.enableAecAgcSensLogging(true);
 
     return EXIT_SUCCESS;
 }

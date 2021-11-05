@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 2020, STEREOLABS.
+// Copyright (c) 2021, STEREOLABS.
 //
 // All rights reserved.
 //
@@ -27,7 +27,6 @@
 #include <vector>
 #include <map>
 #include <mutex>
-
 
 #ifdef SENSORS_MOD_AVAILABLE
 
@@ -148,9 +147,10 @@ public:
 
     /*!
      * \brief Get the list of the serial number of all the available devices
+     * \param refresh if true USB device tree is parsed to search for modifications (new device connected/disconnected)
      * \return a vector containing the serial number of all the available devices
      */
-    std::vector<int> getDeviceList();
+    std::vector<int> getDeviceList(bool refresh=false);
 
     /*!
      * \brief Open a connection to the MCU of a ZED Mini or a ZED2 camera using the specified serial number or searching
@@ -201,17 +201,44 @@ public:
      */
     const data::Temperature& getLastCameraTemperatureData(uint64_t timeout_usec=100);
 
+    /*!
+     * \brief Perform a SW reset of the Sensors Module. To be called in case one of the sensors stops to work correctly.
+     *
+     * \param serial_number The serial number of the device to be reset (0 to reset the first available)
+     * \return true if successful
+     *
+     * \note After the reset a new \ref SensorCapture connection is required
+     * \note The Sensors Module reset automatically performs a reset of the Video Module, so a new \ref video::VideoCapture
+     *  connection is required
+     */
+    static bool resetSensorModule(int serial_number=0);
+
+    /*!
+     * \brief Perform a reset of the video module without resetting the sensor module. To be called in case the Video
+     * module stops to work correctly.
+     *
+     * \param serial_number The serial number of the device to be reset (0 to reset the first available)
+     * \return true if successful
+     *
+     * \note After the reset a new \ref video::VideoCapture connection is required
+     */
+    static bool resetVideoModule(int serial_number=0);
+
 #ifdef VIDEO_MOD_AVAILABLE
     void updateTimestampOffset(uint64_t frame_ts);                                 //!< Called by  VideoCapture to update timestamp offset
     inline void setStartTimestamp(uint64_t start_ts){mStartSysTs=start_ts;}        //!< Called by  VideoCapture to sync timestamps reference point
-    inline void setVideoPtr(video::VideoCapture* videoPtr){mVideoPtr=videoPtr;}           //!< Called by  VideoCapture to set the pointer to it
+    inline void setVideoPtr(video::VideoCapture* videoPtr){mVideoPtr=videoPtr;}    //!< Called by  VideoCapture to set the pointer to it
 #endif
 
 private:
+    static bool searchForConnectedDev(int* serial_number, unsigned short* found_pid); //!< Search for a device and returns its pid and serial number
+
     void grabThreadFunc();              //!< The sensor data grabbing thread function
 
     bool startCapture();                //!< Start data capture thread
-    void reset();                       //!< Reset  connection
+
+    bool open(uint16_t pid, int serial_number); //!< Open the USB connection
+    void close();                       //!< Close the USB connection
 
     int enumerateDevices();             //!< Populates the  mSlDevPid map with serial number and PID of the available devices
 

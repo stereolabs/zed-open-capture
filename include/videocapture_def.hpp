@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 2020, STEREOLABS.
+// Copyright (c) 2021, STEREOLABS.
 //
 // All rights reserved.
 //
@@ -41,6 +41,7 @@ enum class SL_DEVICE {
     ZED_M_CBS,  //!< ZED Mini new FW
     ZED_2,      //!< ZED2
     GS,         //!< TEST GS
+    ZED_2i,     //!< ZED2
     NONE
 };
 

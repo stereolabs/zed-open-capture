@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 2020, STEREOLABS.
+// Copyright (c) 2021, STEREOLABS.
 //
 // All rights reserved.
 //
@@ -24,6 +24,10 @@
 #include "defines.hpp"
 #include <thread>
 #include <mutex>
+#include <fstream>      // std::ofstream
+#include <iomanip>
+
+#define LOG_SEP ","
 
 #ifdef VIDEO_MOD_AVAILABLE
 
@@ -91,7 +95,7 @@ public:
      * \note Frame received will contains the RAW buffer from the camera, in YUV4:2:2 color format and in side by side mode.
      * Images must then be converted to RGB for proper display and will not be rectified.
      */
-    const Frame& getLastFrame(uint64_t timeout_msec=10);
+    const Frame& getLastFrame(uint64_t timeout_msec=100);
 
     /*!
      * \brief Get the size of the camera frame
@@ -273,6 +277,35 @@ public:
     void resetAECAGC();
 
     /*!
+     * \brief Set Region Of Interest (ROI) for AECAGC control
+     * \param side position of the camera sensor (see  CAM_SENS_POS)
+     * \param x top left ROI rectangle X coordinate
+     * \param y top left ROI rectangle Y coordinate
+     * \param w ROI rectangle width
+     * \param h ROI rectangle width
+     * \return returns true if the ROI has been correctly set
+     */
+    bool setROIforAECAGC(CAM_SENS_POS side, uint16_t x, uint16_t y, uint16_t w, uint16_t h);
+
+    /*!
+     * \brief Reset the ROI for AECAGC control
+     * \param side position of the camera sensor (see  CAM_SENS_POS)
+     * \return returns true if the ROI has been correctly reset
+     */
+    bool resetROIforAECAGC(CAM_SENS_POS side);
+
+    /*!
+     * \brief Get the coordinates of the current ROI for AECAGC control
+     * \param side position of the camera sensor (see  CAM_SENS_POS)
+     * \param x top left ROI rectangle X coordinate
+     * \param y top left ROI rectangle Y coordinate
+     * \param w ROI rectangle width
+     * \param h ROI rectangle width
+     * \return returns true if no errors occurred
+     */
+    bool getROIforAECAGC(CAM_SENS_POS side,uint16_t& x, uint16_t& y, uint16_t& w, uint16_t& h);
+
+    /*!
      * \brief Set the Gain value (disable Exposure and Gain control if active)
      * \param cam position of the camera sensor (see  CAM_SENS_POS)
      * \param gain Gain value in the range [0,100]
@@ -307,6 +340,36 @@ public:
      */
     int getSerialNumber();
 
+    /*!
+     * \brief Utils fct to set Color Bars on Image
+     */
+    void setColorBars(int side, bool c);
+
+#ifdef SENSOR_LOG_AVAILABLE
+    /*!
+     * \brief Start logging to file of AEG/AGC camera registers
+     * \param enable set to true to enable logging
+     * \param frame_skip number of frames to skip when logging to file
+     * \return true if log file can be correctly created/closed
+     */
+    bool enableAecAgcSensLogging(bool enable, int frame_skip=10);
+
+    /*!
+     * \brief Save all ISP camera registers into a file
+     * \param filename csv filename
+     * \note CSV file will contain Adress , L value, R value
+     */
+    void saveAllISPRegisters(std::string filename);
+
+    /*!
+     * \brief Save all sensors ctrl register
+     * \param filename csv filename
+     * \note CSV file will contain Adress , L value, R value
+     */
+    void saveAllSensorsRegisters(std::string filename);
+#endif
+
+
 #ifdef SENSORS_MOD_AVAILABLE
     /*!
      * \brief Enable synchronizations between Camera frame and Sensors timestamps
@@ -322,11 +385,13 @@ public:
     inline void setReadyToSync(){ mSensReadyToSync=true; }
 #endif
 
+        bool resetAGCAECregisters();
+
 private:
     void grabThreadFunc();  //!< The frame grabbing thread function
 
     // ----> Low level functions
-    int ll_VendorControl(uint8_t *buf, int len, int readMode, bool safe = false);
+    int ll_VendorControl(uint8_t *buf, int len, int readMode, bool safe = false, bool force=false);
     int ll_get_gpio_value(int gpio_number, uint8_t* value);
     int ll_set_gpio_value(int gpio_number, uint8_t value);
     int ll_set_gpio_direction(int gpio_number, int direction);
@@ -335,10 +400,12 @@ private:
     int ll_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t *value);
     int ll_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value);
 
-    int ll_SPI_FlashProgramRead(uint8_t *pBuf, int Adr, int len);
+    int ll_SPI_FlashProgramRead(uint8_t *pBuf, int Adr, int len, bool force=false);
 
     int ll_isp_aecagc_enable(int side, bool enable);
     int ll_isp_is_aecagc(int side);
+
+    uint8_t ll_read_reg(uint64_t addr);
 
     int ll_isp_get_gain(uint8_t *val, uint8_t sensorID);
     int ll_isp_set_gain(unsigned char ucGainH, unsigned char ucGainM, unsigned char ucGainL, int sensorID);
@@ -370,6 +437,32 @@ private:
     SL_DEVICE getCameraModel(std::string dev_name);     //!< Get the connected camera model
     // <---- Connection control functions
 
+    typedef enum _date_time
+    {
+        FULL,
+        DATE,
+        TIME
+    } DateTime;
+
+    static inline std::string getCurrentDateTime( DateTime type ){
+        time_t now = time(0);
+        struct tm  tstruct;
+        char  buf[80];
+        tstruct = *localtime(&now);
+        if(type==FULL)
+            strftime(buf, sizeof(buf), "%Y-%m-%d %X", &tstruct);
+        else if(type==DATE)
+            strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);
+        else if(type==TIME)
+            strftime(buf, sizeof(buf), "%X", &tstruct);
+        return std::string(buf);
+    }
+
+#ifdef SENSOR_LOG_AVAILABLE
+    void saveLogDataLeft();
+    void saveLogDataRight();
+#endif
+
 private:
     // Flags
     bool mNewFrame=false;               //!< Indicates if a new frame is available
@@ -389,7 +482,7 @@ private:
     int mWidth = 0;                     //!< Frame width
     int mHeight = 0;                    //!< Frame height
     int mChannels = 0;                  //!< Frame channels
-    int mFps=0;                          //!< Frames per seconds
+    int mFps=0;                         //!< Frames per seconds
 
     SL_DEVICE mCameraModel = SL_DEVICE::NONE; //!< The camera model
 
@@ -408,9 +501,21 @@ private:
 
     bool mFirstFrame=true;              //!< Used to initialize the timestamp start point
 
+#ifdef SENSOR_LOG_AVAILABLE
+    // ----> Registers logging
+    bool mLogEnable=false;
+    std::string mLogFilenameLeft;
+    std::string mLogFilenameRight;
+    std::ofstream mLogFileLeft;
+    std::ofstream mLogFileRight;
+    int mLogFrameSkip=10;
+    // <---- Registers logging
+#endif
+
+
 #ifdef SENSORS_MOD_AVAILABLE
     bool mSyncEnabled=false;            //!< Indicates if a  SensorCapture object is synchronized
-    sensors::SensorCapture* mSensPtr;            //!< Pointer to the synchronized  SensorCapture object
+    sensors::SensorCapture* mSensPtr;   //!< Pointer to the synchronized  SensorCapture object
 
     bool mSensReadyToSync=false;        //!< Indicates if the MCU received a HW sync signal
 #endif
@@ -423,7 +528,7 @@ private:
 
 /** \example zed_oc_video_example.cpp
  * Example of how to use the VideoCapture class to get raw video frames and show the stream on screen using the
- * OpenCV library
+ * OpenCV library.
  */
 
 /** \example zed_oc_control_example.cpp
@@ -433,7 +538,18 @@ private:
 
 /** \example zed_oc_rectify_example.cpp
  * Example of how to use the VideoCapture class to get and rectify raw video frames downloading
- * calibration parameters from Stereolabs servers
+ * calibration parameters from Stereolabs servers.
+ */
+
+/** \example zed_oc_depth_example.cpp
+ * Example of how to use the VideoCapture class to get and rectify raw video frames downloading
+ * calibration parameters from Stereolabs servers and then use OpenCV and T-API to extract the
+ * disparity map, the depth map, and finally generate the RGB point cloud.
+ */
+
+/** \example zed_oc_tune_stereo_sgbm.cpp
+ * Example of how to use the VideoCapture class and OpenCV GUI controls to tune the depth
+ * extraction process.
  */
 
 #endif // VIDEOCAPTURE_HPP

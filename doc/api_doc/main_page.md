@@ -1,6 +1,6 @@
 # ZED Open Capture API
 
-The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the internal sensors (only ZED Mini and ZED2). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
+The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the internal sensors (only ZED Mini, ZED2, and ZED2i). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
 
 **Note:** The provided data are not calibrated, images are not rectified in a stereoscopic way, IMU data may drift or be misaligned.
 Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/developers/release/).
@@ -15,7 +15,7 @@ The coordinate system is only used for sensors data (especially for IMU). The gi
 
 ### Prerequisites
 
- * A Stereolabs camera: [ZED](https://www.stereolabs.com/zed/), [ZED Mini](https://www.stereolabs.com/zed-mini/), [ZED2](https://www.stereolabs.com/zed-2/)
+ * A Stereolabs camera: [ZED](https://www.stereolabs.com/zed/), [ZED Mini](https://www.stereolabs.com/zed-mini/), [ZED2](https://www.stereolabs.com/zed-2/), [ZED2i](https://www.stereolabs.com/zed-2i/)
  * Linux OS [Tested on Ubuntu 16.04, 18.04 and 20.04]
  * GCC compiler [at least v7.5]
  * CMake build system [at least v3.1] 
@@ -114,5 +114,5 @@ Documentation can be locally generated in HTML format using Doxygen:
     $ cd doc
     $ ./generate_doc.sh
     
-The documentation will be available opening the file `doc/html/index.html` with a standard web browser.
+The local documentation will be available opening the file `doc/html/index.html` with a standard web browser.
 

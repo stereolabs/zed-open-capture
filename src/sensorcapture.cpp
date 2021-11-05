@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 2020, STEREOLABS.
+// Copyright (c) 2021, STEREOLABS.
 //
 // All rights reserved.
 //
@@ -50,7 +50,7 @@ SensorCapture::SensorCapture(VERBOSITY verbose_lvl )
 
 SensorCapture::~SensorCapture()
 {
-    reset();
+    close();
 }
 
 int SensorCapture::enumerateDevices()
@@ -69,6 +69,11 @@ int SensorCapture::enumerateDevices()
         int fw_major = cur_dev->release_number>>8;
         int fw_minor = cur_dev->release_number&0x00FF;
         uint16_t pid = cur_dev->product_id;
+        if(!cur_dev->serial_number)
+        {
+            cur_dev = cur_dev->next;
+            continue;
+        }
         std::string sn_str = wstr2str( cur_dev->serial_number );
         int sn = std::stoi( sn_str );
 
@@ -85,7 +90,7 @@ int SensorCapture::enumerateDevices()
             smsg << "  Serial_number:   " << sn_str << std::endl;
             smsg << "  Manufacturer:   " << wstr2str(cur_dev->manufacturer_string) << std::endl;
             smsg << "  Product:   " << wstr2str(cur_dev->product_string) << std::endl;
-            smsg << "  Release number:   v" << fw_major << "." << fw_minor << std::endl;
+            smsg << "  Release number:   v" << std::dec << fw_major << "." << fw_minor << std::endl;
             smsg << "***" << std::endl;
 
             INFO_OUT(mVerbose,smsg.str());
@@ -99,9 +104,9 @@ int SensorCapture::enumerateDevices()
     return mSlDevPid.size();
 }
 
-std::vector<int> SensorCapture::getDeviceList()
+std::vector<int> SensorCapture::getDeviceList(bool refresh)
 {
-    if(mSlDevPid.size()==0)
+    if(mSlDevPid.size()==0 || refresh)
         enumerateDevices();
 
     std::vector<int> sn_vec;
@@ -113,6 +118,20 @@ std::vector<int> SensorCapture::getDeviceList()
     return sn_vec;
 }
 
+bool SensorCapture::open( uint16_t pid, int serial_number)
+{
+    std::string sn_str = std::to_string(serial_number);
+    std::wstring wide_sn_string = std::wstring(sn_str.begin(), sn_str.end());
+
+    const wchar_t* wsn = wide_sn_string.c_str();
+
+    mDevHandle = hid_open(SL_USB_VENDOR, pid, wsn );
+
+    if(mDevHandle) mDevSerial = serial_number;
+
+    return mDevHandle!=0;
+}
+
 bool SensorCapture::initializeSensors( int sn )
 {
     if(mSlDevPid.size()==0)
@@ -122,9 +141,7 @@ bool SensorCapture::initializeSensors( int sn )
 
     std::string sn_str;
 
-    if(sn!=-1)
-        sn_str = std::to_string(sn);
-    else
+    if(sn==-1)
     {
         if(mSlDevPid.size()==0)
         {
@@ -138,22 +155,14 @@ bool SensorCapture::initializeSensors( int sn )
         }
 
         sn = mSlDevPid.begin()->first;
-        sn_str = std::to_string(sn);
     }
-
-    mDevSerial = sn;
-
-    std::wstring wide_string = std::wstring(sn_str.begin(), sn_str.end());
-    const wchar_t* wsn = wide_string.c_str();
 
     uint16_t pid = mSlDevPid[sn];
 
-    mDevHandle = hid_open(SL_USB_VENDOR, pid, wsn );
-
-    if (!mDevHandle)
+    if(!open( pid,sn))
     {
         std::string msg = "Connection to device with sn ";
-        msg += sn_str;
+        msg += std::to_string(sn);
         msg += " failed";
 
         ERROR_OUT(mVerbose,msg);
@@ -167,7 +176,7 @@ bool SensorCapture::initializeSensors( int sn )
     if(mVerbose)
     {
         std::string msg = "Connected to device with sn ";
-        msg += sn_str;
+        msg += std::to_string(sn);
 
         INFO_OUT(mVerbose,msg);
     }
@@ -269,7 +278,7 @@ bool SensorCapture::startCapture()
     return true;
 }
 
-void SensorCapture::reset()
+void SensorCapture::close()
 {
     mStopCapture = true;
 
@@ -343,7 +352,7 @@ void SensorCapture::grabThreadFunc()
 
         // ----> Received data are correct?
         int target_struct_id = 0;
-        if (mDevPid==SL_USB_PROD_MCU_ZED2_REVA)
+        if (mDevPid==SL_USB_PROD_MCU_ZED2_REVA || mDevPid==SL_USB_PROD_MCU_ZED2i_REVA)
             target_struct_id = usb::REP_ID_SENSOR_DATA;
 
         if( usbBuf[0] != target_struct_id)
@@ -592,6 +601,183 @@ bool SensorCapture::sendPing() {
         return false;
     }
 
+    return true;
+}
+
+bool SensorCapture::searchForConnectedDev(int* serial_number, unsigned short* found_pid)
+{
+    int in_serial_number;
+    if(serial_number==nullptr)
+         in_serial_number = 0;
+    else
+        in_serial_number = *serial_number;
+    int found_serial_number = 0;
+
+    // ----> Search for connected device
+    struct hid_device_info *devs, *cur_dev;
+
+    if (hid_init()==-1)
+        return false;
+
+    devs = hid_enumerate(SL_USB_VENDOR, 0x0);
+    cur_dev = devs;
+
+    bool found = false;
+    uint16_t pid=0;
+    std::string sn_str;
+
+    while (cur_dev) {
+        //int fw_major = cur_dev->release_number>>8;
+        //int fw_minor = cur_dev->release_number&0x00FF;
+        pid = cur_dev->product_id;
+        sn_str = wstr2str( cur_dev->serial_number );
+        int sn = std::stoi( sn_str );
+
+        if(in_serial_number==0 || sn==in_serial_number)
+        {
+            if( pid==SL_USB_PROD_MCU_ZED2_REVA || pid==SL_USB_PROD_MCU_ZED2i_REVA)
+            {
+                found = true;
+                found_serial_number = sn;
+                break;
+            }
+            else
+            {
+                std::string msg = "The reset function works only for ZED2/ZED2i camera models.";
+                std::cerr << msg << std::endl;
+
+                if(in_serial_number==0)
+                    continue;
+                else
+                    return false;
+            }
+        }
+
+        cur_dev = cur_dev->next;
+    }
+
+    hid_free_enumeration(devs);
+    // <---- Search for connected device
+
+    if(!found) {
+        return false;
+    }
+
+    if(serial_number)
+        *serial_number = found_serial_number;
+    if(found_pid)
+        *found_pid = pid;
+    return true;
+}
+
+bool SensorCapture::resetSensorModule(int serial_number)
+{
+    int found_sn = serial_number;
+    unsigned short pid;
+    bool res = searchForConnectedDev(&found_sn, &pid);
+    if(!res)
+    {
+        std::string msg;
+        if(serial_number!=0)
+        {
+            msg = "[sl_oc::sensors::SensorCapture] WARNING: Sensors Module reset failed. Unable to find the Sensor Module with serial number ";
+            msg += std::to_string(serial_number);
+        }
+        else
+        {
+            msg = "[sl_oc::sensors::SensorCapture] WARNING: Sensors Module reset failed. Unable to find the Sensor Module of a ZED2 camera. Please verify the USB connection.";
+        }
+
+        std::cerr << msg << std::endl;
+
+        return false;
+    }
+
+    std::string sn_str = std::to_string(found_sn);
+    std::wstring wide_sn_string = std::wstring(sn_str.begin(), sn_str.end());
+    const wchar_t* wsn = wide_sn_string.c_str();
+
+    hid_device* devHandle = hid_open(SL_USB_VENDOR, pid, wsn );
+
+    if(!devHandle)
+    {
+        std::string msg = "Unable to open the MCU HID device";
+        std::cerr << msg << std::endl;
+
+        return false;
+    }
+
+    unsigned char  buf[65];
+    buf[0] = static_cast<unsigned char>(usb::REP_ID_REQUEST_SET);
+    buf[1] = static_cast<unsigned char>(usb::RQ_CMD_RST);
+
+    hid_send_feature_report(devHandle, buf, 2);
+    // Note: cannot verify the return value of the `hid_send_feature_report` command because the MCU is suddenly reset
+    // and it cannot return a valid value
+
+    sleep(2); // Wait for MCU and OV580 to reboot
+
+    std::cerr << "[sl_oc::sensors::SensorCapture] INFO: Sensors Module reset successful" << std::endl;
+
+    return true;
+}
+
+bool SensorCapture::resetVideoModule(int serial_number)
+{
+    int found_sn = serial_number;
+    unsigned short pid;
+    bool res = searchForConnectedDev(&found_sn, &pid);
+    if(!res)
+    {
+        std::string msg;
+        if(serial_number!=0)
+        {
+            msg = "[sl_oc::sensors::SensorCapture] WARNING: Video Module reset failed. Unable to find the Sensor Module with serial number ";
+            msg += std::to_string(serial_number);
+        }
+        else
+        {
+            msg = "[sl_oc::sensors::SensorCapture] WARNING: Video Module reset failed. Unable to find the Sensor Module of a ZED2 camera. Please verify the USB connection.";
+        }
+
+        std::cerr << msg << std::endl;
+
+        return false;
+    }
+
+    std::string sn_str = std::to_string(found_sn);
+    std::wstring wide_sn_string = std::wstring(sn_str.begin(), sn_str.end());
+    const wchar_t* wsn = wide_sn_string.c_str();
+
+    hid_device* devHandle = hid_open(SL_USB_VENDOR, pid, wsn );
+
+    if(!devHandle)
+    {
+        std::string msg = "Unable to open the MCU HID device";
+        std::cerr << msg << std::endl;
+
+        return false;
+    }
+
+    usb::OV580CmdStruct cmd;
+    cmd.struct_id = usb::REP_ID_OV580_CMD;
+    cmd.cmd = usb::OV580_CMD_RESET;
+    cmd.info=0;
+
+    unsigned char buf[65];
+    memcpy(buf, &(cmd.struct_id), sizeof(usb::OV580CmdStruct));
+
+    int ret = hid_send_feature_report(devHandle, buf, sizeof(usb::OV580CmdStruct));
+    hid_close(devHandle);
+
+    if(ret!=sizeof(usb::OV580CmdStruct)) {
+        std::cerr << "[sl_oc::sensors::SensorCapture] INFO: Video Module reset failed" << std::endl;
+        return false;
+    }
+
+    sleep(2); // Wait for OV580 to reboot
+
+    std::cerr << "[sl_oc::sensors::SensorCapture] INFO: Video Module reset successful" << std::endl;
     return true;
 }
 

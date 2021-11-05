@@ -30,7 +30,8 @@
 
 #define UNUSED(expr) (void)(expr)
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
   libusb_device **devs;
   libusb_context *ctx = NULL;
 
