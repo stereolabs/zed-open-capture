@@ -304,6 +304,9 @@ private:
 
 };
 
+}
+}
+
 #endif
 
 /** \example zed_oc_sensors_example.cpp
@@ -315,9 +318,5 @@ private:
  * Example of how to get synchronized video and sensors data from
  * the VideoCapture class and the SensorCapture class.
  */
-
-}
-}
-
 
 #endif // SENSORCAPTURE_HPP
