@@ -826,7 +826,7 @@ void VideoCapture::grabThreadFunc()
             // cvt to ns
             rel_ts *= 1000;
 
-            mBufMutex.lock();
+            mBufMutex[mCurrentIndex].lock();
             if (mLastFrame[mCurrentIndex].data != nullptr && mWidth != 0 && mHeight != 0 && mBuffers[mCurrentIndex].start != nullptr)
             {
                 mLastFrame[mCurrentIndex].frame_id++;
@@ -868,7 +868,7 @@ void VideoCapture::grabThreadFunc()
 
                 mNewFrame=true;
             }
-            mBufMutex.unlock();
+            mBufMutex[mCurrentIndex].unlock();
 
             mComMutex.lock();
             ioctl(mFileDesc, VIDIOC_QBUF, &buf);
@@ -901,6 +901,7 @@ const Frame& VideoCapture::getLastFrame( uint64_t timeout_msec )
     {
         if(time_count==0)
         {
+            const std::lock_guard<std::mutex> lock(mBufMutex[mCurrentIndex]);
             return mLastFrame[mCurrentIndex];
         }
         time_count--;
@@ -916,7 +917,7 @@ const Frame& VideoCapture::getLastFrame( uint64_t timeout_msec )
     }
 
     // Get the frame mutex
-    const std::lock_guard<std::mutex> lock(mBufMutex);
+    const std::lock_guard<std::mutex> lock(mBufMutex[idx]);
     mNewFrame = false;
     return mLastFrame[idx];
 }

@@ -474,7 +474,7 @@ private:
     std::string mDevName;               //!< The file descriptor path name (e.g. /dev/video0)
     int mFileDesc=-1;                   //!< The file descriptor handler
 
-    std::mutex mBufMutex;               //!< Mutex for safe access to data buffer
+    std::mutex mBufMutex[BUF_COUNT];    //!< Mutex for safe access to data buffer
     std::mutex mComMutex;               //!< Mutex for safe access to UVC communication
 
     int mWidth = 0;                     //!< Frame width
