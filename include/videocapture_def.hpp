@@ -27,6 +27,8 @@
 
 #include "defines.hpp"
 
+#define BUF_COUNT 2 // Frame multi-buffer size
+
 namespace sl_oc {
 
 namespace video {

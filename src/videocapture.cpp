@@ -183,10 +183,13 @@ void VideoCapture::reset()
         mFileDesc=-1;
     }
 
-    if(mLastFrame.data)
+    for(int i=0; i<BUF_COUNT; i++)
     {
-        delete [] mLastFrame.data;
-        mLastFrame.data = nullptr;
+        if(mLastFrame[i].data)
+        {
+            delete [] mLastFrame[i].data;
+            mLastFrame[i].data = nullptr;
+        }
     }
 
     if( mParams.verbose && mInitialized)
@@ -480,11 +483,14 @@ bool VideoCapture::openCamera( uint8_t devId )
     }
 
     // ----> Output frame allocation
-    mLastFrame.width = mWidth;
-    mLastFrame.height = mHeight;
-    mLastFrame.channels = mChannels;
-    int bufSize = mLastFrame.width * mLastFrame.height * mLastFrame.channels;
-    mLastFrame.data = new unsigned char[bufSize];
+    for(int i=0; i<BUF_COUNT; i++)
+    {
+        mLastFrame[i].width = mWidth;
+        mLastFrame[i].height = mHeight;
+        mLastFrame[i].channels = mChannels;
+        int bufSize = mLastFrame[i].width * mLastFrame[i].height * mLastFrame[i].channels;
+        mLastFrame[i].data = new unsigned char[bufSize];
+    }
     // <---- Output frame allocation
 
     struct v4l2_requestbuffers req;
@@ -821,11 +827,11 @@ void VideoCapture::grabThreadFunc()
             rel_ts *= 1000;
 
             mBufMutex.lock();
-            if (mLastFrame.data != nullptr && mWidth != 0 && mHeight != 0 && mBuffers[mCurrentIndex].start != nullptr)
+            if (mLastFrame[mCurrentIndex].data != nullptr && mWidth != 0 && mHeight != 0 && mBuffers[mCurrentIndex].start != nullptr)
             {
-                mLastFrame.frame_id++;
-                memcpy(mLastFrame.data, (unsigned char*) mBuffers[mCurrentIndex].start, mBuffers[mCurrentIndex].length);
-                mLastFrame.timestamp = mStartTs + rel_ts;
+                mLastFrame[mCurrentIndex].frame_id++;
+                memcpy(mLastFrame[mCurrentIndex].data, (unsigned char*) mBuffers[mCurrentIndex].start, mBuffers[mCurrentIndex].length);
+                mLastFrame[mCurrentIndex].timestamp = mStartTs + rel_ts;
 
                 //                static uint64_t last_ts=0;
                 //                std::cout << "[Video] Frame TS: " << static_cast<double>(mLastFrame.timestamp)/1e9 << " sec" << std::endl;
@@ -837,7 +843,7 @@ void VideoCapture::grabThreadFunc()
                 if(mSensReadyToSync)
                 {
                     mSensReadyToSync = false;
-                    mSensPtr->updateTimestampOffset(mLastFrame.timestamp);
+                    mSensPtr->updateTimestampOffset(mLastFrame[mCurrentIndex].timestamp);
                 }
 #endif
 
@@ -895,17 +901,24 @@ const Frame& VideoCapture::getLastFrame( uint64_t timeout_msec )
     {
         if(time_count==0)
         {
-            return mLastFrame;
+            return mLastFrame[mCurrentIndex];
         }
         time_count--;
         usleep(100);
     }
     // <---- Wait for a new frame
 
+    uint8_t idx=mCurrentIndex;
+
+    if(mCurrentIndex==0)
+    {
+        idx = BUF_COUNT-1;
+    }
+
     // Get the frame mutex
     const std::lock_guard<std::mutex> lock(mBufMutex);
     mNewFrame = false;
-    return mLastFrame;
+    return mLastFrame[idx];
 }
 
 int VideoCapture::ll_VendorControl(uint8_t *buf, int len, int readMode, bool safe, bool force)
@@ -2015,7 +2028,7 @@ void VideoCapture::setColorBars(int side, bool c)
     unsigned long long ulAddr2 = 0x80181080;
 
     if (side==1)
-         ulAddr2 = 0x80181880;
+        ulAddr2 = 0x80181880;
 
     unsigned char ulValue2 =c?128:0;
     ll_write_system_register(ulAddr2,ulValue2);

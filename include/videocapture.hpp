@@ -35,8 +35,6 @@
 
 namespace sl_oc {
 
-
-
 #ifdef SENSORS_MOD_AVAILABLE
 namespace sensors {
 class SensorCapture;
@@ -486,8 +484,8 @@ private:
 
     SL_DEVICE mCameraModel = SL_DEVICE::NONE; //!< The camera model
 
-    Frame mLastFrame;                   //!< Last grabbed frame
-    uint8_t mBufCount = 2;              //!< UVC buffer count
+    Frame mLastFrame[BUF_COUNT];        //!< Last grabbed frame
+    uint8_t mBufCount = BUF_COUNT;      //!< UVC buffer count
     uint8_t mCurrentIndex = 0;          //!< The index of the currect UVC buffer
     struct UVCBuffer *mBuffers = nullptr;  //!< UVC buffers
 
