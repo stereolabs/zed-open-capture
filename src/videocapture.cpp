@@ -909,11 +909,15 @@ const Frame& VideoCapture::getLastFrame( uint64_t timeout_msec )
     }
     // <---- Wait for a new frame
 
-    uint8_t idx=mCurrentIndex;
+    uint8_t idx=0;
 
     if(mCurrentIndex==0)
     {
         idx = BUF_COUNT-1;
+    }
+    else
+    {
+        idx = mCurrentIndex-1;
     }
 
     // Get the frame mutex
