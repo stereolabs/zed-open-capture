@@ -69,7 +69,7 @@ you can permanently add this configuration by adding the above command as last l
 
 ### Prerequisites
 
- * Stereo camera: [ZED 2](https://www.stereolabs.com/zed-2/), [ZED](https://www.stereolabs.com/zed/), [ZED Mini](https://www.stereolabs.com/zed-mini/)
+ * Stereo camera: [ZED 2i](https://www.stereolabs.com/zed-2i/), [ZED 2](https://www.stereolabs.com/zed-2/), [ZED](https://www.stereolabs.com/zed/), [ZED Mini](https://www.stereolabs.com/zed-mini/)
  * Linux OS
  * GCC (v7.5+)
  * CMake (v3.1+)
@@ -214,7 +214,7 @@ The coordinate system is only used for sensors data. The given IMU and Magnetome
 ## Related
 
 - [Stereolabs](https://www.stereolabs.com)
-- [ZED 2 multi-sensor camera](https://www.stereolabs.com/zed-2/)
+- [ZED 2i multi-sensor camera](https://www.stereolabs.com/zed-2i/)
 - [ZED SDK](https://www.stereolabs.com/developers/)
 
 ## License
