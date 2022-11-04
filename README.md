@@ -170,6 +170,7 @@ Include the `SensorCapture` header, declare a `SensorCapture` object, get a list
 After installing the library and examples, you will have the following sample applications in your `build` directory:
 
 * [zed_open_capture_video_example](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_video_example.cpp): This application captures and displays video frames from the camera.
+* [zed_open_capture_multicam_video_example](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_multi_video_example.cpp): This application captures and displays video frames from two cameras.
 * [zed_open_capture_control_example](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_control_example.cpp): This application captures and displays video frames from the camera and provides runtime control of camera parameters using keyboard shortcuts.
 * [zed_open_capture_rectify_example](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_rectify_example.cpp): This application downloads factory stereo calibration parameters from Stereolabs server, performs stereo image rectification and displays original and rectified frames.
 * [zed_open_capture_sensors_example](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_sensors_example.cpp): This application creates a `SensorCapture` object and displays on the command console the values of camera sensors acquired at full rate.
@@ -181,6 +182,7 @@ To run the examples, open a terminal console and enter the following commands:
 
 ```
 $ zed_open_capture_video_example
+$ zed_open_capture_multicam_video_example
 $ zed_open_capture_control_example
 $ zed_open_capture_rectify_example
 $ zed_open_capture_sensors_example
