@@ -1,5 +1,9 @@
 # Changelog
 
+v0.6.0 - 2022 11 04
+-------------------
+* Add multi-camera video example
+
 v0.5.0 - 2021 09 10
 -------------------
 * Add example to extract disparity map, depth map and point cloud using OpenCV and T-API (OpenCL) 

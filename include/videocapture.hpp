@@ -345,6 +345,18 @@ public:
      */
     void setColorBars(int side, bool c);
 
+    /*!
+     * \brief Retrieve the OS device name
+     * \return the OS device name
+     */
+    inline std::string getDeviceName(){return mDevName;}
+
+    /*!
+     * \brief Retrieve the OS device index
+     * \return the OS device index
+     */
+    inline int getDeviceId(){return mDevId;}
+
 #ifdef SENSOR_LOG_AVAILABLE
     /*!
      * \brief Start logging to file of AEG/AGC camera registers

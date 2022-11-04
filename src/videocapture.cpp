@@ -928,6 +928,8 @@ int VideoCapture::ll_VendorControl(uint8_t *buf, int len, int readMode, bool saf
 
     int io_err = ioctl(mFileDesc, UVCIOC_CTRL_QUERY, &xu_query_info);
 
+    //std::cerr << "[ll_VendorControl] '" << mDevName << "' [" << mDevId << "] - mFileDesc: " << mFileDesc << std::endl;
+
     if (io_err != 0)
     {
         return -4;
@@ -1477,6 +1479,9 @@ void VideoCapture::setCameraControlSettings(int ctrl_id, int ctrl_val) {
 
     // save_controls(fd);
     queryctrl.id = ctrl_id;
+
+    //std::cerr << "[setCameraControlSettings] '" << mDevName << "' [" << mDevId << "] - mFileDesc: " << mFileDesc << std::endl;
+
     int res = ioctl(mFileDesc, VIDIOC_QUERYCTRL, &queryctrl);
     if (0 == res) {
         min = queryctrl.minimum;

@@ -42,9 +42,9 @@ int main(int argc, char *argv[])
     params.res = sl_oc::video::RESOLUTION::HD720;
     params.fps = sl_oc::video::FPS::FPS_60;
 
-    // ----> Create Video Capture
+    // ----> Create Video Capture 0
     sl_oc::video::VideoCapture cap_0(params);
-    if( !cap_0.initializeVideo() )
+    if( !cap_0.initializeVideo(0) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
         std::cerr << "See verbosity level for more details." << std::endl;
@@ -52,9 +52,29 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    std::cout << "Connected to camera sn: " << cap_0.getSerialNumber() << "[" << cap_0.getDeviceName() << "]" << std::endl;
-    // <---- Create Video Capture
+    std::cout << "Connected to camera sn: " << cap_0.getSerialNumber() << " [" << cap_0.getDeviceName() << "]" << std::endl;
+    // <---- Create Video Capture 0
 
+    // ----> Create Video Capture 1
+    sl_oc::video::VideoCapture cap_1(params);
+    if( !cap_1.initializeVideo(2) )
+    {
+        std::cerr << "Cannot open camera video capture" << std::endl;
+        std::cerr << "See verbosity level for more details." << std::endl;
+
+        return EXIT_FAILURE;
+    }
+
+    std::cout << "Connected to camera sn: " << cap_1.getSerialNumber() << " [" << cap_1.getDeviceName() << "]" << std::endl;
+    // <---- Create Video Capture 1
+
+    // Set video parameters
+    bool autoSettingEnable = true;
+    cap_0.setAutoWhiteBalance(autoSettingEnable);
+    cap_0.setAECAGC(autoSettingEnable);
+
+    cap_1.setAutoWhiteBalance(autoSettingEnable);
+    cap_1.setAECAGC(autoSettingEnable);
 
 
 #ifdef TEST_FPS
@@ -68,10 +88,11 @@ int main(int argc, char *argv[])
     while (1)
     {
         // Get last available frame
-        const sl_oc::video::Frame frame = cap_0.getLastFrame();
+        const sl_oc::video::Frame frame_0 = cap_0.getLastFrame();
+        const sl_oc::video::Frame frame_1 = cap_1.getLastFrame();
 
         // ----> If the frame is valid we can display it
-        if(frame.data!=nullptr)
+        if(frame_0.data!=nullptr && frame_1.data!=nullptr)
         {
 #ifdef TEST_FPS
             if(lastFrameTs!=0)
@@ -92,13 +113,17 @@ int main(int argc, char *argv[])
 #endif
 
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
-            cv::Mat frameYUV = cv::Mat( frame.height, frame.width, CV_8UC2, frame.data );
-            cv::Mat frameBGR;
-            cv::cvtColor(frameYUV,frameBGR,cv::COLOR_YUV2BGR_YUYV);
+            cv::Mat frameYUV_0 = cv::Mat( frame_0.height, frame_0.width, CV_8UC2, frame_0.data );
+            cv::Mat frameBGR_0;
+            cv::Mat frameYUV_1 = cv::Mat( frame_1.height, frame_1.width, CV_8UC2, frame_1.data );
+            cv::Mat frameBGR_1;
+            cv::cvtColor(frameYUV_0,frameBGR_0,cv::COLOR_YUV2BGR_YUYV);
+            cv::cvtColor(frameYUV_1,frameBGR_1,cv::COLOR_YUV2BGR_YUYV);
             // <---- Conversion from YUV 4:2:2 to BGR for visualization
 
             // Show frame
-            sl_oc::tools::showImage( "Stream RGB", frameBGR, params.res  );
+            sl_oc::tools::showImage( "Stream RGB #0", frameBGR_0, params.res  );
+            sl_oc::tools::showImage( "Stream RGB #1", frameBGR_1, params.res  );
         }
         // <---- If the frame is valid we can display it
 
@@ -106,6 +131,17 @@ int main(int argc, char *argv[])
         int key = cv::waitKey( 5 );
         if(key=='q' || key=='Q') // Quit
             break;
+        if(key=='a' || key=='A')
+        {
+            autoSettingEnable = !autoSettingEnable;
+            cap_0.setAutoWhiteBalance(autoSettingEnable);
+            cap_0.setAECAGC(autoSettingEnable);
+
+            cap_1.setAutoWhiteBalance(autoSettingEnable);
+            cap_1.setAECAGC(autoSettingEnable);
+
+            std::cout << "Auto GAIN/EXPOSURE and Auto White Balance: " << (autoSettingEnable?"ENABLED":"DISABLED") << std::endl;
+        }
         // <---- Keyboard handling
     }
 

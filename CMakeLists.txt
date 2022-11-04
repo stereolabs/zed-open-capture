@@ -171,6 +171,21 @@ if(BUILD_EXAMPLES)
             RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         )
 
+        ##### Multi-camera Video Example
+        set(MULTICAM_VIDEO_EXAMPLE ${PROJECT_NAME}_multicam_video_example)
+        add_executable(${MULTICAM_VIDEO_EXAMPLE} "${PROJECT_SOURCE_DIR}/examples/zed_oc_multi_video_example.cpp")
+        set_target_properties(${MULTICAM_VIDEO_EXAMPLE} PROPERTIES PREFIX "")
+        set_property(TARGET ${MULTICAM_VIDEO_EXAMPLE} PROPERTY POSITION_INDEPENDENT_CODE ON)
+        target_link_libraries(${MULTICAM_VIDEO_EXAMPLE}
+          ${PROJECT_NAME}
+          ${OpenCV_LIBS}
+        )
+        install(TARGETS ${MULTICAM_VIDEO_EXAMPLE}
+            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+        )
+
+
+
         ##### Control Example
         set(CONTROL_EXAMPLE ${PROJECT_NAME}_control_example)
         add_executable(${CONTROL_EXAMPLE} "${PROJECT_SOURCE_DIR}/examples/zed_oc_control_example.cpp")
