@@ -76,7 +76,6 @@ int main(int argc, char *argv[])
     cap_1.setAutoWhiteBalance(autoSettingEnable);
     cap_1.setAECAGC(autoSettingEnable);
 
-
 #ifdef TEST_FPS
     // Timestamp to check FPS
     double lastTime = static_cast<double>(getSteadyTimestamp())/1e9;
