@@ -212,6 +212,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af4b325e83c678ec50b5f608ebf76e456"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#af4b325e83c678ec50b5f608ebf76e456">setColorBars</a> (int side, bool c)</td></tr>
 <tr class="memdesc:af4b325e83c678ec50b5f608ebf76e456"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utils fct to set Color Bars on Image.  <a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#af4b325e83c678ec50b5f608ebf76e456">More...</a><br /></td></tr>
 <tr class="separator:af4b325e83c678ec50b5f608ebf76e456"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa38c10cf15eaf00169dfd322b7563de1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#aa38c10cf15eaf00169dfd322b7563de1">getDeviceName</a> ()</td></tr>
+<tr class="memdesc:aa38c10cf15eaf00169dfd322b7563de1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the OS device name.  <a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#aa38c10cf15eaf00169dfd322b7563de1">More...</a><br /></td></tr>
+<tr class="separator:aa38c10cf15eaf00169dfd322b7563de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0384794ec5bfc9ad6625630a169419d3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a0384794ec5bfc9ad6625630a169419d3">getDeviceId</a> ()</td></tr>
+<tr class="memdesc:a0384794ec5bfc9ad6625630a169419d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the OS device index.  <a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a0384794ec5bfc9ad6625630a169419d3">More...</a><br /></td></tr>
+<tr class="separator:a0384794ec5bfc9ad6625630a169419d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3b3874385db354b0dc5ffb9792e0fcc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#aa3b3874385db354b0dc5ffb9792e0fcc">enableAecAgcSensLogging</a> (bool enable, int frame_skip=10)</td></tr>
 <tr class="memdesc:aa3b3874385db354b0dc5ffb9792e0fcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start logging to file of AEG/AGC camera registers.  <a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#aa3b3874385db354b0dc5ffb9792e0fcc">More...</a><br /></td></tr>
 <tr class="separator:aa3b3874385db354b0dc5ffb9792e0fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -373,82 +379,82 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a57">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01934">1934</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01935"></a><span class="lineno"> 1935</span>&#160;{</div>
-<div class="line"><a name="l01936"></a><span class="lineno"> 1936</span>&#160;    <span class="keywordflow">if</span>(!enable)</div>
-<div class="line"><a name="l01937"></a><span class="lineno"> 1937</span>&#160;    {</div>
-<div class="line"><a name="l01938"></a><span class="lineno"> 1938</span>&#160;        mLogEnable=<span class="keyword">false</span>;</div>
-<div class="line"><a name="l01939"></a><span class="lineno"> 1939</span>&#160;        <span class="keywordflow">if</span>(mLogFileLeft.is_open())</div>
-<div class="line"><a name="l01940"></a><span class="lineno"> 1940</span>&#160;        {</div>
-<div class="line"><a name="l01941"></a><span class="lineno"> 1941</span>&#160;            mLogFileLeft.close();</div>
-<div class="line"><a name="l01942"></a><span class="lineno"> 1942</span>&#160;        }</div>
-<div class="line"><a name="l01943"></a><span class="lineno"> 1943</span>&#160;        <span class="keywordflow">if</span>(mLogFileRight.is_open())</div>
-<div class="line"><a name="l01944"></a><span class="lineno"> 1944</span>&#160;        {</div>
-<div class="line"><a name="l01945"></a><span class="lineno"> 1945</span>&#160;            mLogFileRight.close();</div>
-<div class="line"><a name="l01946"></a><span class="lineno"> 1946</span>&#160;        }</div>
-<div class="line"><a name="l01947"></a><span class="lineno"> 1947</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l01948"></a><span class="lineno"> 1948</span>&#160;    }</div>
-<div class="line"><a name="l01949"></a><span class="lineno"> 1949</span>&#160; </div>
-<div class="line"><a name="l01950"></a><span class="lineno"> 1950</span>&#160;    mLogFrameSkip = frame_skip;</div>
-<div class="line"><a name="l01951"></a><span class="lineno"> 1951</span>&#160; </div>
-<div class="line"><a name="l01952"></a><span class="lineno"> 1952</span>&#160;    mLogFilenameLeft = getCurrentDateTime(DATE);</div>
-<div class="line"><a name="l01953"></a><span class="lineno"> 1953</span>&#160;    mLogFilenameLeft += <span class="stringliteral">&quot;_&quot;</span>;</div>
-<div class="line"><a name="l01954"></a><span class="lineno"> 1954</span>&#160;    mLogFilenameLeft += getCurrentDateTime(TIME);</div>
-<div class="line"><a name="l01955"></a><span class="lineno"> 1955</span>&#160;    mLogFilenameLeft += <span class="stringliteral">&quot;_agc_aec_registers-LEFT.csv&quot;</span>;</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01939">1939</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01940"></a><span class="lineno"> 1940</span>&#160;{</div>
+<div class="line"><a name="l01941"></a><span class="lineno"> 1941</span>&#160;    <span class="keywordflow">if</span>(!enable)</div>
+<div class="line"><a name="l01942"></a><span class="lineno"> 1942</span>&#160;    {</div>
+<div class="line"><a name="l01943"></a><span class="lineno"> 1943</span>&#160;        mLogEnable=<span class="keyword">false</span>;</div>
+<div class="line"><a name="l01944"></a><span class="lineno"> 1944</span>&#160;        <span class="keywordflow">if</span>(mLogFileLeft.is_open())</div>
+<div class="line"><a name="l01945"></a><span class="lineno"> 1945</span>&#160;        {</div>
+<div class="line"><a name="l01946"></a><span class="lineno"> 1946</span>&#160;            mLogFileLeft.close();</div>
+<div class="line"><a name="l01947"></a><span class="lineno"> 1947</span>&#160;        }</div>
+<div class="line"><a name="l01948"></a><span class="lineno"> 1948</span>&#160;        <span class="keywordflow">if</span>(mLogFileRight.is_open())</div>
+<div class="line"><a name="l01949"></a><span class="lineno"> 1949</span>&#160;        {</div>
+<div class="line"><a name="l01950"></a><span class="lineno"> 1950</span>&#160;            mLogFileRight.close();</div>
+<div class="line"><a name="l01951"></a><span class="lineno"> 1951</span>&#160;        }</div>
+<div class="line"><a name="l01952"></a><span class="lineno"> 1952</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l01953"></a><span class="lineno"> 1953</span>&#160;    }</div>
+<div class="line"><a name="l01954"></a><span class="lineno"> 1954</span>&#160; </div>
+<div class="line"><a name="l01955"></a><span class="lineno"> 1955</span>&#160;    mLogFrameSkip = frame_skip;</div>
 <div class="line"><a name="l01956"></a><span class="lineno"> 1956</span>&#160; </div>
-<div class="line"><a name="l01957"></a><span class="lineno"> 1957</span>&#160;    mLogFilenameRight = getCurrentDateTime(DATE);</div>
-<div class="line"><a name="l01958"></a><span class="lineno"> 1958</span>&#160;    mLogFilenameRight += <span class="stringliteral">&quot;_&quot;</span>;</div>
-<div class="line"><a name="l01959"></a><span class="lineno"> 1959</span>&#160;    mLogFilenameRight += getCurrentDateTime(TIME);</div>
-<div class="line"><a name="l01960"></a><span class="lineno"> 1960</span>&#160;    mLogFilenameRight += <span class="stringliteral">&quot;_agc_aec_registers-RIGHT.csv&quot;</span>;</div>
+<div class="line"><a name="l01957"></a><span class="lineno"> 1957</span>&#160;    mLogFilenameLeft = getCurrentDateTime(DATE);</div>
+<div class="line"><a name="l01958"></a><span class="lineno"> 1958</span>&#160;    mLogFilenameLeft += <span class="stringliteral">&quot;_&quot;</span>;</div>
+<div class="line"><a name="l01959"></a><span class="lineno"> 1959</span>&#160;    mLogFilenameLeft += getCurrentDateTime(TIME);</div>
+<div class="line"><a name="l01960"></a><span class="lineno"> 1960</span>&#160;    mLogFilenameLeft += <span class="stringliteral">&quot;_agc_aec_registers-LEFT.csv&quot;</span>;</div>
 <div class="line"><a name="l01961"></a><span class="lineno"> 1961</span>&#160; </div>
-<div class="line"><a name="l01962"></a><span class="lineno"> 1962</span>&#160;    mLogFileLeft.open(mLogFilenameLeft, std::ofstream::out );</div>
-<div class="line"><a name="l01963"></a><span class="lineno"> 1963</span>&#160;    mLogFileRight.open(mLogFilenameRight, std::ofstream::out );</div>
-<div class="line"><a name="l01964"></a><span class="lineno"> 1964</span>&#160; </div>
-<div class="line"><a name="l01965"></a><span class="lineno"> 1965</span>&#160;    <span class="keywordflow">if</span>(mLogFileLeft.bad())</div>
-<div class="line"><a name="l01966"></a><span class="lineno"> 1966</span>&#160;    {</div>
-<div class="line"><a name="l01967"></a><span class="lineno"> 1967</span>&#160;        std::cerr &lt;&lt; <span class="stringliteral">&quot;Logging not started. Error creating the log file: &#39;&quot;</span> &lt;&lt; mLogFilenameLeft &lt;&lt; <span class="stringliteral">&quot;&#39;&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l01968"></a><span class="lineno"> 1968</span>&#160;        mLogEnable = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l01969"></a><span class="lineno"> 1969</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l01970"></a><span class="lineno"> 1970</span>&#160;    }</div>
-<div class="line"><a name="l01971"></a><span class="lineno"> 1971</span>&#160; </div>
-<div class="line"><a name="l01972"></a><span class="lineno"> 1972</span>&#160;    <span class="keywordflow">if</span>(mLogFileRight.bad())</div>
-<div class="line"><a name="l01973"></a><span class="lineno"> 1973</span>&#160;    {</div>
-<div class="line"><a name="l01974"></a><span class="lineno"> 1974</span>&#160;        std::cerr &lt;&lt; <span class="stringliteral">&quot;Logging not started. Error creating the log file: &#39;&quot;</span> &lt;&lt; mLogFilenameRight &lt;&lt; <span class="stringliteral">&quot;&#39;&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l01975"></a><span class="lineno"> 1975</span>&#160;        mLogEnable = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l01976"></a><span class="lineno"> 1976</span>&#160;        mLogFileLeft.close();</div>
-<div class="line"><a name="l01977"></a><span class="lineno"> 1977</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l01978"></a><span class="lineno"> 1978</span>&#160;    }</div>
-<div class="line"><a name="l01979"></a><span class="lineno"> 1979</span>&#160; </div>
-<div class="line"><a name="l01980"></a><span class="lineno"> 1980</span>&#160;    mLogFileLeft &lt;&lt; <span class="stringliteral">&quot;TIMESTAMP&quot;</span> &lt;&lt; LOG_SEP;</div>
-<div class="line"><a name="l01981"></a><span class="lineno"> 1981</span>&#160;    mLogFileLeft &lt;&lt; <span class="stringliteral">&quot;OV580-ISP_EN_HIGH&quot;</span> &lt;&lt; LOG_SEP;</div>
-<div class="line"><a name="l01982"></a><span class="lineno"> 1982</span>&#160;    mLogFileLeft &lt;&lt; <span class="stringliteral">&quot;OV580-yavg_low&quot;</span> &lt;&lt; LOG_SEP;</div>
-<div class="line"><a name="l01983"></a><span class="lineno"> 1983</span>&#160;    mLogFileLeft &lt;&lt; <span class="stringliteral">&quot;OV580-yavg_high&quot;</span> &lt;&lt; LOG_SEP;</div>
-<div class="line"><a name="l01984"></a><span class="lineno"> 1984</span>&#160;    mLogFileLeft &lt;&lt; <span class="stringliteral">&quot;OV580-interrupt_ctrl1&quot;</span>;</div>
-<div class="line"><a name="l01985"></a><span class="lineno"> 1985</span>&#160; </div>
-<div class="line"><a name="l01986"></a><span class="lineno"> 1986</span>&#160;    mLogFileRight &lt;&lt; <span class="stringliteral">&quot;TIMESTAMP&quot;</span> &lt;&lt; LOG_SEP;</div>
-<div class="line"><a name="l01987"></a><span class="lineno"> 1987</span>&#160;    mLogFileRight &lt;&lt; <span class="stringliteral">&quot;OV580-ISP_EN_HIGH&quot;</span> &lt;&lt; LOG_SEP;</div>
-<div class="line"><a name="l01988"></a><span class="lineno"> 1988</span>&#160;    mLogFileRight &lt;&lt; <span class="stringliteral">&quot;OV580-yavg_low&quot;</span> &lt;&lt; LOG_SEP;</div>
-<div class="line"><a name="l01989"></a><span class="lineno"> 1989</span>&#160;    mLogFileRight &lt;&lt; <span class="stringliteral">&quot;OV580-yavg_high&quot;</span> &lt;&lt; LOG_SEP;</div>
-<div class="line"><a name="l01990"></a><span class="lineno"> 1990</span>&#160;    mLogFileRight &lt;&lt; <span class="stringliteral">&quot;OV580-interrupt_ctrl1&quot;</span>;</div>
-<div class="line"><a name="l01991"></a><span class="lineno"> 1991</span>&#160; </div>
-<div class="line"><a name="l01992"></a><span class="lineno"> 1992</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> addr = 0x00; addr &lt;= 0x22; ++addr)</div>
-<div class="line"><a name="l01993"></a><span class="lineno"> 1993</span>&#160;    {</div>
-<div class="line"><a name="l01994"></a><span class="lineno"> 1994</span>&#160;        mLogFileLeft &lt;&lt; LOG_SEP &lt;&lt; <span class="stringliteral">&quot;OV580-YAVG[0x&quot;</span> &lt;&lt; std::hex &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(2) &lt;&lt; addr &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
-<div class="line"><a name="l01995"></a><span class="lineno"> 1995</span>&#160;        mLogFileRight &lt;&lt; LOG_SEP &lt;&lt; <span class="stringliteral">&quot;OV580-YAVG[0x&quot;</span> &lt;&lt; std::hex &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(2) &lt;&lt; addr &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
-<div class="line"><a name="l01996"></a><span class="lineno"> 1996</span>&#160;    }</div>
-<div class="line"><a name="l01997"></a><span class="lineno"> 1997</span>&#160; </div>
-<div class="line"><a name="l01998"></a><span class="lineno"> 1998</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> addr = 0x3500; addr &lt;= 0x3515; ++addr)</div>
-<div class="line"><a name="l01999"></a><span class="lineno"> 1999</span>&#160;    {</div>
-<div class="line"><a name="l02000"></a><span class="lineno"> 2000</span>&#160;        mLogFileLeft &lt;&lt; LOG_SEP &lt;&lt; <span class="stringliteral">&quot;OV4689-GAIN_EXP[0x&quot;</span> &lt;&lt; std::hex &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(4) &lt;&lt; addr &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
-<div class="line"><a name="l02001"></a><span class="lineno"> 2001</span>&#160;        mLogFileRight &lt;&lt; LOG_SEP &lt;&lt; <span class="stringliteral">&quot;OV4689-GAIN_EXP[0x&quot;</span> &lt;&lt; std::hex &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(4) &lt;&lt; addr &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
-<div class="line"><a name="l02002"></a><span class="lineno"> 2002</span>&#160;    }</div>
-<div class="line"><a name="l02003"></a><span class="lineno"> 2003</span>&#160; </div>
-<div class="line"><a name="l02004"></a><span class="lineno"> 2004</span>&#160;    mLogFileLeft &lt;&lt; std::endl;</div>
-<div class="line"><a name="l02005"></a><span class="lineno"> 2005</span>&#160;    mLogFileRight &lt;&lt; std::endl;</div>
-<div class="line"><a name="l02006"></a><span class="lineno"> 2006</span>&#160; </div>
-<div class="line"><a name="l02007"></a><span class="lineno"> 2007</span>&#160;    mLogEnable = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l02008"></a><span class="lineno"> 2008</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l02009"></a><span class="lineno"> 2009</span>&#160;}</div>
+<div class="line"><a name="l01962"></a><span class="lineno"> 1962</span>&#160;    mLogFilenameRight = getCurrentDateTime(DATE);</div>
+<div class="line"><a name="l01963"></a><span class="lineno"> 1963</span>&#160;    mLogFilenameRight += <span class="stringliteral">&quot;_&quot;</span>;</div>
+<div class="line"><a name="l01964"></a><span class="lineno"> 1964</span>&#160;    mLogFilenameRight += getCurrentDateTime(TIME);</div>
+<div class="line"><a name="l01965"></a><span class="lineno"> 1965</span>&#160;    mLogFilenameRight += <span class="stringliteral">&quot;_agc_aec_registers-RIGHT.csv&quot;</span>;</div>
+<div class="line"><a name="l01966"></a><span class="lineno"> 1966</span>&#160; </div>
+<div class="line"><a name="l01967"></a><span class="lineno"> 1967</span>&#160;    mLogFileLeft.open(mLogFilenameLeft, std::ofstream::out );</div>
+<div class="line"><a name="l01968"></a><span class="lineno"> 1968</span>&#160;    mLogFileRight.open(mLogFilenameRight, std::ofstream::out );</div>
+<div class="line"><a name="l01969"></a><span class="lineno"> 1969</span>&#160; </div>
+<div class="line"><a name="l01970"></a><span class="lineno"> 1970</span>&#160;    <span class="keywordflow">if</span>(mLogFileLeft.bad())</div>
+<div class="line"><a name="l01971"></a><span class="lineno"> 1971</span>&#160;    {</div>
+<div class="line"><a name="l01972"></a><span class="lineno"> 1972</span>&#160;        std::cerr &lt;&lt; <span class="stringliteral">&quot;Logging not started. Error creating the log file: &#39;&quot;</span> &lt;&lt; mLogFilenameLeft &lt;&lt; <span class="stringliteral">&quot;&#39;&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l01973"></a><span class="lineno"> 1973</span>&#160;        mLogEnable = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01974"></a><span class="lineno"> 1974</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01975"></a><span class="lineno"> 1975</span>&#160;    }</div>
+<div class="line"><a name="l01976"></a><span class="lineno"> 1976</span>&#160; </div>
+<div class="line"><a name="l01977"></a><span class="lineno"> 1977</span>&#160;    <span class="keywordflow">if</span>(mLogFileRight.bad())</div>
+<div class="line"><a name="l01978"></a><span class="lineno"> 1978</span>&#160;    {</div>
+<div class="line"><a name="l01979"></a><span class="lineno"> 1979</span>&#160;        std::cerr &lt;&lt; <span class="stringliteral">&quot;Logging not started. Error creating the log file: &#39;&quot;</span> &lt;&lt; mLogFilenameRight &lt;&lt; <span class="stringliteral">&quot;&#39;&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l01980"></a><span class="lineno"> 1980</span>&#160;        mLogEnable = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01981"></a><span class="lineno"> 1981</span>&#160;        mLogFileLeft.close();</div>
+<div class="line"><a name="l01982"></a><span class="lineno"> 1982</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01983"></a><span class="lineno"> 1983</span>&#160;    }</div>
+<div class="line"><a name="l01984"></a><span class="lineno"> 1984</span>&#160; </div>
+<div class="line"><a name="l01985"></a><span class="lineno"> 1985</span>&#160;    mLogFileLeft &lt;&lt; <span class="stringliteral">&quot;TIMESTAMP&quot;</span> &lt;&lt; LOG_SEP;</div>
+<div class="line"><a name="l01986"></a><span class="lineno"> 1986</span>&#160;    mLogFileLeft &lt;&lt; <span class="stringliteral">&quot;OV580-ISP_EN_HIGH&quot;</span> &lt;&lt; LOG_SEP;</div>
+<div class="line"><a name="l01987"></a><span class="lineno"> 1987</span>&#160;    mLogFileLeft &lt;&lt; <span class="stringliteral">&quot;OV580-yavg_low&quot;</span> &lt;&lt; LOG_SEP;</div>
+<div class="line"><a name="l01988"></a><span class="lineno"> 1988</span>&#160;    mLogFileLeft &lt;&lt; <span class="stringliteral">&quot;OV580-yavg_high&quot;</span> &lt;&lt; LOG_SEP;</div>
+<div class="line"><a name="l01989"></a><span class="lineno"> 1989</span>&#160;    mLogFileLeft &lt;&lt; <span class="stringliteral">&quot;OV580-interrupt_ctrl1&quot;</span>;</div>
+<div class="line"><a name="l01990"></a><span class="lineno"> 1990</span>&#160; </div>
+<div class="line"><a name="l01991"></a><span class="lineno"> 1991</span>&#160;    mLogFileRight &lt;&lt; <span class="stringliteral">&quot;TIMESTAMP&quot;</span> &lt;&lt; LOG_SEP;</div>
+<div class="line"><a name="l01992"></a><span class="lineno"> 1992</span>&#160;    mLogFileRight &lt;&lt; <span class="stringliteral">&quot;OV580-ISP_EN_HIGH&quot;</span> &lt;&lt; LOG_SEP;</div>
+<div class="line"><a name="l01993"></a><span class="lineno"> 1993</span>&#160;    mLogFileRight &lt;&lt; <span class="stringliteral">&quot;OV580-yavg_low&quot;</span> &lt;&lt; LOG_SEP;</div>
+<div class="line"><a name="l01994"></a><span class="lineno"> 1994</span>&#160;    mLogFileRight &lt;&lt; <span class="stringliteral">&quot;OV580-yavg_high&quot;</span> &lt;&lt; LOG_SEP;</div>
+<div class="line"><a name="l01995"></a><span class="lineno"> 1995</span>&#160;    mLogFileRight &lt;&lt; <span class="stringliteral">&quot;OV580-interrupt_ctrl1&quot;</span>;</div>
+<div class="line"><a name="l01996"></a><span class="lineno"> 1996</span>&#160; </div>
+<div class="line"><a name="l01997"></a><span class="lineno"> 1997</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> addr = 0x00; addr &lt;= 0x22; ++addr)</div>
+<div class="line"><a name="l01998"></a><span class="lineno"> 1998</span>&#160;    {</div>
+<div class="line"><a name="l01999"></a><span class="lineno"> 1999</span>&#160;        mLogFileLeft &lt;&lt; LOG_SEP &lt;&lt; <span class="stringliteral">&quot;OV580-YAVG[0x&quot;</span> &lt;&lt; std::hex &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(2) &lt;&lt; addr &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
+<div class="line"><a name="l02000"></a><span class="lineno"> 2000</span>&#160;        mLogFileRight &lt;&lt; LOG_SEP &lt;&lt; <span class="stringliteral">&quot;OV580-YAVG[0x&quot;</span> &lt;&lt; std::hex &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(2) &lt;&lt; addr &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
+<div class="line"><a name="l02001"></a><span class="lineno"> 2001</span>&#160;    }</div>
+<div class="line"><a name="l02002"></a><span class="lineno"> 2002</span>&#160; </div>
+<div class="line"><a name="l02003"></a><span class="lineno"> 2003</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> addr = 0x3500; addr &lt;= 0x3515; ++addr)</div>
+<div class="line"><a name="l02004"></a><span class="lineno"> 2004</span>&#160;    {</div>
+<div class="line"><a name="l02005"></a><span class="lineno"> 2005</span>&#160;        mLogFileLeft &lt;&lt; LOG_SEP &lt;&lt; <span class="stringliteral">&quot;OV4689-GAIN_EXP[0x&quot;</span> &lt;&lt; std::hex &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(4) &lt;&lt; addr &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
+<div class="line"><a name="l02006"></a><span class="lineno"> 2006</span>&#160;        mLogFileRight &lt;&lt; LOG_SEP &lt;&lt; <span class="stringliteral">&quot;OV4689-GAIN_EXP[0x&quot;</span> &lt;&lt; std::hex &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(4) &lt;&lt; addr &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
+<div class="line"><a name="l02007"></a><span class="lineno"> 2007</span>&#160;    }</div>
+<div class="line"><a name="l02008"></a><span class="lineno"> 2008</span>&#160; </div>
+<div class="line"><a name="l02009"></a><span class="lineno"> 2009</span>&#160;    mLogFileLeft &lt;&lt; std::endl;</div>
+<div class="line"><a name="l02010"></a><span class="lineno"> 2010</span>&#160;    mLogFileRight &lt;&lt; std::endl;</div>
+<div class="line"><a name="l02011"></a><span class="lineno"> 2011</span>&#160; </div>
+<div class="line"><a name="l02012"></a><span class="lineno"> 2012</span>&#160;    mLogEnable = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l02013"></a><span class="lineno"> 2013</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l02014"></a><span class="lineno"> 2014</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d3/df8/zed__oc__video__reg__log_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>.</p>
 
@@ -479,21 +485,21 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if synchronization has been correctly started </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l02146">2146</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l02147"></a><span class="lineno"> 2147</span>&#160;{</div>
-<div class="line"><a name="l02148"></a><span class="lineno"> 2148</span>&#160;    <span class="keywordflow">if</span>(!sensCap)</div>
-<div class="line"><a name="l02149"></a><span class="lineno"> 2149</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l02150"></a><span class="lineno"> 2150</span>&#160; </div>
-<div class="line"><a name="l02151"></a><span class="lineno"> 2151</span>&#160;    <span class="comment">// Activate low level sync mechanism</span></div>
-<div class="line"><a name="l02152"></a><span class="lineno"> 2152</span>&#160;    ll_activate_sync();</div>
-<div class="line"><a name="l02153"></a><span class="lineno"> 2153</span>&#160; </div>
-<div class="line"><a name="l02154"></a><span class="lineno"> 2154</span>&#160;    mSyncEnabled = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l02155"></a><span class="lineno"> 2155</span>&#160;    mSensPtr = sensCap;</div>
-<div class="line"><a name="l02156"></a><span class="lineno"> 2156</span>&#160; </div>
-<div class="line"><a name="l02157"></a><span class="lineno"> 2157</span>&#160;    mSensPtr-&gt;<a class="code" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a44cd3eb30725cff54ce9269a75ff4db5">setVideoPtr</a>(<span class="keyword">this</span>);</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l02151">2151</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l02152"></a><span class="lineno"> 2152</span>&#160;{</div>
+<div class="line"><a name="l02153"></a><span class="lineno"> 2153</span>&#160;    <span class="keywordflow">if</span>(!sensCap)</div>
+<div class="line"><a name="l02154"></a><span class="lineno"> 2154</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l02155"></a><span class="lineno"> 2155</span>&#160; </div>
+<div class="line"><a name="l02156"></a><span class="lineno"> 2156</span>&#160;    <span class="comment">// Activate low level sync mechanism</span></div>
+<div class="line"><a name="l02157"></a><span class="lineno"> 2157</span>&#160;    ll_activate_sync();</div>
 <div class="line"><a name="l02158"></a><span class="lineno"> 2158</span>&#160; </div>
-<div class="line"><a name="l02159"></a><span class="lineno"> 2159</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l02160"></a><span class="lineno"> 2160</span>&#160;}</div>
+<div class="line"><a name="l02159"></a><span class="lineno"> 2159</span>&#160;    mSyncEnabled = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l02160"></a><span class="lineno"> 2160</span>&#160;    mSensPtr = sensCap;</div>
+<div class="line"><a name="l02161"></a><span class="lineno"> 2161</span>&#160; </div>
+<div class="line"><a name="l02162"></a><span class="lineno"> 2162</span>&#160;    mSensPtr-&gt;<a class="code" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a44cd3eb30725cff54ce9269a75ff4db5">setVideoPtr</a>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l02163"></a><span class="lineno"> 2163</span>&#160; </div>
+<div class="line"><a name="l02164"></a><span class="lineno"> 2164</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l02165"></a><span class="lineno"> 2165</span>&#160;}</div>
 <div class="ttc" id="aclasssl__oc_1_1sensors_1_1_sensor_capture_html_a44cd3eb30725cff54ce9269a75ff4db5"><div class="ttname"><a href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a44cd3eb30725cff54ce9269a75ff4db5">sl_oc::sensors::SensorCapture::setVideoPtr</a></div><div class="ttdeci">void setVideoPtr(video::VideoCapture *videoPtr)</div><div class="ttdoc">Called by VideoCapture to set the pointer to it.</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d21/sensorcapture_8hpp_source.html#l00230">sensorcapture.hpp:230</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d5/dcb/classsl__oc_1_1sensors_1_1_sensor_capture.html#a44cd3eb30725cff54ce9269a75ff4db5">sl_oc::sensors::SensorCapture::setVideoPtr()</a>.</p>
@@ -522,12 +528,12 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a66">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01706">1706</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160;{</div>
-<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;    <span class="keywordtype">int</span> resL = ll_isp_is_aecagc(0);</div>
-<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;    <span class="keywordtype">int</span> resR = ll_isp_is_aecagc(1);</div>
-<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;    <span class="keywordflow">return</span> (resL &amp;&amp; resR);</div>
-<div class="line"><a name="l01711"></a><span class="lineno"> 1711</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01711">1711</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01712"></a><span class="lineno"> 1712</span>&#160;{</div>
+<div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160;    <span class="keywordtype">int</span> resL = ll_isp_is_aecagc(0);</div>
+<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160;    <span class="keywordtype">int</span> resR = ll_isp_is_aecagc(1);</div>
+<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;    <span class="keywordflow">return</span> (resL &amp;&amp; resR);</div>
+<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a907f58660df3ee70ba6725c943ba9834">setExposure()</a>, and <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#adbf3d737cb881c39299a09009de58032">setGain()</a>.</p>
 
@@ -553,10 +559,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a67">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01659">1659</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01660"></a><span class="lineno"> 1660</span>&#160;{</div>
-<div class="line"><a name="l01661"></a><span class="lineno"> 1661</span>&#160;    <span class="keywordflow">return</span> (getCameraControlSettings(LINUX_CTRL_AWB_AUTO)!=0);</div>
-<div class="line"><a name="l01662"></a><span class="lineno"> 1662</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01664">1664</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01665"></a><span class="lineno"> 1665</span>&#160;{</div>
+<div class="line"><a name="l01666"></a><span class="lineno"> 1666</span>&#160;    <span class="keywordflow">return</span> (getCameraControlSettings(LINUX_CTRL_AWB_AUTO)!=0);</div>
+<div class="line"><a name="l01667"></a><span class="lineno"> 1667</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a89242e4f3d0ad6f3653de4f831ea01b5">setWhiteBalance()</a>.</p>
 
@@ -582,10 +588,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a60">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01580">1580</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01581"></a><span class="lineno"> 1581</span>&#160;{</div>
-<div class="line"><a name="l01582"></a><span class="lineno"> 1582</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_BRIGHTNESS);</div>
-<div class="line"><a name="l01583"></a><span class="lineno"> 1583</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01585">1585</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01586"></a><span class="lineno"> 1586</span>&#160;{</div>
+<div class="line"><a name="l01587"></a><span class="lineno"> 1587</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_BRIGHTNESS);</div>
+<div class="line"><a name="l01588"></a><span class="lineno"> 1588</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -609,11 +615,77 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a62">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01610">1610</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01611"></a><span class="lineno"> 1611</span>&#160;{</div>
-<div class="line"><a name="l01612"></a><span class="lineno"> 1612</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_CONTRAST);</div>
-<div class="line"><a name="l01613"></a><span class="lineno"> 1613</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01615">1615</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01616"></a><span class="lineno"> 1616</span>&#160;{</div>
+<div class="line"><a name="l01617"></a><span class="lineno"> 1617</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_CONTRAST);</div>
+<div class="line"><a name="l01618"></a><span class="lineno"> 1618</span>&#160;}</div>
 </div><!-- fragment -->
+</div>
+</div>
+<a id="a0384794ec5bfc9ad6625630a169419d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0384794ec5bfc9ad6625630a169419d3">&#9670;&nbsp;</a></span>getDeviceId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int sl_oc::video::VideoCapture::getDeviceId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieve the OS device index. </p>
+<dl class="section return"><dt>Returns</dt><dd>the OS device index </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d6/dd4/videocapture_8hpp_source.html#l00358">358</a> of file <a class="el" href="../../d6/dd4/videocapture_8hpp_source.html">videocapture.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;{<span class="keywordflow">return</span> mDevId;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa38c10cf15eaf00169dfd322b7563de1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa38c10cf15eaf00169dfd322b7563de1">&#9670;&nbsp;</a></span>getDeviceName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string sl_oc::video::VideoCapture::getDeviceName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieve the OS device name. </p>
+<dl class="section return"><dt>Returns</dt><dd>the OS device name </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../dd/dc0/zed_oc_video_example_8cpp-example.html#a10">zed_oc_video_example.cpp</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d6/dd4/videocapture_8hpp_source.html#l00352">352</a> of file <a class="el" href="../../d6/dd4/videocapture_8hpp_source.html">videocapture.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;{<span class="keywordflow">return</span> mDevName;}</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="../../d0/dc8/zed__oc__multi__video__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>.</p>
+
 </div>
 </div>
 <a id="abe128c2f45a29dc71d08064e41ed3149"></a>
@@ -643,25 +715,25 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a79">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01862">1862</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01863"></a><span class="lineno"> 1863</span>&#160;{</div>
-<div class="line"><a name="l01864"></a><span class="lineno"> 1864</span>&#160;    <span class="keywordtype">int</span> rawExp=0;</div>
-<div class="line"><a name="l01865"></a><span class="lineno"> 1865</span>&#160; </div>
-<div class="line"><a name="l01866"></a><span class="lineno"> 1866</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> val[3];</div>
-<div class="line"><a name="l01867"></a><span class="lineno"> 1867</span>&#160;    memset(val, 0, 3);</div>
-<div class="line"><a name="l01868"></a><span class="lineno"> 1868</span>&#160; </div>
-<div class="line"><a name="l01869"></a><span class="lineno"> 1869</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01867">1867</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01868"></a><span class="lineno"> 1868</span>&#160;{</div>
+<div class="line"><a name="l01869"></a><span class="lineno"> 1869</span>&#160;    <span class="keywordtype">int</span> rawExp=0;</div>
 <div class="line"><a name="l01870"></a><span class="lineno"> 1870</span>&#160; </div>
-<div class="line"><a name="l01871"></a><span class="lineno"> 1871</span>&#160;    <span class="keywordtype">int</span> r = ll_isp_get_exposure(val, sensorId);</div>
-<div class="line"><a name="l01872"></a><span class="lineno"> 1872</span>&#160;    <span class="keywordflow">if</span>(r&lt;0)</div>
-<div class="line"><a name="l01873"></a><span class="lineno"> 1873</span>&#160;        <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l01874"></a><span class="lineno"> 1874</span>&#160;    rawExp = (int) ((val[2] &lt;&lt; 12) + (val[1] &lt;&lt; 4) + (val[0] &gt;&gt; 4));</div>
+<div class="line"><a name="l01871"></a><span class="lineno"> 1871</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> val[3];</div>
+<div class="line"><a name="l01872"></a><span class="lineno"> 1872</span>&#160;    memset(val, 0, 3);</div>
+<div class="line"><a name="l01873"></a><span class="lineno"> 1873</span>&#160; </div>
+<div class="line"><a name="l01874"></a><span class="lineno"> 1874</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
 <div class="line"><a name="l01875"></a><span class="lineno"> 1875</span>&#160; </div>
-<div class="line"><a name="l01876"></a><span class="lineno"> 1876</span>&#160;    <span class="comment">//std::cout &lt;&lt; &quot;Get Raw Exp: &quot; &lt;&lt; rawExp &lt;&lt; std::endl;</span></div>
-<div class="line"><a name="l01877"></a><span class="lineno"> 1877</span>&#160; </div>
-<div class="line"><a name="l01878"></a><span class="lineno"> 1878</span>&#160;    <span class="keywordtype">int</span> exposure = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(std::round((100.0*rawExp)/mExpoureRawMax));</div>
-<div class="line"><a name="l01879"></a><span class="lineno"> 1879</span>&#160;    <span class="keywordflow">return</span> exposure;</div>
-<div class="line"><a name="l01880"></a><span class="lineno"> 1880</span>&#160;}</div>
+<div class="line"><a name="l01876"></a><span class="lineno"> 1876</span>&#160;    <span class="keywordtype">int</span> r = ll_isp_get_exposure(val, sensorId);</div>
+<div class="line"><a name="l01877"></a><span class="lineno"> 1877</span>&#160;    <span class="keywordflow">if</span>(r&lt;0)</div>
+<div class="line"><a name="l01878"></a><span class="lineno"> 1878</span>&#160;        <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l01879"></a><span class="lineno"> 1879</span>&#160;    rawExp = (int) ((val[2] &lt;&lt; 12) + (val[1] &lt;&lt; 4) + (val[0] &gt;&gt; 4));</div>
+<div class="line"><a name="l01880"></a><span class="lineno"> 1880</span>&#160; </div>
+<div class="line"><a name="l01881"></a><span class="lineno"> 1881</span>&#160;    <span class="comment">//std::cout &lt;&lt; &quot;Get Raw Exp: &quot; &lt;&lt; rawExp &lt;&lt; std::endl;</span></div>
+<div class="line"><a name="l01882"></a><span class="lineno"> 1882</span>&#160; </div>
+<div class="line"><a name="l01883"></a><span class="lineno"> 1883</span>&#160;    <span class="keywordtype">int</span> exposure = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(std::round((100.0*rawExp)/mExpoureRawMax));</div>
+<div class="line"><a name="l01884"></a><span class="lineno"> 1884</span>&#160;    <span class="keywordflow">return</span> exposure;</div>
+<div class="line"><a name="l01885"></a><span class="lineno"> 1885</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -744,21 +816,21 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a68">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01820">1820</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01821"></a><span class="lineno"> 1821</span>&#160;{</div>
-<div class="line"><a name="l01822"></a><span class="lineno"> 1822</span>&#160;    <span class="keywordtype">int</span> rawGain=0;</div>
-<div class="line"><a name="l01823"></a><span class="lineno"> 1823</span>&#160; </div>
-<div class="line"><a name="l01824"></a><span class="lineno"> 1824</span>&#160;    uint8_t val[3];</div>
-<div class="line"><a name="l01825"></a><span class="lineno"> 1825</span>&#160;    memset(val, 0, 3);</div>
-<div class="line"><a name="l01826"></a><span class="lineno"> 1826</span>&#160; </div>
-<div class="line"><a name="l01827"></a><span class="lineno"> 1827</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
-<div class="line"><a name="l01828"></a><span class="lineno"> 1828</span>&#160;    <span class="keywordtype">int</span> r = ll_isp_get_gain(val, sensorId);</div>
-<div class="line"><a name="l01829"></a><span class="lineno"> 1829</span>&#160;    <span class="keywordflow">if</span>(r&lt;0)</div>
-<div class="line"><a name="l01830"></a><span class="lineno"> 1830</span>&#160;        <span class="keywordflow">return</span> r;</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01825">1825</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01826"></a><span class="lineno"> 1826</span>&#160;{</div>
+<div class="line"><a name="l01827"></a><span class="lineno"> 1827</span>&#160;    <span class="keywordtype">int</span> rawGain=0;</div>
+<div class="line"><a name="l01828"></a><span class="lineno"> 1828</span>&#160; </div>
+<div class="line"><a name="l01829"></a><span class="lineno"> 1829</span>&#160;    uint8_t val[3];</div>
+<div class="line"><a name="l01830"></a><span class="lineno"> 1830</span>&#160;    memset(val, 0, 3);</div>
 <div class="line"><a name="l01831"></a><span class="lineno"> 1831</span>&#160; </div>
-<div class="line"><a name="l01832"></a><span class="lineno"> 1832</span>&#160;    rawGain = (int) ((val[1] &lt;&lt; 8) + val[0]);</div>
-<div class="line"><a name="l01833"></a><span class="lineno"> 1833</span>&#160;    <span class="keywordflow">return</span> calcGainValue(rawGain);</div>
-<div class="line"><a name="l01834"></a><span class="lineno"> 1834</span>&#160;}</div>
+<div class="line"><a name="l01832"></a><span class="lineno"> 1832</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
+<div class="line"><a name="l01833"></a><span class="lineno"> 1833</span>&#160;    <span class="keywordtype">int</span> r = ll_isp_get_gain(val, sensorId);</div>
+<div class="line"><a name="l01834"></a><span class="lineno"> 1834</span>&#160;    <span class="keywordflow">if</span>(r&lt;0)</div>
+<div class="line"><a name="l01835"></a><span class="lineno"> 1835</span>&#160;        <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l01836"></a><span class="lineno"> 1836</span>&#160; </div>
+<div class="line"><a name="l01837"></a><span class="lineno"> 1837</span>&#160;    rawGain = (int) ((val[1] &lt;&lt; 8) + val[0]);</div>
+<div class="line"><a name="l01838"></a><span class="lineno"> 1838</span>&#160;    <span class="keywordflow">return</span> calcGainValue(rawGain);</div>
+<div class="line"><a name="l01839"></a><span class="lineno"> 1839</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -782,10 +854,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a65">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01694">1694</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01694"></a><span class="lineno"> 1694</span>&#160;                           {</div>
-<div class="line"><a name="l01695"></a><span class="lineno"> 1695</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_GAMMA);</div>
-<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01699">1699</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160;                           {</div>
+<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_GAMMA);</div>
+<div class="line"><a name="l01701"></a><span class="lineno"> 1701</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -809,10 +881,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a63">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01625">1625</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01626"></a><span class="lineno"> 1626</span>&#160;{</div>
-<div class="line"><a name="l01627"></a><span class="lineno"> 1627</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_HUE);</div>
-<div class="line"><a name="l01628"></a><span class="lineno"> 1628</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01630">1630</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01631"></a><span class="lineno"> 1631</span>&#160;{</div>
+<div class="line"><a name="l01632"></a><span class="lineno"> 1632</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_HUE);</div>
+<div class="line"><a name="l01633"></a><span class="lineno"> 1633</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -843,7 +915,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>To check if a new frame is available it is possible to compare the timestamp of the returned frame with the timestamp of the previous valid frame</dd>
 <dd>
 <a class="el" href="../../de/d91/structsl__oc_1_1video_1_1_frame.html" title="The Frame struct containing the acquired video frames.">Frame</a> received will contains the RAW buffer from the camera, in YUV4:2:2 color format and in side by side mode. Images must then be converted to RGB for proper display and will not be rectified. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a44">zed_oc_depth_example.cpp</a>, <a class="el" href="../../da/d7d/zed_oc_rectify_example_8cpp-example.html#a21">zed_oc_rectify_example.cpp</a>, and <a class="el" href="../../dd/dc0/zed_oc_video_example_8cpp-example.html#a12">zed_oc_video_example.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d0/d06/zed_oc_depth_example_8cpp-example.html#a44">zed_oc_depth_example.cpp</a>, <a class="el" href="../../da/d7d/zed_oc_rectify_example_8cpp-example.html#a21">zed_oc_rectify_example.cpp</a>, and <a class="el" href="../../dd/dc0/zed_oc_video_example_8cpp-example.html#a13">zed_oc_video_example.cpp</a>.</dd>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l00890">890</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
@@ -896,19 +968,19 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns a negative value if an error occurred </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01416">1416</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01417"></a><span class="lineno"> 1417</span>&#160;{</div>
-<div class="line"><a name="l01418"></a><span class="lineno"> 1418</span>&#160;    <span class="keywordflow">if</span>( status==<span class="keyword">nullptr</span>)</div>
-<div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160;    {</div>
-<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;    }</div>
-<div class="line"><a name="l01422"></a><span class="lineno"> 1422</span>&#160; </div>
-<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;    uint8_t val;</div>
-<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;    <span class="keywordtype">int</span> hr = ll_set_gpio_direction(2, 1);</div>
-<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;    hr += ll_get_gpio_value(2, &amp;val);</div>
-<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;    *status = val!=0;</div>
-<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;    <span class="keywordflow">return</span> hr;</div>
-<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01418">1418</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160;{</div>
+<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;    <span class="keywordflow">if</span>( status==<span class="keyword">nullptr</span>)</div>
+<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;    {</div>
+<div class="line"><a name="l01422"></a><span class="lineno"> 1422</span>&#160;        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;    }</div>
+<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160; </div>
+<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;    uint8_t val;</div>
+<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;    <span class="keywordtype">int</span> hr = ll_set_gpio_direction(2, 1);</div>
+<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;    hr += ll_get_gpio_value(2, &amp;val);</div>
+<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;    *status = val!=0;</div>
+<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;    <span class="keywordflow">return</span> hr;</div>
+<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#af970430296542fc9f3a731bad823e7ce">toggleLED()</a>.</p>
 
@@ -973,35 +1045,35 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a70">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01768">1768</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01769"></a><span class="lineno"> 1769</span>&#160;{</div>
-<div class="line"><a name="l01770"></a><span class="lineno"> 1770</span>&#160;    uint8_t x_start_high = 0;</div>
-<div class="line"><a name="l01771"></a><span class="lineno"> 1771</span>&#160;    uint8_t x_start_low = 0;</div>
-<div class="line"><a name="l01772"></a><span class="lineno"> 1772</span>&#160;    uint8_t y_start_high =0;</div>
-<div class="line"><a name="l01773"></a><span class="lineno"> 1773</span>&#160;    uint8_t y_start_low = 0;</div>
-<div class="line"><a name="l01774"></a><span class="lineno"> 1774</span>&#160;    uint8_t w_start_high =0;</div>
-<div class="line"><a name="l01775"></a><span class="lineno"> 1775</span>&#160;    uint8_t w_start_low = 0;</div>
-<div class="line"><a name="l01776"></a><span class="lineno"> 1776</span>&#160;    uint8_t h_start_high = 0;</div>
-<div class="line"><a name="l01777"></a><span class="lineno"> 1777</span>&#160;    uint8_t h_start_low = 0;</div>
-<div class="line"><a name="l01778"></a><span class="lineno"> 1778</span>&#160;    uint32_t ulAddr = 0x801810C0;</div>
-<div class="line"><a name="l01779"></a><span class="lineno"> 1779</span>&#160;    <span class="keywordflow">if</span> (<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(side)==1)</div>
-<div class="line"><a name="l01780"></a><span class="lineno"> 1780</span>&#160;        ulAddr= 0x801818C0;</div>
-<div class="line"><a name="l01781"></a><span class="lineno"> 1781</span>&#160;    <span class="keywordtype">int</span> r =  ll_read_system_register(ulAddr,&amp;x_start_high);ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01782"></a><span class="lineno"> 1782</span>&#160;    r +=  ll_read_system_register(ulAddr,&amp;x_start_low);ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01783"></a><span class="lineno"> 1783</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;y_start_high);ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01784"></a><span class="lineno"> 1784</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;y_start_low);ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01785"></a><span class="lineno"> 1785</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;w_start_high);ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01786"></a><span class="lineno"> 1786</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;w_start_low);ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01787"></a><span class="lineno"> 1787</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;h_start_high);ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01788"></a><span class="lineno"> 1788</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;h_start_low);ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01789"></a><span class="lineno"> 1789</span>&#160; </div>
-<div class="line"><a name="l01790"></a><span class="lineno"> 1790</span>&#160;    x = x_start_high*256 + x_start_low;</div>
-<div class="line"><a name="l01791"></a><span class="lineno"> 1791</span>&#160;    y = y_start_high*256 + y_start_low;</div>
-<div class="line"><a name="l01792"></a><span class="lineno"> 1792</span>&#160;    w = w_start_high*256 + w_start_low;</div>
-<div class="line"><a name="l01793"></a><span class="lineno"> 1793</span>&#160;    h = h_start_high*256 + h_start_low;</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01773">1773</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01774"></a><span class="lineno"> 1774</span>&#160;{</div>
+<div class="line"><a name="l01775"></a><span class="lineno"> 1775</span>&#160;    uint8_t x_start_high = 0;</div>
+<div class="line"><a name="l01776"></a><span class="lineno"> 1776</span>&#160;    uint8_t x_start_low = 0;</div>
+<div class="line"><a name="l01777"></a><span class="lineno"> 1777</span>&#160;    uint8_t y_start_high =0;</div>
+<div class="line"><a name="l01778"></a><span class="lineno"> 1778</span>&#160;    uint8_t y_start_low = 0;</div>
+<div class="line"><a name="l01779"></a><span class="lineno"> 1779</span>&#160;    uint8_t w_start_high =0;</div>
+<div class="line"><a name="l01780"></a><span class="lineno"> 1780</span>&#160;    uint8_t w_start_low = 0;</div>
+<div class="line"><a name="l01781"></a><span class="lineno"> 1781</span>&#160;    uint8_t h_start_high = 0;</div>
+<div class="line"><a name="l01782"></a><span class="lineno"> 1782</span>&#160;    uint8_t h_start_low = 0;</div>
+<div class="line"><a name="l01783"></a><span class="lineno"> 1783</span>&#160;    uint32_t ulAddr = 0x801810C0;</div>
+<div class="line"><a name="l01784"></a><span class="lineno"> 1784</span>&#160;    <span class="keywordflow">if</span> (<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(side)==1)</div>
+<div class="line"><a name="l01785"></a><span class="lineno"> 1785</span>&#160;        ulAddr= 0x801818C0;</div>
+<div class="line"><a name="l01786"></a><span class="lineno"> 1786</span>&#160;    <span class="keywordtype">int</span> r =  ll_read_system_register(ulAddr,&amp;x_start_high);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01787"></a><span class="lineno"> 1787</span>&#160;    r +=  ll_read_system_register(ulAddr,&amp;x_start_low);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01788"></a><span class="lineno"> 1788</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;y_start_high);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01789"></a><span class="lineno"> 1789</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;y_start_low);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01790"></a><span class="lineno"> 1790</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;w_start_high);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01791"></a><span class="lineno"> 1791</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;w_start_low);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01792"></a><span class="lineno"> 1792</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;h_start_high);ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01793"></a><span class="lineno"> 1793</span>&#160;    r +=   ll_read_system_register(ulAddr,&amp;h_start_low);ulAddr++;usleep(100);</div>
 <div class="line"><a name="l01794"></a><span class="lineno"> 1794</span>&#160; </div>
-<div class="line"><a name="l01795"></a><span class="lineno"> 1795</span>&#160;    <span class="keywordflow">return</span> (r==0);</div>
-<div class="line"><a name="l01796"></a><span class="lineno"> 1796</span>&#160;}</div>
+<div class="line"><a name="l01795"></a><span class="lineno"> 1795</span>&#160;    x = x_start_high*256 + x_start_low;</div>
+<div class="line"><a name="l01796"></a><span class="lineno"> 1796</span>&#160;    y = y_start_high*256 + y_start_low;</div>
+<div class="line"><a name="l01797"></a><span class="lineno"> 1797</span>&#160;    w = w_start_high*256 + w_start_low;</div>
+<div class="line"><a name="l01798"></a><span class="lineno"> 1798</span>&#160;    h = h_start_high*256 + h_start_low;</div>
+<div class="line"><a name="l01799"></a><span class="lineno"> 1799</span>&#160; </div>
+<div class="line"><a name="l01800"></a><span class="lineno"> 1800</span>&#160;    <span class="keywordflow">return</span> (r==0);</div>
+<div class="line"><a name="l01801"></a><span class="lineno"> 1801</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1025,10 +1097,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a64">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01640">1640</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01641"></a><span class="lineno"> 1641</span>&#160;{</div>
-<div class="line"><a name="l01642"></a><span class="lineno"> 1642</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_SATURATION);</div>
-<div class="line"><a name="l01643"></a><span class="lineno"> 1643</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01645">1645</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01646"></a><span class="lineno"> 1646</span>&#160;{</div>
+<div class="line"><a name="l01647"></a><span class="lineno"> 1647</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_SATURATION);</div>
+<div class="line"><a name="l01648"></a><span class="lineno"> 1648</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1126,10 +1198,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a61">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01595">1595</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01596"></a><span class="lineno"> 1596</span>&#160;{</div>
-<div class="line"><a name="l01597"></a><span class="lineno"> 1597</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_SHARPNESS);</div>
-<div class="line"><a name="l01598"></a><span class="lineno"> 1598</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01600">1600</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01601"></a><span class="lineno"> 1601</span>&#160;{</div>
+<div class="line"><a name="l01602"></a><span class="lineno"> 1602</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_SHARPNESS);</div>
+<div class="line"><a name="l01603"></a><span class="lineno"> 1603</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1153,10 +1225,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a69">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01645">1645</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01646"></a><span class="lineno"> 1646</span>&#160;{</div>
-<div class="line"><a name="l01647"></a><span class="lineno"> 1647</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_AWB);</div>
-<div class="line"><a name="l01648"></a><span class="lineno"> 1648</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01650">1650</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01651"></a><span class="lineno"> 1651</span>&#160;{</div>
+<div class="line"><a name="l01652"></a><span class="lineno"> 1652</span>&#160;    <span class="keywordflow">return</span> getCameraControlSettings(LINUX_CTRL_AWB);</div>
+<div class="line"><a name="l01653"></a><span class="lineno"> 1653</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1233,15 +1305,15 @@ Public Member Functions</h2></td></tr>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keywordflow">return</span> mInitialized;</div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;}</div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a0a4f0f528835a4035eee4169ffec2cbb"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a0a4f0f528835a4035eee4169ffec2cbb">sl_oc::video::VideoCapture::resetBrightness</a></div><div class="ttdeci">void resetBrightness()</div><div class="ttdoc">Reset the Brightness value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01575">videocapture.cpp:1575</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a27cee578e5bb3dd9de873c610cb6d272"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a27cee578e5bb3dd9de873c610cb6d272">sl_oc::video::VideoCapture::setLEDstatus</a></div><div class="ttdeci">int setLEDstatus(bool status)</div><div class="ttdoc">Set the status of the camera led.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01401">videocapture.cpp:1401</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a3e2976d56653cf32c5382e024e801b4b"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a3e2976d56653cf32c5382e024e801b4b">sl_oc::video::VideoCapture::resetGamma</a></div><div class="ttdeci">void resetGamma()</div><div class="ttdoc">Reset the Gamma value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01686">videocapture.cpp:1686</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a48628e7c57ec81cd5cf405b3fb166ba8"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a48628e7c57ec81cd5cf405b3fb166ba8">sl_oc::video::VideoCapture::resetHue</a></div><div class="ttdeci">void resetHue()</div><div class="ttdoc">Reset the Hue value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01620">videocapture.cpp:1620</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a5440fb33106658270076a27196aa8e81"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a5440fb33106658270076a27196aa8e81">sl_oc::video::VideoCapture::resetAutoWhiteBalance</a></div><div class="ttdeci">void resetAutoWhiteBalance()</div><div class="ttdoc">Reset the automatic White Balance control value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01669">videocapture.cpp:1669</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a6c45193ee24e4ecf798c774078e6fea2"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a6c45193ee24e4ecf798c774078e6fea2">sl_oc::video::VideoCapture::resetSharpness</a></div><div class="ttdeci">void resetSharpness()</div><div class="ttdoc">Reset the Sharpness value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01590">videocapture.cpp:1590</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ab73580b7d17ab1b6b2b7d9cb2c064c52"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ab73580b7d17ab1b6b2b7d9cb2c064c52">sl_oc::video::VideoCapture::resetSaturation</a></div><div class="ttdeci">void resetSaturation()</div><div class="ttdoc">Reset the Saturation value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01635">videocapture.cpp:1635</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ababf44cb142b2790d9b1ea7ebd3040fd"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ababf44cb142b2790d9b1ea7ebd3040fd">sl_oc::video::VideoCapture::resetAECAGC</a></div><div class="ttdeci">void resetAECAGC()</div><div class="ttdoc">Reset the automatic Exposure and Gain control value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01713">videocapture.cpp:1713</a></div></div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ae66cc31ee0d0a8ff70b20f4941ab52fd"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ae66cc31ee0d0a8ff70b20f4941ab52fd">sl_oc::video::VideoCapture::resetContrast</a></div><div class="ttdeci">void resetContrast()</div><div class="ttdoc">Reset the Contrast value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01605">videocapture.cpp:1605</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a0a4f0f528835a4035eee4169ffec2cbb"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a0a4f0f528835a4035eee4169ffec2cbb">sl_oc::video::VideoCapture::resetBrightness</a></div><div class="ttdeci">void resetBrightness()</div><div class="ttdoc">Reset the Brightness value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01580">videocapture.cpp:1580</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a27cee578e5bb3dd9de873c610cb6d272"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a27cee578e5bb3dd9de873c610cb6d272">sl_oc::video::VideoCapture::setLEDstatus</a></div><div class="ttdeci">int setLEDstatus(bool status)</div><div class="ttdoc">Set the status of the camera led.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01403">videocapture.cpp:1403</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a3e2976d56653cf32c5382e024e801b4b"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a3e2976d56653cf32c5382e024e801b4b">sl_oc::video::VideoCapture::resetGamma</a></div><div class="ttdeci">void resetGamma()</div><div class="ttdoc">Reset the Gamma value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01691">videocapture.cpp:1691</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a48628e7c57ec81cd5cf405b3fb166ba8"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a48628e7c57ec81cd5cf405b3fb166ba8">sl_oc::video::VideoCapture::resetHue</a></div><div class="ttdeci">void resetHue()</div><div class="ttdoc">Reset the Hue value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01625">videocapture.cpp:1625</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a5440fb33106658270076a27196aa8e81"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a5440fb33106658270076a27196aa8e81">sl_oc::video::VideoCapture::resetAutoWhiteBalance</a></div><div class="ttdeci">void resetAutoWhiteBalance()</div><div class="ttdoc">Reset the automatic White Balance control value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01674">videocapture.cpp:1674</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a6c45193ee24e4ecf798c774078e6fea2"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a6c45193ee24e4ecf798c774078e6fea2">sl_oc::video::VideoCapture::resetSharpness</a></div><div class="ttdeci">void resetSharpness()</div><div class="ttdoc">Reset the Sharpness value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01595">videocapture.cpp:1595</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ab73580b7d17ab1b6b2b7d9cb2c064c52"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ab73580b7d17ab1b6b2b7d9cb2c064c52">sl_oc::video::VideoCapture::resetSaturation</a></div><div class="ttdeci">void resetSaturation()</div><div class="ttdoc">Reset the Saturation value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01640">videocapture.cpp:1640</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ababf44cb142b2790d9b1ea7ebd3040fd"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ababf44cb142b2790d9b1ea7ebd3040fd">sl_oc::video::VideoCapture::resetAECAGC</a></div><div class="ttdeci">void resetAECAGC()</div><div class="ttdoc">Reset the automatic Exposure and Gain control value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01718">videocapture.cpp:1718</a></div></div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ae66cc31ee0d0a8ff70b20f4941ab52fd"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ae66cc31ee0d0a8ff70b20f4941ab52fd">sl_oc::video::VideoCapture::resetContrast</a></div><div class="ttdeci">void resetContrast()</div><div class="ttdoc">Reset the Contrast value to default value.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01610">videocapture.cpp:1610</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ababf44cb142b2790d9b1ea7ebd3040fd">resetAECAGC()</a>, <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a5440fb33106658270076a27196aa8e81">resetAutoWhiteBalance()</a>, <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a0a4f0f528835a4035eee4169ffec2cbb">resetBrightness()</a>, <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ae66cc31ee0d0a8ff70b20f4941ab52fd">resetContrast()</a>, <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a3e2976d56653cf32c5382e024e801b4b">resetGamma()</a>, <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a48628e7c57ec81cd5cf405b3fb166ba8">resetHue()</a>, <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ab73580b7d17ab1b6b2b7d9cb2c064c52">resetSaturation()</a>, <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a6c45193ee24e4ecf798c774078e6fea2">resetSharpness()</a>, <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a27cee578e5bb3dd9de873c610cb6d272">setLEDstatus()</a>, and <a class="el" href="../../d1/ded/structsl__oc_1_1video_1_1_video_params.html#a6152f12db5f03c917aa9ca3017cb2246">sl_oc::video::VideoParams::verbose</a>.</p>
 
@@ -1268,11 +1340,11 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a92">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01713">1713</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160;{</div>
-<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;    <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC</a>(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160;}</div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a9e9ecade24964781a13e9218019602e9"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">sl_oc::video::VideoCapture::setAECAGC</a></div><div class="ttdeci">int setAECAGC(bool active)</div><div class="ttdoc">Enable/Disable the automatic Exposure and Gain control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01698">videocapture.cpp:1698</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01718">1718</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01719"></a><span class="lineno"> 1719</span>&#160;{</div>
+<div class="line"><a name="l01720"></a><span class="lineno"> 1720</span>&#160;    <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160;}</div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a9e9ecade24964781a13e9218019602e9"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">sl_oc::video::VideoCapture::setAECAGC</a></div><div class="ttdeci">int setAECAGC(bool active)</div><div class="ttdoc">Enable/Disable the automatic Exposure and Gain control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01703">videocapture.cpp:1703</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC()</a>.</p>
 
@@ -1297,17 +1369,17 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a58">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l02133">2133</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l02133"></a><span class="lineno"> 2133</span>&#160;                                        {</div>
-<div class="line"><a name="l02134"></a><span class="lineno"> 2134</span>&#160;    <span class="keywordtype">int</span> res = 0;</div>
-<div class="line"><a name="l02135"></a><span class="lineno"> 2135</span>&#160; </div>
-<div class="line"><a name="l02136"></a><span class="lineno"> 2136</span>&#160;    res += ll_write_sensor_register( 0, 1, 0x3503, 0x04);</div>
-<div class="line"><a name="l02137"></a><span class="lineno"> 2137</span>&#160;    res += ll_write_sensor_register( 1, 1, 0x3503, 0x04);</div>
-<div class="line"><a name="l02138"></a><span class="lineno"> 2138</span>&#160;    res += ll_write_sensor_register( 0, 1, 0x3505, 0x00);</div>
-<div class="line"><a name="l02139"></a><span class="lineno"> 2139</span>&#160;    res += ll_write_sensor_register( 1, 1, 0x3505, 0x00);</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l02138">2138</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l02138"></a><span class="lineno"> 2138</span>&#160;                                        {</div>
+<div class="line"><a name="l02139"></a><span class="lineno"> 2139</span>&#160;    <span class="keywordtype">int</span> res = 0;</div>
 <div class="line"><a name="l02140"></a><span class="lineno"> 2140</span>&#160; </div>
-<div class="line"><a name="l02141"></a><span class="lineno"> 2141</span>&#160;    <span class="keywordflow">return</span> res==0;</div>
-<div class="line"><a name="l02142"></a><span class="lineno"> 2142</span>&#160;}</div>
+<div class="line"><a name="l02141"></a><span class="lineno"> 2141</span>&#160;    res += ll_write_sensor_register( 0, 1, 0x3503, 0x04);</div>
+<div class="line"><a name="l02142"></a><span class="lineno"> 2142</span>&#160;    res += ll_write_sensor_register( 1, 1, 0x3503, 0x04);</div>
+<div class="line"><a name="l02143"></a><span class="lineno"> 2143</span>&#160;    res += ll_write_sensor_register( 0, 1, 0x3505, 0x00);</div>
+<div class="line"><a name="l02144"></a><span class="lineno"> 2144</span>&#160;    res += ll_write_sensor_register( 1, 1, 0x3505, 0x00);</div>
+<div class="line"><a name="l02145"></a><span class="lineno"> 2145</span>&#160; </div>
+<div class="line"><a name="l02146"></a><span class="lineno"> 2146</span>&#160;    <span class="keywordflow">return</span> res==0;</div>
+<div class="line"><a name="l02147"></a><span class="lineno"> 2147</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1330,11 +1402,11 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a93">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01669">1669</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01670"></a><span class="lineno"> 1670</span>&#160;{</div>
-<div class="line"><a name="l01671"></a><span class="lineno"> 1671</span>&#160;    <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad96e8492bd5ef82edbfc0bb4ccd981e4">setAutoWhiteBalance</a>(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l01672"></a><span class="lineno"> 1672</span>&#160;}</div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ad96e8492bd5ef82edbfc0bb4ccd981e4"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad96e8492bd5ef82edbfc0bb4ccd981e4">sl_oc::video::VideoCapture::setAutoWhiteBalance</a></div><div class="ttdeci">void setAutoWhiteBalance(bool active)</div><div class="ttdoc">Enable/Disable the automatic White Balance control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01664">videocapture.cpp:1664</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01674">1674</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160;{</div>
+<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160;    <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad96e8492bd5ef82edbfc0bb4ccd981e4">setAutoWhiteBalance</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160;}</div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ad96e8492bd5ef82edbfc0bb4ccd981e4"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad96e8492bd5ef82edbfc0bb4ccd981e4">sl_oc::video::VideoCapture::setAutoWhiteBalance</a></div><div class="ttdeci">void setAutoWhiteBalance(bool active)</div><div class="ttdoc">Enable/Disable the automatic White Balance control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01669">videocapture.cpp:1669</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad96e8492bd5ef82edbfc0bb4ccd981e4">setAutoWhiteBalance()</a>.</p>
 
@@ -1361,10 +1433,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a86">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01575">1575</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01576"></a><span class="lineno"> 1576</span>&#160;{</div>
-<div class="line"><a name="l01577"></a><span class="lineno"> 1577</span>&#160;    resetCameraControlSettings(LINUX_CTRL_BRIGHTNESS);</div>
-<div class="line"><a name="l01578"></a><span class="lineno"> 1578</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01580">1580</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01581"></a><span class="lineno"> 1581</span>&#160;{</div>
+<div class="line"><a name="l01582"></a><span class="lineno"> 1582</span>&#160;    resetCameraControlSettings(LINUX_CTRL_BRIGHTNESS);</div>
+<div class="line"><a name="l01583"></a><span class="lineno"> 1583</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e">initializeVideo()</a>.</p>
 
@@ -1389,10 +1461,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a88">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01605">1605</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01606"></a><span class="lineno"> 1606</span>&#160;{</div>
-<div class="line"><a name="l01607"></a><span class="lineno"> 1607</span>&#160;    resetCameraControlSettings(LINUX_CTRL_CONTRAST);</div>
-<div class="line"><a name="l01608"></a><span class="lineno"> 1608</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01610">1610</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01611"></a><span class="lineno"> 1611</span>&#160;{</div>
+<div class="line"><a name="l01612"></a><span class="lineno"> 1612</span>&#160;    resetCameraControlSettings(LINUX_CTRL_CONTRAST);</div>
+<div class="line"><a name="l01613"></a><span class="lineno"> 1613</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e">initializeVideo()</a>.</p>
 
@@ -1417,13 +1489,13 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a91">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01686">1686</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160;{</div>
-<div class="line"><a name="l01688"></a><span class="lineno"> 1688</span>&#160;    <span class="keywordtype">int</span> def_value = DEFAULT_GAMMA_NOECT;</div>
-<div class="line"><a name="l01689"></a><span class="lineno"> 1689</span>&#160;    setGammaPreset(0,def_value);</div>
-<div class="line"><a name="l01690"></a><span class="lineno"> 1690</span>&#160;    setGammaPreset(1,def_value);</div>
-<div class="line"><a name="l01691"></a><span class="lineno"> 1691</span>&#160;    setCameraControlSettings(LINUX_CTRL_GAMMA, def_value);</div>
-<div class="line"><a name="l01692"></a><span class="lineno"> 1692</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01691">1691</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01692"></a><span class="lineno"> 1692</span>&#160;{</div>
+<div class="line"><a name="l01693"></a><span class="lineno"> 1693</span>&#160;    <span class="keywordtype">int</span> def_value = DEFAULT_GAMMA_NOECT;</div>
+<div class="line"><a name="l01694"></a><span class="lineno"> 1694</span>&#160;    setGammaPreset(0,def_value);</div>
+<div class="line"><a name="l01695"></a><span class="lineno"> 1695</span>&#160;    setGammaPreset(1,def_value);</div>
+<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160;    setCameraControlSettings(LINUX_CTRL_GAMMA, def_value);</div>
+<div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e">initializeVideo()</a>.</p>
 
@@ -1448,10 +1520,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a89">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01620">1620</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01621"></a><span class="lineno"> 1621</span>&#160;{</div>
-<div class="line"><a name="l01622"></a><span class="lineno"> 1622</span>&#160;    resetCameraControlSettings(LINUX_CTRL_HUE);</div>
-<div class="line"><a name="l01623"></a><span class="lineno"> 1623</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01625">1625</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01626"></a><span class="lineno"> 1626</span>&#160;{</div>
+<div class="line"><a name="l01627"></a><span class="lineno"> 1627</span>&#160;    resetCameraControlSettings(LINUX_CTRL_HUE);</div>
+<div class="line"><a name="l01628"></a><span class="lineno"> 1628</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e">initializeVideo()</a>.</p>
 
@@ -1484,11 +1556,11 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a94">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01763">1763</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01764"></a><span class="lineno"> 1764</span>&#160;{</div>
-<div class="line"><a name="l01765"></a><span class="lineno"> 1765</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a07c3771e9b6c580d59c2bd8a7de2ab5f">setROIforAECAGC</a>(side, 0,0, mWidth/2, mHeight);</div>
-<div class="line"><a name="l01766"></a><span class="lineno"> 1766</span>&#160;}</div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a07c3771e9b6c580d59c2bd8a7de2ab5f"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a07c3771e9b6c580d59c2bd8a7de2ab5f">sl_oc::video::VideoCapture::setROIforAECAGC</a></div><div class="ttdeci">bool setROIforAECAGC(CAM_SENS_POS side, uint16_t x, uint16_t y, uint16_t w, uint16_t h)</div><div class="ttdoc">Set Region Of Interest (ROI) for AECAGC control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01718">videocapture.cpp:1718</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01768">1768</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01769"></a><span class="lineno"> 1769</span>&#160;{</div>
+<div class="line"><a name="l01770"></a><span class="lineno"> 1770</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a07c3771e9b6c580d59c2bd8a7de2ab5f">setROIforAECAGC</a>(side, 0,0, mWidth/2, mHeight);</div>
+<div class="line"><a name="l01771"></a><span class="lineno"> 1771</span>&#160;}</div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a07c3771e9b6c580d59c2bd8a7de2ab5f"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a07c3771e9b6c580d59c2bd8a7de2ab5f">sl_oc::video::VideoCapture::setROIforAECAGC</a></div><div class="ttdeci">bool setROIforAECAGC(CAM_SENS_POS side, uint16_t x, uint16_t y, uint16_t w, uint16_t h)</div><div class="ttdoc">Set Region Of Interest (ROI) for AECAGC control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01723">videocapture.cpp:1723</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a07c3771e9b6c580d59c2bd8a7de2ab5f">setROIforAECAGC()</a>.</p>
 
@@ -1513,10 +1585,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a90">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01635">1635</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01636"></a><span class="lineno"> 1636</span>&#160;{</div>
-<div class="line"><a name="l01637"></a><span class="lineno"> 1637</span>&#160;    resetCameraControlSettings(LINUX_CTRL_SATURATION);</div>
-<div class="line"><a name="l01638"></a><span class="lineno"> 1638</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01640">1640</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01641"></a><span class="lineno"> 1641</span>&#160;{</div>
+<div class="line"><a name="l01642"></a><span class="lineno"> 1642</span>&#160;    resetCameraControlSettings(LINUX_CTRL_SATURATION);</div>
+<div class="line"><a name="l01643"></a><span class="lineno"> 1643</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e">initializeVideo()</a>.</p>
 
@@ -1541,10 +1613,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a87">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01590">1590</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01591"></a><span class="lineno"> 1591</span>&#160;{</div>
-<div class="line"><a name="l01592"></a><span class="lineno"> 1592</span>&#160;    resetCameraControlSettings(LINUX_CTRL_SHARPNESS);</div>
-<div class="line"><a name="l01593"></a><span class="lineno"> 1593</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01595">1595</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01596"></a><span class="lineno"> 1596</span>&#160;{</div>
+<div class="line"><a name="l01597"></a><span class="lineno"> 1597</span>&#160;    resetCameraControlSettings(LINUX_CTRL_SHARPNESS);</div>
+<div class="line"><a name="l01598"></a><span class="lineno"> 1598</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e">initializeVideo()</a>.</p>
 
@@ -1575,26 +1647,26 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>CSV file will contain Adress , L value, R value </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l02025">2025</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l02026"></a><span class="lineno"> 2026</span>&#160;{</div>
-<div class="line"><a name="l02027"></a><span class="lineno"> 2027</span>&#160;    std::ofstream logFile;</div>
-<div class="line"><a name="l02028"></a><span class="lineno"> 2028</span>&#160;    logFile.open(filename,std::ofstream::out);</div>
-<div class="line"><a name="l02029"></a><span class="lineno"> 2029</span>&#160;    <span class="keywordtype">int</span> res = 0;</div>
-<div class="line"><a name="l02030"></a><span class="lineno"> 2030</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> ulAddrL =  0x80181000;</div>
-<div class="line"><a name="l02031"></a><span class="lineno"> 2031</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span>   ulAddrR =  0x80181800;</div>
-<div class="line"><a name="l02032"></a><span class="lineno"> 2032</span>&#160; </div>
-<div class="line"><a name="l02033"></a><span class="lineno"> 2033</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> p = 0;p&lt;0x800;p++)</div>
-<div class="line"><a name="l02034"></a><span class="lineno"> 2034</span>&#160;    {</div>
-<div class="line"><a name="l02035"></a><span class="lineno"> 2035</span>&#160;        uint8_t valL,valR;</div>
-<div class="line"><a name="l02036"></a><span class="lineno"> 2036</span>&#160;        res += ll_read_system_register( ulAddrL+p, &amp;valL);</div>
-<div class="line"><a name="l02037"></a><span class="lineno"> 2037</span>&#160;        res += ll_read_system_register( ulAddrR+p, &amp;valR);</div>
-<div class="line"><a name="l02038"></a><span class="lineno"> 2038</span>&#160; </div>
-<div class="line"><a name="l02039"></a><span class="lineno"> 2039</span>&#160;        logFile &lt;&lt;<span class="stringliteral">&quot;0x&quot;</span> &lt;&lt; std::hex &lt;&lt; std::setfill(&#39;0&#39;) &lt;&lt; std::setw(8) &lt;&lt; static_cast&lt;unsigned long long&gt;(ulAddrL+p)&lt;&lt;<span class="stringliteral">&quot; , &quot;</span>&lt;&lt;std::hex &lt;&lt; std::setfill(&#39;0&#39;) &lt;&lt; std::setw(2) &lt;&lt; static_cast&lt;unsigned long long&gt;(valL)&lt;&lt;<span class="stringliteral">&quot; , &quot;</span>&lt;&lt;std::hex &lt;&lt; std::setfill(&#39;0&#39;) &lt;&lt; std::setw(2) &lt;&lt; static_cast&lt;unsigned long long&gt;(valR)&lt;&lt;std::endl;</div>
-<div class="line"><a name="l02040"></a><span class="lineno"> 2040</span>&#160;        usleep(10);</div>
-<div class="line"><a name="l02041"></a><span class="lineno"> 2041</span>&#160;    }</div>
-<div class="line"><a name="l02042"></a><span class="lineno"> 2042</span>&#160; </div>
-<div class="line"><a name="l02043"></a><span class="lineno"> 2043</span>&#160;    logFile.close();</div>
-<div class="line"><a name="l02044"></a><span class="lineno"> 2044</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l02030">2030</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l02031"></a><span class="lineno"> 2031</span>&#160;{</div>
+<div class="line"><a name="l02032"></a><span class="lineno"> 2032</span>&#160;    std::ofstream logFile;</div>
+<div class="line"><a name="l02033"></a><span class="lineno"> 2033</span>&#160;    logFile.open(filename,std::ofstream::out);</div>
+<div class="line"><a name="l02034"></a><span class="lineno"> 2034</span>&#160;    <span class="keywordtype">int</span> res = 0;</div>
+<div class="line"><a name="l02035"></a><span class="lineno"> 2035</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> ulAddrL =  0x80181000;</div>
+<div class="line"><a name="l02036"></a><span class="lineno"> 2036</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span>   ulAddrR =  0x80181800;</div>
+<div class="line"><a name="l02037"></a><span class="lineno"> 2037</span>&#160; </div>
+<div class="line"><a name="l02038"></a><span class="lineno"> 2038</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> p = 0;p&lt;0x800;p++)</div>
+<div class="line"><a name="l02039"></a><span class="lineno"> 2039</span>&#160;    {</div>
+<div class="line"><a name="l02040"></a><span class="lineno"> 2040</span>&#160;        uint8_t valL,valR;</div>
+<div class="line"><a name="l02041"></a><span class="lineno"> 2041</span>&#160;        res += ll_read_system_register( ulAddrL+p, &amp;valL);</div>
+<div class="line"><a name="l02042"></a><span class="lineno"> 2042</span>&#160;        res += ll_read_system_register( ulAddrR+p, &amp;valR);</div>
+<div class="line"><a name="l02043"></a><span class="lineno"> 2043</span>&#160; </div>
+<div class="line"><a name="l02044"></a><span class="lineno"> 2044</span>&#160;        logFile &lt;&lt;<span class="stringliteral">&quot;0x&quot;</span> &lt;&lt; std::hex &lt;&lt; std::setfill(&#39;0&#39;) &lt;&lt; std::setw(8) &lt;&lt; static_cast&lt;unsigned long long&gt;(ulAddrL+p)&lt;&lt;<span class="stringliteral">&quot; , &quot;</span>&lt;&lt;std::hex &lt;&lt; std::setfill(&#39;0&#39;) &lt;&lt; std::setw(2) &lt;&lt; static_cast&lt;unsigned long long&gt;(valL)&lt;&lt;<span class="stringliteral">&quot; , &quot;</span>&lt;&lt;std::hex &lt;&lt; std::setfill(&#39;0&#39;) &lt;&lt; std::setw(2) &lt;&lt; static_cast&lt;unsigned long long&gt;(valR)&lt;&lt;std::endl;</div>
+<div class="line"><a name="l02045"></a><span class="lineno"> 2045</span>&#160;        usleep(10);</div>
+<div class="line"><a name="l02046"></a><span class="lineno"> 2046</span>&#160;    }</div>
+<div class="line"><a name="l02047"></a><span class="lineno"> 2047</span>&#160; </div>
+<div class="line"><a name="l02048"></a><span class="lineno"> 2048</span>&#160;    logFile.close();</div>
+<div class="line"><a name="l02049"></a><span class="lineno"> 2049</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d3/df8/zed__oc__video__reg__log_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>.</p>
 
@@ -1625,24 +1697,24 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>CSV file will contain Adress , L value, R value </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l02046">2046</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l02047"></a><span class="lineno"> 2047</span>&#160;{</div>
-<div class="line"><a name="l02048"></a><span class="lineno"> 2048</span>&#160;    std::ofstream logFile;</div>
-<div class="line"><a name="l02049"></a><span class="lineno"> 2049</span>&#160;    logFile.open(filename,std::ofstream::out);</div>
-<div class="line"><a name="l02050"></a><span class="lineno"> 2050</span>&#160; </div>
-<div class="line"><a name="l02051"></a><span class="lineno"> 2051</span>&#160;    <span class="keywordtype">int</span> res = 0;</div>
-<div class="line"><a name="l02052"></a><span class="lineno"> 2052</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> addr = 0x3000; addr &lt;= 0x6000; ++addr)</div>
-<div class="line"><a name="l02053"></a><span class="lineno"> 2053</span>&#160;    {</div>
-<div class="line"><a name="l02054"></a><span class="lineno"> 2054</span>&#160;        uint8_t valL,valR;</div>
-<div class="line"><a name="l02055"></a><span class="lineno"> 2055</span>&#160;        res += ll_read_sensor_register( 0, 1, addr, &amp;valL);</div>
-<div class="line"><a name="l02056"></a><span class="lineno"> 2056</span>&#160;        res += ll_read_sensor_register( 1, 1, addr, &amp;valR);</div>
-<div class="line"><a name="l02057"></a><span class="lineno"> 2057</span>&#160; </div>
-<div class="line"><a name="l02058"></a><span class="lineno"> 2058</span>&#160;        usleep(10);</div>
-<div class="line"><a name="l02059"></a><span class="lineno"> 2059</span>&#160;        logFile &lt;&lt;<span class="stringliteral">&quot;0x&quot;</span> &lt;&lt; std::hex &lt;&lt; std::setfill(&#39;0&#39;) &lt;&lt; std::setw(8) &lt;&lt; static_cast&lt;int&gt;(addr)&lt;&lt;<span class="stringliteral">&quot; , &quot;</span>&lt;&lt;std::hex &lt;&lt; std::setfill(&#39;0&#39;) &lt;&lt; std::setw(2) &lt;&lt; static_cast&lt;unsigned long long&gt;(valL)&lt;&lt;<span class="stringliteral">&quot; , &quot;</span>&lt;&lt;std::hex &lt;&lt; std::setfill(&#39;0&#39;) &lt;&lt; std::setw(2) &lt;&lt; static_cast&lt;unsigned long long&gt;(valR)&lt;&lt;std::endl;</div>
-<div class="line"><a name="l02060"></a><span class="lineno"> 2060</span>&#160;    }</div>
-<div class="line"><a name="l02061"></a><span class="lineno"> 2061</span>&#160; </div>
-<div class="line"><a name="l02062"></a><span class="lineno"> 2062</span>&#160;    logFile.close();</div>
-<div class="line"><a name="l02063"></a><span class="lineno"> 2063</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l02051">2051</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l02052"></a><span class="lineno"> 2052</span>&#160;{</div>
+<div class="line"><a name="l02053"></a><span class="lineno"> 2053</span>&#160;    std::ofstream logFile;</div>
+<div class="line"><a name="l02054"></a><span class="lineno"> 2054</span>&#160;    logFile.open(filename,std::ofstream::out);</div>
+<div class="line"><a name="l02055"></a><span class="lineno"> 2055</span>&#160; </div>
+<div class="line"><a name="l02056"></a><span class="lineno"> 2056</span>&#160;    <span class="keywordtype">int</span> res = 0;</div>
+<div class="line"><a name="l02057"></a><span class="lineno"> 2057</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> addr = 0x3000; addr &lt;= 0x6000; ++addr)</div>
+<div class="line"><a name="l02058"></a><span class="lineno"> 2058</span>&#160;    {</div>
+<div class="line"><a name="l02059"></a><span class="lineno"> 2059</span>&#160;        uint8_t valL,valR;</div>
+<div class="line"><a name="l02060"></a><span class="lineno"> 2060</span>&#160;        res += ll_read_sensor_register( 0, 1, addr, &amp;valL);</div>
+<div class="line"><a name="l02061"></a><span class="lineno"> 2061</span>&#160;        res += ll_read_sensor_register( 1, 1, addr, &amp;valR);</div>
+<div class="line"><a name="l02062"></a><span class="lineno"> 2062</span>&#160; </div>
+<div class="line"><a name="l02063"></a><span class="lineno"> 2063</span>&#160;        usleep(10);</div>
+<div class="line"><a name="l02064"></a><span class="lineno"> 2064</span>&#160;        logFile &lt;&lt;<span class="stringliteral">&quot;0x&quot;</span> &lt;&lt; std::hex &lt;&lt; std::setfill(&#39;0&#39;) &lt;&lt; std::setw(8) &lt;&lt; static_cast&lt;int&gt;(addr)&lt;&lt;<span class="stringliteral">&quot; , &quot;</span>&lt;&lt;std::hex &lt;&lt; std::setfill(&#39;0&#39;) &lt;&lt; std::setw(2) &lt;&lt; static_cast&lt;unsigned long long&gt;(valL)&lt;&lt;<span class="stringliteral">&quot; , &quot;</span>&lt;&lt;std::hex &lt;&lt; std::setfill(&#39;0&#39;) &lt;&lt; std::setw(2) &lt;&lt; static_cast&lt;unsigned long long&gt;(valR)&lt;&lt;std::endl;</div>
+<div class="line"><a name="l02065"></a><span class="lineno"> 2065</span>&#160;    }</div>
+<div class="line"><a name="l02066"></a><span class="lineno"> 2066</span>&#160; </div>
+<div class="line"><a name="l02067"></a><span class="lineno"> 2067</span>&#160;    logFile.close();</div>
+<div class="line"><a name="l02068"></a><span class="lineno"> 2068</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d3/df8/zed__oc__video__reg__log_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>.</p>
 
@@ -1674,15 +1746,15 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a82">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01698">1698</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160;{</div>
-<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160;    <span class="keywordtype">int</span> res = 0;</div>
-<div class="line"><a name="l01701"></a><span class="lineno"> 1701</span>&#160;    res += ll_isp_aecagc_enable(0, active);</div>
-<div class="line"><a name="l01702"></a><span class="lineno"> 1702</span>&#160;    res += ll_isp_aecagc_enable(1, active);</div>
-<div class="line"><a name="l01703"></a><span class="lineno"> 1703</span>&#160;    <span class="keywordflow">return</span> res;</div>
-<div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01703">1703</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160;{</div>
+<div class="line"><a name="l01705"></a><span class="lineno"> 1705</span>&#160;    <span class="keywordtype">int</span> res = 0;</div>
+<div class="line"><a name="l01706"></a><span class="lineno"> 1706</span>&#160;    res += ll_isp_aecagc_enable(0, active);</div>
+<div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160;    res += ll_isp_aecagc_enable(1, active);</div>
+<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;    <span class="keywordflow">return</span> res;</div>
+<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ababf44cb142b2790d9b1ea7ebd3040fd">resetAECAGC()</a>, <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a907f58660df3ee70ba6725c943ba9834">setExposure()</a>, and <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#adbf3d737cb881c39299a09009de58032">setGain()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d0/dc8/zed__oc__multi__video__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>, <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ababf44cb142b2790d9b1ea7ebd3040fd">resetAECAGC()</a>, <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a907f58660df3ee70ba6725c943ba9834">setExposure()</a>, and <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#adbf3d737cb881c39299a09009de58032">setGain()</a>.</p>
 
 </div>
 </div>
@@ -1712,12 +1784,12 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a81">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01664">1664</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01665"></a><span class="lineno"> 1665</span>&#160;{</div>
-<div class="line"><a name="l01666"></a><span class="lineno"> 1666</span>&#160;    setCameraControlSettings(LINUX_CTRL_AWB_AUTO, active?1:0);</div>
-<div class="line"><a name="l01667"></a><span class="lineno"> 1667</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01669">1669</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01670"></a><span class="lineno"> 1670</span>&#160;{</div>
+<div class="line"><a name="l01671"></a><span class="lineno"> 1671</span>&#160;    setCameraControlSettings(LINUX_CTRL_AWB_AUTO, active?1:0);</div>
+<div class="line"><a name="l01672"></a><span class="lineno"> 1672</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a5440fb33106658270076a27196aa8e81">resetAutoWhiteBalance()</a>, and <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a89242e4f3d0ad6f3653de4f831ea01b5">setWhiteBalance()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d0/dc8/zed__oc__multi__video__example_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>, <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a5440fb33106658270076a27196aa8e81">resetAutoWhiteBalance()</a>, and <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a89242e4f3d0ad6f3653de4f831ea01b5">setWhiteBalance()</a>.</p>
 
 </div>
 </div>
@@ -1747,10 +1819,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a71">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01570">1570</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01571"></a><span class="lineno"> 1571</span>&#160;{</div>
-<div class="line"><a name="l01572"></a><span class="lineno"> 1572</span>&#160;    setCameraControlSettings(LINUX_CTRL_BRIGHTNESS, brightness);</div>
-<div class="line"><a name="l01573"></a><span class="lineno"> 1573</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01575">1575</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01576"></a><span class="lineno"> 1576</span>&#160;{</div>
+<div class="line"><a name="l01577"></a><span class="lineno"> 1577</span>&#160;    setCameraControlSettings(LINUX_CTRL_BRIGHTNESS, brightness);</div>
+<div class="line"><a name="l01578"></a><span class="lineno"> 1578</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1782,18 +1854,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Utils fct to set Color Bars on Image. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l02011">2011</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l02012"></a><span class="lineno"> 2012</span>&#160;{</div>
-<div class="line"><a name="l02013"></a><span class="lineno"> 2013</span>&#160; </div>
-<div class="line"><a name="l02014"></a><span class="lineno"> 2014</span>&#160; </div>
-<div class="line"><a name="l02015"></a><span class="lineno"> 2015</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> ulAddr2 = 0x80181080;</div>
-<div class="line"><a name="l02016"></a><span class="lineno"> 2016</span>&#160; </div>
-<div class="line"><a name="l02017"></a><span class="lineno"> 2017</span>&#160;    <span class="keywordflow">if</span> (side==1)</div>
-<div class="line"><a name="l02018"></a><span class="lineno"> 2018</span>&#160;         ulAddr2 = 0x80181880;</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l02016">2016</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l02017"></a><span class="lineno"> 2017</span>&#160;{</div>
+<div class="line"><a name="l02018"></a><span class="lineno"> 2018</span>&#160; </div>
 <div class="line"><a name="l02019"></a><span class="lineno"> 2019</span>&#160; </div>
-<div class="line"><a name="l02020"></a><span class="lineno"> 2020</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ulValue2 =c?128:0;</div>
-<div class="line"><a name="l02021"></a><span class="lineno"> 2021</span>&#160;    ll_write_system_register(ulAddr2,ulValue2);</div>
-<div class="line"><a name="l02022"></a><span class="lineno"> 2022</span>&#160;}</div>
+<div class="line"><a name="l02020"></a><span class="lineno"> 2020</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> ulAddr2 = 0x80181080;</div>
+<div class="line"><a name="l02021"></a><span class="lineno"> 2021</span>&#160; </div>
+<div class="line"><a name="l02022"></a><span class="lineno"> 2022</span>&#160;    <span class="keywordflow">if</span> (side==1)</div>
+<div class="line"><a name="l02023"></a><span class="lineno"> 2023</span>&#160;         ulAddr2 = 0x80181880;</div>
+<div class="line"><a name="l02024"></a><span class="lineno"> 2024</span>&#160; </div>
+<div class="line"><a name="l02025"></a><span class="lineno"> 2025</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ulValue2 =c?128:0;</div>
+<div class="line"><a name="l02026"></a><span class="lineno"> 2026</span>&#160;    ll_write_system_register(ulAddr2,ulValue2);</div>
+<div class="line"><a name="l02027"></a><span class="lineno"> 2027</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d3/df8/zed__oc__video__reg__log_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main()</a>.</p>
 
@@ -1825,10 +1897,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a72">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01600">1600</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01601"></a><span class="lineno"> 1601</span>&#160;{</div>
-<div class="line"><a name="l01602"></a><span class="lineno"> 1602</span>&#160;    setCameraControlSettings(LINUX_CTRL_CONTRAST, contrast);</div>
-<div class="line"><a name="l01603"></a><span class="lineno"> 1603</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01605">1605</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01606"></a><span class="lineno"> 1606</span>&#160;{</div>
+<div class="line"><a name="l01607"></a><span class="lineno"> 1607</span>&#160;    setCameraControlSettings(LINUX_CTRL_CONTRAST, contrast);</div>
+<div class="line"><a name="l01608"></a><span class="lineno"> 1608</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1869,32 +1941,32 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a80">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01836">1836</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01837"></a><span class="lineno"> 1837</span>&#160;{</div>
-<div class="line"><a name="l01838"></a><span class="lineno"> 1838</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpH, ucExpM, ucExpL;</div>
-<div class="line"><a name="l01839"></a><span class="lineno"> 1839</span>&#160; </div>
-<div class="line"><a name="l01840"></a><span class="lineno"> 1840</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">getAECAGC</a>())</div>
-<div class="line"><a name="l01841"></a><span class="lineno"> 1841</span>&#160;        <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01842"></a><span class="lineno"> 1842</span>&#160; </div>
-<div class="line"><a name="l01843"></a><span class="lineno"> 1843</span>&#160;    <span class="keywordflow">if</span>(exposure &lt; DEFAULT_MIN_EXP)</div>
-<div class="line"><a name="l01844"></a><span class="lineno"> 1844</span>&#160;        exposure = DEFAULT_MIN_EXP;</div>
-<div class="line"><a name="l01845"></a><span class="lineno"> 1845</span>&#160;    <span class="keywordflow">if</span>(exposure &gt; DEFAULT_MAX_EXP)</div>
-<div class="line"><a name="l01846"></a><span class="lineno"> 1846</span>&#160;        exposure = DEFAULT_MAX_EXP;</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01841">1841</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01842"></a><span class="lineno"> 1842</span>&#160;{</div>
+<div class="line"><a name="l01843"></a><span class="lineno"> 1843</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ucExpH, ucExpM, ucExpL;</div>
+<div class="line"><a name="l01844"></a><span class="lineno"> 1844</span>&#160; </div>
+<div class="line"><a name="l01845"></a><span class="lineno"> 1845</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">getAECAGC</a>())</div>
+<div class="line"><a name="l01846"></a><span class="lineno"> 1846</span>&#160;        <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC</a>(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l01847"></a><span class="lineno"> 1847</span>&#160; </div>
-<div class="line"><a name="l01848"></a><span class="lineno"> 1848</span>&#160;    <span class="keywordtype">int</span> rawExp = (mExpoureRawMax * ((float) exposure / 100.0));</div>
-<div class="line"><a name="l01849"></a><span class="lineno"> 1849</span>&#160;    <span class="keywordflow">if</span>(rawExp&lt;EXP_RAW_MIN)</div>
-<div class="line"><a name="l01850"></a><span class="lineno"> 1850</span>&#160;        rawExp = EXP_RAW_MIN;</div>
-<div class="line"><a name="l01851"></a><span class="lineno"> 1851</span>&#160; </div>
-<div class="line"><a name="l01852"></a><span class="lineno"> 1852</span>&#160;    <span class="comment">//std::cout &lt;&lt; &quot;Set Raw Exp: &quot; &lt;&lt; rawExp &lt;&lt; std::endl;</span></div>
-<div class="line"><a name="l01853"></a><span class="lineno"> 1853</span>&#160; </div>
-<div class="line"><a name="l01854"></a><span class="lineno"> 1854</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
-<div class="line"><a name="l01855"></a><span class="lineno"> 1855</span>&#160; </div>
-<div class="line"><a name="l01856"></a><span class="lineno"> 1856</span>&#160;    ucExpH = (rawExp &gt;&gt; 12) &amp; 0xff;</div>
-<div class="line"><a name="l01857"></a><span class="lineno"> 1857</span>&#160;    ucExpM = (rawExp &gt;&gt; 4) &amp; 0xff;</div>
-<div class="line"><a name="l01858"></a><span class="lineno"> 1858</span>&#160;    ucExpL = (rawExp &lt;&lt; 4) &amp; 0xf0;</div>
-<div class="line"><a name="l01859"></a><span class="lineno"> 1859</span>&#160;    ll_isp_set_exposure(ucExpH, ucExpM, ucExpL, sensorId);</div>
-<div class="line"><a name="l01860"></a><span class="lineno"> 1860</span>&#160;}</div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ad36ff05e29c628efa82dde68c32661d4"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">sl_oc::video::VideoCapture::getAECAGC</a></div><div class="ttdeci">bool getAECAGC()</div><div class="ttdoc">Get the status of the automatic Exposure and Gain control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01706">videocapture.cpp:1706</a></div></div>
+<div class="line"><a name="l01848"></a><span class="lineno"> 1848</span>&#160;    <span class="keywordflow">if</span>(exposure &lt; DEFAULT_MIN_EXP)</div>
+<div class="line"><a name="l01849"></a><span class="lineno"> 1849</span>&#160;        exposure = DEFAULT_MIN_EXP;</div>
+<div class="line"><a name="l01850"></a><span class="lineno"> 1850</span>&#160;    <span class="keywordflow">if</span>(exposure &gt; DEFAULT_MAX_EXP)</div>
+<div class="line"><a name="l01851"></a><span class="lineno"> 1851</span>&#160;        exposure = DEFAULT_MAX_EXP;</div>
+<div class="line"><a name="l01852"></a><span class="lineno"> 1852</span>&#160; </div>
+<div class="line"><a name="l01853"></a><span class="lineno"> 1853</span>&#160;    <span class="keywordtype">int</span> rawExp = (mExpoureRawMax * ((float) exposure / 100.0));</div>
+<div class="line"><a name="l01854"></a><span class="lineno"> 1854</span>&#160;    <span class="keywordflow">if</span>(rawExp&lt;EXP_RAW_MIN)</div>
+<div class="line"><a name="l01855"></a><span class="lineno"> 1855</span>&#160;        rawExp = EXP_RAW_MIN;</div>
+<div class="line"><a name="l01856"></a><span class="lineno"> 1856</span>&#160; </div>
+<div class="line"><a name="l01857"></a><span class="lineno"> 1857</span>&#160;    <span class="comment">//std::cout &lt;&lt; &quot;Set Raw Exp: &quot; &lt;&lt; rawExp &lt;&lt; std::endl;</span></div>
+<div class="line"><a name="l01858"></a><span class="lineno"> 1858</span>&#160; </div>
+<div class="line"><a name="l01859"></a><span class="lineno"> 1859</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
+<div class="line"><a name="l01860"></a><span class="lineno"> 1860</span>&#160; </div>
+<div class="line"><a name="l01861"></a><span class="lineno"> 1861</span>&#160;    ucExpH = (rawExp &gt;&gt; 12) &amp; 0xff;</div>
+<div class="line"><a name="l01862"></a><span class="lineno"> 1862</span>&#160;    ucExpM = (rawExp &gt;&gt; 4) &amp; 0xff;</div>
+<div class="line"><a name="l01863"></a><span class="lineno"> 1863</span>&#160;    ucExpL = (rawExp &lt;&lt; 4) &amp; 0xf0;</div>
+<div class="line"><a name="l01864"></a><span class="lineno"> 1864</span>&#160;    ll_isp_set_exposure(ucExpH, ucExpM, ucExpL, sensorId);</div>
+<div class="line"><a name="l01865"></a><span class="lineno"> 1865</span>&#160;}</div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_ad36ff05e29c628efa82dde68c32661d4"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">sl_oc::video::VideoCapture::getAECAGC</a></div><div class="ttdeci">bool getAECAGC()</div><div class="ttdoc">Get the status of the automatic Exposure and Gain control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01711">videocapture.cpp:1711</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">getAECAGC()</a>, and <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC()</a>.</p>
 
@@ -1937,27 +2009,27 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a78">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01798">1798</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01799"></a><span class="lineno"> 1799</span>&#160;{</div>
-<div class="line"><a name="l01800"></a><span class="lineno"> 1800</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">getAECAGC</a>())</div>
-<div class="line"><a name="l01801"></a><span class="lineno"> 1801</span>&#160;        <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01802"></a><span class="lineno"> 1802</span>&#160; </div>
-<div class="line"><a name="l01803"></a><span class="lineno"> 1803</span>&#160;    <span class="keywordflow">if</span> (gain &lt;= DEFAULT_MIN_GAIN)</div>
-<div class="line"><a name="l01804"></a><span class="lineno"> 1804</span>&#160;        gain = DEFAULT_MIN_GAIN;</div>
-<div class="line"><a name="l01805"></a><span class="lineno"> 1805</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (gain &gt;= DEFAULT_MAX_GAIN)</div>
-<div class="line"><a name="l01806"></a><span class="lineno"> 1806</span>&#160;        gain = DEFAULT_MAX_GAIN;</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01803">1803</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01804"></a><span class="lineno"> 1804</span>&#160;{</div>
+<div class="line"><a name="l01805"></a><span class="lineno"> 1805</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">getAECAGC</a>())</div>
+<div class="line"><a name="l01806"></a><span class="lineno"> 1806</span>&#160;        <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC</a>(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l01807"></a><span class="lineno"> 1807</span>&#160; </div>
-<div class="line"><a name="l01808"></a><span class="lineno"> 1808</span>&#160;    uint8_t ucGainH=0, ucGainM=0, ucGainL=0;</div>
-<div class="line"><a name="l01809"></a><span class="lineno"> 1809</span>&#160; </div>
-<div class="line"><a name="l01810"></a><span class="lineno"> 1810</span>&#160;    <span class="keywordtype">int</span> rawGain = calcRawGainValue(gain);</div>
-<div class="line"><a name="l01811"></a><span class="lineno"> 1811</span>&#160; </div>
-<div class="line"><a name="l01812"></a><span class="lineno"> 1812</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
-<div class="line"><a name="l01813"></a><span class="lineno"> 1813</span>&#160; </div>
-<div class="line"><a name="l01814"></a><span class="lineno"> 1814</span>&#160;    ucGainM = (rawGain &gt;&gt; 8) &amp; 0xff;</div>
-<div class="line"><a name="l01815"></a><span class="lineno"> 1815</span>&#160;    ucGainL = rawGain &amp; 0xff;</div>
-<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160;    ll_isp_set_gain(ucGainH, ucGainM, ucGainL, sensorId);</div>
-<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160; </div>
-<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160;}</div>
+<div class="line"><a name="l01808"></a><span class="lineno"> 1808</span>&#160;    <span class="keywordflow">if</span> (gain &lt;= DEFAULT_MIN_GAIN)</div>
+<div class="line"><a name="l01809"></a><span class="lineno"> 1809</span>&#160;        gain = DEFAULT_MIN_GAIN;</div>
+<div class="line"><a name="l01810"></a><span class="lineno"> 1810</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (gain &gt;= DEFAULT_MAX_GAIN)</div>
+<div class="line"><a name="l01811"></a><span class="lineno"> 1811</span>&#160;        gain = DEFAULT_MAX_GAIN;</div>
+<div class="line"><a name="l01812"></a><span class="lineno"> 1812</span>&#160; </div>
+<div class="line"><a name="l01813"></a><span class="lineno"> 1813</span>&#160;    uint8_t ucGainH=0, ucGainM=0, ucGainL=0;</div>
+<div class="line"><a name="l01814"></a><span class="lineno"> 1814</span>&#160; </div>
+<div class="line"><a name="l01815"></a><span class="lineno"> 1815</span>&#160;    <span class="keywordtype">int</span> rawGain = calcRawGainValue(gain);</div>
+<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160; </div>
+<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160;    <span class="keywordtype">int</span> sensorId = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cam);</div>
+<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160; </div>
+<div class="line"><a name="l01819"></a><span class="lineno"> 1819</span>&#160;    ucGainM = (rawGain &gt;&gt; 8) &amp; 0xff;</div>
+<div class="line"><a name="l01820"></a><span class="lineno"> 1820</span>&#160;    ucGainL = rawGain &amp; 0xff;</div>
+<div class="line"><a name="l01821"></a><span class="lineno"> 1821</span>&#160;    ll_isp_set_gain(ucGainH, ucGainM, ucGainL, sensorId);</div>
+<div class="line"><a name="l01822"></a><span class="lineno"> 1822</span>&#160; </div>
+<div class="line"><a name="l01823"></a><span class="lineno"> 1823</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad36ff05e29c628efa82dde68c32661d4">getAECAGC()</a>, and <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9e9ecade24964781a13e9218019602e9">setAECAGC()</a>.</p>
 
@@ -1989,17 +2061,17 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a77">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01674">1674</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160;{</div>
-<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160;    <span class="keywordtype">int</span> current_gamma = getCameraControlSettings(LINUX_CTRL_GAMMA);</div>
-<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160; </div>
-<div class="line"><a name="l01678"></a><span class="lineno"> 1678</span>&#160;    <span class="keywordflow">if</span> (gamma!=current_gamma)</div>
-<div class="line"><a name="l01679"></a><span class="lineno"> 1679</span>&#160;    {</div>
-<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;        setGammaPreset(0,gamma);</div>
-<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;        setGammaPreset(1,gamma);</div>
-<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160;        setCameraControlSettings(LINUX_CTRL_GAMMA, gamma);</div>
-<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160;    }</div>
-<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01679">1679</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;{</div>
+<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;    <span class="keywordtype">int</span> current_gamma = getCameraControlSettings(LINUX_CTRL_GAMMA);</div>
+<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160; </div>
+<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160;    <span class="keywordflow">if</span> (gamma!=current_gamma)</div>
+<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160;    {</div>
+<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160;        setGammaPreset(0,gamma);</div>
+<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160;        setGammaPreset(1,gamma);</div>
+<div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160;        setCameraControlSettings(LINUX_CTRL_GAMMA, gamma);</div>
+<div class="line"><a name="l01688"></a><span class="lineno"> 1688</span>&#160;    }</div>
+<div class="line"><a name="l01689"></a><span class="lineno"> 1689</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2029,10 +2101,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a73">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01615">1615</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01616"></a><span class="lineno"> 1616</span>&#160;{</div>
-<div class="line"><a name="l01617"></a><span class="lineno"> 1617</span>&#160;    setCameraControlSettings(LINUX_CTRL_HUE, hue);</div>
-<div class="line"><a name="l01618"></a><span class="lineno"> 1618</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01620">1620</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01621"></a><span class="lineno"> 1621</span>&#160;{</div>
+<div class="line"><a name="l01622"></a><span class="lineno"> 1622</span>&#160;    setCameraControlSettings(LINUX_CTRL_HUE, hue);</div>
+<div class="line"><a name="l01623"></a><span class="lineno"> 1623</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2061,20 +2133,20 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns a negative value if an error occurred </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01401">1401</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160;{</div>
-<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;    <span class="keywordtype">int</span> hr = 0;</div>
-<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;    <span class="comment">//LED GPIO : GPIO 2</span></div>
-<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160;    <span class="keywordflow">if</span> (status) {</div>
-<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;        hr += ll_set_gpio_direction(2, 0);</div>
-<div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160;        hr += ll_set_gpio_value(2, 1);</div>
-<div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160;        hr += ll_set_gpio_direction(2, 0);</div>
-<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160;        hr += ll_set_gpio_value(2, 0);</div>
-<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160;    }</div>
-<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160; </div>
-<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;    <span class="keywordflow">return</span> hr;</div>
-<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01403">1403</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;{</div>
+<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160;    <span class="keywordtype">int</span> hr = 0;</div>
+<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;    <span class="comment">//LED GPIO : GPIO 2</span></div>
+<div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160;    <span class="keywordflow">if</span> (status) {</div>
+<div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160;        hr += ll_set_gpio_direction(2, 0);</div>
+<div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160;        hr += ll_set_gpio_value(2, 1);</div>
+<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160;        hr += ll_set_gpio_direction(2, 0);</div>
+<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;        hr += ll_set_gpio_value(2, 0);</div>
+<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;    }</div>
+<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160; </div>
+<div class="line"><a name="l01415"></a><span class="lineno"> 1415</span>&#160;    <span class="keywordflow">return</span> hr;</div>
+<div class="line"><a name="l01416"></a><span class="lineno"> 1416</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a9ad02dd9c454adf803653b57162cdc1e">initializeVideo()</a>, and <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#af970430296542fc9f3a731bad823e7ce">toggleLED()</a>.</p>
 
@@ -2105,8 +2177,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Indicates that the SensorCapture object received the HW sync signal and a frame must be synchronized to the last Sensor Data. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/dd4/videocapture_8hpp_source.html#l00385">385</a> of file <a class="el" href="../../d6/dd4/videocapture_8hpp_source.html">videocapture.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;{ mSensReadyToSync=<span class="keyword">true</span>; }</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/dd4/videocapture_8hpp_source.html#l00397">397</a> of file <a class="el" href="../../d6/dd4/videocapture_8hpp_source.html">videocapture.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;{ mSensReadyToSync=<span class="keyword">true</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2167,50 +2239,50 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns true if the ROI has been correctly set </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01718">1718</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01719"></a><span class="lineno"> 1719</span>&#160;{</div>
-<div class="line"><a name="l01720"></a><span class="lineno"> 1720</span>&#160;    <span class="keywordflow">if</span>(side!=<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176a684d325a7303f52e64011467ff5c5758">CAM_SENS_POS::LEFT</a> &amp;&amp; side!=<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176a21507b40c80068eda19865706fdc2403">CAM_SENS_POS::RIGHT</a>)</div>
-<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160;    {</div>
-<div class="line"><a name="l01722"></a><span class="lineno"> 1722</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l01723"></a><span class="lineno"> 1723</span>&#160;    }</div>
-<div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160;    <span class="keywordflow">if</span>(w==0 || h==0)</div>
-<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160;    {</div>
-<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160;    }</div>
-<div class="line"><a name="l01728"></a><span class="lineno"> 1728</span>&#160;    <span class="keywordflow">if</span>((x+w)&gt;(mWidth/2) || (y+h)&gt;mHeight)</div>
-<div class="line"><a name="l01729"></a><span class="lineno"> 1729</span>&#160;    {</div>
-<div class="line"><a name="l01730"></a><span class="lineno"> 1730</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l01731"></a><span class="lineno"> 1731</span>&#160;    }</div>
-<div class="line"><a name="l01732"></a><span class="lineno"> 1732</span>&#160;    <span class="keywordflow">if</span>(w*h&lt;=100)</div>
-<div class="line"><a name="l01733"></a><span class="lineno"> 1733</span>&#160;    {</div>
-<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l01735"></a><span class="lineno"> 1735</span>&#160;    }</div>
-<div class="line"><a name="l01736"></a><span class="lineno"> 1736</span>&#160; </div>
-<div class="line"><a name="l01737"></a><span class="lineno"> 1737</span>&#160;    <span class="keywordtype">int</span> x_start_high = x / 256;</div>
-<div class="line"><a name="l01738"></a><span class="lineno"> 1738</span>&#160;    <span class="keywordtype">int</span> x_start_low = (x - x_start_high * 256);</div>
-<div class="line"><a name="l01739"></a><span class="lineno"> 1739</span>&#160;    <span class="keywordtype">int</span> y_start_high = y / 256;</div>
-<div class="line"><a name="l01740"></a><span class="lineno"> 1740</span>&#160;    <span class="keywordtype">int</span> y_start_low = (y - x_start_high * 256);</div>
-<div class="line"><a name="l01741"></a><span class="lineno"> 1741</span>&#160;    <span class="keywordtype">int</span> w_start_high = w / 256;</div>
-<div class="line"><a name="l01742"></a><span class="lineno"> 1742</span>&#160;    <span class="keywordtype">int</span> w_start_low = (w - x_start_high * 256);</div>
-<div class="line"><a name="l01743"></a><span class="lineno"> 1743</span>&#160;    <span class="keywordtype">int</span> h_start_high = h / 256;</div>
-<div class="line"><a name="l01744"></a><span class="lineno"> 1744</span>&#160;    <span class="keywordtype">int</span> h_start_low = (h - x_start_high * 256);</div>
-<div class="line"><a name="l01745"></a><span class="lineno"> 1745</span>&#160; </div>
-<div class="line"><a name="l01746"></a><span class="lineno"> 1746</span>&#160; </div>
-<div class="line"><a name="l01747"></a><span class="lineno"> 1747</span>&#160;    uint32_t ulAddr = 0x801810C0;</div>
-<div class="line"><a name="l01748"></a><span class="lineno"> 1748</span>&#160;    <span class="keywordflow">if</span> (<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(side)==1)</div>
-<div class="line"><a name="l01749"></a><span class="lineno"> 1749</span>&#160;        ulAddr= 0x801818C0;</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01723">1723</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160;{</div>
+<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160;    <span class="keywordflow">if</span>(side!=<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176a684d325a7303f52e64011467ff5c5758">CAM_SENS_POS::LEFT</a> &amp;&amp; side!=<a class="code" href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176a21507b40c80068eda19865706fdc2403">CAM_SENS_POS::RIGHT</a>)</div>
+<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;    {</div>
+<div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01728"></a><span class="lineno"> 1728</span>&#160;    }</div>
+<div class="line"><a name="l01729"></a><span class="lineno"> 1729</span>&#160;    <span class="keywordflow">if</span>(w==0 || h==0)</div>
+<div class="line"><a name="l01730"></a><span class="lineno"> 1730</span>&#160;    {</div>
+<div class="line"><a name="l01731"></a><span class="lineno"> 1731</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01732"></a><span class="lineno"> 1732</span>&#160;    }</div>
+<div class="line"><a name="l01733"></a><span class="lineno"> 1733</span>&#160;    <span class="keywordflow">if</span>((x+w)&gt;(mWidth/2) || (y+h)&gt;mHeight)</div>
+<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160;    {</div>
+<div class="line"><a name="l01735"></a><span class="lineno"> 1735</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01736"></a><span class="lineno"> 1736</span>&#160;    }</div>
+<div class="line"><a name="l01737"></a><span class="lineno"> 1737</span>&#160;    <span class="keywordflow">if</span>(w*h&lt;=100)</div>
+<div class="line"><a name="l01738"></a><span class="lineno"> 1738</span>&#160;    {</div>
+<div class="line"><a name="l01739"></a><span class="lineno"> 1739</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01740"></a><span class="lineno"> 1740</span>&#160;    }</div>
+<div class="line"><a name="l01741"></a><span class="lineno"> 1741</span>&#160; </div>
+<div class="line"><a name="l01742"></a><span class="lineno"> 1742</span>&#160;    <span class="keywordtype">int</span> x_start_high = x / 256;</div>
+<div class="line"><a name="l01743"></a><span class="lineno"> 1743</span>&#160;    <span class="keywordtype">int</span> x_start_low = (x - x_start_high * 256);</div>
+<div class="line"><a name="l01744"></a><span class="lineno"> 1744</span>&#160;    <span class="keywordtype">int</span> y_start_high = y / 256;</div>
+<div class="line"><a name="l01745"></a><span class="lineno"> 1745</span>&#160;    <span class="keywordtype">int</span> y_start_low = (y - x_start_high * 256);</div>
+<div class="line"><a name="l01746"></a><span class="lineno"> 1746</span>&#160;    <span class="keywordtype">int</span> w_start_high = w / 256;</div>
+<div class="line"><a name="l01747"></a><span class="lineno"> 1747</span>&#160;    <span class="keywordtype">int</span> w_start_low = (w - x_start_high * 256);</div>
+<div class="line"><a name="l01748"></a><span class="lineno"> 1748</span>&#160;    <span class="keywordtype">int</span> h_start_high = h / 256;</div>
+<div class="line"><a name="l01749"></a><span class="lineno"> 1749</span>&#160;    <span class="keywordtype">int</span> h_start_low = (h - x_start_high * 256);</div>
 <div class="line"><a name="l01750"></a><span class="lineno"> 1750</span>&#160; </div>
-<div class="line"><a name="l01751"></a><span class="lineno"> 1751</span>&#160;    <span class="keywordtype">int</span> r = ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(x_start_high));ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01752"></a><span class="lineno"> 1752</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(x_start_low));ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01753"></a><span class="lineno"> 1753</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(y_start_high));ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01754"></a><span class="lineno"> 1754</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(y_start_low));ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01755"></a><span class="lineno"> 1755</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(w_start_high));ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01756"></a><span class="lineno"> 1756</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(w_start_low));ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01757"></a><span class="lineno"> 1757</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(h_start_high));ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01758"></a><span class="lineno"> 1758</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(h_start_low));ulAddr++;usleep(100);</div>
-<div class="line"><a name="l01759"></a><span class="lineno"> 1759</span>&#160; </div>
-<div class="line"><a name="l01760"></a><span class="lineno"> 1760</span>&#160;    <span class="keywordflow">return</span> (r==0);</div>
-<div class="line"><a name="l01761"></a><span class="lineno"> 1761</span>&#160;}</div>
+<div class="line"><a name="l01751"></a><span class="lineno"> 1751</span>&#160; </div>
+<div class="line"><a name="l01752"></a><span class="lineno"> 1752</span>&#160;    uint32_t ulAddr = 0x801810C0;</div>
+<div class="line"><a name="l01753"></a><span class="lineno"> 1753</span>&#160;    <span class="keywordflow">if</span> (<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(side)==1)</div>
+<div class="line"><a name="l01754"></a><span class="lineno"> 1754</span>&#160;        ulAddr= 0x801818C0;</div>
+<div class="line"><a name="l01755"></a><span class="lineno"> 1755</span>&#160; </div>
+<div class="line"><a name="l01756"></a><span class="lineno"> 1756</span>&#160;    <span class="keywordtype">int</span> r = ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(x_start_high));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01757"></a><span class="lineno"> 1757</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(x_start_low));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01758"></a><span class="lineno"> 1758</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(y_start_high));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01759"></a><span class="lineno"> 1759</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(y_start_low));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01760"></a><span class="lineno"> 1760</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(w_start_high));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01761"></a><span class="lineno"> 1761</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(w_start_low));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01762"></a><span class="lineno"> 1762</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(h_start_high));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01763"></a><span class="lineno"> 1763</span>&#160;    r += ll_write_system_register(ulAddr,<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(h_start_low));ulAddr++;usleep(100);</div>
+<div class="line"><a name="l01764"></a><span class="lineno"> 1764</span>&#160; </div>
+<div class="line"><a name="l01765"></a><span class="lineno"> 1765</span>&#160;    <span class="keywordflow">return</span> (r==0);</div>
+<div class="line"><a name="l01766"></a><span class="lineno"> 1766</span>&#160;}</div>
 <div class="ttc" id="anamespacesl__oc_1_1video_html_a7e6c10d39fd369376814fd736979a176a21507b40c80068eda19865706fdc2403"><div class="ttname"><a href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176a21507b40c80068eda19865706fdc2403">sl_oc::video::CAM_SENS_POS::RIGHT</a></div><div class="ttdeci">@ RIGHT</div><div class="ttdoc">The right sensor.</div></div>
 <div class="ttc" id="anamespacesl__oc_1_1video_html_a7e6c10d39fd369376814fd736979a176a684d325a7303f52e64011467ff5c5758"><div class="ttname"><a href="../../d1/da0/namespacesl__oc_1_1video.html#a7e6c10d39fd369376814fd736979a176a684d325a7303f52e64011467ff5c5758">sl_oc::video::CAM_SENS_POS::LEFT</a></div><div class="ttdeci">@ LEFT</div><div class="ttdoc">The left sensor.</div></div>
 </div><!-- fragment -->
@@ -2246,10 +2318,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a74">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01630">1630</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01631"></a><span class="lineno"> 1631</span>&#160;{</div>
-<div class="line"><a name="l01632"></a><span class="lineno"> 1632</span>&#160;    setCameraControlSettings(LINUX_CTRL_SATURATION, saturation);</div>
-<div class="line"><a name="l01633"></a><span class="lineno"> 1633</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01635">1635</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01636"></a><span class="lineno"> 1636</span>&#160;{</div>
+<div class="line"><a name="l01637"></a><span class="lineno"> 1637</span>&#160;    setCameraControlSettings(LINUX_CTRL_SATURATION, saturation);</div>
+<div class="line"><a name="l01638"></a><span class="lineno"> 1638</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2279,10 +2351,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a76">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01585">1585</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01586"></a><span class="lineno"> 1586</span>&#160;{</div>
-<div class="line"><a name="l01587"></a><span class="lineno"> 1587</span>&#160;    setCameraControlSettings(LINUX_CTRL_SHARPNESS, sharpness);</div>
-<div class="line"><a name="l01588"></a><span class="lineno"> 1588</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01590">1590</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01591"></a><span class="lineno"> 1591</span>&#160;{</div>
+<div class="line"><a name="l01592"></a><span class="lineno"> 1592</span>&#160;    setCameraControlSettings(LINUX_CTRL_SHARPNESS, sharpness);</div>
+<div class="line"><a name="l01593"></a><span class="lineno"> 1593</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2312,15 +2384,15 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a75">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01650">1650</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01651"></a><span class="lineno"> 1651</span>&#160;{</div>
-<div class="line"><a name="l01652"></a><span class="lineno"> 1652</span>&#160;    <span class="comment">// Disable auto white balance if active</span></div>
-<div class="line"><a name="l01653"></a><span class="lineno"> 1653</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a757a2669d47f4be91059681e5b590af2">getAutoWhiteBalance</a>() != 0)</div>
-<div class="line"><a name="l01654"></a><span class="lineno"> 1654</span>&#160;        <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad96e8492bd5ef82edbfc0bb4ccd981e4">setAutoWhiteBalance</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01655"></a><span class="lineno"> 1655</span>&#160; </div>
-<div class="line"><a name="l01656"></a><span class="lineno"> 1656</span>&#160;    setCameraControlSettings(LINUX_CTRL_AWB, wb);</div>
-<div class="line"><a name="l01657"></a><span class="lineno"> 1657</span>&#160;}</div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a757a2669d47f4be91059681e5b590af2"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a757a2669d47f4be91059681e5b590af2">sl_oc::video::VideoCapture::getAutoWhiteBalance</a></div><div class="ttdeci">bool getAutoWhiteBalance()</div><div class="ttdoc">Get the status of the automatic White Balance control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01659">videocapture.cpp:1659</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01655">1655</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01656"></a><span class="lineno"> 1656</span>&#160;{</div>
+<div class="line"><a name="l01657"></a><span class="lineno"> 1657</span>&#160;    <span class="comment">// Disable auto white balance if active</span></div>
+<div class="line"><a name="l01658"></a><span class="lineno"> 1658</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a757a2669d47f4be91059681e5b590af2">getAutoWhiteBalance</a>() != 0)</div>
+<div class="line"><a name="l01659"></a><span class="lineno"> 1659</span>&#160;        <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad96e8492bd5ef82edbfc0bb4ccd981e4">setAutoWhiteBalance</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01660"></a><span class="lineno"> 1660</span>&#160; </div>
+<div class="line"><a name="l01661"></a><span class="lineno"> 1661</span>&#160;    setCameraControlSettings(LINUX_CTRL_AWB, wb);</div>
+<div class="line"><a name="l01662"></a><span class="lineno"> 1662</span>&#160;}</div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a757a2669d47f4be91059681e5b590af2"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a757a2669d47f4be91059681e5b590af2">sl_oc::video::VideoCapture::getAutoWhiteBalance</a></div><div class="ttdeci">bool getAutoWhiteBalance()</div><div class="ttdoc">Get the status of the automatic White Balance control.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01664">videocapture.cpp:1664</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a757a2669d47f4be91059681e5b590af2">getAutoWhiteBalance()</a>, and <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#ad96e8492bd5ef82edbfc0bb4ccd981e4">setAutoWhiteBalance()</a>.</p>
 
@@ -2353,26 +2425,26 @@ Public Member Functions</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d7/dea/zed_oc_control_example_8cpp-example.html#a59">zed_oc_control_example.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01430">1430</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;{</div>
-<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;    <span class="keywordtype">bool</span> curVal;</div>
-<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160; </div>
-<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;    <span class="keywordtype">int</span> ret = <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a4e326fed89aeec27b0a0f7805006a176">getLEDstatus</a>( &amp;curVal );</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d19/videocapture_8cpp_source.html#l01432">1432</a> of file <a class="el" href="../../d6/d19/videocapture_8cpp_source.html">videocapture.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;{</div>
+<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;    <span class="keywordtype">bool</span> curVal;</div>
 <div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160; </div>
-<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160;    <span class="keywordflow">if</span>(ret==0)</div>
-<div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160;    {</div>
-<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160;        <span class="keywordtype">bool</span> newVal = !curVal;</div>
-<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160;        ret = <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a27cee578e5bb3dd9de873c610cb6d272">setLEDstatus</a>( newVal );</div>
-<div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160; </div>
-<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;        <span class="keywordflow">if</span>( ret==0 &amp;&amp; value!=<span class="keyword">nullptr</span> )</div>
-<div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160;        {</div>
-<div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;            *value = newVal;</div>
-<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;        }</div>
-<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160;    }</div>
-<div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160; </div>
-<div class="line"><a name="l01447"></a><span class="lineno"> 1447</span>&#160;    <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l01448"></a><span class="lineno"> 1448</span>&#160;}</div>
-<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a4e326fed89aeec27b0a0f7805006a176"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a4e326fed89aeec27b0a0f7805006a176">sl_oc::video::VideoCapture::getLEDstatus</a></div><div class="ttdeci">int getLEDstatus(bool *status)</div><div class="ttdoc">Get the status of the camera led.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01416">videocapture.cpp:1416</a></div></div>
+<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160;    <span class="keywordtype">int</span> ret = <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a4e326fed89aeec27b0a0f7805006a176">getLEDstatus</a>( &amp;curVal );</div>
+<div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160; </div>
+<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160;    <span class="keywordflow">if</span>(ret==0)</div>
+<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160;    {</div>
+<div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160;        <span class="keywordtype">bool</span> newVal = !curVal;</div>
+<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;        ret = <a class="code" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a27cee578e5bb3dd9de873c610cb6d272">setLEDstatus</a>( newVal );</div>
+<div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160; </div>
+<div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;        <span class="keywordflow">if</span>( ret==0 &amp;&amp; value!=<span class="keyword">nullptr</span> )</div>
+<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;        {</div>
+<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160;            *value = newVal;</div>
+<div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160;        }</div>
+<div class="line"><a name="l01447"></a><span class="lineno"> 1447</span>&#160;    }</div>
+<div class="line"><a name="l01448"></a><span class="lineno"> 1448</span>&#160; </div>
+<div class="line"><a name="l01449"></a><span class="lineno"> 1449</span>&#160;    <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l01450"></a><span class="lineno"> 1450</span>&#160;}</div>
+<div class="ttc" id="aclasssl__oc_1_1video_1_1_video_capture_html_a4e326fed89aeec27b0a0f7805006a176"><div class="ttname"><a href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a4e326fed89aeec27b0a0f7805006a176">sl_oc::video::VideoCapture::getLEDstatus</a></div><div class="ttdeci">int getLEDstatus(bool *status)</div><div class="ttdoc">Get the status of the camera led.</div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d19/videocapture_8cpp_source.html#l01418">videocapture.cpp:1418</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a4e326fed89aeec27b0a0f7805006a176">getLEDstatus()</a>, and <a class="el" href="../../d6/d2a/classsl__oc_1_1video_1_1_video_capture.html#a27cee578e5bb3dd9de873c610cb6d272">setLEDstatus()</a>.</p>
 
