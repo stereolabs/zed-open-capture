@@ -21,6 +21,8 @@
  * Video Capture
     - YUV 4:2:2 data format
     - Camera controls
+    - HIGH-RESOLUTION mode (requires USB3)
+    - VGA mode with USB2
  * Sensor Data Capture [Not available for ZED]
     - 6-DOF IMU (3-DOF accelerometer + 3-DOF gyroscope)
     - 3-DOF Magnetometer [Only ZED2 and ZED2i]
@@ -73,8 +75,7 @@ you can permanently add this configuration by adding the above command as the la
  * Linux OS
  * GCC (v7.5+)
  * CMake (v3.1+)
- * OpenCV (v3.4.0+) -Optional for the examples-
- * USB3 connectivity for HIGH RESOLUTION, USB2 for VGA mode
+ * OpenCV (v3.4.0+) -Optional for the examples- 
 
 ### Install prerequisites
 
