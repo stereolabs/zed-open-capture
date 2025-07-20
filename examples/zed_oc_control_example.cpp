@@ -27,6 +27,8 @@
 #include <opencv2/opencv.hpp>
 #include <ctime>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <errno.h>
 #include <cstdio>
 #include <sstream>
 // <---- Includes
@@ -75,6 +77,33 @@ static void updateAllCtrlValues(sl_oc::video::VideoCapture &cap);
 
 // Reset all the control values to default
 static void resetControls( sl_oc::video::VideoCapture &cap );
+
+// Ensure that the provided directory and all its parent directories exist
+static bool ensureFolder(const std::string& folder)
+{
+    if(folder.empty())
+        return false;
+
+    std::string path;
+    for(const char c : folder)
+    {
+        path.push_back(c);
+        if(c == '/')
+        {
+            if(path.size() == 1) // root '/' on absolute paths
+                continue;
+            struct stat st{};
+            if(stat(path.c_str(), &st)!=0)
+            {
+                if(mkdir(path.c_str(), 0755)!=0 && errno!=EEXIST)
+                    return false;
+            }
+            else if(!S_ISDIR(st.st_mode))
+                return false;
+        }
+    }
+    return true;
+}
 // <---- Global functions to control settings
 
 // ----> Global variables
@@ -153,9 +182,11 @@ int main(int argc, char *argv[])
 
     if(enableRecord)
     {
-        struct stat st{};
-        if(stat(recordFolder.c_str(), &st)!=0)
-            mkdir(recordFolder.c_str(), 0755);
+        if(!ensureFolder(recordFolder))
+        {
+            std::cerr << "Cannot create output directory: " << recordFolder << std::endl;
+            return EXIT_FAILURE;
+        }
     }
 
     // ----> Create rendering window
