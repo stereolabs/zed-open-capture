@@ -1,30 +1,29 @@
 # HIDAPI/libusb
-SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f580", MODE="0666"
-SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f680", MODE="0666"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f582", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f681", MODE="0666"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f682", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f780", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f781", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f880", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f881", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE="0666"
 
-# HIDAPI/hidraw
-KERNEL=="hidraw*", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f580", MODE="0666"
-KERNEL=="hidraw*", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f680", MODE="0666"
+# HIDAPI/hidraw (busnum constraint removed for multi-controller hosts like Jetson AGX Orin)
+KERNEL=="hidraw*", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f582", MODE="0666"
 KERNEL=="hidraw*", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f681", MODE="0666"
+KERNEL=="hidraw*", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f682", MODE="0666"
 KERNEL=="hidraw*", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f780", MODE="0666"
 KERNEL=="hidraw*", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f781", MODE="0666"
 KERNEL=="hidraw*", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f880", MODE="0666"
 KERNEL=="hidraw*", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f881", MODE="0666"
 KERNEL=="hidraw*", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE="0666"
 
-# Disable USB autosuspend for ZED cameras and their internal hub
+# Disable USB autosuspend for ZED cameras and their internal USB hub
 # Reference: https://www.kernel.org/doc/Documentation/usb/power-management.txt
-# Note: power/control="on" is the authoritative switch — it disables runtime PM
-# entirely for the device, so the device stays powered and never autosuspends.
-ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f580", TEST=="power/control", ATTR{power/control}="on"
-ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f680", TEST=="power/control", ATTR{power/control}="on"
-ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f681", TEST=="power/control", ATTR{power/control}="on"
+# power/control="on" is the authoritative switch — it disables runtime PM,
+# so the device stays powered and never autosuspends.
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f582", TEST=="power/control", ATTR{power/control}="on"
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f682", TEST=="power/control", ATTR{power/control}="on"
 ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f780", TEST=="power/control", ATTR{power/control}="on"
 ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f781", TEST=="power/control", ATTR{power/control}="on"
 ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f880", TEST=="power/control", ATTR{power/control}="on"
