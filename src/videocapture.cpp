@@ -1741,9 +1741,17 @@ int VideoCapture::getGamma() {
 
 int VideoCapture::setAECAGC(bool active)
 {
+    const bool wasOn = !active && (ll_isp_is_aecagc(0)==1 || ll_isp_is_aecagc(1)==1);
+
     int res = 0;
     res += ll_isp_aecagc_enable(0, active);
     res += ll_isp_aecagc_enable(1, active);
+
+    // After AEC is disabled the ISP can still apply a pending update ~3 frames later
+    // (measured 205-215 ms at 15 fps), overwriting manual values written in between
+    if( wasOn && mFps>0 )
+        usleep( 5 * 1000000 / mFps );
+
     return res;
 }
 
