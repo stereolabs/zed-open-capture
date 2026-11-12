@@ -61,6 +61,9 @@
 #define ADDR_GAIN_H  0x3507
 #define ADDR_GAIN_M  0x3508
 #define ADDR_GAIN_L  0x3509
+#define ADDR_CHIP_ID_H  0x300A
+#define ADDR_CHIP_ID_L  0x300B
+#define OV4689_CHIP_ID  0x4688
 
 #define XU_TASK_SET     0x50
 #define XU_TASK_GET     0x51
@@ -299,6 +302,19 @@ bool VideoCapture::initializeVideo( int devId/*=-1*/ )
     }
 
     mInitialized = startCapture();
+
+    // After STREAMON the sensors ignore register writes and reads return 0 for ~150 ms
+    if( mInitialized && !waitSensorsReady(2000) )
+    {
+        // Chip ID only verified on ZED 2 and ZED 2i: other models must not lose the ability to open
+        if( mCameraModel==SL_DEVICE::ZED_2 || mCameraModel==SL_DEVICE::ZED_2i )
+        {
+            ERROR_OUT(mParams.verbose,"Sensors not ready after 2 s, closing the camera");
+            reset();
+            return false;
+        }
+        WARNING_OUT(mParams.verbose,"Sensors not ready after 2 s, camera settings may not be applied");
+    }
 
     if( mParams.verbose && mInitialized)
     {
@@ -1203,6 +1219,29 @@ int VideoCapture::ll_read_sensor_register(int side, int sscb_id, uint64_t addres
     return hr;
 }
 
+bool VideoCapture::waitSensorsReady(int timeout_msec)
+{
+    const uint64_t start = getSteadyTimestamp();
+    int good = 0;
+    while( (getSteadyTimestamp()-start) < static_cast<uint64_t>(timeout_msec)*1000000ULL )
+    {
+        bool ok = true;
+        for( int side=0; side<2 && ok; side++ )
+        {
+            uint8_t hi=0, lo=0;
+            ok = ll_read_sensor_register(side, 1, ADDR_CHIP_ID_H, &hi)==0 &&
+                 ll_read_sensor_register(side, 1, ADDR_CHIP_ID_L, &lo)==0 &&
+                 ((hi<<8)|lo)==OV4689_CHIP_ID;
+        }
+        // Replies are unreliable around the transition: require consecutive matches
+        good = ok ? good+1 : 0;
+        if(good>=3)
+            return true;
+        usleep(2000);
+    }
+    return false;
+}
+
 int VideoCapture::ll_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value)
 {
 
@@ -1702,9 +1741,17 @@ int VideoCapture::getGamma() {
 
 int VideoCapture::setAECAGC(bool active)
 {
+    const bool wasOn = !active && (ll_isp_is_aecagc(0)==1 || ll_isp_is_aecagc(1)==1);
+
     int res = 0;
     res += ll_isp_aecagc_enable(0, active);
     res += ll_isp_aecagc_enable(1, active);
+
+    // After AEC is disabled the ISP can still apply a pending update ~3 frames later
+    // (measured 205-215 ms at 15 fps), overwriting manual values written in between
+    if( wasOn && mFps>0 )
+        usleep( 5 * 1000000 / mFps );
+
     return res;
 }
 
