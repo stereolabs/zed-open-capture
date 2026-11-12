@@ -81,6 +81,8 @@ public:
      * \brief Open a ZED camera using the specified ID or searching for the first available
      * \param devId Id of the camera (see `/dev/video*`). Use `-1` to open the first available camera
      * \return returns true if the camera is correctly opened
+     * \note The call returns once the camera sensors accept settings (about 0.2 s after streaming starts),
+     *       so gain and exposure can be set right after it.
      */
     bool initializeVideo( int devId=-1 );
 
@@ -261,7 +263,10 @@ public:
 
     /*!
      * \brief Enable/Disable the automatic Exposure and Gain control
-     * \param active true to activate automatic White Balance
+     * \param active true to activate automatic Exposure and Gain control
+     * \note When disabling an active control, the call blocks for 5 frame periods
+     *       (333 ms at 15 fps) so that a pending automatic update cannot overwrite
+     *       the gain and exposure values set right after it.
      */
     int setAECAGC(bool active);
 
@@ -307,6 +312,7 @@ public:
 
     /*!
      * \brief Set the Gain value (disable Exposure and Gain control if active)
+     * \note If the automatic control was active, the call blocks for 5 frame periods (see \ref setAECAGC)
      * \param cam position of the camera sensor (see  CAM_SENS_POS)
      * \param gain Gain value in the range [0,100]
      */
@@ -321,6 +327,7 @@ public:
 
     /*!
      * \brief Set the Exposure value (disable Exposure and Gain control if active)
+     * \note If the automatic control was active, the call blocks for 5 frame periods (see \ref setAECAGC)
      * \param cam position of the camera sensor (see  CAM_SENS_POS)
      * \param exposure Exposure value in the range [0,100]
      */

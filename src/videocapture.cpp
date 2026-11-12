@@ -306,8 +306,8 @@ bool VideoCapture::initializeVideo( int devId/*=-1*/ )
     // After STREAMON the sensors ignore register writes and reads return 0 for ~150 ms
     if( mInitialized && !waitSensorsReady(2000) )
     {
-        // Chip ID only verified on ZED 2i: other models must not lose the ability to open
-        if( mCameraModel==SL_DEVICE::ZED_2i )
+        // Chip ID only verified on ZED 2 and ZED 2i: other models must not lose the ability to open
+        if( mCameraModel==SL_DEVICE::ZED_2 || mCameraModel==SL_DEVICE::ZED_2i )
         {
             ERROR_OUT(mParams.verbose,"Sensors not ready after 2 s, closing the camera");
             reset();
