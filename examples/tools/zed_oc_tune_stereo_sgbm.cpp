@@ -36,10 +36,6 @@
 #include "ocv_display.hpp"
 // <---- Includes
 
-// ----> MACROS
-#define USE_HALF_SIZE_DISPARITY
-// <---- MACROS
-
 // ----> Global variables
 sl_oc::video::VideoParams params;
 
@@ -122,8 +118,12 @@ int main(int argc, char *argv[])
     cv::Mat map_left_x, map_left_y;
     cv::Mat map_right_x, map_right_y;
     cv::Mat cameraMatrix_left, cameraMatrix_right;
-    sl_oc::tools::initCalibration(calibration_file, cv::Size(w/2,h), map_left_x, map_left_y, map_right_x, map_right_y,
-                                  cameraMatrix_left, cameraMatrix_right);
+    if( !sl_oc::tools::initCalibration(calibration_file, cv::Size(w/2,h), map_left_x, map_left_y, map_right_x, map_right_y,
+                                       cameraMatrix_left, cameraMatrix_right) )
+    {
+        std::cerr << "Invalid calibration file" << std::endl;
+        return EXIT_FAILURE;
+    }
 
     std::cout << " Camera Matrix L: \n" << cameraMatrix_left << std::endl << std::endl;
     std::cout << " Camera Matrix R: \n" << cameraMatrix_right << std::endl << std::endl;
@@ -163,10 +163,8 @@ int main(int argc, char *argv[])
     }
 
     // ----> Create tune GUI
-    maxMaxDisp = right_rect.cols;
-#ifdef USE_HALF_SIZE_DISPARITY
-    maxMaxDisp/=2;
-#endif
+    stereoPar.load();
+    maxMaxDisp = static_cast<int>(right_rect.cols*((stereoPar.matchScale>0. && stereoPar.matchScale<=1.) ? stereoPar.matchScale : 1.));
 
     cv::namedWindow(preFiltDispWinName, cv::WINDOW_AUTOSIZE); // Create Window
 
@@ -316,13 +314,21 @@ void applyStereoMatching()
     // ----> Stereo matching
     sl_oc::tools::StopWatch stereo_clock;
 
-#ifdef USE_HALF_SIZE_DISPARITY
-    cv::resize(left_rect,  left_for_matcher,  cv::Size(), 0.5, 0.5, cv::INTER_AREA);
-    cv::resize(right_rect, right_for_matcher, cv::Size(), 0.5, 0.5, cv::INTER_AREA);
-#else
-    left_for_matcher = left_rect.clone();
-    right_for_matcher = right_rect.clone();
-#endif
+    // The same images used by the depth example: grayscale, reduced according to `matchScale`
+    const double scale = (stereoPar.matchScale>0. && stereoPar.matchScale<=1.) ? stereoPar.matchScale : 1.;
+    cv::Mat left_gray, right_gray;
+    cv::cvtColor(left_rect, left_gray, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(right_rect, right_gray, cv::COLOR_BGR2GRAY);
+    if(scale<1.)
+    {
+        cv::resize(left_gray,  left_for_matcher,  cv::Size(), scale, scale, cv::INTER_AREA);
+        cv::resize(right_gray, right_for_matcher, cv::Size(), scale, scale, cv::INTER_AREA);
+    }
+    else
+    {
+        left_for_matcher = left_gray;
+        right_for_matcher = right_gray;
+    }
 
     left_matcher->setMinDisparity(stereoPar.minDisparity);
     left_matcher->setNumDisparities(stereoPar.numDisparities);
@@ -335,10 +341,6 @@ void applyStereoMatching()
     left_matcher->setUniquenessRatio(stereoPar.uniquenessRatio);
     left_matcher->setSpeckleWindowSize(stereoPar.speckleWindowSize);
     left_matcher->setSpeckleRange(stereoPar.speckleRange);
-#ifdef USE_HALF_SIZE_DISPARITY
-    left_disp*=2;
-#endif
-
     std::cout << "Start stereo matching..." << std::endl;
     left_matcher->compute(left_for_matcher, right_for_matcher, left_disp);
     std::cout << "... finished stereo matching" << std::endl;
@@ -350,9 +352,10 @@ void applyStereoMatching()
     // ----> Show disparity
     //cv::ximgproc::getDisparityVis(left_disp,left_disp_vis,3.0);
     cv::normalize(left_disp, left_disp_vis, 0, 255, cv::NORM_MINMAX, CV_8UC1);
-#ifdef USE_HALF_SIZE_DISPARITY
-    cv::resize(left_disp_vis, left_disp_vis, cv::Size(), 2.0, 2.0, cv::INTER_AREA);
-#endif
+    if(scale<1.)
+    {
+        cv::resize(left_disp_vis, left_disp_vis, cv::Size(), 1./scale, 1./scale, cv::INTER_NEAREST);
+    }
     sl_oc::tools::showImage(preFiltDispWinName, left_disp_vis, params.res, false);
     // <---- Show disparity
 }
@@ -384,8 +387,8 @@ void on_trackbar_block_size( int newBlockSize, void* )
     }
 
     stereoPar.blockSize = newBlockSize;
-    stereoPar.P1 = 24*stereoPar.blockSize*stereoPar.blockSize;
-    stereoPar. P2 = 96*stereoPar.blockSize*stereoPar.blockSize;
+    stereoPar.P1 = sl_oc::tools::P1_FACTOR*stereoPar.blockSize*stereoPar.blockSize;
+    stereoPar.P2 = sl_oc::tools::P2_FACTOR*stereoPar.blockSize*stereoPar.blockSize;
 
     if(fixed)
     {

@@ -1,9 +1,9 @@
 # ZED Open Capture API
 
-The ZED Open Capture library allows the low level control of ZED, ZED Mini and ZED 2 camera. The library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the internal sensors (only ZED Mini, ZED2, and ZED2i). A synchronization mechanism is provided to get the correct sensor data associated to each video frame.
+The ZED Open Capture library allows the low level control of ZED 2i, ZED 2, ZED Mini and ZED cameras on Linux computers, without the ZED SDK and without an NVIDIA GPU. The library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the internal sensors (only ZED Mini, ZED 2, and ZED 2i). Frames and sensors data share the same clock, and a synchronization mechanism based on a hardware signal is provided to get the correct sensor data associated to each video frame.
 
 **Note:** The provided data are not calibrated, images are not rectified in a stereoscopic way, IMU data may drift or be misaligned.
-Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/developers/release/).
+Calibration data can be accessed using the [ZED SDK](https://docs.stereolabs.com/docs/development/zed-sdk).
 
 ## Coordinates system
 
@@ -15,12 +15,13 @@ The coordinate system is only used for sensors data (especially for IMU). The gi
 
 ### Prerequisites
 
- * A Stereolabs camera: [ZED](https://www.stereolabs.com/zed/), [ZED Mini](https://www.stereolabs.com/zed-mini/), [ZED2](https://www.stereolabs.com/zed-2/), [ZED2i](https://www.stereolabs.com/zed-2i/)
- * Linux OS [Tested on Ubuntu 16.04, 18.04 and 20.04]
+ * A Stereolabs USB 3 camera: ZED 2i, ZED 2, ZED Mini or ZED (see the [ZED USB 3 cameras](https://docs.stereolabs.com/docs/products/cameras/zed) documentation)
+ * Linux OS [Tested on Ubuntu 22.04 (x86_64), Ubuntu 24.04 (NVIDIA Jetson AGX Thor) and Raspberry Pi OS 13 (Raspberry Pi 4)]
  * GCC compiler [at least v7.5]
- * CMake build system [at least v3.1] 
- * HIDAPI and LIBUSB Libraries for USB communication
+ * CMake build system [at least v3.16]
+ * HIDAPI library for the USB communication with the sensors
  * OpenCV [at least v3.4. Required only by examples]
+ * GoogleTest [Required only by the hardware tests]
  * git [if installing from source]
 
 #### Install prerequisites
@@ -33,26 +34,23 @@ The coordinate system is only used for sensors data (especially for IMU). The gi
 
     `$ sudo apt install cmake`
 
-* Install HIDAPI and LIBUSB libraries:
+* Install the HIDAPI library:
 
-    `$ sudo apt install libusb-1.0-0-dev libhidapi-libusb0 libhidapi-dev`
+    `$ sudo apt install libhidapi-libusb0 libhidapi-dev`
 
 * Install OpenCV to compile the examples
 
-    `$ sudo apt install opencv-dev`
-
-### Install the udev rule 
-To be able to access the USB you must install the udev rule contained in the `udev` folder:
-
-    $ cd udev
-    $ bash install_udev_rule.sh
-    $ cd ..
-    $ udevadm trigger
+    `$ sudo apt install libopencv-dev`
 
 ### Clone the repository
-    
+
     $ git clone https://github.com/stereolabs/zed-open-capture.git
     $ cd zed-open-capture
+
+### Install the udev rule
+To be able to access the sensors without root privileges you must install the udev rule contained in the `udev` folder:
+
+    $ bash udev/install_udev_rule.sh
 
 ### Compile
 
@@ -105,6 +103,20 @@ From inside the `build` folder:
 
     $ sudo make install
     $ sudo ldconfig
+
+### Use the library in a CMake project
+
+After the installation the library is available as a CMake package:
+
+    find_package(zed_open_capture REQUIRED)
+    target_link_libraries(my_application PRIVATE zed_open_capture::zed_open_capture)
+
+A pkg-config file is also installed: `pkg-config --cflags --libs zed_open_capture`.
+
+## Performance
+
+See \ref benchmarks for the frame rates, the sensors rates and the depth processing time measured on Raspberry Pi 4
+and NVIDIA Jetson AGX Thor.
 
 ## Local documentation
 

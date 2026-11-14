@@ -1,0 +1,9 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+includedir=${prefix}/@ZED_OC_INSTALL_INCLUDEDIR@
+
+Name: @PROJECT_NAME@
+Description: Low level camera and sensors capture library for Stereolabs ZED cameras
+Version: @PROJECT_VERSION@
+Libs: -L${libdir} -l@PROJECT_NAME@ -pthread
+Cflags: -I${includedir} @ZED_OC_PC_DEFINITIONS@

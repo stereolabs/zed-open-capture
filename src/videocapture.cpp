@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2021, STEREOLABS.
 //
@@ -19,6 +19,7 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #include "videocapture.hpp"
+#include "internal.hpp"
 
 #ifdef SENSORS_MOD_AVAILABLE
 #include "sensorcapture.hpp"
@@ -28,6 +29,8 @@
 #include <errno.h>            // for errno, EBADRQC, EINVAL, ENOBUFS, ENOENT
 #include <fcntl.h>            // for open, O_NONBLOCK, O_RDONLY, O_RDWR
 #include <unistd.h>           // for usleep, close
+#include <dirent.h>           // for opendir, readdir
+#include <poll.h>             // for poll
 
 #include <linux/usb/video.h>  // for UVC_GET_CUR, UVC_SET_CUR, UVC_GET_LEN
 #include <linux/uvcvideo.h>   // for uvc_xu_control_query, UVCIOC_CTRL_QUERY
@@ -35,6 +38,10 @@
 #include <sys/mman.h>         // for mmap, munmap, MAP_SHARED, PROT_READ
 #include <sys/ioctl.h>        // for ioctl
 
+#include <algorithm>
+#include <chrono>
+#include <cstdlib>
+#include <ctime>
 #include <sstream>
 #include <fstream>            // for char_traits, basic_istream::operator>>
 
@@ -45,12 +52,22 @@
 #define READ_MODE   1
 #define WRITE_MODE  2
 
+#define XU_BUF_SIZE 384       // Size of the buffer of the vendor control: 384 bytes with USB3, 64 bytes with USB2
+
 // ----> Camera control
 #define cbs_xu_unit_id          0x04 //mapped to wIndex 0x0400
 #define cbs_xu_control_selector 0x02 //mapped to wValue 0x0200
 
 #define ISP_CTRL_LEFT    0x80181033
 #define ISP_CTRL_RIGHT   0x80181833
+
+#define ISP_GAMMA_LEFT   0x80181500
+#define ISP_GAMMA_RIGHT  0x80181D00
+#define ISP_GAMMA_EN_OFFSET 0x10
+#define ISP_GAMMA_VALUES 15
+
+#define ISP_ROI_LEFT     0x801810C0
+#define ISP_ROI_RIGHT    0x801818C0
 
 #define AEG_AGC_MASK_ON     0x02
 #define AEG_AGC_MASK_OFF    0xFD
@@ -72,15 +89,13 @@
 
 #define UNIQUE_ID_START 0x18000
 
-#define LINUX_CTRL_BRIGHTNESS   9963776
-#define LINUX_CTRL_CONTRAST     9963777
-#define LINUX_CTRL_HUE          9963779
-#define LINUX_CTRL_SATURATION   9963778
-#define LINUX_CTRL_GAIN         9963795
-#define LINUX_CTRL_AWB          9963802
-#define LINUX_CTRL_AWB_AUTO     9963788
-#define LINUX_CTRL_SHARPNESS    9963803
-#define LINUX_CTRL_GAMMA        9963792
+#define LINUX_CTRL_BRIGHTNESS   V4L2_CID_BRIGHTNESS
+#define LINUX_CTRL_CONTRAST     V4L2_CID_CONTRAST
+#define LINUX_CTRL_HUE          V4L2_CID_HUE
+#define LINUX_CTRL_SATURATION   V4L2_CID_SATURATION
+#define LINUX_CTRL_AWB          V4L2_CID_WHITE_BALANCE_TEMPERATURE
+#define LINUX_CTRL_AWB_AUTO     V4L2_CID_AUTO_WHITE_BALANCE
+#define LINUX_CTRL_SHARPNESS    V4L2_CID_SHARPNESS
 
 #define DEFAULT_GAMMA_NOECT 1
 #define DEFAULT_MIN_GAMMA   1
@@ -110,30 +125,417 @@
 #define EXP_RAW_MIN         2
 // <---- Camera Control
 
+// ----> Capture
+#define UVC_BUFFER_COUNT        4       // Buffers shared with the driver
+#define GRAB_POLL_TIMEOUT_MSEC  100     // Maximum time the grabbing thread waits before checking the stop flag
+#define GRAB_MAX_ERRORS         20      // Consecutive errors before considering the camera disconnected
+#define SYNC_MAX_DISTANCE_NSEC   8000000ULL  // Maximum distance between the timestamps of a frame and of its sync signal
+// <---- Capture
 
 namespace sl_oc {
 
 namespace video {
 
-VideoCapture::VideoCapture(VideoParams params)
-{
-    memcpy( &mParams, &params, sizeof(VideoParams) );
+namespace {
 
-    if( mParams.verbose )
+const char* LOG_TAG = "sl_oc::video::VideoCapture";
+
+std::string errnoMsg(const std::string& what, const std::string& dev)
+{
+    return what + " '" + dev + "': [" + std::to_string(errno) + "] " + std::string(strerror(errno));
+}
+
+SL_DEVICE modelFromIds(int vid, int pid)
+{
+    if( vid!=SL_USB_VENDOR )
+        return SL_DEVICE::NONE;
+
+    switch(pid)
     {
-        std::string ver =
-                "ZED Open Capture - Camera module - Version: "
-                + std::to_string(mMajorVer) + "."
-                + std::to_string(mMinorVer) + "."
-                + std::to_string(mPatchVer);
-        INFO_OUT(mParams.verbose,ver);
+    case SL_USB_PROD_ZED_REVA:   return SL_DEVICE::ZED;
+    case SL_USB_PROD_ZED_M_REVA: return SL_DEVICE::ZED_M;
+    case SL_USB_PROD_ZED_REVB:   return SL_DEVICE::ZED_CBS;
+    case SL_USB_PROD_ZED_M_REVB: return SL_DEVICE::ZED_M_CBS;
+    case SL_USB_PROD_ZED_2_REVB: return SL_DEVICE::ZED_2;
+    case SL_USB_PROD_ZED_2i:     return SL_DEVICE::ZED_2i;
+    default:                     return SL_DEVICE::NONE;
     }
+}
+
+/*!
+ * \brief Read the camera model of a video device from the information exposed by the kernel
+ * \param devId index of the `/dev/video*` device
+ * \param usbSpeed if not null receives the USB speed in Mbps, 0 if unknown
+ * \param captureNode if not null receives false for the nodes that do not provide images (e.g. metadata)
+ */
+SL_DEVICE readCameraModel(int devId, int* usbSpeed=nullptr, bool* captureNode=nullptr)
+{
+    const std::string sysPath = "/sys/class/video4linux/video" + std::to_string(devId);
+
+    if(usbSpeed) *usbSpeed = 0;
+    if(captureNode) *captureNode = true;
+
+    std::string modalias;
+    if (!(std::ifstream(sysPath + "/device/modalias") >> modalias))
+        return SL_DEVICE::NONE;
+
+    if (modalias.size() < 14 || modalias.substr(0, 5) != "usb:v" || modalias[9] != 'p')
+        return SL_DEVICE::NONE;
+
+    int vid = 0, pid = 0;
+    if (!(std::istringstream(modalias.substr(5, 4)) >> std::hex >> vid))
+        return SL_DEVICE::NONE;
+    if (!(std::istringstream(modalias.substr(10, 4)) >> std::hex >> pid))
+        return SL_DEVICE::NONE;
+
+    if(usbSpeed)
+    {
+        int speed = 0;
+        if( std::ifstream(sysPath + "/device/../speed") >> speed )
+            *usbSpeed = speed;
+    }
+
+    if(captureNode)
+    {
+        int index = 0;
+        if( std::ifstream(sysPath + "/index") >> index )
+            *captureNode = (index==0);
+    }
+
+    return modelFromIds(vid, pid);
+}
+
+/*!
+ * \brief List the indices of the `/dev/video*` capture devices of the Stereolabs cameras
+ */
+std::vector<int> listCameraIds()
+{
+    std::vector<int> ids;
+
+    DIR* dir = opendir("/sys/class/video4linux");
+    if(!dir)
+        return ids;
+
+    while( struct dirent* entry = readdir(dir) )
+    {
+        const std::string name = entry->d_name;
+        if( name.size()<=5 || name.size()>9 || name.compare(0,5,"video")!=0 ||
+                name.find_first_not_of("0123456789",5)!=std::string::npos )
+            continue;
+
+        const int id = std::atoi(name.c_str()+5);
+        bool captureNode = true;
+        if( readCameraModel(id, nullptr, &captureNode)!=SL_DEVICE::NONE && captureNode )
+            ids.push_back(id);
+    }
+    closedir(dir);
+
+    std::sort(ids.begin(), ids.end());
+    return ids;
+}
+
+const char* xuErrorMsg(int err)
+{
+    switch (err) {
+    case ENOENT:  return "Extension unit or control not found";
+    case ENOBUFS: return "Buffer size does not match control size";
+    case EINVAL:  return "Invalid request code";
+    case EBADRQC: return "Request not supported by control";
+    default:      return strerror(err);
+    }
+}
+
+/*!
+ * \brief Send a command to the vendor control of the camera and optionally read the reply
+ * \param fd file descriptor of the video device
+ * \param buf buffer of XU_BUF_SIZE bytes containing the command, and receiving the reply
+ * \param error if not null receives the description of the error
+ * \return 0 if successful
+ */
+int xuControl(int fd, uint8_t* buf, bool readReply, bool safe, std::string* error=nullptr)
+{
+    // A command is a sequence of requests: the sequences of different objects must not be mixed, because two
+    // objects can communicate with the same camera (e.g. while listing the connected devices)
+    static std::mutex xuMutex;
+    const std::lock_guard<std::mutex> lock(xuMutex);
+
+    unsigned char tmp[2] = {0};
+    struct uvc_xu_control_query xu_query_info;
+    memset(&xu_query_info, 0, sizeof(xu_query_info));
+    xu_query_info.unit = cbs_xu_unit_id;
+    xu_query_info.selector = cbs_xu_control_selector;
+    xu_query_info.query = UVC_GET_LEN;
+    xu_query_info.size = 2;
+    xu_query_info.data = tmp;
+
+    if (ioctl(fd, UVCIOC_CTRL_QUERY, &xu_query_info) != 0)
+        return -4;
+
+    // 384 bytes with USB3, 64 bytes with USB2
+    int len = (tmp[1] << 8) + tmp[0];
+    if( len<=0 || len>XU_BUF_SIZE )
+        return -2;
+
+    // we use the UVC_SET_CUR to write the cmd
+    struct uvc_xu_control_query xu_query_send;
+    memset(&xu_query_send, 0, sizeof(xu_query_send));
+    xu_query_send.unit = cbs_xu_unit_id;
+    xu_query_send.selector = cbs_xu_control_selector;
+    xu_query_send.query = UVC_SET_CUR;
+    xu_query_send.size = static_cast<__u16> (len);
+    xu_query_send.data = buf;
+
+    if (ioctl(fd, UVCIOC_CTRL_QUERY, &xu_query_send) != 0)
+    {
+        const int res = errno;
+        if(error)
+            *error = std::string("CBS SET failed: ") + xuErrorMsg(res) + ". (System code: " + std::to_string(res) + ") " + std::to_string(len);
+        return -1;
+    }
+
+    usleep(safe ? 2000 : 300);
+
+    if (readReply)
+    {
+        struct uvc_xu_control_query xu_query;
+        memset(&xu_query, 0, sizeof(xu_query));
+        xu_query.unit = cbs_xu_unit_id;
+        xu_query.selector = cbs_xu_control_selector;
+        xu_query.query = UVC_GET_CUR;
+        xu_query.size = static_cast<__u16> (len);
+        xu_query.data = buf;
+
+        if (ioctl(fd, UVCIOC_CTRL_QUERY, &xu_query) != 0)
+        {
+            const int res = errno;
+            if(error)
+                *error = std::string("CBS GET failed: ") + xuErrorMsg(res) + ". (System code: " + std::to_string(res) + ") " + std::to_string(len);
+            return -1;
+        }
+    }
+
+    return 0;
+}
+
+/*!
+ * \brief Read the serial number from the flash memory of the camera
+ * \param fd file descriptor of the video device
+ * \param maxTries number of attempts
+ * \return the serial number, -1 if it cannot be read
+ */
+int readSerialNumber(int fd, int maxTries)
+{
+    for( int i=0; i<maxTries; i++ )
+    {
+        const int len = 64;
+        const int Adr = UNIQUE_ID_START;
+
+        uint8_t xu_buf[XU_BUF_SIZE];
+        memset(xu_buf, 0, XU_BUF_SIZE);
+
+        xu_buf[0] = 0x51;
+        xu_buf[1] = 0xA1;
+        xu_buf[2] = 0x03;
+
+        xu_buf[5] = (Adr >> 24) & 0xff;
+        xu_buf[6] = (Adr >> 16) & 0xff;
+        xu_buf[7] = (Adr >> 8) & 0xff;
+        xu_buf[8] = (Adr) & 0xff;
+
+        const int pack_val = 36864 + len;
+        xu_buf[9] = ((pack_val) >> 8) & 0xff;
+        xu_buf[10] = ((pack_val) >> 0) & 0xff;
+
+        xu_buf[11] = ((len) >> 8) & 0xff;
+        xu_buf[12] = ((len) >> 0) & 0xff;
+
+        const uint8_t* UNIQUE_BUF = &xu_buf[17];
+
+        if( xuControl(fd, xu_buf, true, true)==0 && UNIQUE_BUF[0]=='O' && UNIQUE_BUF[1]=='V' )
+        {
+            // The serial number is stored as binary-coded decimal
+            int sn = 0;
+            for( int b=2; b<6; b++ )
+            {
+                const int hi = UNIQUE_BUF[b]>>4;
+                const int lo = UNIQUE_BUF[b]&0x0f;
+                if( hi>9 || lo>9 )
+                    return -1;
+                sn = sn*100 + hi*10 + lo;
+            }
+            return sn;
+        }
+
+        usleep(1000);
+    }
+
+    return -1;
+}
+
+}
+
+VideoCapture::VideoCapture(VideoParams params)
+    : mParams(params)
+{
+
+    std::string ver =
+            "ZED Open Capture - Camera module - Version: "
+            + std::to_string(ZED_OC_MAJOR_VERSION) + "."
+            + std::to_string(ZED_OC_MINOR_VERSION) + "."
+            + std::to_string(ZED_OC_PATCH_VERSION);
+    detail::log(mParams.verbose, VERBOSITY::INFO, LOG_TAG, ver);
 
     // Check that FPS is coherent with user resolution
     checkResFps( );
 
     // Calculate gain zones (required because the raw gain control is not continuous in the range of values)
     mGainSegMax = (GAIN_ZONE4_MAX-GAIN_ZONE4_MIN)+(GAIN_ZONE3_MAX-GAIN_ZONE3_MIN)+(GAIN_ZONE2_MAX-GAIN_ZONE2_MIN)+(GAIN_ZONE1_MAX-GAIN_ZONE1_MIN);
+}
+
+VideoCapture::~VideoCapture()
+{
+    close();
+}
+
+std::vector<VideoDevice> VideoCapture::getDeviceList()
+{
+    std::vector<VideoDevice> devices;
+
+    for( int id : listCameraIds() )
+    {
+        VideoDevice dev;
+        dev.dev_id = id;
+        dev.dev_name = "/dev/video" + std::to_string(id);
+        dev.model = readCameraModel(id, &dev.usb_speed);
+
+        const int fd = ::open(dev.dev_name.c_str(), O_RDWR|O_NONBLOCK, 0);
+        if( fd!=-1 )
+        {
+            dev.serial_number = readSerialNumber(fd, 20);
+            ::close(fd);
+        }
+
+        devices.push_back(dev);
+    }
+
+    return devices;
+}
+
+void VideoCapture::close()
+{
+    if( mInitialized && !mDeviceLost )
+        setLEDstatus( false );
+
+    const bool wasInitialized = mInitialized;
+    mInitialized=false;
+
+    mStopCapture = true;
+
+    if( mGrabThread.joinable() )
+    {
+        mGrabThread.join();
+    }
+
+    closeDevice();
+
+    {
+        const std::lock_guard<std::mutex> lock(mBufMutex);
+        mSyncLink.reset();
+        mNewFrame = false;
+        mLastFrame.data = nullptr;
+        for( std::vector<uint8_t>& img : mFrameData )
+            std::vector<uint8_t>().swap(img);
+    }
+    mFrameCond.notify_all();
+
+    if( wasInitialized )
+    {
+        detail::log(mParams.verbose, VERBOSITY::INFO, LOG_TAG, "Device closed");
+    }
+}
+
+void VideoCapture::closeDevice()
+{
+    if (mFileDesc != -1)
+    {
+        enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+        ioctl(mFileDesc, VIDIOC_STREAMOFF, &type);
+    }
+
+    if( mBuffers )
+    {
+        for (unsigned int i = 0; i < mBufCount; ++i)
+        {
+            if( mBuffers[i].start!=nullptr && mBuffers[i].start!=MAP_FAILED )
+                munmap(mBuffers[i].start, mBuffers[i].length);
+        }
+        free(mBuffers);
+        mBuffers = nullptr;
+    }
+    mBufCount = 0;
+
+    if (mFileDesc != -1)
+    {
+        ::close(mFileDesc);
+        mFileDesc=-1;
+    }
+}
+
+bool VideoCapture::isOpened() const
+{
+    return mInitialized && !mDeviceLost;
+}
+
+void VideoCapture::checkResFps()
+{
+    if( static_cast<int>(mParams.res)<0 || static_cast<int>(mParams.res)>=static_cast<int>(RESOLUTION::LAST) )
+    {
+        detail::log(mParams.verbose, VERBOSITY::WARNING, LOG_TAG, "RESOLUTION not supported. Using HD2K");
+        mParams.res = RESOLUTION::HD2K;
+    }
+
+    mWidth = cameraResolution[static_cast<int>(mParams.res)].width*2;
+    mHeight = cameraResolution[static_cast<int>(mParams.res)].height;
+    mFps = static_cast<int>(mParams.fps);
+
+    const int requested = mFps;
+
+    switch (mParams.res)
+    {
+    default:
+    case RESOLUTION::HD2K:
+        mFps = 15;
+        break;
+
+    case RESOLUTION::HD1080:
+        mFps = (mFps <= 22) ? 15 : 30;
+        break;
+
+    case RESOLUTION::HD720:
+        if( mFps <= 22  )
+            mFps = 15;
+        else if( mFps < 45  )
+            mFps = 30;
+        else
+            mFps = 60;
+        break;
+
+    case RESOLUTION::VGA:
+        if( mFps <= 22  )
+            mFps = 15;
+        else if( mFps < 45  )
+            mFps = 30;
+        else if( mFps < 80  )
+            mFps = 60;
+        else
+            mFps = 100;
+        break;
+    }
+
+    if( mFps!=requested )
+    {
+        detail::log(mParams.verbose, VERBOSITY::WARNING, LOG_TAG, "FPS not supported for the chosen resolution. Using the best value");
+    }
 
     // FPS mapping
     if( mFps <= 15 )
@@ -144,148 +546,28 @@ VideoCapture::VideoCapture(VideoParams params)
         mExpoureRawMax = EXP_RAW_MAX_60FPS;
     else
         mExpoureRawMax = EXP_RAW_MAX_100FPS;
-}
 
-VideoCapture::~VideoCapture()
-{
-    reset();
-}
-
-void VideoCapture::reset()
-{
-    setLEDstatus( false );
-
-    mStopCapture = true;
-
-    if( mGrabThread.joinable() )
-    {
-        mGrabThread.join();
-    }
-
-    // ----> Stop capturing
-    enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-    if (mFileDesc != -1)
-        xioctl(mFileDesc, VIDIOC_STREAMOFF, &type);
-    // <---- Stop capturing
-
-    // ----> deinit device
-    if( mInitialized && mBuffers)
-    {
-        for (unsigned int i = 0; i < mBufCount; ++i)
-            munmap(mBuffers[i].start, mBuffers[i].length);
-        if (mBuffers)
-            free(mBuffers);
-
-        mBuffers = nullptr;
-    }
-    // <---- deinit device
-
-    if (mFileDesc)
-    {
-        close(mFileDesc);
-        mFileDesc=-1;
-    }
-
-    if(mLastFrame.data)
-    {
-        delete [] mLastFrame.data;
-        mLastFrame.data = nullptr;
-    }
-
-    if( mParams.verbose && mInitialized)
-    {
-        std::string msg = "Device closed";
-        INFO_OUT(mParams.verbose,msg );
-    }
-
-    mInitialized=false;
-}
-
-void VideoCapture::checkResFps()
-{
-    mWidth = cameraResolution[static_cast<int>(mParams.res)].width*2;
-    mHeight = cameraResolution[static_cast<int>(mParams.res)].height;
-    mFps = static_cast<int>(mParams.fps);
-
-    switch (mParams.res)
-    {
-    default:
-        WARNING_OUT(mParams.verbose,"RESOLUTION not supported. Using the best value");
-
-    case RESOLUTION::HD2K:
-        if( mFps!=15 )
-        {
-            WARNING_OUT(mParams.verbose,"FPS not supported for the chosen resolution. Using the best value");
-            mFps = 15;
-        }
-        break;
-
-    case RESOLUTION::HD1080:
-        if( mFps!=15 && mFps!=30 )
-        {
-            WARNING_OUT(mParams.verbose,"FPS not supported for the chosen resolution. Using the best value");
-
-            if( mFps <= 22  )
-                mFps = 15;
-            else
-                mFps = 30;
-        }
-        break;
-
-    case RESOLUTION::HD720:
-        if( mFps!=15 && mFps!=30 && mFps!=60 )
-        {
-            WARNING_OUT(mParams.verbose,"FPS not supported for the chosen resolution. Using the best value");
-
-            if( mFps <= 22  )
-                mFps = 15;
-            else if( mFps < 45  )
-                mFps = 30;
-            else
-                mFps = 60;
-        }
-        break;
-
-    case RESOLUTION::VGA:
-        if( mFps!=15 && mFps!=30 && mFps!=60 && mFps!=100)
-        {
-            WARNING_OUT(mParams.verbose,"FPS not supported for the chosen resolution. Using the best value");
-
-            if( mFps <= 22  )
-                mFps = 15;
-            else if( mFps < 45  )
-                mFps = 30;
-            else if( mFps < 80  )
-                mFps = 60;
-            else
-                mFps = 100;
-        }
-    }
-
-    if(mParams.verbose)
-    {
-        std::string msg = std::string("Camera resolution: ")
-                + std::to_string(mWidth)
-                + std::string("x")
-                + std::to_string(mHeight)
-                + std::string("@")
-                + std::to_string(mFps)
-                +std::string("Hz");
-
-        INFO_OUT(mParams.verbose,msg);
-    }
+    detail::log(mParams.verbose, VERBOSITY::INFO, LOG_TAG,
+                "Camera resolution: " + std::to_string(mWidth) + "x" + std::to_string(mHeight) + "@" + std::to_string(mFps) + "Hz");
 }
 
 bool VideoCapture::initializeVideo( int devId/*=-1*/ )
 {
-    reset();
+    close();
 
     bool opened=false;
 
     if( devId==-1 )
     {
-        // Try to open all the devices until the first success (max allowed by v4l: 64)
-        for( uint8_t id=0; id<64; id++ )
+        // Try to open all the Stereolabs cameras until the first success
+        const std::vector<int> ids = listCameraIds();
+
+        if( ids.empty() )
+        {
+            detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG, "No Stereolabs camera detected");
+        }
+
+        for( int id : ids )
         {
             opened = openCamera( id );
             if(opened) break;
@@ -293,7 +575,7 @@ bool VideoCapture::initializeVideo( int devId/*=-1*/ )
     }
     else
     {
-        opened = openCamera( static_cast<uint8_t>(devId) );
+        opened = openCamera( devId );
     }
 
     if(!opened)
@@ -301,26 +583,59 @@ bool VideoCapture::initializeVideo( int devId/*=-1*/ )
         return false;
     }
 
-    mInitialized = startCapture();
+    return finalizeInit();
+}
+
+bool VideoCapture::initializeVideoBySerialNumber( int serial_number )
+{
+    close();
+
+    for( int id : listCameraIds() )
+    {
+        const std::string name = "/dev/video" + std::to_string(id);
+        const int fd = ::open(name.c_str(), O_RDWR|O_NONBLOCK, 0);
+        if( fd==-1 )
+            continue;
+
+        const int sn = readSerialNumber(fd, 20);
+        ::close(fd);
+
+        if( sn==serial_number )
+        {
+            return openCamera(id) && finalizeInit();
+        }
+    }
+
+    detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG,
+                "Camera with serial number " + std::to_string(serial_number) + " not found");
+
+    return false;
+}
+
+bool VideoCapture::finalizeInit()
+{
+    if( !startCapture() )
+    {
+        closeDevice();
+        return false;
+    }
+
+    mInitialized = true;
 
     // After STREAMON the sensors ignore register writes and reads return 0 for ~150 ms
-    if( mInitialized && !waitSensorsReady(2000) )
+    if( !waitSensorsReady(2000) )
     {
         // Chip ID only verified on ZED 2 and ZED 2i: other models must not lose the ability to open
         if( mCameraModel==SL_DEVICE::ZED_2 || mCameraModel==SL_DEVICE::ZED_2i )
         {
-            ERROR_OUT(mParams.verbose,"Sensors not ready after 2 s, closing the camera");
-            reset();
+            detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG, "Sensors not ready after 2 s, closing the camera");
+            close();
             return false;
         }
-        WARNING_OUT(mParams.verbose,"Sensors not ready after 2 s, camera settings may not be applied");
+        detail::log(mParams.verbose, VERBOSITY::WARNING, LOG_TAG, "Sensors not ready after 2 s, camera settings may not be applied");
     }
 
-    if( mParams.verbose && mInitialized)
-    {
-        std::string msg = "Device '" + mDevName + "' opened";
-        INFO_OUT(mParams.verbose,msg );
-    }
+    detail::log(mParams.verbose, VERBOSITY::INFO, LOG_TAG, "Device '" + mDevName + "' opened");
 
     setLEDstatus( true );
 
@@ -333,42 +648,39 @@ bool VideoCapture::initializeVideo( int devId/*=-1*/ )
     resetSaturation();
     resetSharpness();
 
-    return mInitialized;
+    return true;
 }
 
-bool VideoCapture::openCamera( uint8_t devId )
+bool VideoCapture::openCamera( int devId )
 {
+    const int verbose = mParams.verbose;
+
     mDevId = devId;
-
     mDevName = std::string("/dev/video") + std::to_string(mDevId);
+    mSerialNumber = -1;
 
-    if( mParams.verbose )
-    {
-        std::string msg = "Trying to open the device '" + mDevName + "'";
-        INFO_OUT(mParams.verbose,msg );
-    }
+    detail::log(verbose, VERBOSITY::INFO, LOG_TAG, "Trying to open the device '" + mDevName + "'");
+
+    // The requested values: the size is replaced by the one accepted by the driver
+    checkResFps();
+    const int reqWidth = mWidth;
+    const int reqHeight = mHeight;
 
     // Check camera model
-    mCameraModel = getCameraModel(mDevName);
+    int usbSpeed = 0;
+    mCameraModel = readCameraModel(mDevId, &usbSpeed);
 
     if( mCameraModel==SL_DEVICE::NONE )
     {
-        if(mParams.verbose)
-        {
-            std::string msg = "The device '" + mDevName + "' is not a Stereolabs camera";
-            WARNING_OUT(mParams.verbose,msg );
-        }
+        detail::log(verbose, VERBOSITY::WARNING, LOG_TAG, "The device '" + mDevName + "' is not a Stereolabs camera");
         return false;
     }
 
     if( mCameraModel==SL_DEVICE::ZED ||
             mCameraModel==SL_DEVICE::ZED_M )
     {
-        if(mParams.verbose)
-        {
-            std::string msg = "The FW of the device '" + mDevName + "' is not supported. Please update it.";
-            ERROR_OUT(mParams.verbose,msg );
-        }
+        detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, "The FW of the device '" + mDevName + "' is not supported. Please update it.");
+        mCameraModel = SL_DEVICE::NONE;
         return false;
     }
 
@@ -377,307 +689,261 @@ bool VideoCapture::openCamera( uint8_t devId )
     memset(&st, 0, sizeof (struct stat));
     if (-1 == stat(mDevName.c_str(), &st))
     {
-        if(mParams.verbose)
-        {
-            std::string msg = std::string("Cannot identify '") + mDevName + "': ["
-                    + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
-            ERROR_OUT(mParams.verbose,msg);
-
-            return false;
-        }
+        detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, errnoMsg("Cannot identify", mDevName));
+        return false;
     }
 
     if (!S_ISCHR(st.st_mode))
     {
-        if(mParams.verbose)
-        {
-            std::string msg = mDevName + std::string(" is no device");
-            ERROR_OUT(mParams.verbose,msg);
-
-            return false;
-        }
+        detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, mDevName + " is no device");
+        return false;
     }
 
-    mFileDesc = 0;
-
-    mFileDesc = open(mDevName.c_str(), O_RDWR|O_NONBLOCK,0); // Reading are non blocking
+    mFileDesc = ::open(mDevName.c_str(), O_RDWR|O_NONBLOCK,0); // Reading are non blocking
 
     if (-1 == mFileDesc)
     {
-        if(mParams.verbose)
-        {
-            std::string msg = std::string("Cannot open '") + mDevName + "': ["
-                    + std::to_string(errno) + std::string("] ") + std::string(strerror(errno));
-            ERROR_OUT(mParams.verbose,msg);
-        }
-
+        detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, errnoMsg("Cannot open", mDevName));
         return false;
     }
     // <---- Open
 
-    int sn = getSerialNumber();
-    if(mParams.verbose)
-    {
-        std::string msg = std::string("Opened camera with SN: ") + std::to_string(sn);
-        INFO_OUT(mParams.verbose,msg);
-    }
+    // From here the device must be released in case of error
+    struct Guard {
+        VideoCapture* cap; bool release;
+        ~Guard(){ if(release) cap->closeDevice(); }
+    } guard{this,true};
 
     // ----> Init
     struct v4l2_capability cap;
     memset(&cap, 0, sizeof (v4l2_capability));
-    struct v4l2_cropcap cropcap;
-    memset(&cropcap, 0, sizeof (v4l2_cropcap));
-    struct v4l2_crop crop;
-    memset(&crop, 0, sizeof (v4l2_crop));
-    struct v4l2_format fmt;
-    memset(&fmt, 0, sizeof (v4l2_format));
 
     if( -1==xioctl(mFileDesc, VIDIOC_QUERYCAP, &cap) )
     {
-        if(mParams.verbose)
-        {
-            std::string msg = std::string("Cannot query capabilities of '") + mDevName + "': ["
-                    + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
-            ERROR_OUT(mParams.verbose,msg);
-        }
-
+        detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, errnoMsg("Cannot query capabilities of", mDevName));
         return false;
     }
 
-    cropcap.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-
-    // Query the Capture
-    if (0 == xioctl(mFileDesc, VIDIOC_CROPCAP, &cropcap))
+    const __u32 caps = (cap.capabilities & V4L2_CAP_DEVICE_CAPS) ? cap.device_caps : cap.capabilities;
+    if( !(caps & V4L2_CAP_VIDEO_CAPTURE) || !(caps & V4L2_CAP_STREAMING) )
     {
-        crop.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-        crop.c = cropcap.defrect; /* reset to default */
+        // E.g. the metadata node that the driver creates for each camera
+        detail::log(verbose, VERBOSITY::WARNING, LOG_TAG, "The device '" + mDevName + "' does not provide images");
+        return false;
     }
 
+    mSerialNumber = readSerialNumber(mFileDesc, 500);
+    detail::log(verbose, VERBOSITY::INFO, LOG_TAG, "Opened camera with SN: " + std::to_string(mSerialNumber));
+
+    struct v4l2_format fmt;
+    memset(&fmt, 0, sizeof (v4l2_format));
     fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
     fmt.fmt.pix.field = V4L2_FIELD_ANY;
+    fmt.fmt.pix.width = reqWidth;
+    fmt.fmt.pix.height = reqHeight;
 
-    if (mWidth * mHeight != 0)
+    if( -1==xioctl(mFileDesc, VIDIOC_S_FMT, &fmt) )
     {
-        fmt.fmt.pix.width = mWidth;
-        fmt.fmt.pix.height = mHeight;
+        std::string msg = errnoMsg("Cannot set pixel format of", mDevName);
+        if( errno==EBUSY )
+            msg += ". The camera is in use by another application";
+        detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, msg);
+        return false;
     }
 
-    int width_tmp = mWidth;
-    int height_tmp = mHeight;
-
-    /* Preserve original settings as set by v4l2-ctl for example */
-    if( -1==xioctl(mFileDesc, VIDIOC_S_FMT/*VIDIOC_G_FMT*/, &fmt) )
+    // Asked resolution not available, exiting
+    if ( static_cast<int>(fmt.fmt.pix.width) != reqWidth || static_cast<int>(fmt.fmt.pix.height) != reqHeight ||
+         fmt.fmt.pix.pixelformat != V4L2_PIX_FMT_YUYV )
     {
-        if(mParams.verbose)
-        {
-            std::string msg = std::string("Cannot set pixel format of '") + mDevName + "': ["
-                    + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
-            ERROR_OUT(mParams.verbose,msg);
-        }
-
+        std::string msg = "Error setting the camera resolution: " + std::to_string(reqWidth) + "x" + std::to_string(reqHeight) +
+                " is not available";
+        if( usbSpeed>0 && usbSpeed<5000 )
+            msg += ". The camera is connected in USB 2.0 mode: use a USB 3.0 port and cable to enable all the resolutions";
+        detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, msg);
         return false;
     }
 
     mWidth = fmt.fmt.pix.width;
     mHeight = fmt.fmt.pix.height;
     mChannels = fmt.fmt.pix.bytesperline / mWidth;
+    mFrameSize = static_cast<size_t>(mWidth) * mHeight * mChannels;
 
-    // Asked resolution not available, exiting
-    if (mWidth != width_tmp || mHeight != height_tmp)
+    if( mChannels!=2 || fmt.fmt.pix.sizeimage<mFrameSize )
     {
-        ERROR_OUT(mParams.verbose,"Error setting the camera resolution");
+        detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, "Unexpected image format from '" + mDevName + "'");
         return false;
     }
 
-    if( -1==input_set_framerate(mFps) )
-    {
-        ERROR_OUT(mParams.verbose,"Error setting the camera framerate");
-    }
+    // ----> Frame rate
+    struct v4l2_streamparm streamparm;
+    memset(&streamparm, 0, sizeof(streamparm));
+    streamparm.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    streamparm.parm.capture.timeperframe.numerator = 1;
+    streamparm.parm.capture.timeperframe.denominator = mFps;
 
-    // ----> Output frame allocation
-    mLastFrame.width = mWidth;
-    mLastFrame.height = mHeight;
-    mLastFrame.channels = mChannels;
-    int bufSize = mLastFrame.width * mLastFrame.height * mLastFrame.channels;
-    mLastFrame.data = new unsigned char[bufSize];
-    // <---- Output frame allocation
+    if( -1==xioctl(mFileDesc, VIDIOC_S_PARM, &streamparm) )
+    {
+        detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, "Error setting the camera framerate");
+    }
+    else if( streamparm.parm.capture.timeperframe.numerator>0 )
+    {
+        const int realFps = static_cast<int>(std::round(
+                    static_cast<double>(streamparm.parm.capture.timeperframe.denominator)/streamparm.parm.capture.timeperframe.numerator));
+        if( realFps>0 && realFps!=mFps )
+        {
+            std::string msg = "The camera cannot provide " + std::to_string(mFps) + " FPS at this resolution, using " +
+                    std::to_string(realFps) + " FPS";
+            if( usbSpeed>0 && usbSpeed<5000 )
+                msg += ". The camera is connected in USB 2.0 mode: use a USB 3.0 port and cable to enable all the frame rates";
+            detail::log(verbose, VERBOSITY::WARNING, LOG_TAG, msg);
+
+            mFps = realFps;
+            if( mFps <= 15 )
+                mExpoureRawMax = EXP_RAW_MAX_15FPS;
+            else if( mFps <= 30 )
+                mExpoureRawMax = EXP_RAW_MAX_30FPS;
+            else if( mFps <= 60 )
+                mExpoureRawMax = EXP_RAW_MAX_60FPS;
+            else
+                mExpoureRawMax = EXP_RAW_MAX_100FPS;
+        }
+    }
+    // <---- Frame rate
 
     struct v4l2_requestbuffers req;
     memset(&req, 0, sizeof (v4l2_requestbuffers));
 
-    req.count = mBufCount;
-
+    req.count = UVC_BUFFER_COUNT;
     req.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     req.memory = V4L2_MEMORY_MMAP;
     if( -1==xioctl(mFileDesc, VIDIOC_REQBUFS, &req) )
     {
-        if(mParams.verbose)
-        {
-            std::string msg = std::string("Cannot request buffers for '") + mDevName + "': ["
-                    + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
-            ERROR_OUT(mParams.verbose,msg);
-        }
+        detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, errnoMsg("Cannot request buffers for", mDevName));
+        return false;
+    }
 
+    if( req.count<2 )
+    {
+        detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, "Insufficient buffer memory on '" + mDevName + "'");
         return false;
     }
 
     // Create buffers
-    mBuffers = (UVCBuffer*) calloc(req.count, sizeof(*mBuffers));
+    mBuffers = static_cast<UVCBuffer*>(calloc(req.count, sizeof(*mBuffers)));
+    if( !mBuffers )
+    {
+        detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, "Out of memory");
+        return false;
+    }
+    mBufCount = static_cast<uint8_t>(req.count);
 
-    for(mBufCount = 0; mBufCount < req.count; ++mBufCount)
+    for(unsigned int i = 0; i < req.count; ++i)
     {
         struct v4l2_buffer buf;
         memset(&buf, 0, sizeof (v4l2_buffer));
         buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
         buf.memory = V4L2_MEMORY_MMAP;
-        buf.index = mBufCount;
-        buf.flags = V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC;
+        buf.index = i;
         if( -1==xioctl(mFileDesc, VIDIOC_QUERYBUF, &buf))
         {
-            if(mParams.verbose)
-            {
-                std::string msg = std::string("Cannot query buffer for '") + mDevName + "': ["
-                        + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
-                ERROR_OUT(mParams.verbose,msg);
-            }
-
+            detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, errnoMsg("Cannot query buffer for", mDevName));
             return false;
         }
 
-        mBuffers[mBufCount].length = buf.length;
+        void* start = mmap(nullptr /* start anywhere */,
+                           buf.length,
+                           PROT_READ | PROT_WRITE /* required */,
+                           MAP_SHARED /* recommended */,
+                           mFileDesc, buf.m.offset);
 
-        mBuffers[mBufCount].start =
-                mmap(nullptr /* start anywhere */,
-                     buf.length,
-                     PROT_READ | PROT_WRITE /* required */,
-                     MAP_SHARED /* recommended */,
-                     mFileDesc, buf.m.offset);
+        if( start==MAP_FAILED )
+        {
+            detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, errnoMsg("Cannot map buffer for", mDevName));
+            return false;
+        }
+
+        mBuffers[i].start = start;
+        mBuffers[i].length = buf.length;
+
+        if( buf.length<mFrameSize )
+        {
+            detail::log(verbose, VERBOSITY::ERROR, LOG_TAG, "Buffer too small on '" + mDevName + "'");
+            return false;
+        }
     }
-
-    mBufCount = req.count;
     // <---- Init
 
+    // ----> Output frames allocation
+    {
+        const std::lock_guard<std::mutex> lock(mBufMutex);
+        for( std::vector<uint8_t>& img : mFrameData )
+            img.assign(mFrameSize, 0);
+        mWriteIdx = 0;
+        mReadyIdx = 1;
+        mUserIdx = 2;
+        mNewFrame = false;
+        mReadyFrameId = 0;
+        mReadyTimestamp = 0;
+
+        mLastFrame = Frame();
+        mLastFrame.width = static_cast<uint16_t>(mWidth);
+        mLastFrame.height = static_cast<uint16_t>(mHeight);
+        mLastFrame.channels = static_cast<uint8_t>(mChannels);
+        mLastFrame.data = mFrameData[mUserIdx].data();
+    }
+    // <---- Output frames allocation
+
+    guard.release = false;
     return true;
 }
 
 int VideoCapture::getSerialNumber()
 {
-    /*if(!mInitialized)
-        return -1;*/
-
-    int ulValue = -1;
-
-    uint8_t UNIQUE_BUF[384];
-    memset(UNIQUE_BUF, 0, 384);
-
-    int res = -1;
-
-    int try_count = 0;
-    while(res!=0)
+    if( mSerialNumber<0 && mFileDesc!=-1 )
     {
-        res = ll_SPI_FlashProgramRead(&UNIQUE_BUF[0], UNIQUE_ID_START, 64, true);
-
-        //check bytes read
-        if (UNIQUE_BUF[0] != 'O') {
-            res =  -1;
-        }
-        if (UNIQUE_BUF[1] != 'V') {
-            res =  -1;
-        }
-
-        try_count++;
-        if (try_count>500)
-            break;
-        usleep(1000);
+        const std::lock_guard<std::mutex> lock(mComMutex);
+        mSerialNumber = readSerialNumber(mFileDesc, 100);
     }
 
-    if (res != 0)
-        return -1;
-
-    //check bytes read
-    if (UNIQUE_BUF[0] != 'O') {
-        return -1;
-    }
-    if (UNIQUE_BUF[1] != 'V') {
-        return -1;
-    }
-
-    ulValue = (UNIQUE_BUF[2] << 24) + (UNIQUE_BUF[3] << 16) + (UNIQUE_BUF[4] << 8) + UNIQUE_BUF[5];
-
-    char buff[128];
-    memset(buff, 0, 128);
-    sprintf(buff, "%x", ulValue);
-    return (int) atoi(buff);
+    return mSerialNumber;
 }
 
 bool VideoCapture::startCapture()
 {
     // ----> Start capturing
-    enum v4l2_buf_type type;
     for (unsigned int i = 0; i < mBufCount; ++i)
     {
-        struct v4l2_buffer buf = {0};
+        struct v4l2_buffer buf;
+        memset(&buf, 0, sizeof(buf));
         buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
         buf.memory = V4L2_MEMORY_MMAP;
         buf.index = i;
         if( -1==xioctl(mFileDesc, VIDIOC_QBUF, &buf) )
         {
-            if(mParams.verbose)
-            {
-                std::string msg = std::string("Cannot queue buffer for '") + mDevName + "': ["
-                        + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
-                ERROR_OUT(mParams.verbose,msg);
-            }
-
+            detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG, errnoMsg("Cannot queue buffer for", mDevName));
             return false;
         }
     }
-    type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-
-    // Set priority
-    int priority = V4L2_PRIORITY_RECORD;
-    if( -1==xioctl(mFileDesc, VIDIOC_G_PRIORITY, &priority) )
-    {
-        if(mParams.verbose)
-        {
-            std::string msg = std::string("Cannot set priority for '") + mDevName + "': ["
-                    + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
-            ERROR_OUT(mParams.verbose,msg);
-        }
-
-        return false;
-    }
 
     // Start streaming
+    enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     if( -1==xioctl(mFileDesc, VIDIOC_STREAMON, &type) )
     {
-        if(mParams.verbose)
-        {
-            std::string msg = std::string("Cannot start streaming for '") + mDevName + "': ["
-                    + std::to_string(errno) +std::string("] ") + std::string(strerror(errno));
-            ERROR_OUT(mParams.verbose,msg);
-        }
-
+        std::string msg = errnoMsg("Cannot start streaming for", mDevName);
+        if( errno==ENOSPC )
+            msg += ". Not enough USB bandwidth: connect the camera to another USB controller or reduce resolution and FPS";
+        detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG, msg);
         return false;
     }
     // <---- Start capturing
 
+    // The flags must be ready before the thread starts: `close` can be called at any time
+    mStopCapture = false;
+    mDeviceLost = false;
     mGrabThread = std::thread( &VideoCapture::grabThreadFunc,this );
 
     return true;
-}
-
-int VideoCapture::input_set_framerate(int fps)
-{
-    struct v4l2_streamparm streamparm = {0}; // v4l2 stream parameters struct
-
-    streamparm.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-    streamparm.parm.capture.capturemode |= V4L2_CAP_TIMEPERFRAME;
-    streamparm.parm.capture.timeperframe.numerator = 1;
-    streamparm.parm.capture.timeperframe.denominator = fps;
-
-    return xioctl(mFileDesc, VIDIOC_S_PARM, &streamparm);
 }
 
 int VideoCapture::xioctl(int fd, uint64_t IOCTL_X, void *arg)
@@ -687,377 +953,189 @@ int VideoCapture::xioctl(int fd, uint64_t IOCTL_X, void *arg)
     do
     {
         ret = ioctl(fd, IOCTL_X, arg);
-        // usleep(1);
     } while (ret && tries-- &&
              ((errno == EINTR) || (errno == EAGAIN) || (errno == ETIMEDOUT)));
-
-    if( ret==-1 )
-    {
-        if(mParams.verbose)
-        {
-            perror( "xioctl");
-        }
-    }
 
     return (ret);
 }
 
-SL_DEVICE VideoCapture::getCameraModel( std::string dev_name)
-{
-    sl_oc::video::SL_DEVICE camera_device = sl_oc::video::SL_DEVICE::NONE;
-    int vid = 0, pid = 0;
-    std::string modalias = "";
-    std::string name = dev_name.erase(0, 5); //remove /dev/
-    if (!(std::ifstream("/sys/class/video4linux/" + name + "/device/modalias") >> modalias))
-    {
-        if(mParams.verbose>sl_oc::VERBOSITY::ERROR)
-        {
-            std::string msg =
-                    std::string(" Not a modalias : /sys/class/video4linux/")
-                    + name + std::string("/device/modalias");
-            WARNING_OUT(mParams.verbose,msg);
-        }
-        return camera_device;
-    }
-
-    if (modalias.size() < 14 || modalias.substr(0, 5) != "usb:v" || modalias[9] != 'p')
-    {
-        if(mParams.verbose)
-        {
-            std::string msg = std::string(" not a modalias 2" );
-            WARNING_OUT(mParams.verbose,msg);
-        }
-        return camera_device;
-    }
-
-    if (!(std::istringstream(modalias.substr(5, 4)) >> std::hex >> vid))
-    {
-        if(mParams.verbose)
-        {
-            std::string msg = std::string("unable to read Vendor ID" );
-            WARNING_OUT(mParams.verbose,msg);
-        }
-
-
-        return camera_device;
-    }
-
-    if (!(std::istringstream(modalias.substr(10, 4)) >> std::hex >> pid))
-    {
-        if(mParams.verbose)
-        {
-            std::string msg = std::string("unable to read Product ID" );
-            WARNING_OUT(mParams.verbose,msg);
-        }
-
-        return camera_device;
-    }
-
-    // check PID VID
-    if (pid == SL_USB_PROD_ZED_REVA && vid == SL_USB_VENDOR)
-        camera_device = SL_DEVICE::ZED;
-    else if (pid == SL_USB_PROD_ZED_M_REVA && vid == SL_USB_VENDOR)
-        camera_device = SL_DEVICE::ZED_M;
-    else if (pid == SL_USB_PROD_ZED_REVB && vid == SL_USB_VENDOR)
-        camera_device = SL_DEVICE::ZED_CBS;
-    else if (pid == SL_USB_PROD_ZED_M_REVB && vid == SL_USB_VENDOR)
-        camera_device = SL_DEVICE::ZED_M_CBS;
-    else if (pid == SL_USB_PROD_ZED_2_REVB && vid == SL_USB_VENDOR)
-        camera_device = SL_DEVICE::ZED_2;
-    else if (pid == SL_USB_PROD_ZED_2i && vid == SL_USB_VENDOR)
-        camera_device = SL_DEVICE::ZED_2i;
-
-    return camera_device;
-}
-
 void VideoCapture::grabThreadFunc()
 {
-    mNewFrame = false;
-    mStopCapture = false;
+    struct pollfd pfd;
+    pfd.fd = mFileDesc;
+    pfd.events = POLLIN;
+    pfd.revents = 0;
 
-    fd_set fds;
-    struct timeval tv = {0};
+    int errorCount = 0;
+    int logFrameCount = 0;
 
-    FD_ZERO(&fds);
-
-    if (mFileDesc < 0)
-        return;
-
-    FD_SET(mFileDesc, &fds);
-    tv.tv_sec = 2;
-    tv.tv_usec = 0;
-    select(mFileDesc + 1, &fds, nullptr, nullptr, &tv);
-
-    struct v4l2_buffer buf;
-    memset(&(buf), 0, sizeof (buf));
-    buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-    buf.memory = V4L2_MEMORY_MMAP;
-    buf.bytesused = -1;
-    buf.length = 0;
-
-    uint64_t rel_ts = 0;
-    int capture_frame_count = 0;
-
-    mFirstFrame=true;
+    // A sync signal is assigned to a frame only if closer than half frame period
+    const uint64_t syncMaxDistance = std::min<uint64_t>(SYNC_MAX_DISTANCE_NSEC, (NSEC_PER_SEC*45ULL/100ULL)/static_cast<uint64_t>(mFps>0?mFps:15));
 
     while (!mStopCapture)
     {
-        mGrabRunning=true;
-
-        mComMutex.lock();
-        int ret = ioctl(mFileDesc, VIDIOC_DQBUF, &buf);
-        mComMutex.unlock();
-
-        if (buf.bytesused == buf.length && ret == 0 && buf.index < mBufCount)
+        if( errorCount>=GRAB_MAX_ERRORS )
         {
-            mCurrentIndex = buf.index;
-            // get buffer timestamp in us
-
-            uint64_t ts_uvc = ((uint64_t) buf.timestamp.tv_sec) * (1000 * 1000) + ((uint64_t) buf.timestamp.tv_usec);
-
-            if(mFirstFrame)
-            {
-                mStartTs = getWallTimestamp();
-                //std::cout << "VideoCapture: " << mStartTs << std::endl;
-
-#ifdef SENSORS_MOD_AVAILABLE
-                if(mSyncEnabled && mSensPtr)
-                {
-                    // Synchronize reference timestamp
-                    mSensPtr->setStartTimestamp(mStartTs);
-                }
-#endif
-
-                mFirstFrame = false;
-                mInitTs = ts_uvc;
-            }
-
-            rel_ts = ts_uvc - mInitTs;
-            // cvt to ns
-            rel_ts *= 1000;
-
-            mBufMutex.lock();
-            if (mLastFrame.data != nullptr && mWidth != 0 && mHeight != 0 && mBuffers[mCurrentIndex].start != nullptr)
-            {
-                mLastFrame.frame_id++;
-                memcpy(mLastFrame.data, (unsigned char*) mBuffers[mCurrentIndex].start, mBuffers[mCurrentIndex].length);
-                mLastFrame.timestamp = mStartTs + rel_ts;
-
-                //                static uint64_t last_ts=0;
-                //                std::cout << "[Video] Frame TS: " << static_cast<double>(mLastFrame.timestamp)/1e9 << " sec" << std::endl;
-                //                double dT = static_cast<double>(mLastFrame.timestamp-last_ts)/1e9;
-                //                last_ts = mLastFrame.timestamp;
-                //                std::cout << "[Video] Frame FPS: " << 1./dT << std::endl;
-
-#ifdef SENSORS_MOD_AVAILABLE
-                if(mSensReadyToSync)
-                {
-                    mSensReadyToSync = false;
-                    mSensPtr->updateTimestampOffset(mLastFrame.timestamp);
-                }
-#endif
-
-#ifdef SENSOR_LOG_AVAILABLE
-                // ----> AEC/AGC register logging
-                if(mLogEnable)
-                {
-                    static int frame_count =0;
-
-
-                    if((++frame_count)==mLogFrameSkip)
-                        frame_count = 0;
-
-                    if(frame_count==0)
-                    {
-                        saveLogDataLeft();
-                        saveLogDataRight();
-                    }
-                }
-                // <---- AEC/AGC register logging
-#endif
-
-                mNewFrame=true;
-            }
-            mBufMutex.unlock();
-
-            mComMutex.lock();
-            ioctl(mFileDesc, VIDIOC_QBUF, &buf);
-            mComMutex.unlock();
-
-            capture_frame_count++;
+            detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG, "Connection lost: '" + mDevName + "' does not provide frames");
+            mDeviceLost = true;
+            break;
         }
-        else
+
+        // ----> Wait for a frame
+        const int ready = poll(&pfd, 1, GRAB_POLL_TIMEOUT_MSEC);
+
+        if( ready==0 )
+            continue;
+
+        if( ready<0 )
         {
-            if (buf.bytesused != buf.length)
+            if( errno!=EINTR )
             {
-                mComMutex.lock();
-                ioctl(mFileDesc, VIDIOC_QBUF, &buf);
-                mComMutex.unlock();
+                errorCount++;
+                usleep(1000);
             }
-            usleep(200);
-            buf.bytesused = -1;
-            buf.length = 0;
+            continue;
+        }
+        // <---- Wait for a frame
+
+        struct v4l2_buffer buf;
+        memset(&(buf), 0, sizeof (buf));
+        buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+        buf.memory = V4L2_MEMORY_MMAP;
+
+        if( ioctl(mFileDesc, VIDIOC_DQBUF, &buf)!=0 )
+        {
+            if( errno==ENODEV )
+            {
+                errorCount = GRAB_MAX_ERRORS; // Camera unplugged
+            }
+            else if( errno!=EAGAIN && errno!=EINTR )
+            {
+                errorCount++;
+                usleep(1000);
+            }
+            else if( pfd.revents & (POLLERR|POLLHUP|POLLNVAL) )
+            {
+                // Nothing to read and the device reports an error: avoid a busy loop
+                errorCount++;
+                usleep(5000);
+            }
+            continue;
+        }
+
+        const bool valid = buf.index<mBufCount && !(buf.flags & V4L2_BUF_FLAG_ERROR) && buf.bytesused>=mFrameSize;
+
+        if (valid)
+        {
+            errorCount = 0;
+
+            // ----> Timestamp
+            // The driver stores the time of arrival of the first data of the frame, using the monotonic clock
+            const uint64_t now = getTimestampNow();
+            uint64_t ts = now;
+
+            if( (buf.flags & V4L2_BUF_FLAG_TIMESTAMP_MASK)==V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC )
+            {
+                const uint64_t ts_uvc = static_cast<uint64_t>(buf.timestamp.tv_sec)*NSEC_PER_SEC +
+                        static_cast<uint64_t>(buf.timestamp.tv_usec)*1000ULL;
+                const uint64_t ts_frame = steadyToTimestamp(ts_uvc);
+
+                if( ts_frame<=now && now-ts_frame<NSEC_PER_SEC )
+                    ts = ts_frame;
+            }
+            // <---- Timestamp
+
+            // The image is written without locking: this buffer is not visible to the user
+            memcpy(mFrameData[mWriteIdx].data(), mBuffers[buf.index].start, mFrameSize);
+
+            {
+                const std::lock_guard<std::mutex> lock(mBufMutex);
+
+                if( mSyncLink )
+                {
+                    // The driver timestamp and the sync signal both mark the start of the frame, but the signal is
+                    // timestamped by the sensors module: using it removes the jitter between frames and sensors data
+                    uint64_t pulse = 0;
+                    if( mSyncLink->findPulse(ts, syncMaxDistance, pulse) )
+                        ts = pulse;
+                }
+
+                // Timestamps never go backwards
+                if( ts<=mReadyTimestamp )
+                    ts = mReadyTimestamp+1;
+
+                std::swap(mWriteIdx, mReadyIdx);
+                mReadyFrameId = buf.sequence;
+                mReadyTimestamp = ts;
+                mNewFrame = true;
+            }
+            mFrameCond.notify_all();
+
+            // ----> AEC/AGC register logging
+            if(mLogEnable)
+            {
+                if((++logFrameCount)>=mLogFrameSkip)
+                    logFrameCount = 0;
+
+                if(logFrameCount==0)
+                {
+                    saveLogDataLeft(ts);
+                    saveLogDataRight(ts);
+                }
+            }
+            // <---- AEC/AGC register logging
+        }
+
+        if( ioctl(mFileDesc, VIDIOC_QBUF, &buf)!=0 )
+        {
+            errorCount++;
         }
     }
 
-    mGrabRunning = false;
+    mFrameCond.notify_all();
 }
 
 const Frame& VideoCapture::getLastFrame( uint64_t timeout_msec )
 {
-    // ----> Wait for a new frame
-    uint64_t time_count = timeout_msec*10;
-    while( !mNewFrame )
-    {
-        if(time_count==0)
-        {
-            return mLastFrame;
-        }
-        time_count--;
-        usleep(100);
-    }
-    // <---- Wait for a new frame
+    std::unique_lock<std::mutex> lock(mBufMutex);
 
-    // Get the frame mutex
-    const std::lock_guard<std::mutex> lock(mBufMutex);
-    mNewFrame = false;
+    // The full timeout is also used when the camera is closed or disconnected: a loop that calls this function
+    // without checking `isOpened` must not keep a CPU core busy
+    mFrameCond.wait_for(lock, std::chrono::milliseconds(timeout_msec), [this]{ return mNewFrame; });
+
+    if( mNewFrame )
+    {
+        // The image given to the user is no longer touched by the grabbing thread
+        std::swap(mUserIdx, mReadyIdx);
+        mNewFrame = false;
+
+        mLastFrame.data = mFrameData[mUserIdx].data();
+        mLastFrame.frame_id = mReadyFrameId;
+        mLastFrame.timestamp = mReadyTimestamp;
+    }
+
     return mLastFrame;
 }
 
-int VideoCapture::ll_VendorControl(uint8_t *buf, int len, int readMode, bool safe, bool force)
+int VideoCapture::ll_VendorControl(uint8_t *buf, int readMode, bool safe, bool force)
 {
-    if (len > 384)
-        return -2;
-
     if (!force && !mInitialized)
         return -3;
 
-    unsigned char tmp[2] = {0};
-    struct uvc_xu_control_query xu_query_info;
-    xu_query_info.unit = cbs_xu_unit_id;
-    xu_query_info.selector = cbs_xu_control_selector;
-    xu_query_info.query = UVC_GET_LEN;
-    xu_query_info.size = 2;
-    xu_query_info.data = tmp;
+    if( mFileDesc==-1 )
+        return -3;
 
     const std::lock_guard<std::mutex> lock(mComMutex);
 
-    int io_err = ioctl(mFileDesc, UVCIOC_CTRL_QUERY, &xu_query_info);
+    std::string error;
+    const int res = xuControl(mFileDesc, buf, readMode==READ_MODE, safe, &error);
 
-    //std::cerr << "[ll_VendorControl] '" << mDevName << "' [" << mDevId << "] - mFileDesc: " << mFileDesc << std::endl;
-
-    if (io_err != 0)
+    if( res==-1 )
     {
-        return -4;
-    }
-    else
-    {
-        len = (xu_query_info.data[1] << 8) + xu_query_info.data[0];
+        detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG, error);
     }
 
-    //len should be now 384 for USB3 and 64 for USB2
-    // we use the UVC_SET_CUR to write the cmd
-    struct uvc_xu_control_query xu_query_send;
-    xu_query_send.unit = cbs_xu_unit_id;
-    xu_query_send.selector = cbs_xu_control_selector;
-    xu_query_send.query = UVC_SET_CUR;
-    xu_query_send.size = static_cast<__u16> (len); //64 for USB2
-    xu_query_send.data = buf;
-
-    io_err = ioctl(mFileDesc, UVCIOC_CTRL_QUERY, &xu_query_send);
-    if (io_err != 0)
-    {
-        int res = errno;
-
-        const char *err=nullptr;
-        switch (res) {
-        case ENOENT:
-            err = "Extension unit or control not found";
-            break;
-        case ENOBUFS:
-            err = "Buffer size does not match control size";
-            break;
-        case EINVAL:
-            err = "Invalid request code";
-            break;
-        case EBADRQC:
-            err = "Request not supported by control";
-            break;
-        default:
-            err = strerror(res);
-            break;
-        }
-
-        if(mParams.verbose)
-        {
-            std::string msg = std::string("CBS SET failed") +
-                    std::string(err) +
-                    std::string(". (System code: ") +
-                    std::to_string(res) +
-                    std::string(") ") +
-                    std::to_string(xu_query_send.size);
-            ERROR_OUT(mParams.verbose,msg);
-        }
-
-        return -1;
-    }
-
-#if 1
-    if (!safe)
-        usleep(300);
-    else
-        usleep(2000);
-
-    if (readMode == READ_MODE) {
-
-        struct uvc_xu_control_query xu_query;
-        xu_query.unit = cbs_xu_unit_id,
-                xu_query.selector = cbs_xu_control_selector,
-                xu_query.query = UVC_GET_CUR,
-                xu_query.size = static_cast<__u16> (len),
-                xu_query.data = buf;
-
-        io_err = ioctl(mFileDesc, UVCIOC_CTRL_QUERY, &xu_query);
-        if (io_err != 0) {
-            int res = errno;
-
-            const char *err;
-            switch (res) {
-            case ENOENT: err = "Extension unit or control not found";
-                break;
-            case ENOBUFS: err = "Buffer size does not match control size";
-                break;
-            case EINVAL: err = "Invalid request code";
-                break;
-            case EBADRQC: err = "Request not supported by control";
-                break;
-            default: err = strerror(res);
-                break;
-            }
-
-            if(mParams.verbose)
-            {
-                std::string msg = std::string("CBS GET failed") +
-                        std::string(err) +
-                        std::string(". (System code: ") +
-                        std::to_string(res) +
-                        std::string(") ") +
-                        std::to_string(xu_query_send.size);
-                ERROR_OUT(mParams.verbose,msg);
-            }
-            return -1;
-        }
-
-        return 0;
-    }
-    else
-    {
-        return 0;
-    }
-
-#endif
-
-
+    return res;
 }
 
 /**
@@ -1068,15 +1146,15 @@ int VideoCapture::ll_VendorControl(uint8_t *buf, int len, int readMode, bool saf
  */
 int VideoCapture::ll_get_gpio_value(int gpio_number, uint8_t *value)
 {
-    unsigned char xu_buf[384];
-    memset(xu_buf, 0, 384);
+    unsigned char xu_buf[XU_BUF_SIZE];
+    memset(xu_buf, 0, XU_BUF_SIZE);
 
     //Set xubuf
     xu_buf[0] = XU_TASK_GET;
     xu_buf[1] = 0x13;
     xu_buf[2] = gpio_number;
 
-    int hr = ll_VendorControl(xu_buf, 384, 1);
+    int hr = ll_VendorControl(xu_buf, READ_MODE);
     *value = xu_buf[17];
     return hr;
 }
@@ -1089,8 +1167,8 @@ int VideoCapture::ll_get_gpio_value(int gpio_number, uint8_t *value)
  */
 int VideoCapture::ll_set_gpio_value(int gpio_number, uint8_t value)
 {
-    unsigned char xu_buf[64];
-    memset(xu_buf, 0, 64);
+    unsigned char xu_buf[XU_BUF_SIZE];
+    memset(xu_buf, 0, XU_BUF_SIZE);
 
     //Set xubuf
     xu_buf[0] = XU_TASK_SET;
@@ -1098,7 +1176,7 @@ int VideoCapture::ll_set_gpio_value(int gpio_number, uint8_t value)
     xu_buf[2] = gpio_number;
     xu_buf[3] = value;
 
-    int hr = ll_VendorControl(xu_buf, 64, 0);
+    int hr = ll_VendorControl(xu_buf, 0);
     return hr;
 }
 
@@ -1110,8 +1188,8 @@ int VideoCapture::ll_set_gpio_value(int gpio_number, uint8_t value)
  */
 int VideoCapture::ll_set_gpio_direction(int gpio_number, int direction)
 {
-    unsigned char xu_buf[64];
-    memset(xu_buf, 0, 64);
+    unsigned char xu_buf[XU_BUF_SIZE];
+    memset(xu_buf, 0, XU_BUF_SIZE);
 
     //Set xubuf
     xu_buf[0] = XU_TASK_SET;
@@ -1119,14 +1197,14 @@ int VideoCapture::ll_set_gpio_direction(int gpio_number, int direction)
     xu_buf[2] = gpio_number;
     xu_buf[3] = direction;
 
-    int hr = ll_VendorControl(xu_buf, 64, 0);
+    int hr = ll_VendorControl(xu_buf, 0);
     return hr;
 }
 
 int VideoCapture::ll_read_system_register(uint64_t address, uint8_t *value)
 {
-    unsigned char xu_buf[384];
-    memset(xu_buf, 0, 384);
+    unsigned char xu_buf[XU_BUF_SIZE];
+    memset(xu_buf, 0, XU_BUF_SIZE);
 
     //Set xubuf
     xu_buf[0] = XU_TASK_GET;
@@ -1144,15 +1222,15 @@ int VideoCapture::ll_read_system_register(uint64_t address, uint8_t *value)
     xu_buf[11] = 0x00;
     xu_buf[12] = 0x01;
 
-    int hr = ll_VendorControl(xu_buf, 384, READ_MODE);
+    int hr = ll_VendorControl(xu_buf, READ_MODE);
     *value = xu_buf[17];
     return hr;
 }
 
 int VideoCapture::ll_write_system_register(uint64_t address, uint8_t value)
 {
-    unsigned char xu_buf[384];
-    memset(xu_buf, 0, 384);
+    unsigned char xu_buf[XU_BUF_SIZE];
+    memset(xu_buf, 0, XU_BUF_SIZE);
 
     //Set xubuf
     xu_buf[0] = XU_TASK_SET;
@@ -1171,7 +1249,7 @@ int VideoCapture::ll_write_system_register(uint64_t address, uint8_t value)
     xu_buf[12] = 0x01;
     xu_buf[16] = value;
 
-    int hr = ll_VendorControl(xu_buf, 384, 0);
+    int hr = ll_VendorControl(xu_buf, 0);
     return hr;
 }
 
@@ -1180,8 +1258,8 @@ int VideoCapture::ll_write_system_register(uint64_t address, uint8_t value)
 
 int VideoCapture::ll_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t* value)
 {
-    unsigned char xu_buf[384];
-    memset(xu_buf, 0, 384);
+    unsigned char xu_buf[XU_BUF_SIZE];
+    memset(xu_buf, 0, XU_BUF_SIZE);
 
 
     //Set xubuf
@@ -1214,7 +1292,7 @@ int VideoCapture::ll_read_sensor_register(int side, int sscb_id, uint64_t addres
     xu_buf[9] = xu_buf[9] | 0x10;
     xu_buf[9] = xu_buf[9] | 0x80;
 
-    int hr = ll_VendorControl(xu_buf, 384, READ_MODE);
+    int hr = ll_VendorControl(xu_buf, READ_MODE);
     *value = xu_buf[17];
     return hr;
 }
@@ -1245,8 +1323,8 @@ bool VideoCapture::waitSensorsReady(int timeout_msec)
 int VideoCapture::ll_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value)
 {
 
-    unsigned char xu_buf[384];
-    memset(xu_buf, 0, 384);
+    unsigned char xu_buf[XU_BUF_SIZE];
+    memset(xu_buf, 0, XU_BUF_SIZE);
 
     //Set xubuf
     xu_buf[0] = XU_TASK_SET;
@@ -1283,42 +1361,14 @@ int VideoCapture::ll_write_sensor_register(int side, int sscb_id, uint64_t addre
     xu_buf[9] = xu_buf[9] | 0x10;
     xu_buf[9] = xu_buf[9] | 0x80;
     memcpy(&xu_buf[16], &value, sizeof (uint8_t));
-    int hr = ll_VendorControl(xu_buf, 384, 0);
+    int hr = ll_VendorControl(xu_buf, 0);
 
-    return hr;
-}
-
-int VideoCapture::ll_SPI_FlashProgramRead(uint8_t *pBuf, int Adr, int len, bool force) {
-
-    int hr = -1;
-    uint8_t xu_buf[384];
-    memset(xu_buf, 0, 384);
-
-    xu_buf[0] = 0x51;
-    xu_buf[1] = 0xA1;
-    xu_buf[2] = 0x03;
-
-    xu_buf[5] = (Adr >> 24) & 0xff;
-    xu_buf[6] = (Adr >> 16) & 0xff;
-    xu_buf[7] = (Adr >> 8) & 0xff;
-    xu_buf[8] = (Adr) & 0xff;
-
-    int pack_val = 36864 + len;
-    xu_buf[9] = ((pack_val) >> 8) & 0xff;
-    xu_buf[10] = ((pack_val) >> 0) & 0xff;
-
-    xu_buf[11] = ((len) >> 8) & 0xff;
-    xu_buf[12] = ((len) >> 0) & 0xff;
-
-    hr = ll_VendorControl(xu_buf, len, 1, true, force);
-    memcpy(pBuf, &xu_buf[17], len);
     return hr;
 }
 
 int VideoCapture::ll_isp_aecagc_enable(int side, bool enable) {
     uint64_t Address = 0;
     uint8_t value = 0;
-    int hr = 0;
     if (side == 0)
         Address = ISP_CTRL_LEFT; //ISP L
     else if (side == 1)
@@ -1326,8 +1376,10 @@ int VideoCapture::ll_isp_aecagc_enable(int side, bool enable) {
     else
         return -2;
 
-    //Read Current sysregister
-    hr += ll_read_system_register(Address, &value);
+    //Read Current sysregister: the other bits must be preserved
+    int hr = ll_read_system_register(Address, &value);
+    if( hr!=0 )
+        return hr;
 
     // Adjust Value
     if (enable)
@@ -1335,9 +1387,7 @@ int VideoCapture::ll_isp_aecagc_enable(int side, bool enable) {
     else
         value = value & AEG_AGC_MASK_OFF;
 
-    hr += ll_write_system_register(Address, value);
-
-    return hr;
+    return ll_write_system_register(Address, value);
 }
 
 
@@ -1439,64 +1489,62 @@ void VideoCapture::ll_activate_sync()
     }
 }
 
-int VideoCapture::setLEDstatus(bool status)
+bool VideoCapture::setLEDstatus(bool status)
 {
-    int hr = 0;
     //LED GPIO : GPIO 2
-    if (status) {
-        hr += ll_set_gpio_direction(2, 0);
-        hr += ll_set_gpio_value(2, 1);
-    } else {
-        hr += ll_set_gpio_direction(2, 0);
-        hr += ll_set_gpio_value(2, 0);
-    }
+    int hr = ll_set_gpio_direction(2, 0);
+    hr += ll_set_gpio_value(2, status?1:0);
 
-    return hr;
+    return hr==0;
 }
 
-int VideoCapture::getLEDstatus(bool *status)
+bool VideoCapture::getLEDstatus(bool *status)
 {
     if( status==nullptr)
     {
-        return -1;
+        return false;
     }
 
-    uint8_t val;
+    uint8_t val = 0;
     int hr = ll_set_gpio_direction(2, 1);
     hr += ll_get_gpio_value(2, &val);
+    if( hr!=0 )
+        return false;
+
     *status = val!=0;
-    return hr;
+    return true;
 }
 
-int VideoCapture::toggleLED(bool* value)
+bool VideoCapture::toggleLED(bool* value)
 {
-    bool curVal;
+    bool curVal = false;
 
-    int ret = getLEDstatus( &curVal );
+    if( !getLEDstatus( &curVal ) )
+        return false;
 
-    if(ret==0)
+    const bool newVal = !curVal;
+    if( !setLEDstatus( newVal ) )
+        return false;
+
+    if( value!=nullptr )
     {
-        bool newVal = !curVal;
-        ret = setLEDstatus( newVal );
-
-        if( ret==0 && value!=nullptr )
-        {
-            *value = newVal;
-        }
+        *value = newVal;
     }
 
-    return ret;
+    return true;
 }
 
 int VideoCapture::getCameraControlSettings(int ctrl_id)
 {
+    if( mFileDesc==-1 )
+        return -1;
+
     struct v4l2_control control_s;
     struct v4l2_queryctrl queryctrl;
     memset(&queryctrl, 0, sizeof (queryctrl));
     memset(&control_s, 0, sizeof (control_s));
     int res = -1;
 
-    // save_controls(fd);
     queryctrl.id = ctrl_id;
 
     if (0 != ioctl(mFileDesc, VIDIOC_QUERYCTRL, &queryctrl))
@@ -1509,64 +1557,45 @@ int VideoCapture::getCameraControlSettings(int ctrl_id)
     return res;
 }
 
-void VideoCapture::setCameraControlSettings(int ctrl_id, int ctrl_val) {
-    struct v4l2_control control_s;
-    struct v4l2_queryctrl queryctrl;
-    memset(&queryctrl, 0, sizeof (queryctrl));
-    memset(&control_s, 0, sizeof (control_s));
-    int min, max/*, step, val_def*/;
-
-    // save_controls(fd);
-    queryctrl.id = ctrl_id;
-
-    //std::cerr << "[setCameraControlSettings] '" << mDevName << "' [" << mDevId << "] - mFileDesc: " << mFileDesc << std::endl;
-
-    int res = ioctl(mFileDesc, VIDIOC_QUERYCTRL, &queryctrl);
-    if (0 == res) {
-        min = queryctrl.minimum;
-        max = queryctrl.maximum;
-        //step = queryctrl.step;
-        //val_def = queryctrl.default_value;
-
-        if (ctrl_id == LINUX_CTRL_GAMMA) {
-            min = DEFAULT_MIN_GAMMA;
-            max = DEFAULT_MAX_GAMMA;
-        }
-
-    } else {
-        min = 0; // queryctrl.minimum;
-        max = 6500; // queryctrl.maximum;
-        //step = queryctrl.step;
-        //val_def = queryctrl.default_value;
-    }
-
-    if ((ctrl_val >= min) && (ctrl_val <= max)) {
-        control_s.id = ctrl_id;
-        control_s.value = ctrl_val;
-
-
-        if (ioctl(mFileDesc, VIDIOC_S_CTRL, &control_s) == 0)
-            return;
-    } else
-        return;
-}
-
-void VideoCapture::resetCameraControlSettings(int ctrl_id) {
+bool VideoCapture::setCameraControlSettings(int ctrl_id, int ctrl_val) {
+    if( mFileDesc==-1 )
+        return false;
 
     struct v4l2_control control_s;
     struct v4l2_queryctrl queryctrl;
     memset(&queryctrl, 0, sizeof (queryctrl));
     memset(&control_s, 0, sizeof (control_s));
-    int val_def;
-    // save_controls(fd);
+
     queryctrl.id = ctrl_id;
-    ioctl(mFileDesc, VIDIOC_QUERYCTRL, &queryctrl);
-    val_def = queryctrl.default_value;
+
+    if( 0!=ioctl(mFileDesc, VIDIOC_QUERYCTRL, &queryctrl) )
+        return false;
+
+    if( ctrl_val<queryctrl.minimum || ctrl_val>queryctrl.maximum )
+        return false;
 
     control_s.id = ctrl_id;
-    control_s.value = val_def;
-    ioctl(mFileDesc, VIDIOC_S_CTRL, &control_s);
-    return;
+    control_s.value = ctrl_val;
+
+    return ioctl(mFileDesc, VIDIOC_S_CTRL, &control_s) == 0;
+}
+
+bool VideoCapture::resetCameraControlSettings(int ctrl_id) {
+    if( mFileDesc==-1 )
+        return false;
+
+    struct v4l2_control control_s;
+    struct v4l2_queryctrl queryctrl;
+    memset(&queryctrl, 0, sizeof (queryctrl));
+    memset(&control_s, 0, sizeof (control_s));
+
+    queryctrl.id = ctrl_id;
+    if( 0!=ioctl(mFileDesc, VIDIOC_QUERYCTRL, &queryctrl) )
+        return false;
+
+    control_s.id = ctrl_id;
+    control_s.value = queryctrl.default_value;
+    return ioctl(mFileDesc, VIDIOC_S_CTRL, &control_s) == 0;
 }
 
 int VideoCapture::setGammaPreset(int side, int value)
@@ -1579,46 +1608,39 @@ int VideoCapture::setGammaPreset(int side, int value)
     if(value > DEFAULT_MAX_GAMMA)
         value = DEFAULT_MAX_GAMMA;
 
-    uint64_t ulAddr = 0x80181500;
-
-    if (side == 1)
-        ulAddr = 0x80181D00;
+    const uint64_t base = (side == 1) ? ISP_GAMMA_RIGHT : ISP_GAMMA_LEFT;
 
     int hr = 0;
 
-    for (int i = 0; i < 15; i++) {
-        hr += ll_write_system_register(ulAddr, PRESET_GAMMA[value-1][i]);
+    for (int i = 0; i < ISP_GAMMA_VALUES; i++) {
+        hr += ll_write_system_register(base+i, PRESET_GAMMA[value-1][i]);
         usleep(10);
         uint8_t valRead = 0x0;
-        hr += ll_read_system_register(ulAddr, &valRead);
+        hr += ll_read_system_register(base+i, &valRead);
         if (valRead != PRESET_GAMMA[value-1][i]) {
             return -3;
         }
-        ulAddr++;
     }
 
-    ulAddr = 0x80181510;
-
-    if (side == 1)
-        ulAddr = 0x80181D10;
-    hr += ll_write_system_register(ulAddr, 0x01);
+    // Enable the custom curve
+    hr += ll_write_system_register(base+ISP_GAMMA_EN_OFFSET, 0x01);
     usleep(10);
     uint8_t valRead = 0x0;
-    hr += ll_read_system_register(ulAddr, &valRead);
+    hr += ll_read_system_register(base+ISP_GAMMA_EN_OFFSET, &valRead);
     if (valRead != 0x01)
         return -2;
 
     return hr;
 }
 
-void VideoCapture::setBrightness(int brightness)
+bool VideoCapture::setBrightness(int brightness)
 {
-    setCameraControlSettings(LINUX_CTRL_BRIGHTNESS, brightness);
+    return setCameraControlSettings(LINUX_CTRL_BRIGHTNESS, brightness);
 }
 
-void VideoCapture::resetBrightness()
+bool VideoCapture::resetBrightness()
 {
-    resetCameraControlSettings(LINUX_CTRL_BRIGHTNESS);
+    return resetCameraControlSettings(LINUX_CTRL_BRIGHTNESS);
 }
 
 int VideoCapture::getBrightness()
@@ -1626,14 +1648,14 @@ int VideoCapture::getBrightness()
     return getCameraControlSettings(LINUX_CTRL_BRIGHTNESS);
 }
 
-void VideoCapture::setSharpness(int sharpness)
+bool VideoCapture::setSharpness(int sharpness)
 {
-    setCameraControlSettings(LINUX_CTRL_SHARPNESS, sharpness);
+    return setCameraControlSettings(LINUX_CTRL_SHARPNESS, sharpness);
 }
 
-void VideoCapture::resetSharpness()
+bool VideoCapture::resetSharpness()
 {
-    resetCameraControlSettings(LINUX_CTRL_SHARPNESS);
+    return resetCameraControlSettings(LINUX_CTRL_SHARPNESS);
 }
 
 int VideoCapture::getSharpness()
@@ -1641,14 +1663,14 @@ int VideoCapture::getSharpness()
     return getCameraControlSettings(LINUX_CTRL_SHARPNESS);
 }
 
-void VideoCapture::setContrast(int contrast)
+bool VideoCapture::setContrast(int contrast)
 {
-    setCameraControlSettings(LINUX_CTRL_CONTRAST, contrast);
+    return setCameraControlSettings(LINUX_CTRL_CONTRAST, contrast);
 }
 
-void VideoCapture::resetContrast()
+bool VideoCapture::resetContrast()
 {
-    resetCameraControlSettings(LINUX_CTRL_CONTRAST);
+    return resetCameraControlSettings(LINUX_CTRL_CONTRAST);
 }
 
 int VideoCapture::getContrast()
@@ -1656,14 +1678,14 @@ int VideoCapture::getContrast()
     return getCameraControlSettings(LINUX_CTRL_CONTRAST);
 }
 
-void VideoCapture::setHue(int hue)
+bool VideoCapture::setHue(int hue)
 {
-    setCameraControlSettings(LINUX_CTRL_HUE, hue);
+    return setCameraControlSettings(LINUX_CTRL_HUE, hue);
 }
 
-void VideoCapture::resetHue()
+bool VideoCapture::resetHue()
 {
-    resetCameraControlSettings(LINUX_CTRL_HUE);
+    return resetCameraControlSettings(LINUX_CTRL_HUE);
 }
 
 int VideoCapture::getHue()
@@ -1671,14 +1693,14 @@ int VideoCapture::getHue()
     return getCameraControlSettings(LINUX_CTRL_HUE);
 }
 
-void VideoCapture::setSaturation(int saturation)
+bool VideoCapture::setSaturation(int saturation)
 {
-    setCameraControlSettings(LINUX_CTRL_SATURATION, saturation);
+    return setCameraControlSettings(LINUX_CTRL_SATURATION, saturation);
 }
 
-void VideoCapture::resetSaturation()
+bool VideoCapture::resetSaturation()
 {
-    resetCameraControlSettings(LINUX_CTRL_SATURATION);
+    return resetCameraControlSettings(LINUX_CTRL_SATURATION);
 }
 
 int VideoCapture::getSaturation()
@@ -1691,55 +1713,76 @@ int VideoCapture::getWhiteBalance()
     return getCameraControlSettings(LINUX_CTRL_AWB);
 }
 
-void VideoCapture::setWhiteBalance(int wb)
+bool VideoCapture::setWhiteBalance(int wb)
 {
     // Disable auto white balance if active
-    if (getAutoWhiteBalance() != 0)
+    if (getAutoWhiteBalance())
         setAutoWhiteBalance(false);
 
-    setCameraControlSettings(LINUX_CTRL_AWB, wb);
+    return setCameraControlSettings(LINUX_CTRL_AWB, wb);
 }
 
 bool VideoCapture::getAutoWhiteBalance()
 {
-    return (getCameraControlSettings(LINUX_CTRL_AWB_AUTO)!=0);
+    return (getCameraControlSettings(LINUX_CTRL_AWB_AUTO)>0);
 }
 
-void VideoCapture::setAutoWhiteBalance(bool active)
+bool VideoCapture::setAutoWhiteBalance(bool active)
 {
-    setCameraControlSettings(LINUX_CTRL_AWB_AUTO, active?1:0);
+    return setCameraControlSettings(LINUX_CTRL_AWB_AUTO, active?1:0);
 }
 
-void VideoCapture::resetAutoWhiteBalance()
+bool VideoCapture::resetAutoWhiteBalance()
 {
-    setAutoWhiteBalance(true);
+    return setAutoWhiteBalance(true);
 }
 
-void VideoCapture::setGamma(int gamma)
+bool VideoCapture::setGamma(int gamma)
 {
-    int current_gamma = getCameraControlSettings(LINUX_CTRL_GAMMA);
+    if( gamma<DEFAULT_MIN_GAMMA || gamma>DEFAULT_MAX_GAMMA )
+        return false;
 
-    if (gamma!=current_gamma)
-    {
-        setGammaPreset(0,gamma);
-        setGammaPreset(1,gamma);
-        setCameraControlSettings(LINUX_CTRL_GAMMA, gamma);
-    }
+    const int resL = setGammaPreset(0,gamma);
+    const int resR = setGammaPreset(1,gamma);
+
+    return resL==0 && resR==0;
 }
 
-void VideoCapture::resetGamma()
+bool VideoCapture::resetGamma()
 {
-    int def_value = DEFAULT_GAMMA_NOECT;
-    setGammaPreset(0,def_value);
-    setGammaPreset(1,def_value);
-    setCameraControlSettings(LINUX_CTRL_GAMMA, def_value);
+    // Without the custom curve the camera uses its factory gamma, that matches the first preset
+    int hr = ll_write_system_register(ISP_GAMMA_LEFT+ISP_GAMMA_EN_OFFSET, 0x00);
+    hr += ll_write_system_register(ISP_GAMMA_RIGHT+ISP_GAMMA_EN_OFFSET, 0x00);
+
+    return hr==0;
 }
 
 int VideoCapture::getGamma() {
-    return getCameraControlSettings(LINUX_CTRL_GAMMA);
+    uint8_t enabled = 0;
+    if( ll_read_system_register(ISP_GAMMA_LEFT+ISP_GAMMA_EN_OFFSET, &enabled)!=0 )
+        return -1;
+
+    if( enabled==0 )
+        return DEFAULT_GAMMA_NOECT;
+
+    // The value is not stored by the camera: search for the preset that matches the curve in use
+    uint8_t curve[ISP_GAMMA_VALUES];
+    for( int i=0; i<ISP_GAMMA_VALUES; i++ )
+    {
+        if( ll_read_system_register(ISP_GAMMA_LEFT+i, &curve[i])!=0 )
+            return -1;
+    }
+
+    for( int preset=DEFAULT_MIN_GAMMA; preset<=DEFAULT_MAX_GAMMA; preset++ )
+    {
+        if( memcmp(curve, PRESET_GAMMA[preset-1], ISP_GAMMA_VALUES)==0 )
+            return preset;
+    }
+
+    return -1;
 }
 
-int VideoCapture::setAECAGC(bool active)
+bool VideoCapture::setAECAGC(bool active)
 {
     const bool wasOn = !active && (ll_isp_is_aecagc(0)==1 || ll_isp_is_aecagc(1)==1);
 
@@ -1752,19 +1795,18 @@ int VideoCapture::setAECAGC(bool active)
     if( wasOn && mFps>0 )
         usleep( 5 * 1000000 / mFps );
 
-    return res;
+    return res==0;
 }
 
 bool VideoCapture::getAECAGC()
 {
-    int resL = ll_isp_is_aecagc(0);
-    int resR = ll_isp_is_aecagc(1);
-    return (resL && resR);
+    // A negative value indicates a communication error
+    return ll_isp_is_aecagc(0)==1 && ll_isp_is_aecagc(1)==1;
 }
 
-void VideoCapture::resetAECAGC()
+bool VideoCapture::resetAECAGC()
 {
-    setAECAGC(true);
+    return setAECAGC(true);
 }
 
 bool VideoCapture::setROIforAECAGC(CAM_SENS_POS side, uint16_t x, uint16_t y, uint16_t w, uint16_t h)
@@ -1786,28 +1828,17 @@ bool VideoCapture::setROIforAECAGC(CAM_SENS_POS side, uint16_t x, uint16_t y, ui
         return false;
     }
 
-    int x_start_high = x / 256;
-    int x_start_low = (x - x_start_high * 256);
-    int y_start_high = y / 256;
-    int y_start_low = (y - x_start_high * 256);
-    int w_start_high = w / 256;
-    int w_start_low = (w - x_start_high * 256);
-    int h_start_high = h / 256;
-    int h_start_low = (h - x_start_high * 256);
+    // High byte first: X, Y, width, height
+    const uint16_t values[4] = {x, y, w, h};
 
+    uint32_t ulAddr = (side==CAM_SENS_POS::RIGHT) ? ISP_ROI_RIGHT : ISP_ROI_LEFT;
 
-    uint32_t ulAddr = 0x801810C0;
-    if (static_cast<int>(side)==1)
-        ulAddr= 0x801818C0;
-
-    int r = ll_write_system_register(ulAddr,static_cast<uint8_t>(x_start_high));ulAddr++;usleep(100);
-    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(x_start_low));ulAddr++;usleep(100);
-    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(y_start_high));ulAddr++;usleep(100);
-    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(y_start_low));ulAddr++;usleep(100);
-    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(w_start_high));ulAddr++;usleep(100);
-    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(w_start_low));ulAddr++;usleep(100);
-    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(h_start_high));ulAddr++;usleep(100);
-    r += ll_write_system_register(ulAddr,static_cast<uint8_t>(h_start_low));ulAddr++;usleep(100);
+    int r = 0;
+    for( int i=0; i<4; i++ )
+    {
+        r += ll_write_system_register(ulAddr++,static_cast<uint8_t>(values[i]>>8));usleep(100);
+        r += ll_write_system_register(ulAddr++,static_cast<uint8_t>(values[i]&0xff));usleep(100);
+    }
 
     return (r==0);
 }
@@ -1819,36 +1850,41 @@ bool VideoCapture::resetROIforAECAGC(CAM_SENS_POS side)
 
 bool VideoCapture::getROIforAECAGC(CAM_SENS_POS side, uint16_t &x, uint16_t &y, uint16_t &w, uint16_t &h)
 {
-    uint8_t x_start_high = 0;
-    uint8_t x_start_low = 0;
-    uint8_t y_start_high =0;
-    uint8_t y_start_low = 0;
-    uint8_t w_start_high =0;
-    uint8_t w_start_low = 0;
-    uint8_t h_start_high = 0;
-    uint8_t h_start_low = 0;
-    uint32_t ulAddr = 0x801810C0;
-    if (static_cast<int>(side)==1)
-        ulAddr= 0x801818C0;
-    int r =  ll_read_system_register(ulAddr,&x_start_high);ulAddr++;usleep(100);
-    r +=  ll_read_system_register(ulAddr,&x_start_low);ulAddr++;usleep(100);
-    r +=   ll_read_system_register(ulAddr,&y_start_high);ulAddr++;usleep(100);
-    r +=   ll_read_system_register(ulAddr,&y_start_low);ulAddr++;usleep(100);
-    r +=   ll_read_system_register(ulAddr,&w_start_high);ulAddr++;usleep(100);
-    r +=   ll_read_system_register(ulAddr,&w_start_low);ulAddr++;usleep(100);
-    r +=   ll_read_system_register(ulAddr,&h_start_high);ulAddr++;usleep(100);
-    r +=   ll_read_system_register(ulAddr,&h_start_low);ulAddr++;usleep(100);
+    if(side!=CAM_SENS_POS::LEFT && side!=CAM_SENS_POS::RIGHT)
+    {
+        return false;
+    }
 
-    x = x_start_high*256 + x_start_low;
-    y = y_start_high*256 + y_start_low;
-    w = w_start_high*256 + w_start_low;
-    h = h_start_high*256 + h_start_low;
+    uint32_t ulAddr = (side==CAM_SENS_POS::RIGHT) ? ISP_ROI_RIGHT : ISP_ROI_LEFT;
 
-    return (r==0);
+    uint16_t values[4] = {0,0,0,0};
+
+    int r = 0;
+    for( int i=0; i<4; i++ )
+    {
+        uint8_t high = 0;
+        uint8_t low = 0;
+        r += ll_read_system_register(ulAddr++,&high);usleep(100);
+        r += ll_read_system_register(ulAddr++,&low);usleep(100);
+        values[i] = static_cast<uint16_t>(high*256 + low);
+    }
+
+    if( r!=0 )
+        return false;
+
+    x = values[0];
+    y = values[1];
+    w = values[2];
+    h = values[3];
+
+    return true;
 }
 
-void VideoCapture::setGain(CAM_SENS_POS cam, int gain)
+bool VideoCapture::setGain(CAM_SENS_POS cam, int gain)
 {
+    if(cam!=CAM_SENS_POS::LEFT && cam!=CAM_SENS_POS::RIGHT)
+        return false;
+
     if(getAECAGC())
         setAECAGC(false);
 
@@ -1865,12 +1901,14 @@ void VideoCapture::setGain(CAM_SENS_POS cam, int gain)
 
     ucGainM = (rawGain >> 8) & 0xff;
     ucGainL = rawGain & 0xff;
-    ll_isp_set_gain(ucGainH, ucGainM, ucGainL, sensorId);
-
+    return ll_isp_set_gain(ucGainH, ucGainM, ucGainL, sensorId)==0;
 }
 
 int VideoCapture::getGain(CAM_SENS_POS cam)
 {
+    if(cam!=CAM_SENS_POS::LEFT && cam!=CAM_SENS_POS::RIGHT)
+        return -1;
+
     int rawGain=0;
 
     uint8_t val[3];
@@ -1885,8 +1923,11 @@ int VideoCapture::getGain(CAM_SENS_POS cam)
     return calcGainValue(rawGain);
 }
 
-void VideoCapture::setExposure(CAM_SENS_POS cam, int exposure)
+bool VideoCapture::setExposure(CAM_SENS_POS cam, int exposure)
 {
+    if(cam!=CAM_SENS_POS::LEFT && cam!=CAM_SENS_POS::RIGHT)
+        return false;
+
     unsigned char ucExpH, ucExpM, ucExpL;
 
     if(getAECAGC())
@@ -1901,18 +1942,19 @@ void VideoCapture::setExposure(CAM_SENS_POS cam, int exposure)
     if(rawExp<EXP_RAW_MIN)
         rawExp = EXP_RAW_MIN;
 
-    //std::cout << "Set Raw Exp: " << rawExp << std::endl;
-
     int sensorId = static_cast<int>(cam);
 
     ucExpH = (rawExp >> 12) & 0xff;
     ucExpM = (rawExp >> 4) & 0xff;
     ucExpL = (rawExp << 4) & 0xf0;
-    ll_isp_set_exposure(ucExpH, ucExpM, ucExpL, sensorId);
+    return ll_isp_set_exposure(ucExpH, ucExpM, ucExpL, sensorId)==0;
 }
 
 int VideoCapture::getExposure(CAM_SENS_POS cam)
 {
+    if(cam!=CAM_SENS_POS::LEFT && cam!=CAM_SENS_POS::RIGHT)
+        return -1;
+
     int rawExp=0;
 
     unsigned char val[3];
@@ -1924,8 +1966,6 @@ int VideoCapture::getExposure(CAM_SENS_POS cam)
     if(r<0)
         return r;
     rawExp = (int) ((val[2] << 12) + (val[1] << 4) + (val[0] >> 4));
-
-    //std::cout << "Get Raw Exp: " << rawExp << std::endl;
 
     int exposure = static_cast<int>(std::round((100.0*rawExp)/mExpoureRawMax));
     return exposure;
@@ -1982,7 +2022,22 @@ int VideoCapture::calcGainValue(int rawGain)
     return gain;
 }
 
-#ifdef SENSOR_LOG_AVAILABLE
+std::string VideoCapture::getCurrentDateTime( DateTime type )
+{
+    time_t now = time(nullptr);
+    struct tm  tstruct;
+    char  buf[80];
+    memset(buf, 0, sizeof(buf));
+    localtime_r(&now, &tstruct);
+    if(type==FULL)
+        strftime(buf, sizeof(buf), "%Y-%m-%d %X", &tstruct);
+    else if(type==DATE)
+        strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);
+    else if(type==TIME)
+        strftime(buf, sizeof(buf), "%X", &tstruct);
+    return std::string(buf);
+}
+
 bool VideoCapture::enableAecAgcSensLogging(bool enable, int frame_skip/*=10*/)
 {
     if(!enable)
@@ -2074,19 +2129,18 @@ void VideoCapture::setColorBars(int side, bool c)
 }
 
 
-void VideoCapture::saveAllISPRegisters(std::string filename)
+void VideoCapture::saveAllISPRegisters(const std::string& filename)
 {
     std::ofstream logFile;
     logFile.open(filename,std::ofstream::out);
-    int res = 0;
     unsigned long long ulAddrL =  0x80181000;
     unsigned long long   ulAddrR =  0x80181800;
 
     for (int p = 0;p<0x800;p++)
     {
-        uint8_t valL,valR;
-        res += ll_read_system_register( ulAddrL+p, &valL);
-        res += ll_read_system_register( ulAddrR+p, &valR);
+        uint8_t valL=0,valR=0;
+        ll_read_system_register( ulAddrL+p, &valL);
+        ll_read_system_register( ulAddrR+p, &valR);
 
         logFile <<"0x" << std::hex << std::setfill('0') << std::setw(8) << static_cast<unsigned long long>(ulAddrL+p)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valR)<<std::endl;
         usleep(10);
@@ -2095,17 +2149,16 @@ void VideoCapture::saveAllISPRegisters(std::string filename)
     logFile.close();
 }
 
-void VideoCapture::saveAllSensorsRegisters(std::string filename)
+void VideoCapture::saveAllSensorsRegisters(const std::string& filename)
 {
     std::ofstream logFile;
     logFile.open(filename,std::ofstream::out);
 
-    int res = 0;
     for (int addr = 0x3000; addr <= 0x6000; ++addr)
     {
-        uint8_t valL,valR;
-        res += ll_read_sensor_register( 0, 1, addr, &valL);
-        res += ll_read_sensor_register( 1, 1, addr, &valR);
+        uint8_t valL=0,valR=0;
+        ll_read_sensor_register( 0, 1, addr, &valL);
+        ll_read_sensor_register( 1, 1, addr, &valR);
 
         usleep(10);
         logFile <<"0x" << std::hex << std::setfill('0') << std::setw(8) << static_cast<int>(addr)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valR)<<std::endl;
@@ -2114,13 +2167,15 @@ void VideoCapture::saveAllSensorsRegisters(std::string filename)
     logFile.close();
 }
 
-void VideoCapture::saveLogDataLeft()
+void VideoCapture::saveLogDataLeft(uint64_t timestamp)
 {
     const int reg_count = 61;
     uint8_t values[reg_count];
+    memset(values, 0, sizeof(values));
     int idx = 0;
 
     int res = 0;
+    (void)res;
     res += ll_read_system_register( 0x80181002, &values[idx++]);
     res += ll_read_system_register( 0x80181031, &values[idx++]);
     res += ll_read_system_register( 0x80181032, &values[idx++]);
@@ -2137,7 +2192,7 @@ void VideoCapture::saveLogDataLeft()
         res += ll_read_sensor_register( 0, 1, addr, &values[idx++]);
     }
 
-    mLogFileLeft << std::dec << mLastFrame.timestamp << LOG_SEP;
+    mLogFileLeft << std::dec << timestamp << LOG_SEP;
     for(int i=0; i<reg_count; i++)
     {
         mLogFileLeft << "0x" << std::hex << std::setfill('0') << std::setw(2) << static_cast<int>(values[i]);
@@ -2148,13 +2203,15 @@ void VideoCapture::saveLogDataLeft()
     }
 }
 
-void VideoCapture::saveLogDataRight()
+void VideoCapture::saveLogDataRight(uint64_t timestamp)
 {
     const int reg_count = 61;
     uint8_t values[reg_count];
+    memset(values, 0, sizeof(values));
     int idx = 0;
 
     int res = 0;
+    (void)res;
     res += ll_read_system_register( 0x80181802, &values[idx++]);
     res += ll_read_system_register( 0x80181831, &values[idx++]);
     res += ll_read_system_register( 0x80181832, &values[idx++]);
@@ -2171,7 +2228,7 @@ void VideoCapture::saveLogDataRight()
         res += ll_read_sensor_register( 1, 1, addr, &values[idx++]);
     }
 
-    mLogFileRight << std::dec << mLastFrame.timestamp << LOG_SEP;
+    mLogFileRight << std::dec << timestamp << LOG_SEP;
     for(int i=0; i<reg_count; i++)
     {
         mLogFileRight << "0x" << std::hex << std::setfill('0') << std::setw(2) << static_cast<int>(values[i]);
@@ -2192,29 +2249,33 @@ bool VideoCapture::resetAGCAECregisters() {
 
     return res==0;
 }
-#endif
 
-#ifdef SENSORS_MOD_AVAILABLE
 bool VideoCapture::enableSensorSync( sensors::SensorCapture* sensCap )
 {
-    if(!sensCap)
+#ifdef SENSORS_MOD_AVAILABLE
+    if( !sensCap || !mInitialized || !sensCap->isOpened() )
         return false;
 
     // Activate low level sync mechanism
     ll_activate_sync();
 
-    mSyncEnabled = true;
-    mSensPtr = sensCap;
+    std::shared_ptr<detail::SyncLink> link = std::make_shared<detail::SyncLink>();
 
-    mSensPtr->setVideoPtr(this);
+    sensCap->setSyncLink(link);
+
+    {
+        const std::lock_guard<std::mutex> lock(mBufMutex);
+        mSyncLink = link;
+    }
 
     return true;
-}
+#else
+    (void)sensCap;
+    detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG, "The library has been built without the sensors module");
+    return false;
 #endif
-
 }
 
 }
 
-
-
+}

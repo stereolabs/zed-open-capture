@@ -24,7 +24,6 @@
 #include <stdint.h>
 #include <string>
 #include <string.h>
-#include <cxxabi.h>
 #include <iostream>
 #include <vector>
 #include <chrono>
@@ -37,24 +36,14 @@
 #endif
 #elif __GNUC__
 #define SL_OC_EXPORT __attribute__((visibility("default")))
-#if defined(__arm__) || defined(__aarch64__)
-#define _SL_JETSON_
-#endif
+#else
+#define SL_OC_EXPORT
 #endif
 
 //// SDK VERSION NUMBER
-#define ZED_OC_MAJOR_VERSION 0
-#define ZED_OC_MINOR_VERSION 6
+#define ZED_OC_MAJOR_VERSION 1
+#define ZED_OC_MINOR_VERSION 0
 #define ZED_OC_PATCH_VERSION 0
-
-#define ZED_OC_VERSION_ATTRIBUTE private: uint32_t mMajorVer = ZED_OC_MAJOR_VERSION, mMinorVer = ZED_OC_MINOR_VERSION, mPatchVer = ZED_OC_PATCH_VERSION
-
-// Debug output
-#define INFO_OUT(lvl,msg) { int status_dem_0; if (lvl>=3) std::cout << "[" << abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status_dem_0) << "] INFO: " << msg << std::endl; }
-#define WARNING_OUT(lvl,msg) { int status_dem_0; if (lvl>=2) std::cerr << "[" << abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status_dem_0) << "] WARNING: " << msg << std::endl; }
-#define ERROR_OUT(lvl,msg) { int status_dem_0; if (lvl>=1) std::cerr << "[" << abi::__cxa_demangle(typeid(*this).name(), 0, 0, &status_dem_0) << "] ERROR: " << msg << std::endl; }
-
-
 
 /*!
  * \brief Get the current system clock as steady clock, so with no jumps even if the system time changes
@@ -88,6 +77,24 @@ enum VERBOSITY {
     WARNING = 2,
     INFO = 3
 };
+
+/*!
+ * \brief Convert a steady clock time to the time base used for all the frame and sensor timestamps
+ *
+ * The time base is the wall clock read once, the first time a timestamp is needed, and then advanced with the
+ * steady clock. Timestamps are therefore comparable with the system time, never go backwards and are not affected
+ * by later adjustments of the system clock.
+ *
+ * \param steady_nsec a steady clock time in nanoseconds (see \ref getSteadyTimestamp)
+ * \return the corresponding timestamp in nanoseconds
+ */
+SL_OC_EXPORT uint64_t steadyToTimestamp(uint64_t steady_nsec);
+
+/*!
+ * \brief Get the current time in the time base used for all the frame and sensor timestamps
+ * \return the current timestamp in nanoseconds
+ */
+inline uint64_t getTimestampNow() { return steadyToTimestamp(getSteadyTimestamp()); }
 
 }
 
