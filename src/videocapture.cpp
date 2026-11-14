@@ -375,8 +375,8 @@ int readSerialNumber(int fd, int maxTries)
 }
 
 VideoCapture::VideoCapture(VideoParams params)
+    : mParams(params)
 {
-    mParams = params;
 
     std::string ver =
             "ZED Open Capture - Camera module - Version: "
@@ -2133,15 +2133,14 @@ void VideoCapture::saveAllISPRegisters(std::string filename)
 {
     std::ofstream logFile;
     logFile.open(filename,std::ofstream::out);
-    int res = 0;
     unsigned long long ulAddrL =  0x80181000;
     unsigned long long   ulAddrR =  0x80181800;
 
     for (int p = 0;p<0x800;p++)
     {
         uint8_t valL=0,valR=0;
-        res += ll_read_system_register( ulAddrL+p, &valL);
-        res += ll_read_system_register( ulAddrR+p, &valR);
+        ll_read_system_register( ulAddrL+p, &valL);
+        ll_read_system_register( ulAddrR+p, &valR);
 
         logFile <<"0x" << std::hex << std::setfill('0') << std::setw(8) << static_cast<unsigned long long>(ulAddrL+p)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valR)<<std::endl;
         usleep(10);
@@ -2155,12 +2154,11 @@ void VideoCapture::saveAllSensorsRegisters(std::string filename)
     std::ofstream logFile;
     logFile.open(filename,std::ofstream::out);
 
-    int res = 0;
     for (int addr = 0x3000; addr <= 0x6000; ++addr)
     {
         uint8_t valL=0,valR=0;
-        res += ll_read_sensor_register( 0, 1, addr, &valL);
-        res += ll_read_sensor_register( 1, 1, addr, &valR);
+        ll_read_sensor_register( 0, 1, addr, &valL);
+        ll_read_sensor_register( 1, 1, addr, &valR);
 
         usleep(10);
         logFile <<"0x" << std::hex << std::setfill('0') << std::setw(8) << static_cast<int>(addr)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valL)<<" , "<<std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned long long>(valR)<<std::endl;

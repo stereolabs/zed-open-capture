@@ -25,6 +25,7 @@ application: see **API changes** at the end of this section before updating an e
   * `make install` now installs a CMake package (`find_package(zed_open_capture)`, target `zed_open_capture::zed_open_capture`) and a pkg-config file
   * Add the `ZED_OC_SANITIZER` build option to build with the address or thread sanitizer
   * Add the `ZED_OC_WARNINGS_AS_ERRORS` build option
+  * Add automatic checks on GitHub for each pull request: build with GCC and Clang on x86_64 and ARM64 in every configuration, use of the installed package, tests without a camera also with sanitizers, documentation and static analysis
 
 ### Improvements
 

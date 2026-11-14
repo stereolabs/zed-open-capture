@@ -1,26 +1,46 @@
-
 name: Documentation generation
 
-on: 
+# Pull requests: the documentation must be generated without warnings.
+# Master: the documentation is generated and published.
+
+on:
+  pull_request:
   push:
     branches:
       - master
 
+concurrency:
+  group: documentation-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   generate_doc:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Doxygen Action    
-        uses: mattnotmitt/doxygen-action@v1.3.1
-        with:
-          working-directory: 'doc/api_doc'
-          doxyfile-path: './doxyfile' 
-      - run: ls -la doc
-      - run: ls -la doc/html
+        uses: actions/checkout@v7
+
+      - name: Install Doxygen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends doxygen graphviz
+
+      - name: Generate the documentation
+        working-directory: doc/api_doc
+        run: |
+          doxygen --version
+          # Same configuration of the repository, but warnings are errors
+          (cat doxyfile; echo "WARN_AS_ERROR = FAIL_ON_WARNINGS") | doxygen -
+          test -f ../html/index.html
+
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        if: github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./doc/html

@@ -282,6 +282,16 @@ To look for memory errors or data races, build the tests with a sanitizer:
 cmake .. -DBUILD_TESTS=ON -DBUILD_EXAMPLES=OFF -DZED_OC_SANITIZER=thread -DCMAKE_BUILD_TYPE=RelWithDebInfo
 ```
 
+### Checks without a camera
+
+The script used by the automatic checks of the GitHub repository can also be started on your computer. It builds all the configurations of the library with warnings as errors, verifies that an application can use the installed library, and runs the tests that do not need a camera:
+
+```bash
+.github/scripts/check_without_camera.sh
+```
+
+Set `CXX=clang++` to use another compiler and `SANITIZERS=1` to also build and run with the address and thread sanitizers.
+
 ## Running the examples
 
 After installing the library and examples, you will have the following sample applications in your `build` directory:
