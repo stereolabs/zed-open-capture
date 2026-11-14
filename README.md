@@ -2,8 +2,8 @@
   Open Capture Camera API
 </h1>
 
-<h4 align="center">A platform-agnostic camera and sensor capture API for the <a href="https://www.stereolabs.com/products/zed-2">ZED 2, ZED 2i, and ZED Mini</a> stereo cameras</h4>
-<h5 align="center">*** not compatible with GMSL2 devices: <a href="https://www.stereolabs.com/products/zed-x">ZED X, ZED X Mini, and ZED X One</a> ***</h5>
+<h4 align="center">A platform-agnostic camera and sensor capture API for the <a href="https://docs.stereolabs.com/docs/products/cameras/zed">ZED 2, ZED 2i, and ZED Mini</a> stereo cameras</h4>
+<h5 align="center">*** not compatible with GMSL2 devices: <a href="https://docs.stereolabs.com/docs/products/cameras">ZED X, ZED X Mini, and ZED X One</a> ***</h5>
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
@@ -56,13 +56,13 @@ The ZED Open Capture is a multi-platform, open-source C++ library for low-level 
 
 The open-source library provides methods to access raw video frames, calibration data, camera controls, and raw data from the USB3 camera sensors (on ZED 2, ZED 2i, and ZED Mini). A synchronization mechanism is provided to get the correct sensor data associated with a video frame.
 
-**Note:** While in the ZED SDK all output data is calibrated and compensated, here the extracted raw data is not corrected by the camera and sensor calibration parameters. You can retrieve camera and sensor calibration data using the [ZED SDK](https://www.stereolabs.com/docs/video/camera-calibration/) to correct your camera data [see `zed_open_capture_rectify_example` example](#running-the-examples).
+**Note:** While in the ZED SDK all output data is calibrated and compensated, here the extracted raw data is not corrected by the camera and sensor calibration parameters. You can retrieve camera and sensor calibration data using the [ZED SDK](https://docs.stereolabs.com/docs/development/zed-sdk/modules/camera/camera-calibration) to correct your camera data [see `zed_open_capture_rectify_example` example](#running-the-examples).
 
 ## Build and install
 
 ### Prerequisites
 
-* USB3 Stereolabs Stereo camera: [ZED 2i](https://www.stereolabs.com/zed-2i/), [ZED 2](https://www.stereolabs.com/zed-2/), [ZED](https://www.stereolabs.com/zed/), [ZED Mini](https://www.stereolabs.com/zed-mini/)
+* USB3 Stereolabs Stereo camera: ZED 2i, ZED 2, ZED Mini or ZED (see the [ZED USB 3 cameras](https://docs.stereolabs.com/docs/products/cameras/zed) documentation and their [specifications](https://docs.stereolabs.com/docs/products/cameras/zed/specifications))
 * Linux OS
 * GCC (v7.5+)
 * CMake (v3.16+)
@@ -434,9 +434,9 @@ On a Raspberry Pi 4 part of the frames are lost at resolutions higher than VGA, 
 
 ## Related
 
-* [Stereolabs](https://www.stereolabs.com)
-* [ZED 2i multi-sensor camera](https://www.stereolabs.com/zed-2i/)
-* [ZED SDK](https://www.stereolabs.com/developers/)
+* [Stereolabs documentation](https://docs.stereolabs.com/docs)
+* [ZED USB 3 cameras: ZED 2i, ZED 2 and ZED Mini](https://docs.stereolabs.com/docs/products/cameras/zed)
+* [ZED SDK](https://docs.stereolabs.com/docs/development/zed-sdk)
 
 ## License
 

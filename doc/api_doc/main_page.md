@@ -3,7 +3,7 @@
 The ZED Open Capture library allows the low level control of ZED 2i, ZED 2, ZED Mini and ZED cameras on Linux computers, without the ZED SDK and without an NVIDIA GPU. The library provides methods to access raw video frames, to control the video parameters and to acquire raw data from the internal sensors (only ZED Mini, ZED 2, and ZED 2i). Frames and sensors data share the same clock, and a synchronization mechanism based on a hardware signal is provided to get the correct sensor data associated to each video frame.
 
 **Note:** The provided data are not calibrated, images are not rectified in a stereoscopic way, IMU data may drift or be misaligned.
-Calibration data can be accessed using the [ZED SDK](https://www.stereolabs.com/developers/release/).
+Calibration data can be accessed using the [ZED SDK](https://docs.stereolabs.com/docs/development/zed-sdk).
 
 ## Coordinates system
 
@@ -15,7 +15,7 @@ The coordinate system is only used for sensors data (especially for IMU). The gi
 
 ### Prerequisites
 
- * A Stereolabs camera: [ZED 2i](https://www.stereolabs.com/zed-2i/), [ZED 2](https://www.stereolabs.com/zed-2/), [ZED Mini](https://www.stereolabs.com/zed-mini/), [ZED](https://www.stereolabs.com/zed/)
+ * A Stereolabs USB 3 camera: ZED 2i, ZED 2, ZED Mini or ZED (see the [ZED USB 3 cameras](https://docs.stereolabs.com/docs/products/cameras/zed) documentation)
  * Linux OS [Tested on Ubuntu 22.04 (x86_64), Ubuntu 24.04 (NVIDIA Jetson AGX Thor) and Raspberry Pi OS 13 (Raspberry Pi 4)]
  * GCC compiler [at least v7.5]
  * CMake build system [at least v3.16]
