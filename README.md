@@ -85,7 +85,7 @@ The open-source library provides methods to access raw video frames, calibration
 
 * Install OpenCV to build the examples (optional)
 
-    `sudo apt install libopencv-dev libopencv-viz-dev`
+    `sudo apt install libopencv-dev`
 
 * Install GoogleTest to build the hardware tests (optional)
 
@@ -302,7 +302,7 @@ After installing the library and examples, you will have the following sample ap
 * [zed_open_capture_rectify_example](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_rectify_example.cpp): This application downloads factory stereo calibration parameters from Stereolabs server, performs stereo image rectification and displays original and rectified frames.
 * [zed_open_capture_sensors_example](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_sensors_example.cpp): This application creates a `SensorCapture` object and displays on the command console the values of camera sensors acquired at full rate.
 * [zed_open_capture_sync_example](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_sync_example.cpp): This application creates a `VideoCapture` and a `SensorCapture` object, initialize the camera/sensors synchronization and displays on screen the video stream with the synchronized IMU data.
-* [zed_open_capture_depth_example](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_depth_example.cpp): This application captures video frames, extracts the depth map and the point cloud using only the CPU, and displays the result with the processing time. See [Depth settings](#depth-settings).
+* [zed_open_capture_depth_example](https://github.com/stereolabs/zed-open-capture/blob/master/examples/zed_oc_depth_example.cpp): This application captures video frames, extracts the depth map and the point cloud using only the CPU, and displays the result with the processing time. The point cloud is shown in a window that does not need OpenGL: drag with the left mouse button to rotate the view, with the right button or the wheel to zoom, double click to restore the view of the camera. See [Depth settings](#depth-settings).
 * [zed_open_capture_depth_tune_stereo](https://github.com/stereolabs/zed-open-capture/blob/master/examples/tools/zed_oc_tune_stereo_sgbm.cpp): This application captures the first available stereo frames and provides GUI Controls to tune the disparity map results and save them to be used in the `zed_open_capture_depth_example` example
 * [zed_open_capture_benchmark](https://github.com/stereolabs/zed-open-capture/blob/master/examples/tools/zed_oc_benchmark.cpp): This application measures the performance of image, sensors and depth acquisition on your computer. It does not need a display.
 
@@ -431,20 +431,6 @@ A camera connected to a USB 2.0 port, or with a USB 2.0 cable, only provides a f
 ### Lost frames on Raspberry Pi 4
 
 On a Raspberry Pi 4 part of the frames are lost at resolutions higher than VGA, because the USB host cannot always receive all the data sent by the camera (see [Performance](#performance)). Lost frames can be detected from the gaps of `Frame::frame_id` or of the frame timestamps. Use the VGA resolution, or HD720 at 30 FPS, when all the frames are required.
-
-### OpenGL version
-
-On some embedded devices, like Raspberry Pi 4, the depth extraction example can crash with the following error:
-
-`vtkShaderProgram.cxx:438    ERR| vtkShaderProgram (0x23a611c0): 0:1(10): error: GLSL 1.50 is not supported. Supported versions are: 1.10, 1.20, 1.00 ES, and 3.00 ES`
-
-to correctly execute the example application it is necessary to change the default OpenGL version:
-
-```bash
-export MESA_GL_VERSION_OVERRIDE=3.2
-```
-
-you can permanently add this configuration by adding the above command as the last line of the `~/.bashrc` file.
 
 ## Related
 

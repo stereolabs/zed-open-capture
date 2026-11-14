@@ -29,17 +29,11 @@
 // OpenCV includes
 #include <opencv2/opencv.hpp>
 
-//#undef HAVE_OPENCV_VIZ // Uncomment if cannot use Viz3D for point cloud rendering
-
-#ifdef HAVE_OPENCV_VIZ
-#include <opencv2/viz.hpp>
-#include <opencv2/viz/viz3d.hpp>
-#endif
-
 // Sample includes
 #include "calibration.hpp"
 #include "stereo.hpp"
 #include "depth.hpp"
+#include "cloud_viewer.hpp"
 #include "ocv_display.hpp"
 // <---- Includes
 
@@ -119,10 +113,10 @@ int main(int argc, char *argv[])
     cv::Mat left_rect;      // Left rectified color image
     cv::Mat depth_image;    // Color representation of the depth map
     cv::Mat cloudMat;       // Point cloud
+    cv::Mat cloudColors;    // Color of each point
 
-#ifdef HAVE_OPENCV_VIZ
-    cv::viz::Viz3d pc_viewer = cv::viz::Viz3d( "Point Cloud" );
-#endif
+    // The point cloud is drawn in a standard window: drag with the mouse to rotate the view
+    sl_oc::tools::CloudViewer pc_viewer( "Point Cloud", cv::Size(800, 450) );
 
     uint64_t last_ts=0; // Used to check new frame arrival
     uint64_t last_print_ts=0;
@@ -146,7 +140,7 @@ int main(int argc, char *argv[])
 
             const sl_oc::tools::StereoDepth::Timing& timing = depth.timing();
             std::stringstream stereoElabInfo;
-            stereoElabInfo << std::fixed << std::setprecision(1) << "Depth processing: " << timing.total() << " msec - Freq: " << 1000./timing.total();
+            stereoElabInfo << std::fixed << std::setprecision(1) << "Depth: " << timing.total() << " msec - " << 1000./timing.total() << " Hz";
             // <---- Rectification, stereo matching and depth extraction
 
             // ----> Show frames
@@ -154,7 +148,10 @@ int main(int argc, char *argv[])
             depth.getDepthImage(depth_image);
 
             sl_oc::tools::showImage("Left rect.", left_rect, params.res, true);
-            sl_oc::tools::showImage("Depth", depth_image, sl_oc::video::RESOLUTION::VGA, false, stereoElabInfo.str());
+            // The depth map is displayed with the same size of the left image
+            cv::Mat depth_display;
+            cv::resize(depth_image, depth_display, left_rect.size(), 0, 0, cv::INTER_NEAREST);
+            sl_oc::tools::showImage("Depth", depth_display, params.res, true, stereoElabInfo.str());
             // <---- Show frames
 
             // ----> Depth of the central pixel, once per second
@@ -170,10 +167,11 @@ int main(int argc, char *argv[])
             }
             // <---- Depth of the central pixel
 
-#ifdef HAVE_OPENCV_VIZ
-            // Point Cloud: 3D coordinates in millimeters of each pixel of the depth map
+            // ----> Point Cloud: 3D coordinates in millimeters of each pixel of the depth map
             depth.getPointCloud(cloudMat);
-#endif
+            cv::resize(left_rect, cloudColors, cloudMat.size(), 0, 0, cv::INTER_AREA);
+            pc_viewer.show(cloudMat, cloudColors);
+            // <---- Point Cloud
         }
         // <---- If the frame is valid we can extract the depth and display it
 
@@ -183,22 +181,6 @@ int main(int argc, char *argv[])
             break;
         // <---- Keyboard handling
 
-#ifdef HAVE_OPENCV_VIZ
-        // ----> Show Point Cloud
-        if( !cloudMat.empty() )
-        {
-            cv::Mat colors;
-            cv::resize(left_rect, colors, cloudMat.size(), 0, 0, cv::INTER_AREA);
-            cv::viz::WCloud cloudWidget( cloudMat, colors );
-            cloudWidget.setRenderingProperty( cv::viz::POINT_SIZE, 1 );
-            pc_viewer.showWidget( "Point Cloud", cloudWidget );
-            pc_viewer.spinOnce(1);
-        }
-
-        if(pc_viewer.wasStopped())
-            break;
-        // <---- Show Point Cloud
-#endif
     }
 
     return EXIT_SUCCESS;

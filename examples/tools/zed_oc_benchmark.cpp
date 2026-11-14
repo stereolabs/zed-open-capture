@@ -52,6 +52,7 @@
 #include "calibration.hpp"
 #include "stereo.hpp"
 #include "depth.hpp"
+#include "cloud_viewer.hpp"
 
 using namespace sl_oc;
 
@@ -682,6 +683,15 @@ int replayFrames(const Options& opt)
         depth.getLeftColor(frames.back().data(), left);
         cv::imwrite(opt.out + "_depth.png", image);
         cv::imwrite(opt.out + "_left.jpg", left);
+
+        // Point cloud seen from the side
+        cv::Mat cloud, colors, cloudImage;
+        depth.getPointCloud(cloud);
+        cv::resize(left, colors, cloud.size(), 0, 0, cv::INTER_AREA);
+        tools::CloudViewer viewer("Point Cloud", cv::Size(960, 540));
+        viewer.setView(0.5f, -0.25f, 0.8f);
+        viewer.render(cloud, colors, cloudImage);
+        cv::imwrite(opt.out + "_cloud.png", cloudImage);
 
         // Rectified images side by side with horizontal lines, to verify the alignment
         cv::Mat pair;
