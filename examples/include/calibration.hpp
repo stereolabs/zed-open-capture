@@ -2,6 +2,11 @@
 #define CONF_MANAGER_HPP
 
 // Includes
+// This file embeds a third party INI parser: its warnings are not reported
+#if defined(__GNUC__)
+#pragma GCC system_header
+#endif
+
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -4045,7 +4050,7 @@ private:
 
 
 
-bool checkFile(std::string path) {
+inline bool checkFile(std::string path) {
     std::ifstream f(path.c_str());
     return f.good();
 }
@@ -4080,7 +4085,9 @@ static inline std::string getRootHiddenDir() {
     filename += "\\Stereolabs\\";
 
 #else //LINUX
-    std::string homepath = getenv("HOME");
+    // HOME is not set for some services: use the current folder
+    const char* home = getenv("HOME");
+    std::string homepath = (home!=nullptr && home[0]!='\0') ? home : ".";
     std::string filename = homepath + "/zed/";
 #endif
 
@@ -4098,35 +4105,47 @@ static inline std::string getHiddenDir() {
     return filename;
 }
 
-bool downloadCalibrationFile(unsigned int serial_number, std::string &calibration_file) {
+inline bool downloadCalibrationFile(unsigned int serial_number, std::string &calibration_file) {
 #ifndef _WIN32
     std::string path = getHiddenDir();
-    char specific_name[128];
-    sprintf(specific_name, "SN%d.conf", serial_number);
-    calibration_file = path + specific_name;
+    calibration_file = path + "SN" + std::to_string(serial_number) + ".conf";
+
+    // A file left empty by a failed download is not valid
+    {
+        std::ifstream f(calibration_file.c_str(), std::ios::ate);
+        if( f.good() && f.tellg()<=0 )
+        {
+            f.close();
+            std::remove(calibration_file.c_str());
+        }
+    }
+
     if (!checkFile(calibration_file)) {
         std::string cmd;
         int res;
 
         // Create download folder
-        cmd = "mkdir -p " + path;
+        cmd = "mkdir -p '" + path + "'";
         res = system(cmd.c_str());
+        if( res != 0 )
+        {
+            std::cerr << "Cannot create the folder " << path << std::endl;
+            return false;
+        }
 
         // Download the file
         std::string url("'https://calib.stereolabs.com/?SN=");
 
-        cmd = "wget " + url + std::to_string(serial_number) + "' -O " + calibration_file;
+        cmd = "wget -q --timeout=20 --tries=2 " + url + std::to_string(serial_number) + "' -O '" + calibration_file + "'";
         std::cout << cmd << std::endl;
         res = system(cmd.c_str());
 
-        if( res == EXIT_FAILURE )
+        std::ifstream f(calibration_file.c_str(), std::ios::ate);
+        if( res != 0 || !f.good() || f.tellg()<=0 )
         {
-            std::cerr << "Error downloading the calibration file" << std::endl;
-            return false;
-        }
-
-        if (!checkFile(calibration_file)) {
-            std::cerr << "Invalid calibration file" << std::endl;
+            std::cerr << "Error downloading the calibration file. Please verify the internet connection and that `wget` is installed" << std::endl;
+            f.close();
+            std::remove(calibration_file.c_str()); // wget creates the file also when the download fails
             return false;
         }
     }
@@ -4169,7 +4188,7 @@ bool downloadCalibrationFile(unsigned int serial_number, std::string &calibratio
 // OpenCV includes
 #include <opencv2/opencv.hpp>
 
-bool initCalibration(std::string calibration_file, cv::Size2i image_size, cv::Mat &map_left_x, cv::Mat &map_left_y,
+inline bool initCalibration(std::string calibration_file, cv::Size2i image_size, cv::Mat &map_left_x, cv::Mat &map_left_y,
         cv::Mat &map_right_x, cv::Mat &map_right_y, cv::Mat &cameraMatrix_left, cv::Mat &cameraMatrix_right, double *baseline=nullptr) {
 
     if (!checkFile(calibration_file)) {
@@ -4234,16 +4253,9 @@ bool initCalibration(std::string calibration_file, cv::Size2i image_size, cv::Ma
     // (Linux only) Safety check A: Wrong "." or "," reading in file conf.
 #ifndef _WIN32
     if (right_cam_k1 == 0 && left_cam_k1 == 0 && left_cam_k2 == 0 && right_cam_k2 == 0) {
-        std::cout << "ZED File invalid" << std::endl;
-
-        std::string cmd = "rm " + calibration_file;
-        int res = system(cmd.c_str());
-        if( res == EXIT_FAILURE )
-        {
-            exit(1);
-        }
-
-        exit(1);
+        std::cout << "ZED File invalid: it will be downloaded again at the next start" << std::endl;
+        std::remove(calibration_file.c_str());
+        return false;
     }
 #endif
 
@@ -4265,9 +4277,6 @@ bool initCalibration(std::string calibration_file, cv::Size2i image_size, cv::Ma
 
     // Stereo
     cv::Mat T = (cv::Mat_<double>(3, 1) << T_[0], T_[1], T_[2]);
-    std::cout << " Camera Matrix L: \n" << cameraMatrix_left << std::endl << std::endl;
-    std::cout << " Camera Matrix R: \n" << cameraMatrix_right << std::endl << std::endl;
-
     cv::Mat R1, R2, P1, P2, Q;
     cv::stereoRectify(cameraMatrix_left, distCoeffs_left, cameraMatrix_right, distCoeffs_right, image_size, R, T,
             R1, R2, P1, P2, Q, cv::CALIB_ZERO_DISPARITY, 0, image_size);

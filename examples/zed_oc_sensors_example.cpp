@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 
     if( devs.size()==0 )
     {
-        std::cerr << "No available ZED Mini or ZED2 cameras" << std::endl;
+        std::cerr << "No available ZED Mini, ZED 2 or ZED 2i cameras" << std::endl;
         return EXIT_FAILURE;
     }
     // <---- Get a list of available camera with sensor
@@ -61,8 +61,8 @@ int main(int argc, char *argv[])
     // <---- Inizialize the sensors
 
     // ----> Get FW version information
-    uint16_t fw_maior;
-    uint16_t fw_minor;
+    uint16_t fw_maior = 0;
+    uint16_t fw_minor = 0;
 
     sens.getFirmwareVersion( fw_maior, fw_minor );
 
@@ -76,13 +76,14 @@ int main(int argc, char *argv[])
     uint64_t last_cam_temp_ts = 0;
     // <---- Variables to calculate sensors frequencies
 
-    // Lets grab 4000 sensors data (about 10 seconds
-    int count = 0;
-    while(++count<4000)
+    // Lets grab sensors data for 10 seconds
+    const uint64_t start_ts = getSteadyTimestamp();
+    while( getSteadyTimestamp()-start_ts < 10000000000ULL )
     {
-        // ----> Get IMU data with a timeout of 5 millisecods
-        const sl_oc::sensors::data::Imu imuData = sens.getLastIMUData(5000);
-        if( imuData.valid == sl_oc::sensors::data::Imu::NEW_VAL  )
+        // ----> Get all the IMU data received after the previous call, with a timeout of 5 millisecods
+        // Note: `getLastIMUData` only returns the most recent sample, so it can skip data when the loop is slow
+        const std::vector<sl_oc::sensors::data::Imu> imuQueue = sens.getIMUData(5000);
+        for( const sl_oc::sensors::data::Imu& imuData : imuQueue )
         {
             std::cout << "**** New IMU data ****" << std::endl;
             std::cout << " * Timestamp: " << imuData.timestamp << " nsec" << std::endl;
@@ -94,7 +95,7 @@ int main(int argc, char *argv[])
             std::cout << " * Accelerations [m/s²]: " << imuData.aX << " " << imuData.aY << " " << imuData.aZ << std::endl;
             std::cout << " * Angular Velocities [°/s]: " << imuData.gX << " " << imuData.gY << " " << imuData.gZ << std::endl;
         }
-        // <---- Get IMU data with a timeout of 5 millisecods
+        // <---- Get all the IMU data
 
         // ----> Get Magnetometer data with a timeout of 100 microseconds to not slow down fastest data (IMU)
         const sl_oc::sensors::data::Magnetometer magData = sens.getLastMagnetometerData(100);

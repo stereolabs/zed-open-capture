@@ -42,9 +42,24 @@ int main(int argc, char *argv[])
     params.res = sl_oc::video::RESOLUTION::HD720;
     params.fps = sl_oc::video::FPS::FPS_60;
 
+    // ----> Search for the connected cameras
+    const std::vector<sl_oc::video::VideoDevice> devices = sl_oc::video::VideoCapture::getDeviceList();
+    for( const sl_oc::video::VideoDevice& dev : devices )
+    {
+        std::cout << "Found camera sn: " << dev.serial_number << " [" << dev.dev_name << "]" << std::endl;
+    }
+
+    if( devices.size()<2 )
+    {
+        std::cerr << "This example requires two cameras, " << devices.size() << " found" << std::endl;
+
+        return EXIT_FAILURE;
+    }
+    // <---- Search for the connected cameras
+
     // ----> Create Video Capture 0
     sl_oc::video::VideoCapture cap_0(params);
-    if( !cap_0.initializeVideo(0) )
+    if( !cap_0.initializeVideo(devices[0].dev_id) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
         std::cerr << "See verbosity level for more details." << std::endl;
@@ -57,7 +72,7 @@ int main(int argc, char *argv[])
 
     // ----> Create Video Capture 1
     sl_oc::video::VideoCapture cap_1(params);
-    if( !cap_1.initializeVideo(2) )
+    if( !cap_1.initializeVideo(devices[1].dev_id) )
     {
         std::cerr << "Cannot open camera video capture" << std::endl;
         std::cerr << "See verbosity level for more details." << std::endl;
@@ -87,8 +102,8 @@ int main(int argc, char *argv[])
     while (1)
     {
         // Get last available frame
-        const sl_oc::video::Frame frame_0 = cap_0.getLastFrame();
-        const sl_oc::video::Frame frame_1 = cap_1.getLastFrame();
+        const sl_oc::video::Frame& frame_0 = cap_0.getLastFrame();
+        const sl_oc::video::Frame& frame_1 = cap_1.getLastFrame();
 
         // ----> If the frame is valid we can display it
         if(frame_0.data!=nullptr && frame_1.data!=nullptr)
@@ -104,11 +119,11 @@ int main(int argc, char *argv[])
                 // <---- System time
 
                 // ----> Frame time
-                double frame_dT = static_cast<double>(frame.timestamp-lastFrameTs)/1e9;
+                double frame_dT = static_cast<double>(frame_0.timestamp-lastFrameTs)/1e9;
                 std::cout << "[Camera] Frame period: " << frame_dT << "sec - Freq: " << 1./frame_dT << " Hz" << std::endl;
                 // <---- Frame time
             }
-            lastFrameTs = frame.timestamp;
+            lastFrameTs = frame_0.timestamp;
 #endif
 
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
