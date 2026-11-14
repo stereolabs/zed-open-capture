@@ -2129,7 +2129,7 @@ void VideoCapture::setColorBars(int side, bool c)
 }
 
 
-void VideoCapture::saveAllISPRegisters(std::string filename)
+void VideoCapture::saveAllISPRegisters(const std::string& filename)
 {
     std::ofstream logFile;
     logFile.open(filename,std::ofstream::out);
@@ -2149,7 +2149,7 @@ void VideoCapture::saveAllISPRegisters(std::string filename)
     logFile.close();
 }
 
-void VideoCapture::saveAllSensorsRegisters(std::string filename)
+void VideoCapture::saveAllSensorsRegisters(const std::string& filename)
 {
     std::ofstream logFile;
     logFile.open(filename,std::ofstream::out);
