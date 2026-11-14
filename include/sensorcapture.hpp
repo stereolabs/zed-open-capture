@@ -238,7 +238,8 @@ public:
     const data::Temperature& getLastCameraTemperatureData(uint64_t timeout_usec=100);
 
     /*!
-     * \brief Perform a SW reset of the Sensors Module. To be called in case one of the sensors stops to work correctly.
+     * \brief Perform a SW reset of the Sensors Module. To be called in case one of the sensors stops to work correctly,
+     *        e.g. when the environmental data are no longer updated (a warning is printed in this case).
      *
      * \param serial_number The serial number of the device to be reset (0 to reset the first available)
      * \return true if successful

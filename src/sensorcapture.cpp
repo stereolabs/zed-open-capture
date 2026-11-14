@@ -41,6 +41,7 @@ const size_t IMU_QUEUE_MAX_SIZE = 1600;             //!< 2 seconds of ZED Mini d
 const int HID_READ_TIMEOUT_MSEC = 100;              //!< Maximum time the grabbing thread waits before checking the stop flag
 const int HID_MAX_CONSECUTIVE_ERRORS = 10;          //!< Read errors before considering the device disconnected
 const int STALE_REPORT_COUNT = 3;                   //!< The first reports can still contain data of a previous connection
+const uint64_t ENV_STALL_NSEC = 3000000000ULL;      //!< Time without environmental data before reporting a problem
 const uint64_t PING_PERIOD_NSEC = 1000000000ULL;    //!< The MCU stops the stream if not pinged for 6 seconds
 
 // ----> Conversion of the MCU timestamps
@@ -511,6 +512,8 @@ void SensorCapture::grabThreadFunc()
     bool firstData = true;
     int errorCount = 0;
     int discardCount = STALE_REPORT_COUNT;
+    uint64_t lastEnvTs = getSteadyTimestamp();
+    bool envWarning = false;
 
     const uint8_t target_struct_id =
             (mDevPid==SL_USB_PROD_MCU_ZED2_REVA || mDevPid==SL_USB_PROD_MCU_ZED2i_REVA) ? usb::REP_ID_SENSOR_DATA : 0;
@@ -584,6 +587,22 @@ void SensorCapture::grabThreadFunc()
         lastSyncCount = raw.frame_sync_count;
         firstData = false;
         // <---- Camera/Sensors Synchronization
+
+        // ----> Environmental sensors still working?
+        // They are read about 25 times per second. The MCU can stop to update them: only a reset recovers them
+        if( raw.env_valid==data::Environment::NEW_VAL )
+        {
+            lastEnvTs = getSteadyTimestamp();
+            envWarning = false;
+        }
+        else if( raw.env_valid!=0 && !envWarning && getSteadyTimestamp()-lastEnvTs > ENV_STALL_NSEC )
+        {
+            envWarning = true;
+            detail::log(mVerbose, VERBOSITY::WARNING, LOG_TAG,
+                        "The environmental and temperature sensors are not providing new data. "
+                        "Call `SensorCapture::resetSensorModule` and connect again to recover them");
+        }
+        // <---- Environmental sensors still working?
 
         std::shared_ptr<detail::SyncLink> link;
 

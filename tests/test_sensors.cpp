@@ -231,8 +231,9 @@ TEST_P(Sensors, MagnetometerEnvironmentAndTemperature)
         if(sens.getLastCameraTemperatureData(2000).valid == data::Temperature::NEW_VAL) temp++;
     }
     EXPECT_GT(mag, 0);
-    EXPECT_GT(temp, 0);
-    ASSERT_GT(env, 0);
+    const char* hint = ": the sensors of this camera are stalled, `SensorCapture::resetSensorModule` recovers them";
+    EXPECT_GT(temp, 0) << "no temperature data" << hint;
+    ASSERT_GT(env, 0) << "no environmental data" << hint;
     EXPECT_NEAR(lastEnv.press, 950.0, 150.0) << "pressure is not plausible [hPa]";
     EXPECT_NEAR(lastEnv.temp, 35.0, 35.0) << "temperature is not plausible [C]";
 }

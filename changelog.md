@@ -16,6 +16,7 @@ application: see **API changes** at the end of this section before updating an e
 * Sensors
   * Add `SensorCapture::getIMUData()`: it returns all the IMU samples received after the previous call, so no sample is lost when the application is slower than the sensor (800 Hz on ZED Mini)
   * Add `SensorCapture::close()` and `SensorCapture::isOpened()`. A disconnected camera is now detected
+  * A warning is printed when the environmental and temperature sensors of the camera stop providing new data, a condition that `resetSensorModule()` recovers
 * Examples and tools
   * Add `zed_open_capture_benchmark`: it measures image, sensors and depth performance on the host and prints the results as Markdown tables. It does not need a display
   * The depth example automatically corrects the vertical misalignment of the two images that a camera can show after a shock or far from the calibration temperature

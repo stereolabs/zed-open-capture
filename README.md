@@ -320,12 +320,12 @@ Performance measured on a **Raspberry Pi 4** (Model B, 8 GB, Raspberry Pi OS 13 
 
 | Resolution | Requested FPS | Received FPS | Lost frames | Frame period 1% / 99% [ms] | Latency [ms] | CPU | Memory [MB] | Open [s] |
 |---|---|---|---|---|---|---|---|---|
-| HD2K (4416x1242) | 15 | 13.4 | 11.3% | 66.09 / 198.85 | 59.9 | 10% | 120 | 0.26 |
-| HD1080 (3840x1080) | 30 | 25.0 | 16.1% | 33.24 / 100.49 | 39.1 | 18% | 102 | 0.25 |
-| HD720 (2560x720) | 60 | 55.2 | 8.0% | 16.48 / 50.00 | 16.8 | 16% | 72 | 0.22 |
-| HD720 (2560x720) | 30 | 28.3 | 5.7% | 33.15 / 100.02 | 31.0 | 8% | 72 | 0.20 |
-| VGA (1344x376) | 100 | 98.3 | 1.6% | 9.86 / 20.03 | 6.6 | 9% | 61 | 0.19 |
-| VGA (1344x376) | 30 | 30.0 | 0.0% | 33.28 / 33.54 | 20.0 | 3% | 61 | 0.19 |
+| HD2K (4416x1242) | 15 | 13.0 | 13.9% | 66.14 / 198.96 | 59.7 | 9% | 120 | 0.27 |
+| HD1080 (3840x1080) | 30 | 23.8 | 20.3% | 33.26 / 133.73 | 38.7 | 16% | 102 | 0.25 |
+| HD720 (2560x720) | 60 | 55.5 | 7.5% | 16.45 / 49.63 | 17.0 | 16% | 72 | 0.21 |
+| HD720 (2560x720) | 30 | 28.8 | 4.0% | 33.17 / 66.77 | 31.1 | 8% | 72 | 0.21 |
+| VGA (1344x376) | 100 | 99.2 | 0.6% | 9.87 / 10.21 | 6.6 | 9% | 61 | 0.19 |
+| VGA (1344x376) | 30 | 29.9 | 0.3% | 33.23 / 33.57 | 19.9 | 3% | 61 | 0.19 |
 
 At VGA resolution all the frames are received. At higher resolutions the USB host of the Raspberry Pi 4 loses part of the data sent by the camera and the incomplete frames are discarded: the same happens reading the camera with `v4l2-ctl`, without the library. *Latency* is the time from the start of the frame to its availability; *CPU* is 100% for one core fully used.
 
@@ -333,30 +333,30 @@ At VGA resolution all the frames are received. At higher resolutions the USB hos
 
 | Video stream | IMU rate [Hz] | Lost samples | Period [ms] | Period 1% / 99% [ms] | Latency [ms] | Mag. [Hz] | Env. [Hz] | Synced frames | CPU |
 |---|---|---|---|---|---|---|---|---|---|
-| none | 396.3 | 2 | 2.522 | 2.246 / 2.798 | 0.77 | 49.4 | 24.8 | - | 10% |
-| HD2K @ 15 FPS | 395.7 | 8 | 2.522 | 2.248 / 2.837 | 0.89 | 49.3 | 24.7 | 98% | 21% |
-| HD1080 @ 30 FPS | 394.7 | 19 | 2.522 | 2.246 / 2.962 | 0.94 | 48.9 | 23.9 | 99% | 29% |
-| HD720 @ 60 FPS | 394.1 | 24 | 2.522 | 2.246 / 2.995 | 0.89 | 48.6 | 24.6 | 99% | 29% |
-| HD720 @ 30 FPS | 395.8 | 7 | 2.522 | 2.246 / 2.837 | 0.81 | 49.3 | 24.6 | 99% | 19% |
-| VGA @ 100 FPS | 396.0 | 5 | 2.522 | 2.286 / 2.837 | 0.81 | 49.6 | 24.8 | 100% | 20% |
-| VGA @ 30 FPS | 396.3 | 2 | 2.522 | 2.286 / 2.837 | 0.80 | 49.5 | 24.7 | 99% | 12% |
+| none | 396.3 | 2 | 2.522 | 2.286 / 2.798 | 0.74 | 49.4 | 24.9 | - | 10% |
+| HD2K @ 15 FPS | 396.3 | 2 | 2.522 | 2.325 / 2.798 | 0.88 | 49.4 | 24.7 | 98% | 21% |
+| HD1080 @ 30 FPS | 393.2 | 34 | 2.522 | 2.248 / 3.113 | 0.96 | 48.8 | 24.4 | 100% | 29% |
+| HD720 @ 60 FPS | 395.0 | 15 | 2.522 | 2.208 / 2.916 | 0.90 | 48.7 | 24.9 | 100% | 28% |
+| HD720 @ 30 FPS | 395.3 | 13 | 2.522 | 2.207 / 2.916 | 0.78 | 49.1 | 24.6 | 99% | 18% |
+| VGA @ 100 FPS | 395.6 | 9 | 2.522 | 2.365 / 2.799 | 0.83 | 49.2 | 24.7 | 100% | 20% |
+| VGA @ 30 FPS | 396.3 | 2 | 2.522 | 2.246 / 2.838 | 0.79 | 49.2 | 24.9 | 100% | 13% |
 
-The IMU is received at full rate with every video mode (the ZED 2 provides 396 samples per second). *Synced frames* are the frames that received the timestamp of the IMU sample acquired with their hardware sync signal.
+The IMU is received at full rate with every video mode (this ZED 2 provides 396 samples per second), with less than 1% of lost samples. *Synced frames* are the frames that received the timestamp of the IMU sample acquired with their hardware sync signal.
 
 ### Depth generation
 
 | Resolution | Depth map | Convert [ms] | Rectify [ms] | Matching [ms] | Depth [ms] | Total [ms] | Depth FPS | Valid pixels | CPU | Refine [ms] |
 |---|---|---|---|---|---|---|---|---|---|---|
-| HD2K @ 15 FPS | 2208x1242 | 12.3 | 54.3 | 4767.2 | 17.8 | 4851.6 | 0.2 | 16% | 218% | 441 |
-| HD2K @ 15 FPS | 1104x621 | 12.4 | 13.4 | 1040.6 | 5.4 | 1071.8 | 0.9 | 18% | 213% | 202 |
-| HD1080 @ 30 FPS | 1920x1080 | 8.0 | 38.5 | 3499.2 | 12.6 | 3558.3 | 0.3 | 22% | 225% | 396 |
-| HD1080 @ 30 FPS | 960x540 | 11.0 | 9.3 | 782.2 | 4.0 | 806.4 | 1.2 | 34% | 209% | 215 |
-| HD720 @ 30 FPS | 1280x720 | 3.4 | 17.6 | 1458.2 | 7.7 | 1486.8 | 0.7 | 27% | 221% | 237 |
-| HD720 @ 30 FPS | 640x360 | 4.7 | 6.3 | 292.9 | 1.7 | 305.6 | 3.3 | 25% | 209% | 144 |
-| VGA @ 30 FPS | 672x376 | 0.9 | 7.1 | 302.0 | 1.8 | 311.8 | 3.2 | 40% | 229% | 152 |
-| VGA @ 30 FPS | 336x188 | 1.5 | 2.7 | 35.8 | 0.5 | 40.7 | 24.1 | 48% | 208% | 104 |
+| HD2K @ 15 FPS | 2208x1242 | 9.8 | 44.8 | 5048.0 | 17.6 | 5120.1 | 0.2 | 56% | 219% | 656 |
+| HD2K @ 15 FPS | 1104x621 | 12.7 | 14.1 | 1068.7 | 5.4 | 1100.9 | 0.9 | 70% | 213% | 242 |
+| HD1080 @ 30 FPS | 1920x1080 | 7.7 | 49.0 | 3633.9 | 15.1 | 3705.7 | 0.3 | 55% | 224% | 403 |
+| HD1080 @ 30 FPS | 960x540 | 10.5 | 10.8 | 741.7 | 4.0 | 767.0 | 1.3 | 71% | 215% | 243 |
+| HD720 @ 30 FPS | 1280x720 | 4.0 | 19.2 | 1518.4 | 6.3 | 1547.8 | 0.6 | 68% | 212% | 314 |
+| HD720 @ 30 FPS | 640x360 | 5.2 | 6.0 | 294.2 | 2.1 | 307.5 | 3.2 | 69% | 211% | 187 |
+| VGA @ 30 FPS | 672x376 | 1.0 | 6.3 | 299.1 | 1.9 | 308.3 | 3.2 | 68% | 228% | 151 |
+| VGA @ 30 FPS | 336x188 | 1.6 | 3.0 | 37.8 | 0.5 | 42.9 | 22.9 | 62% | 212% | 113 |
 
-For each resolution the first row is the depth map at full size (`matchScale` 1.0) and the second row at half size (`matchScale` 0.5, the default). On a Raspberry Pi 4 use the VGA resolution with the default settings to get the depth map in real time (more than 20 FPS), or a 640x360 depth map at about 3 FPS when more detail is required.
+For each resolution the first row is the depth map at full size (`matchScale` 1.0) and the second row at half size (`matchScale` 0.5, the default). On a Raspberry Pi 4 use the VGA resolution with the default settings to get the depth map in real time (about 23 FPS), or a 640x360 depth map at about 3 FPS when more detail is required.
 
 ### Other values
 
@@ -364,10 +364,10 @@ For each resolution the first row is the depth map at full size (`matchScale` 1.
 |---|---|---|
 | Time to open a camera | 0.2 - 0.3 s | 0.2 s |
 | Memory used grabbing frames, VGA / HD2K | 61 MB / 120 MB | 22 MB / 81 MB |
-| IMU latency (acquisition to application) | 0.8 - 0.9 ms | 0.4 - 0.5 ms |
+| IMU latency (acquisition to application) | 0.7 - 1.0 ms | less than 0.5 ms |
 | Distance between frame timestamp and hardware sync signal, without synchronization | 0.7 ms (median), 5 ms (99%) | 1 ms (median), 2 ms (99%) |
 | Build time of library, examples and tests | about 2 minutes | not measured |
-| Depth map 640x360 from HD720 | 3.3 FPS | 22 FPS (30 FPS with `taskset`, see the benchmarks page) |
+| Depth map 640x360 from HD720 | 3.2 FPS | 26 FPS (30 FPS with `taskset`, see the benchmarks page) |
 
 Run `zed_open_capture_benchmark` to get the same tables for your computer:
 
@@ -386,8 +386,8 @@ The depth example and the benchmark use the Semi-Global Block Matching algorithm
 | `matchScale` | 0.5 | Size of the depth map relative to the camera image. 1.0 gives more detail but it is 4 to 8 times slower |
 | `numDisparities` | 96 | Disparity range in pixels of the depth map. A higher value measures closer objects (minimum distance = focal x baseline / numDisparities) and it is proportionally slower |
 | `blockSize` | 5 | Size of the matched block. Higher values give a smoother and more dense depth map with less detail |
-| `mode` | 2 | 2 (`MODE_SGBM_3WAY`) is the fastest. 1 (`MODE_HH`) reduces the wrong values (up to 35% less in our tests) but it is about 6 times slower |
-| `disp12MaxDiff` | 1 | Left-right consistency check. Disabling it (-1) gives a more dense depth map with more wrong values |
+| `mode` | 2 | 2 (`MODE_SGBM_3WAY`) is the fastest on a Raspberry Pi 4. 3 (`MODE_HH4`) gives fewer wrong values on textured scenes, but more on repetitive patterns: it is as fast as mode 2 on a computer with many cores and 35-60% slower on a Raspberry Pi 4. 1 (`MODE_HH`) gives the best result (up to 60% less wrong values in our tests) but it is about 6 times slower |
+| `disp12MaxDiff` | 1 | Maximum difference in pixels accepted by the left-right consistency check. Higher values give a more dense depth map with more wrong values |
 | `uniquenessRatio` | 5 | Higher values remove uncertain matches |
 | `speckleWindowSize`, `speckleRange` | 255, 1 | Removal of small isolated regions |
 | `refineRectification` | 1 | Measures and corrects the vertical misalignment of the two images while running. A camera can show a misalignment of a few pixels after a shock or far from the calibration temperature |
