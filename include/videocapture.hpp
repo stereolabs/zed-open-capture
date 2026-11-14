@@ -462,14 +462,14 @@ public:
      * \param filename csv filename
      * \note CSV file will contain Adress , L value, R value
      */
-    void saveAllISPRegisters(std::string filename);
+    void saveAllISPRegisters(const std::string& filename);
 
     /*!
      * \brief Save all sensors ctrl register
      * \param filename csv filename
      * \note CSV file will contain Adress , L value, R value
      */
-    void saveAllSensorsRegisters(std::string filename);
+    void saveAllSensorsRegisters(const std::string& filename);
     // <---- Debug functions
 
 private:

@@ -1,0 +1,67 @@
+name: Release
+
+# Creates the GitHub release when a version tag is pushed, e.g. `v1.0.0`.
+# The tag must match the version of the code, and the changelog must contain the dated section of the version.
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Verify the version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="${TAG#v}"
+
+          cmake_version="$(sed -n 's/^project(zed_open_capture VERSION \([0-9.]*\).*/\1/p' CMakeLists.txt)"
+          major="$(sed -n 's/^#define ZED_OC_MAJOR_VERSION \([0-9]*\).*/\1/p' include/defines.hpp)"
+          minor="$(sed -n 's/^#define ZED_OC_MINOR_VERSION \([0-9]*\).*/\1/p' include/defines.hpp)"
+          patch="$(sed -n 's/^#define ZED_OC_PATCH_VERSION \([0-9]*\).*/\1/p' include/defines.hpp)"
+          doc_version="$(sed -n 's/^PROJECT_NUMBER *= *v\([0-9.]*\).*/\1/p' doc/api_doc/doxyfile)"
+
+          echo "Tag: $version - CMakeLists.txt: $cmake_version - defines.hpp: $major.$minor.$patch - doxyfile: $doc_version"
+
+          test "$version" = "$cmake_version"
+          test "$version" = "$major.$minor.$patch"
+          test "$version" = "$doc_version"
+
+      - name: Extract the release notes from the changelog
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          # The section starts with a line like "v1.0.0 - 2026 01 31" followed by a line of dashes
+          title="$(grep -m1 -E "^${TAG//./\\.} - " changelog.md || true)"
+          if [ -z "$title" ]; then
+            echo "::error::Section of $TAG not found in changelog.md"
+            exit 1
+          fi
+          if echo "$title" | grep -q -i "development"; then
+            echo "::error::Set the release date of $TAG in changelog.md"
+            exit 1
+          fi
+
+          awk -v title="$title" '
+            $0 == title { found = 1; getline; next }
+            found && /^v[0-9]+\.[0-9]+\.[0-9]+ - / { exit }
+            found { print }
+          ' changelog.md > release_notes.md
+
+          test -s release_notes.md
+          cat release_notes.md
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: gh release create "$TAG" --title "$TAG" --notes-file release_notes.md --verify-tag
