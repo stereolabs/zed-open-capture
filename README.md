@@ -264,10 +264,21 @@ ctest --output-on-failure
 | Test | What it checks |
 |---|---|
 | `test_video` | Frame rate and frame integrity in every video mode, camera controls, camera selection, open/close without leaks |
+| `test_controls` | Every camera control over its full range: accepted values, read back, effect on the image, in every video mode |
 | `test_sensors` | IMU rate, lost samples and timestamps, magnetometer, barometer and temperature data, robustness of the connection |
 | `test_sync` | Agreement of video and IMU timestamps when the synchronization is enabled, closing order of the two objects |
 
 A camera connected in USB 2.0 mode is reported as a failure and most of its tests are skipped.
+
+The checks on the image of `test_controls` need a scene that does not change during the test, not too dark, with some colors and details.
+
+A longer stress test is also built, not started by `ctest`. It repeats for about 20 minutes for each camera the operations of an application: manual gain and exposure at start-up and while streaming, settings changed while receiving frames, open and close cycles, long acquisitions of video and sensors.
+
+```bash
+tests/test_stress
+ZED_OC_STRESS_SCALE=0.1 tests/test_stress   # quick run
+ZED_OC_STRESS_SCALE=3 tests/test_stress     # longer run
+```
 
 Each test is a GoogleTest executable, so a single case can be selected:
 
@@ -427,6 +438,27 @@ The coordinate system is only used for sensor data. The given IMU and Magnetomet
 ### USB 2.0 connection
 
 A camera connected to a USB 2.0 port, or with a USB 2.0 cable, only provides a few low resolution modes at a reduced frame rate. In this case `initializeVideo()` fails for the other resolutions and the error message reports the USB 2.0 connection. `VideoCapture::getDeviceList()` and `zed_open_capture_benchmark` show the speed of the connection of each camera.
+
+### Image sensor not answering (ZED 2 and ZED 2i)
+
+When the video stream starts while the sensors module of the same camera is sending data (`SensorCapture` already initialized), sometimes the image sensors of the camera do not answer and the camera provides no frames: in our tests it happened in about 1 start out of 40, against 0 out of 127 in the same test with the sensors module not in use. **Open the video first, then the sensors.** The camera usually starts them again by itself after about 6 seconds. `initializeVideo()` detects it and waits: the open takes about 6 seconds instead of 0.2 and a warning is printed. The environmental sensors (pressure, humidity, temperature) do not provide data in the meantime. In rare cases a sensor stays in this state, also if the camera is closed and opened again: after 7 seconds `initializeVideo()` restarts the camera through its sensors module, and the open takes a few seconds more. If the application already uses the sensors module of the same camera (`SensorCapture`), the restart is not possible: the open is tried again for 15 seconds and then it fails. In this case close the sensors, or call `SensorCapture::resetSensorModule()`, then open again.
+
+If the state appears while streaming, `isOpened()` returns `false` after 3 seconds without frames, and the settings that cannot be applied return `false`.
+
+### Environmental sensors not updated (ZED 2 and ZED 2i)
+
+The pressure, humidity and temperature data of the camera can stop being updated while the IMU keeps working. In our tests it happened when the video was streamed for some minutes while no application had the sensors module open (`SensorCapture` not initialized): the environmental data were missing at the next `initializeSensors()`, right after the video or a few minutes later. It never happened while the sensors module was open during the video, and it is not caused by the USB power management: it also happens with every USB device of the camera and its hubs kept powered.
+
+To avoid it, initialize `SensorCapture` right after opening the video, and keep it open while the camera is used. A warning is printed when the data stop. `SensorCapture::resetSensorModule()` recovers them: it also restarts the video of the camera, so close `VideoCapture` first.
+
+If the application needs the environmental data and the camera may have been used before without the sensors module (for example by another program, or by earlier steps of a test sequence), reset the sensors module when the application starts:
+
+1. Close `VideoCapture` and `SensorCapture` if they are open.
+2. Call `SensorCapture::resetSensorModule(serial_number)`. The camera disconnects and connects again: it takes a few seconds.
+3. Open the video, retrying until `initializeVideo()` or `initializeVideoBySerialNumber()` succeeds.
+4. Initialize `SensorCapture`. The first environmental data can take a few seconds to arrive.
+
+The stress test of the sensors (`Stress.LongAcquisitionOfSensors`) does this before it starts.
 
 ### Lost frames on Raspberry Pi 4
 

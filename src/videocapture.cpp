@@ -54,6 +54,13 @@
 
 #define XU_BUF_SIZE 384       // Size of the buffer of the vendor control: 384 bytes with USB3, 64 bytes with USB2
 
+// Reply of the vendor control: status, copy of the request, data
+#define XU_STATUS_DONE    0x56          // The command has been completed (0x55: still in progress)
+#define XU_REQUEST_ECHO   13            // Bytes of the request repeated by the reply after the status
+#define XU_REPLY_HEADER   17            // Position of the first data byte of the reply
+#define XU_TIMEOUT_NSEC   200000000ULL  // Maximum duration of a command, usually completed in less than 5 msec
+#define XU_POLL_USEC      150           // Time between two checks of the status
+
 // ----> Camera control
 #define cbs_xu_unit_id          0x04 //mapped to wIndex 0x0400
 #define cbs_xu_control_selector 0x02 //mapped to wValue 0x0200
@@ -78,6 +85,8 @@
 #define ADDR_GAIN_H  0x3507
 #define ADDR_GAIN_M  0x3508
 #define ADDR_GAIN_L  0x3509
+#define ADDR_FRAME_LEN_H 0x380E
+#define ADDR_FRAME_LEN_L 0x380F
 #define ADDR_CHIP_ID_H  0x300A
 #define ADDR_CHIP_ID_L  0x300B
 #define OV4689_CHIP_ID  0x4688
@@ -92,6 +101,7 @@
 #define LINUX_CTRL_BRIGHTNESS   V4L2_CID_BRIGHTNESS
 #define LINUX_CTRL_CONTRAST     V4L2_CID_CONTRAST
 #define LINUX_CTRL_HUE          V4L2_CID_HUE
+#define LINUX_CTRL_HUE_AUTO     V4L2_CID_HUE_AUTO
 #define LINUX_CTRL_SATURATION   V4L2_CID_SATURATION
 #define LINUX_CTRL_AWB          V4L2_CID_WHITE_BALANCE_TEMPERATURE
 #define LINUX_CTRL_AWB_AUTO     V4L2_CID_AUTO_WHITE_BALANCE
@@ -123,12 +133,24 @@
 #define EXP_RAW_MAX_100FPS  720
 
 #define EXP_RAW_MIN         2
+
+// The exposure cannot be longer than a frame: lines of a frame of the sensors for each resolution, used if the value
+// cannot be read from the camera, and lines to be left free
+#define FRAME_LINES_HD2K    1554
+#define FRAME_LINES_HD1080  1120
+#define FRAME_LINES_HD720   832
+#define FRAME_LINES_VGA     639
+#define EXP_FRAME_MARGIN    8
 // <---- Camera Control
 
 // ----> Capture
 #define UVC_BUFFER_COUNT        4       // Buffers shared with the driver
 #define GRAB_POLL_TIMEOUT_MSEC  100     // Maximum time the grabbing thread waits before checking the stop flag
 #define GRAB_MAX_ERRORS         20      // Consecutive errors before considering the camera disconnected
+#define GRAB_NO_FRAME_NSEC      3000000000ULL // Time without frames before considering the stream stopped
+#define SENSORS_READY_MSEC      2000           // Time given to the image sensors to answer after the start of the stream
+#define SENSORS_RESTART_MSEC    5000           // Further time given to the camera to start again image sensors that did not start
+#define RECOVERY_TIMEOUT_NSEC   15000000000ULL // Maximum time to wait for a camera that is restarting
 #define SYNC_MAX_DISTANCE_NSEC   8000000ULL  // Maximum distance between the timestamps of a frame and of its sync signal
 // <---- Capture
 
@@ -246,13 +268,20 @@ const char* xuErrorMsg(int err)
 }
 
 /*!
- * \brief Send a command to the vendor control of the camera and optionally read the reply
+ * \brief Send a command to the vendor control of the camera and wait for its completion
+ *
+ * The camera executes the command after the request has been received: a command that involves the image sensors can
+ * take a few milliseconds. The reply contains a status byte, that tells if the command is still in progress, followed
+ * by a copy of the request and by the data. The function returns only when the command is completed, so that the
+ * data of a read are valid, and that a new command cannot be sent while a write is still in progress.
+ *
  * \param fd file descriptor of the video device
- * \param buf buffer of XU_BUF_SIZE bytes containing the command, and receiving the reply
+ * \param buf buffer of XU_BUF_SIZE bytes containing the command. If `readReply` is true it receives the reply
+ * \param readReply true to return the reply of the camera
  * \param error if not null receives the description of the error
  * \return 0 if successful
  */
-int xuControl(int fd, uint8_t* buf, bool readReply, bool safe, std::string* error=nullptr)
+int xuControl(int fd, uint8_t* buf, bool readReply, std::string* error=nullptr)
 {
     // A command is a sequence of requests: the sequences of different objects must not be mixed, because two
     // objects can communicate with the same camera (e.g. while listing the connected devices)
@@ -273,8 +302,12 @@ int xuControl(int fd, uint8_t* buf, bool readReply, bool safe, std::string* erro
 
     // 384 bytes with USB3, 64 bytes with USB2
     int len = (tmp[1] << 8) + tmp[0];
-    if( len<=0 || len>XU_BUF_SIZE )
+    if( len<=XU_REPLY_HEADER || len>XU_BUF_SIZE )
         return -2;
+
+    // The reply repeats the request: it is used to recognize the reply of this command
+    uint8_t request[XU_REQUEST_ECHO];
+    memcpy(request, buf, XU_REQUEST_ECHO);
 
     // we use the UVC_SET_CUR to write the cmd
     struct uvc_xu_control_query xu_query_send;
@@ -293,9 +326,11 @@ int xuControl(int fd, uint8_t* buf, bool readReply, bool safe, std::string* erro
         return -1;
     }
 
-    usleep(safe ? 2000 : 300);
+    // ----> Wait for the completion of the command
+    uint8_t reply[XU_BUF_SIZE];
+    const uint64_t start = getSteadyTimestamp();
 
-    if (readReply)
+    for(;;)
     {
         struct uvc_xu_control_query xu_query;
         memset(&xu_query, 0, sizeof(xu_query));
@@ -303,7 +338,9 @@ int xuControl(int fd, uint8_t* buf, bool readReply, bool safe, std::string* erro
         xu_query.selector = cbs_xu_control_selector;
         xu_query.query = UVC_GET_CUR;
         xu_query.size = static_cast<__u16> (len);
-        xu_query.data = buf;
+        xu_query.data = reply;
+
+        memset(reply, 0, sizeof(reply));
 
         if (ioctl(fd, UVCIOC_CTRL_QUERY, &xu_query) != 0)
         {
@@ -312,6 +349,25 @@ int xuControl(int fd, uint8_t* buf, bool readReply, bool safe, std::string* erro
                 *error = std::string("CBS GET failed: ") + xuErrorMsg(res) + ". (System code: " + std::to_string(res) + ") " + std::to_string(len);
             return -1;
         }
+
+        if( reply[0]==XU_STATUS_DONE && memcmp(&reply[1], request, XU_REQUEST_ECHO)==0 )
+            break;
+
+        if( getSteadyTimestamp()-start > XU_TIMEOUT_NSEC )
+        {
+            if(error)
+                *error = "The camera did not complete a command in time (status " + std::to_string(reply[0]) + ")";
+            return -5;
+        }
+
+        usleep(XU_POLL_USEC);
+    }
+    // <---- Wait for the completion of the command
+
+    if (readReply)
+    {
+        // The data follow the status byte and the copy of the request: same position expected by the callers
+        memcpy(buf, reply, len);
     }
 
     return 0;
@@ -351,7 +407,7 @@ int readSerialNumber(int fd, int maxTries)
 
         const uint8_t* UNIQUE_BUF = &xu_buf[17];
 
-        if( xuControl(fd, xu_buf, true, true)==0 && UNIQUE_BUF[0]=='O' && UNIQUE_BUF[1]=='V' )
+        if( xuControl(fd, xu_buf, true)==0 && UNIQUE_BUF[0]=='O' && UNIQUE_BUF[1]=='V' )
         {
             // The serial number is stored as binary-coded decimal
             int sn = 0;
@@ -623,17 +679,108 @@ bool VideoCapture::finalizeInit()
     mInitialized = true;
 
     // After STREAMON the sensors ignore register writes and reads return 0 for ~150 ms
-    if( !waitSensorsReady(2000) )
+    bool ready = waitSensorsReady(SENSORS_READY_MSEC);
+
+    // Chip ID only verified on ZED 2 and ZED 2i: other models must not lose the ability to open
+    const bool checked = mCameraModel==SL_DEVICE::ZED_2 || mCameraModel==SL_DEVICE::ZED_2i;
+
+    if( !ready && checked )
     {
-        // Chip ID only verified on ZED 2 and ZED 2i: other models must not lose the ability to open
-        if( mCameraModel==SL_DEVICE::ZED_2 || mCameraModel==SL_DEVICE::ZED_2i )
+        // Sometimes the image sensors do not start with the stream: the camera sends no frames and it tries to start
+        // them again by itself every ~5 seconds. No frames are expected in the meantime
+        detail::log(mParams.verbose, VERBOSITY::WARNING, LOG_TAG,
+                    "The image sensors do not answer: waiting for the camera to start them again");
+
+        const uint64_t start = getSteadyTimestamp();
+        mSensorsStarting = true;
+        ready = waitSensorsReady(SENSORS_RESTART_MSEC);
+        mSensorsStarting = false;
+
+        if( ready )
         {
-            detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG, "Sensors not ready after 2 s, closing the camera");
+            char waited[64];
+            snprintf(waited, sizeof(waited), "Image sensors ready after %.1f s more",
+                     static_cast<double>(getSteadyTimestamp()-start)/1e9);
+            detail::log(mParams.verbose, VERBOSITY::WARNING, LOG_TAG, waited);
+        }
+    }
+
+    if( !ready )
+    {
+        if( checked )
+        {
+            const int sn = mSerialNumber;
             close();
+
+#ifdef SENSORS_MOD_AVAILABLE
+            // An image sensor that still does not answer stays in this state until the camera is restarted: closing
+            // and opening again, or resetting the USB connection, do not recover it. The restart is requested to the
+            // sensors module of the camera, if it is not in use.
+            if( !mRecovering && sn>0 )
+            {
+                detail::log(mParams.verbose, VERBOSITY::WARNING, LOG_TAG,
+                            "The image sensors still do not answer: restarting the camera, it takes a few seconds");
+
+                mRecovering = true;
+                const int verbose = mParams.verbose;
+                mParams.verbose = VERBOSITY::NONE; // The camera is not available while it restarts
+
+                bool recovered = false;
+                if( sensors::SensorCapture::resetSensorModule(sn) )
+                {
+                    const uint64_t start = getSteadyTimestamp();
+                    while( !recovered && getSteadyTimestamp()-start < RECOVERY_TIMEOUT_NSEC )
+                    {
+                        usleep(500000);
+                        recovered = initializeVideoBySerialNumber(sn);
+                    }
+                }
+                else
+                {
+                    // The sensors module is in use: the camera cannot be restarted, but it can still start the image
+                    // sensors by itself
+                    const uint64_t start = getSteadyTimestamp();
+                    while( !recovered && getSteadyTimestamp()-start < RECOVERY_TIMEOUT_NSEC )
+                    {
+                        recovered = initializeVideoBySerialNumber(sn);
+                    }
+                }
+
+                mParams.verbose = verbose;
+                mRecovering = false;
+
+                if( recovered )
+                {
+                    detail::log(mParams.verbose, VERBOSITY::WARNING, LOG_TAG, "Camera restarted, device '" + mDevName + "' opened");
+                    return true;
+                }
+            }
+#endif
+
+            detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG,
+                        "The image sensors do not answer. Call `SensorCapture::resetSensorModule`, or disconnect and "
+                        "connect the camera again");
             return false;
         }
         detail::log(mParams.verbose, VERBOSITY::WARNING, LOG_TAG, "Sensors not ready after 2 s, camera settings may not be applied");
     }
+
+    // ----> Longest exposure accepted by the sensors
+    {
+        static const int frameLines[] = {FRAME_LINES_HD2K, FRAME_LINES_HD1080, FRAME_LINES_HD720, FRAME_LINES_VGA};
+        int lines = frameLines[static_cast<int>(mParams.res)];
+
+        uint8_t hi=0, lo=0;
+        if( ll_read_sensor_register(0, 1, ADDR_FRAME_LEN_H, &hi)==0 && ll_read_sensor_register(0, 1, ADDR_FRAME_LEN_L, &lo)==0 )
+        {
+            const int value = (hi<<8) | lo;
+            if( value>=300 && value<=4000 )
+                lines = value;
+        }
+
+        mExposureRawLimit = lines-EXP_FRAME_MARGIN;
+    }
+    // <---- Longest exposure accepted by the sensors
 
     detail::log(mParams.verbose, VERBOSITY::INFO, LOG_TAG, "Device '" + mDevName + "' opened");
 
@@ -968,6 +1115,7 @@ void VideoCapture::grabThreadFunc()
 
     int errorCount = 0;
     int logFrameCount = 0;
+    uint64_t lastFrameTime = getSteadyTimestamp();
 
     // A sync signal is assigned to a frame only if closer than half frame period
     const uint64_t syncMaxDistance = std::min<uint64_t>(SYNC_MAX_DISTANCE_NSEC, (NSEC_PER_SEC*45ULL/100ULL)/static_cast<uint64_t>(mFps>0?mFps:15));
@@ -985,7 +1133,20 @@ void VideoCapture::grabThreadFunc()
         const int ready = poll(&pfd, 1, GRAB_POLL_TIMEOUT_MSEC);
 
         if( ready==0 )
+        {
+            // A camera with an image sensor that stopped working stays connected, but it does not send frames
+            if( mSensorsStarting )
+            {
+                lastFrameTime = getSteadyTimestamp(); // The open is waiting for the image sensors
+            }
+            else if( getSteadyTimestamp()-lastFrameTime > GRAB_NO_FRAME_NSEC )
+            {
+                detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG, "'" + mDevName + "' stopped providing frames");
+                mDeviceLost = true;
+                break;
+            }
             continue;
+        }
 
         if( ready<0 )
         {
@@ -1028,6 +1189,7 @@ void VideoCapture::grabThreadFunc()
         if (valid)
         {
             errorCount = 0;
+            lastFrameTime = getSteadyTimestamp();
 
             // ----> Timestamp
             // The driver stores the time of arrival of the first data of the frame, using the monotonic clock
@@ -1128,9 +1290,11 @@ int VideoCapture::ll_VendorControl(uint8_t *buf, int readMode, bool safe, bool f
     const std::lock_guard<std::mutex> lock(mComMutex);
 
     std::string error;
-    const int res = xuControl(mFileDesc, buf, readMode==READ_MODE, safe, &error);
+    (void)safe; // The completion of the command is verified: no fixed delay is required
 
-    if( res==-1 )
+    const int res = xuControl(mFileDesc, buf, readMode==READ_MODE, &error);
+
+    if( res==-1 || res==-5 )
     {
         detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG, error);
     }
@@ -1368,7 +1532,6 @@ int VideoCapture::ll_write_sensor_register(int side, int sscb_id, uint64_t addre
 
 int VideoCapture::ll_isp_aecagc_enable(int side, bool enable) {
     uint64_t Address = 0;
-    uint8_t value = 0;
     if (side == 0)
         Address = ISP_CTRL_LEFT; //ISP L
     else if (side == 1)
@@ -1376,18 +1539,33 @@ int VideoCapture::ll_isp_aecagc_enable(int side, bool enable) {
     else
         return -2;
 
-    //Read Current sysregister: the other bits must be preserved
-    int hr = ll_read_system_register(Address, &value);
-    if( hr!=0 )
-        return hr;
+    // The other bits of the register must be preserved, and they can change: only the control bit is verified
+    int hr = -6;
+    for( int attempt=0; attempt<3; attempt++ )
+    {
+        uint8_t value = 0;
+        hr = ll_read_system_register(Address, &value);
+        if( hr!=0 )
+            continue;
 
-    // Adjust Value
-    if (enable)
-        value = value | AEG_AGC_MASK_ON;
-    else
-        value = value & AEG_AGC_MASK_OFF;
+        if (enable)
+            value = value | AEG_AGC_MASK_ON;
+        else
+            value = value & AEG_AGC_MASK_OFF;
 
-    return ll_write_system_register(Address, value);
+        hr = ll_write_system_register(Address, value);
+        if( hr!=0 )
+            continue;
+
+        uint8_t readBack = 0;
+        hr = ll_read_system_register(Address, &readBack);
+        if( hr==0 && ((readBack & AEG_AGC_MASK_ON)!=0)==enable )
+            return 0;
+
+        hr = -6;
+    }
+
+    return hr;
 }
 
 
@@ -1430,12 +1608,59 @@ int VideoCapture::ll_isp_get_gain(uint8_t *val, uint8_t sensorID) {
     return hr;
 }
 
+int VideoCapture::ll_write_system_register_checked(uint64_t address, uint8_t value)
+{
+    // The value is read back: a write that did not take effect is repeated, and reported if it keeps failing
+    int hr = -6;
+    for( int attempt=0; attempt<3; attempt++ )
+    {
+        hr = ll_write_system_register(address, value);
+        if( hr!=0 )
+            continue;
+
+        uint8_t readBack = 0;
+        hr = ll_read_system_register(address, &readBack);
+        if( hr==0 && readBack==value )
+            return 0;
+
+        hr = -6;
+    }
+
+    detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG, "A setting has not been applied to the camera");
+
+    return hr;
+}
+
+int VideoCapture::ll_write_sensor_register_checked(int side, uint64_t address, uint8_t value)
+{
+    // The value is read back: a write that the sensor did not receive is repeated, and reported if it keeps failing
+    int hr = -6;
+    for( int attempt=0; attempt<3; attempt++ )
+    {
+        hr = ll_write_sensor_register(side, 1, address, value);
+        if( hr!=0 )
+            continue;
+
+        uint8_t readBack = 0;
+        hr = ll_read_sensor_register(side, 1, address, &readBack);
+        if( hr==0 && readBack==value )
+            return 0;
+
+        hr = -6;
+    }
+
+    detail::log(mParams.verbose, VERBOSITY::ERROR, LOG_TAG,
+                std::string("A setting has not been applied to the ") + (side==0?"left":"right") + " image sensor");
+
+    return hr;
+}
+
 int VideoCapture::ll_isp_set_gain(unsigned char ucGainH, unsigned char ucGainM, unsigned char ucGainL, int sensorID)
 {
     int hr = 0;
-    hr += ll_write_sensor_register(sensorID, 1, ADDR_GAIN_H, ucGainH);
-    hr += ll_write_sensor_register(sensorID, 1, ADDR_GAIN_M, ucGainM);
-    hr += ll_write_sensor_register(sensorID, 1, ADDR_GAIN_L, ucGainL);
+    hr += ll_write_sensor_register_checked(sensorID, ADDR_GAIN_H, ucGainH);
+    hr += ll_write_sensor_register_checked(sensorID, ADDR_GAIN_M, ucGainM);
+    hr += ll_write_sensor_register_checked(sensorID, ADDR_GAIN_L, ucGainL);
     return hr;
 }
 
@@ -1462,9 +1687,9 @@ int VideoCapture::ll_isp_get_exposure(unsigned char *val, unsigned char sensorID
 int VideoCapture::ll_isp_set_exposure(unsigned char ucExpH, unsigned char ucExpM, unsigned char ucExpL, int sensorID)
 {
     int hr = 0;
-    hr += ll_write_sensor_register(sensorID, 1, ADDR_EXP_H, ucExpH);
-    hr += ll_write_sensor_register(sensorID, 1, ADDR_EXP_M, ucExpM);
-    hr += ll_write_sensor_register(sensorID, 1, ADDR_EXP_L, ucExpL);
+    hr += ll_write_sensor_register_checked(sensorID, ADDR_EXP_H, ucExpH);
+    hr += ll_write_sensor_register_checked(sensorID, ADDR_EXP_M, ucExpM);
+    hr += ll_write_sensor_register_checked(sensorID, ADDR_EXP_L, ucExpL);
     return hr;
 }
 
@@ -1577,7 +1802,32 @@ bool VideoCapture::setCameraControlSettings(int ctrl_id, int ctrl_val) {
     control_s.id = ctrl_id;
     control_s.value = ctrl_val;
 
-    return ioctl(mFileDesc, VIDIOC_S_CTRL, &control_s) == 0;
+    // The camera can refuse a value for a few milliseconds, e.g. a manual value right after its automatic control
+    // has been disabled
+    bool written = false;
+    for( int attempt=0; attempt<5 && !written; attempt++ )
+    {
+        written = ioctl(mFileDesc, VIDIOC_S_CTRL, &control_s) == 0;
+        if( !written )
+            usleep(5000);
+    }
+
+    if( !written )
+        return false;
+
+    // The camera applies the value after the request: wait until it is the one read back
+    for( int attempt=0; attempt<20; attempt++ )
+    {
+        struct v4l2_control current;
+        memset(&current, 0, sizeof (current));
+        current.id = ctrl_id;
+        if( ioctl(mFileDesc, VIDIOC_G_CTRL, &current)==0 && current.value==ctrl_val )
+            return true;
+
+        usleep(2500);
+    }
+
+    return false;
 }
 
 bool VideoCapture::resetCameraControlSettings(int ctrl_id) {
@@ -1613,22 +1863,11 @@ int VideoCapture::setGammaPreset(int side, int value)
     int hr = 0;
 
     for (int i = 0; i < ISP_GAMMA_VALUES; i++) {
-        hr += ll_write_system_register(base+i, PRESET_GAMMA[value-1][i]);
-        usleep(10);
-        uint8_t valRead = 0x0;
-        hr += ll_read_system_register(base+i, &valRead);
-        if (valRead != PRESET_GAMMA[value-1][i]) {
-            return -3;
-        }
+        hr += ll_write_system_register_checked(base+i, PRESET_GAMMA[value-1][i]);
     }
 
     // Enable the custom curve
-    hr += ll_write_system_register(base+ISP_GAMMA_EN_OFFSET, 0x01);
-    usleep(10);
-    uint8_t valRead = 0x0;
-    hr += ll_read_system_register(base+ISP_GAMMA_EN_OFFSET, &valRead);
-    if (valRead != 0x01)
-        return -2;
+    hr += ll_write_system_register_checked(base+ISP_GAMMA_EN_OFFSET, 0x01);
 
     return hr;
 }
@@ -1680,12 +1919,20 @@ int VideoCapture::getContrast()
 
 bool VideoCapture::setHue(int hue)
 {
+    // The camera refuses the value while its automatic hue control is active
+    setCameraControlSettings(LINUX_CTRL_HUE_AUTO, 0);
+
     return setCameraControlSettings(LINUX_CTRL_HUE, hue);
 }
 
 bool VideoCapture::resetHue()
 {
-    return resetCameraControlSettings(LINUX_CTRL_HUE);
+    // The default value can only be written with the automatic control disabled, that is then restored
+    setCameraControlSettings(LINUX_CTRL_HUE_AUTO, 0);
+    const bool res = resetCameraControlSettings(LINUX_CTRL_HUE);
+    resetCameraControlSettings(LINUX_CTRL_HUE_AUTO);
+
+    return res;
 }
 
 int VideoCapture::getHue()
@@ -1751,8 +1998,8 @@ bool VideoCapture::setGamma(int gamma)
 bool VideoCapture::resetGamma()
 {
     // Without the custom curve the camera uses its factory gamma, that matches the first preset
-    int hr = ll_write_system_register(ISP_GAMMA_LEFT+ISP_GAMMA_EN_OFFSET, 0x00);
-    hr += ll_write_system_register(ISP_GAMMA_RIGHT+ISP_GAMMA_EN_OFFSET, 0x00);
+    int hr = ll_write_system_register_checked(ISP_GAMMA_LEFT+ISP_GAMMA_EN_OFFSET, 0x00);
+    hr += ll_write_system_register_checked(ISP_GAMMA_RIGHT+ISP_GAMMA_EN_OFFSET, 0x00);
 
     return hr==0;
 }
@@ -1836,8 +2083,8 @@ bool VideoCapture::setROIforAECAGC(CAM_SENS_POS side, uint16_t x, uint16_t y, ui
     int r = 0;
     for( int i=0; i<4; i++ )
     {
-        r += ll_write_system_register(ulAddr++,static_cast<uint8_t>(values[i]>>8));usleep(100);
-        r += ll_write_system_register(ulAddr++,static_cast<uint8_t>(values[i]&0xff));usleep(100);
+        r += ll_write_system_register_checked(ulAddr++,static_cast<uint8_t>(values[i]>>8));
+        r += ll_write_system_register_checked(ulAddr++,static_cast<uint8_t>(values[i]&0xff));
     }
 
     return (r==0);
@@ -1864,8 +2111,8 @@ bool VideoCapture::getROIforAECAGC(CAM_SENS_POS side, uint16_t &x, uint16_t &y, 
     {
         uint8_t high = 0;
         uint8_t low = 0;
-        r += ll_read_system_register(ulAddr++,&high);usleep(100);
-        r += ll_read_system_register(ulAddr++,&low);usleep(100);
+        r += ll_read_system_register(ulAddr++,&high);
+        r += ll_read_system_register(ulAddr++,&low);
         values[i] = static_cast<uint16_t>(high*256 + low);
     }
 
@@ -1941,6 +2188,11 @@ bool VideoCapture::setExposure(CAM_SENS_POS cam, int exposure)
     int rawExp = (mExpoureRawMax * ((float) exposure / 100.0));
     if(rawExp<EXP_RAW_MIN)
         rawExp = EXP_RAW_MIN;
+
+    // An exposure longer than a frame is not applied by the sensor, and it stops the image if the two sensors
+    // receive different values
+    if(rawExp>mExposureRawLimit)
+        rawExp = mExposureRawLimit;
 
     int sensorId = static_cast<int>(cam);
 

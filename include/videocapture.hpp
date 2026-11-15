@@ -95,6 +95,9 @@ public:
      * \note The call returns once the camera sensors accept settings (about 0.2 s after streaming starts),
      *       so gain and exposure can be set right after it.
      * \note A camera already open is closed before opening the new one
+     * \note ZED 2 and ZED 2i: if the image sensors do not answer, the function waits some seconds for the camera
+     *       to start them again. If they still do not answer the camera is restarted through its sensors module and
+     *       opened again: it takes a few seconds more and it is only possible if the sensors module is not in use.
      */
     bool initializeVideo( int devId=-1 );
 
@@ -228,7 +231,7 @@ public:
     bool resetContrast();
 
     /*!
-     * \brief Set the Hue value
+     * \brief Set the Hue value. The automatic hue control of the camera is disabled, \ref resetHue restores it
      * \param hue Hue value in the range [0,11]
      * \return true if the camera accepted the setting
      */
@@ -372,7 +375,7 @@ public:
      * \note If the automatic control was active, the call blocks for 5 frame periods (see \ref setAECAGC)
      * \param cam position of the camera sensor (see  CAM_SENS_POS)
      * \param gain Gain value in the range [0,100]
-     * \return true if the camera accepted the setting
+     * \return true if the camera applied the setting: the value is read back from the image sensor
      */
     bool setGain(CAM_SENS_POS cam, int gain);
 
@@ -386,9 +389,12 @@ public:
     /*!
      * \brief Set the Exposure value (disable Exposure and Gain control if active)
      * \note If the automatic control was active, the call blocks for 5 frame periods (see \ref setAECAGC)
+     * \note The exposure cannot be longer than a frame of the image sensor. In the video modes where the highest
+     *       values would exceed it (e.g. above 76 at HD720 and 30 FPS) they are reduced to the longest exposure
+     *       available: \ref getExposure returns the value really applied.
      * \param cam position of the camera sensor (see  CAM_SENS_POS)
      * \param exposure Exposure value in the range [0,100]
-     * \return true if the camera accepted the setting
+     * \return true if the camera applied the setting
      */
     bool setExposure(CAM_SENS_POS cam, int exposure);
 
@@ -482,8 +488,10 @@ private:
     int ll_set_gpio_direction(int gpio_number, int direction);
     int ll_read_system_register(uint64_t address, uint8_t* value);
     int ll_write_system_register(uint64_t address, uint8_t value);
+    int ll_write_system_register_checked(uint64_t address, uint8_t value); //!< Write, read back and repeat if needed
     int ll_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t *value);
     int ll_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value);
+    int ll_write_sensor_register_checked(int side, uint64_t address, uint8_t value); //!< Write, read back and repeat if needed
     bool waitSensorsReady(int timeout_msec);
 
     int ll_isp_aecagc_enable(int side, bool enable);
@@ -534,6 +542,8 @@ private:
     std::atomic<bool> mInitialized{false};  //!< Indicates if the camera has been initialized
     std::atomic<bool> mStopCapture{true};   //!< Indicates if the grabbing thread must be stopped
     std::atomic<bool> mDeviceLost{false};   //!< Indicates if the camera has been disconnected
+    std::atomic<bool> mSensorsStarting{false}; //!< Indicates that the open is waiting for the image sensors: no frames are expected
+    bool mRecovering=false;                 //!< Indicates if the camera is being restarted by the open
 
     VideoParams mParams;                //!< Grabbing parameters
 
@@ -572,6 +582,7 @@ private:
 
     int mGainSegMax=0;                  //!< Maximum value of the raw gain to be used for conversion
     int mExpoureRawMax=0;               //!< Maximum value of the raw exposure to be used for conversion
+    int mExposureRawLimit=639-8;        //!< Longest exposure accepted by the sensors in the current mode [lines]
 
     std::thread mGrabThread;            //!< The video grabbing thread
 

@@ -11,14 +11,15 @@ application: see **API changes** at the end of this section before updating an e
 * Video
   * Add `VideoCapture::getDeviceList()` to list the connected cameras with model, serial number and USB speed
   * Add `VideoCapture::initializeVideoBySerialNumber()` to open a camera by serial number
-  * Add `VideoCapture::close()` and `VideoCapture::isOpened()`. A disconnected camera is now detected
+  * Add `VideoCapture::close()` and `VideoCapture::isOpened()`. A disconnected camera is now detected, and also a camera that stays connected but stops providing frames
+  * ZED 2 and ZED 2i: `initializeVideo()` detects the image sensors that do not answer when the stream starts (no frames, the registers of the sensor read `0xff`). This can happen when the video is opened while the sensors module of the same camera is sending data. It waits for the camera to start them again, which takes about 6 seconds, and if they still do not answer it restarts the camera through its sensors module and opens it again. The restart is only possible if the sensors module is not in use by the application
   * Add `VideoCapture::getFps()` and `VideoCapture::getCameraModel()`
 * Timestamps
   * Add `sl_oc::getTimestampNow()` and `sl_oc::steadyToTimestamp()` to compare the time of the application with the timestamps of frames and sensors data
 * Sensors
   * Add `SensorCapture::getIMUData()`: it returns all the IMU samples received after the previous call, so no sample is lost when the application is slower than the sensor (800 Hz on ZED Mini)
   * Add `SensorCapture::close()` and `SensorCapture::isOpened()`. A disconnected camera is now detected
-  * A warning is printed when the environmental and temperature sensors of the camera stop providing new data, a condition that `resetSensorModule()` recovers
+  * A warning is printed when the environmental and temperature sensors of the camera stop providing new data, a condition that `resetSensorModule()` recovers. The README describes when the camera does it and how to avoid it
 * Examples and tools
   * Add `zed_open_capture_benchmark`: it measures image, sensors and depth performance on the host and prints the results as Markdown tables. It does not need a display
   * `zed_open_capture_benchmark` can also record a few frames and process them again with different stereo parameters (`--record`, `--replay`, `--par`), reporting quality and processing time of the depth map
@@ -27,6 +28,8 @@ application: see **API changes** at the end of this section before updating an e
   * Add `examples/include/depth.hpp`: the depth extraction of the depth example as a class that can be reused in other applications, with depth map, point cloud and processing time of each step
 * Build
   * Add hardware tests based on GoogleTest (`-DBUILD_TESTS=ON`). They run on every connected camera, without a display, and check video, sensors and video/sensors synchronization
+  * Add `test_controls`: every camera control is verified over its full range, including its effect on the image, in every video mode
+  * Add `test_stress`: long test that repeats the operations of an application, like manual gain and exposure at start-up and while streaming, settings changed while receiving frames, open and close cycles, long acquisitions of video and sensors, of sensors alone
   * `make install` now installs a CMake package (`find_package(zed_open_capture)`, target `zed_open_capture::zed_open_capture`) and a pkg-config file
   * Add the `ZED_OC_SANITIZER` build option to build with the address or thread sanitizer
   * Add the `ZED_OC_WARNINGS_AS_ERRORS` build option
@@ -44,6 +47,7 @@ application: see **API changes** at the end of this section before updating an e
   * The frame returned by `getLastFrame()` is no longer overwritten while the application uses it
   * `frame_id` is the frame counter of the driver: a gap reveals lost frames
   * The automatic camera search only tries Stereolabs devices and it is not limited to the first 64 video devices
+  * Gain, exposure, gamma, automatic exposure and its region are read back after being written: a write that did not take effect is repeated, and the function returns `false` if the camera still does not apply it
   * A camera connected in USB 2.0 mode is reported in the error messages, and the frame rate really in use is available with `getFps()`
   * The error messages report a camera in use by another application and a USB controller without enough bandwidth
   * Frames are received with 4 driver buffers and without polling
@@ -72,6 +76,10 @@ application: see **API changes** at the end of this section before updating an e
 ### Bug Fixes
 
 * Video
+  * Fix the camera settings that were intermittently not applied, or read with a wrong value, more often on the left sensor and on computers with a fast USB connection. The camera needs up to a few milliseconds to execute a command on the image sensors, but the library sent the next command, or read the result, after a fixed time of 0.3 milliseconds. Every command now waits for the completion reported by the camera
+  * Fix the image that became black when the two sensors received different exposure values above the limit of the video mode, e.g. above 76 at HD720 and 30 FPS. The exposure cannot be longer than a frame: the values above the limit are now reduced to it, and `getExposure()` returns the value really applied
+  * Fix `setHue()`, that was always refused by the camera because of its automatic hue control. The automatic control is now disabled by `setHue()` and restored by `resetHue()`
+  * Fix the manual white balance that could be refused right after the automatic white balance was disabled
   * Fix the frames modified while the application was reading them (image tearing)
   * Fix file descriptors and memory left allocated when opening a camera fails, e.g. during the automatic search with a camera already in use
   * Fix `initializeVideo()` that kept configuring the camera when the stream could not be started
