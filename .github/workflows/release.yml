@@ -41,13 +41,13 @@ jobs:
           TAG: ${{ github.ref_name }}
         run: |
           # The section starts with a line like "v1.0.0 - 2026 01 31" followed by a line of dashes
-          title="$(grep -m1 -E "^${TAG//./\\.} - " changelog.md || true)"
+          title="$(grep -m1 -E "^${TAG//./\\.} - " CHANGELOG.md || true)"
           if [ -z "$title" ]; then
-            echo "::error::Section of $TAG not found in changelog.md"
+            echo "::error::Section of $TAG not found in CHANGELOG.md"
             exit 1
           fi
           if echo "$title" | grep -q -i "development"; then
-            echo "::error::Set the release date of $TAG in changelog.md"
+            echo "::error::Set the release date of $TAG in CHANGELOG.md"
             exit 1
           fi
 
@@ -55,7 +55,7 @@ jobs:
             $0 == title { found = 1; getline; next }
             found && /^v[0-9]+\.[0-9]+\.[0-9]+ - / { exit }
             found { print }
-          ' changelog.md > release_notes.md
+          ' CHANGELOG.md > release_notes.md
 
           test -s release_notes.md
           cat release_notes.md
