@@ -16,6 +16,7 @@ endfunction()
 
 if(BUILD_VIDEO)
     zed_oc_add_test(test_video)
+    zed_oc_add_test(test_controls)
 endif()
 
 if(BUILD_SENSORS)
@@ -24,4 +25,12 @@ endif()
 
 if(BUILD_VIDEO AND BUILD_SENSORS)
     zed_oc_add_test(test_sync)
+endif()
+
+# Long test, not started by `ctest` unless requested: `ctest -L stress` or `tests/test_stress`
+if(BUILD_VIDEO)
+    add_executable(test_stress test_stress.cpp)
+    target_link_libraries(test_stress PRIVATE ${PROJECT_NAME} GTest::gtest GTest::gtest_main)
+    add_test(NAME test_stress COMMAND test_stress CONFIGURATIONS Stress)
+    set_tests_properties(test_stress PROPERTIES LABELS stress RUN_SERIAL TRUE TIMEOUT 7200)
 endif()

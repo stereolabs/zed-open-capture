@@ -247,11 +247,11 @@ TEST_P(Camera, GainAndExposure)
     for(CAM_SENS_POS side : {CAM_SENS_POS::LEFT, CAM_SENS_POS::RIGHT})
     {
         SCOPED_TRACE(side == CAM_SENS_POS::LEFT ? "left sensor" : "right sensor");
-        for(int value : {0, 25, 50, 100})
+        // The exposure values above the limit of the video mode are covered by `test_controls`
+        for(int value : {0, 25, 50, 70})
         {
-            cap.setGain(side, value);
-            cap.setExposure(side, value);
-            usleep(100000);
+            EXPECT_TRUE(cap.setGain(side, value));
+            EXPECT_TRUE(cap.setExposure(side, value));
             EXPECT_EQ(cap.getGain(side), value);
             EXPECT_EQ(cap.getExposure(side), value);
         }

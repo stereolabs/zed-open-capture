@@ -28,6 +28,7 @@
 #include <cstdint>
 #include <cstring>
 #include <fstream>
+#include <cmath>
 #include <ostream>
 #include <string>
 #include <vector>
@@ -126,6 +127,97 @@ inline std::string modelTag(const std::string& name)
     return tag;
 }
 // <---- Camera discovery
+
+// ----> Image measures
+#ifdef VIDEO_MOD_AVAILABLE
+} // namespace test
+
+#include "videocapture.hpp"
+
+namespace test {
+/*!
+ * \brief Statistics of one of the two images of a frame
+ */
+struct ImageStats
+{
+    double luma = 0.;      //!< Mean luminance [0,255]
+    double contrast = 0.;  //!< Standard deviation of the luminance
+    double u = 128.;       //!< Mean of the U chroma component
+    double v = 128.;       //!< Mean of the V chroma component
+    double chroma = 0.;    //!< Mean distance of the chroma components from gray
+    double detail = 0.;    //!< Mean horizontal variation of the luminance, higher for a sharper image
+};
+
+/*!
+ * \brief Measure the left (side 0) or right (side 1) image of a side-by-side YUV 4:2:2 frame
+ */
+inline ImageStats imageStats(const sl_oc::video::Frame& frame, int side)
+{
+    const int w = frame.width / 2, h = frame.height, x0 = side * w;
+    double sy = 0, sy2 = 0, su = 0, sv = 0, sc = 0, sd = 0;
+    long n = 0;
+    for(int r = 8; r < h - 8; r += 4)
+    {
+        const uint8_t* p = frame.data + static_cast<size_t>(r) * frame.width * 2;
+        for(int c = x0 + 8; c < x0 + w - 8; c += 4)
+        {
+            const int cc = c & ~1; // U and V are shared by a pair of pixels
+            const double y = p[cc * 2], u = p[cc * 2 + 1], v = p[cc * 2 + 3];
+            sy += y; sy2 += y * y; su += u; sv += v;
+            sc += std::fabs(u - 128.) + std::fabs(v - 128.);
+            sd += std::fabs(2. * y - p[(cc - 2) * 2] - p[(cc + 2) * 2]);
+            n++;
+        }
+    }
+    ImageStats st;
+    st.luma = sy / n;
+    st.contrast = std::sqrt(std::max(0., sy2 / n - st.luma * st.luma));
+    st.u = su / n;
+    st.v = sv / n;
+    st.chroma = sc / n;
+    st.detail = sd / n;
+    return st;
+}
+
+/*!
+ * \brief Wait for new frames and measure the last ones
+ * \param cap an opened camera
+ * \param skip frames to wait before measuring, to let a new setting take effect
+ * \param average frames to measure
+ * \param left statistics of the left image
+ * \param right statistics of the right image
+ * \return false if the frames did not arrive
+ */
+inline bool measureImages(sl_oc::video::VideoCapture& cap, int skip, int average, ImageStats& left, ImageStats& right)
+{
+    ImageStats l, r;
+    l.u = l.v = r.u = r.v = 0.;
+    uint64_t lastTs = cap.getLastFrame(0).timestamp;
+    int got = 0, tries = 0;
+    while(got < skip + average)
+    {
+        const sl_oc::video::Frame& frame = cap.getLastFrame(500);
+        if(frame.data == nullptr || frame.timestamp == lastTs)
+        {
+            if(++tries > 20) return false;
+            continue;
+        }
+        tries = 0;
+        lastTs = frame.timestamp;
+        got++;
+        if(got <= skip)
+            continue;
+        const ImageStats a = imageStats(frame, 0), b = imageStats(frame, 1);
+        l.luma += a.luma; l.contrast += a.contrast; l.u += a.u; l.v += a.v; l.chroma += a.chroma; l.detail += a.detail;
+        r.luma += b.luma; r.contrast += b.contrast; r.u += b.u; r.v += b.v; r.chroma += b.chroma; r.detail += b.detail;
+    }
+    const double k = average;
+    left = {l.luma / k, l.contrast / k, l.u / k, l.v / k, l.chroma / k, l.detail / k};
+    right = {r.luma / k, r.contrast / k, r.u / k, r.v / k, r.chroma / k, r.detail / k};
+    return true;
+}
+#endif
+// <---- Image measures
 
 } // namespace test
 

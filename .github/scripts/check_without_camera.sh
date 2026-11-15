@@ -16,7 +16,7 @@ echo "::endgroup::"
 
 echo "::group::Run without a camera"
 # The tests that need a camera are skipped: the others must pass and nothing must crash
-for t in test_video test_sensors test_sync; do
+for t in test_video test_controls test_sensors test_sync test_stress; do
     "$WORK/full/tests/$t" --gtest_filter=-Setup.*
 done
 
@@ -54,7 +54,7 @@ if [ "${SANITIZERS:-0}" = "1" ]; then
         cmake -S "$SRC" -B "$WORK/$sanitizer" -DBUILD_TESTS=ON -DBUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DZED_OC_SANITIZER=$sanitizer
         cmake --build "$WORK/$sanitizer" -j"$JOBS"
-        for t in test_video test_sensors test_sync; do
+        for t in test_video test_controls test_sensors test_sync test_stress; do
             "$WORK/$sanitizer/tests/$t" --gtest_filter=-Setup.*
         done
         echo "::endgroup::"
