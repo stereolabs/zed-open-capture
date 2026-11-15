@@ -709,10 +709,14 @@ bool VideoCapture::finalizeInit()
     {
         if( checked )
         {
+#ifdef SENSORS_MOD_AVAILABLE
             const int sn = mSerialNumber;
+#endif
             close();
 
-#ifdef SENSORS_MOD_AVAILABLE
+#ifndef SENSORS_MOD_AVAILABLE
+            (void)mRecovering; // The camera can only be restarted through its sensors module
+#else
             // An image sensor that still does not answer stays in this state until the camera is restarted: closing
             // and opening again, or resetting the USB connection, do not recover it. The restart is requested to the
             // sensors module of the camera, if it is not in use.
