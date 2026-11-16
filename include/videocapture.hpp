@@ -491,7 +491,8 @@ private:
     int ll_write_system_register_checked(uint64_t address, uint8_t value); //!< Write, read back and repeat if needed
     int ll_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t *value);
     int ll_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value);
-    int ll_write_sensor_register_checked(int side, uint64_t address, uint8_t value); //!< Write, read back and repeat if needed
+    int ll_check_sensor_answers(int side); //!< 0 if the image sensor returns its chip ID
+    int ll_access_sensor_registers(int side, const uint16_t* address, uint8_t* value, int count, bool write); //!< Read or write (with read back) while the sensor answers
     bool waitSensorsReady(int timeout_msec);
 
     int ll_isp_aecagc_enable(int side, bool enable);

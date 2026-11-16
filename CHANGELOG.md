@@ -77,6 +77,7 @@ application: see **API changes** at the end of this section before updating an e
 
 * Video
   * Fix the camera settings that were intermittently not applied, or read with a wrong value, more often on the left sensor and on computers with a fast USB connection. The camera needs up to a few milliseconds to execute a command on the image sensors, but the library sent the next command, or read the result, after a fixed time of 0.3 milliseconds. Every command now waits for the completion reported by the camera
+  * ZED 2 and ZED 2i: fix gain and exposure of the left sensor that were not applied, or read with wrong values like an exposure of 95325, while the sensors module was sending data. The left sensor can stop answering for 0.5 to several seconds at a time: the access to gain and exposure is now verified and repeated until the sensor answers, for up to 6 seconds. `getGain()` and `getExposure()` return an error instead of a wrong value if it does not answer
   * Fix the image that became black when the two sensors received different exposure values above the limit of the video mode, e.g. above 76 at HD720 and 30 FPS. The exposure cannot be longer than a frame: the values above the limit are now reduced to it, and `getExposure()` returns the value really applied
   * Fix `setHue()`, that was always refused by the camera because of its automatic hue control. The automatic control is now disabled by `setHue()` and restored by `resetHue()`
   * Fix the manual white balance that could be refused right after the automatic white balance was disabled
