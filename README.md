@@ -364,21 +364,6 @@ At VGA resolution all the frames are received. At higher resolutions the USB hos
 
 The IMU is received at full rate with every video mode (this ZED 2 provides 396 samples per second), with less than 1% of lost samples. *Synced frames* are the frames that received the timestamp of the IMU sample acquired with their hardware sync signal.
 
-### Depth generation
-
-| Resolution | Depth map | Convert [ms] | Rectify [ms] | Matching [ms] | Depth [ms] | Total [ms] | Depth FPS | CPU |
-|---|---|---|---|---|---|---|---|---|
-| HD2K @ 15 FPS | 2208x1242 | 9.8 | 44.8 | 5048.0 | 17.6 | 5120.1 | 0.2 | 219% |
-| HD2K @ 15 FPS | 1104x621 | 12.7 | 14.1 | 1068.7 | 5.4 | 1100.9 | 0.9 | 213% |
-| HD1080 @ 30 FPS | 1920x1080 | 7.7 | 49.0 | 3633.9 | 15.1 | 3705.7 | 0.3 | 224% |
-| HD1080 @ 30 FPS | 960x540 | 10.5 | 10.8 | 741.7 | 4.0 | 767.0 | 1.3 | 215% |
-| HD720 @ 30 FPS | 1280x720 | 4.0 | 19.2 | 1518.4 | 6.3 | 1547.8 | 0.6 | 212% |
-| HD720 @ 30 FPS | 640x360 | 5.2 | 6.0 | 294.2 | 2.1 | 307.5 | 3.2 | 211% |
-| VGA @ 30 FPS | 672x376 | 1.0 | 6.3 | 299.1 | 1.9 | 308.3 | 3.2 | 228% |
-| VGA @ 30 FPS | 336x188 | 1.6 | 3.0 | 37.8 | 0.5 | 42.9 | 22.9 | 212% |
-
-For each resolution the first row is the depth map at full size (`matchScale` 1.0) and the second row at half size (`matchScale` 0.5, the default). On a Raspberry Pi 4 use the VGA resolution with the default settings to get the depth map in real time (about 23 FPS), or a 640x360 depth map at about 3 FPS when more detail is required.
-
 ### Other values
 
 | | Raspberry Pi 4 | Jetson AGX Thor |
@@ -388,7 +373,6 @@ For each resolution the first row is the depth map at full size (`matchScale` 1.
 | IMU latency (acquisition to application) | 0.7 - 1.0 ms | less than 0.5 ms |
 | Distance between frame timestamp and hardware sync signal, without synchronization | 0.7 ms (median), 5 ms (99%) | 1 ms (median), 2 ms (99%) |
 | Build time of library, examples and tests | about 2 minutes | not measured |
-| Depth map 640x360 from HD720 | 3.2 FPS | 26 FPS (30 FPS with `taskset`, see the benchmarks page) |
 
 Run `zed_open_capture_benchmark` to get the same tables for your computer:
 
