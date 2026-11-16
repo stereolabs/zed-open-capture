@@ -23,10 +23,6 @@
 //
 //   zed_open_capture_benchmark                     all the measures, results as Markdown tables
 //   zed_open_capture_benchmark --video --sensors   only the selected measures
-//   zed_open_capture_benchmark --record f.raw --res HD720 --frames 10
-//   zed_open_capture_benchmark --replay f.raw --par blockSize=5 --out /tmp/test
-//
-// The last two commands are used to compare stereo matching parameters on the same images.
 
 #include <algorithm>
 #include <atomic>
@@ -35,7 +31,6 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
-#include <map>
 #include <string>
 #include <thread>
 #include <vector>
@@ -52,7 +47,6 @@
 #include "calibration.hpp"
 #include "stereo.hpp"
 #include "depth.hpp"
-#include "cloud_viewer.hpp"
 
 using namespace sl_oc;
 
@@ -110,10 +104,6 @@ struct Options
     bool video = false, sensors = false, depth = false;
     double duration = 5.0;
     int devId = -1;
-    std::string record, replay, out;
-    std::string resName = "HD720";
-    int frames = 10;
-    std::map<std::string,std::string> par;
 };
 
 video::VideoParams makeParams(const Mode& mode)
@@ -344,61 +334,11 @@ void benchSensors(const Options& opt)
 #endif
 }
 
-//! Apply `name=value` overrides to the stereo parameters
-void applyPar(tools::StereoSgbmPar& par, const std::map<std::string,std::string>& values)
-{
-    bool customP = false;
-    for(const auto& kv : values)
-    {
-        const double v = atof(kv.second.c_str());
-        if(kv.first=="blockSize") par.blockSize = static_cast<int>(v);
-        else if(kv.first=="minDisparity") par.minDisparity = static_cast<int>(v);
-        else if(kv.first=="numDisparities") par.numDisparities = static_cast<int>(v);
-        else if(kv.first=="mode") par.mode = static_cast<int>(v);
-        else if(kv.first=="disp12MaxDiff") par.disp12MaxDiff = static_cast<int>(v);
-        else if(kv.first=="preFilterCap") par.preFilterCap = static_cast<int>(v);
-        else if(kv.first=="uniquenessRatio") par.uniquenessRatio = static_cast<int>(v);
-        else if(kv.first=="speckleWindowSize") par.speckleWindowSize = static_cast<int>(v);
-        else if(kv.first=="speckleRange") par.speckleRange = static_cast<int>(v);
-        else if(kv.first=="minDepth_mm") par.minDepth_mm = v;
-        else if(kv.first=="maxDepth_mm") par.maxDepth_mm = v;
-        else if(kv.first=="matchScale") par.matchScale = v;
-        else if(kv.first=="medianSize") par.medianSize = static_cast<int>(v);
-        else if(kv.first=="refineRectification") par.refineRectification = static_cast<int>(v);
-        else if(kv.first=="P1" || kv.first=="P2" || kv.first=="p1Factor" || kv.first=="p2Factor") customP = true;
-        else std::cerr << "Unknown parameter: " << kv.first << std::endl;
-    }
-
-    // The penalties follow the block size, unless explicitly set
-    par.P1 = tools::P1_FACTOR*par.blockSize*par.blockSize;
-    par.P2 = tools::P2_FACTOR*par.blockSize*par.blockSize;
-    if(customP)
-    {
-        if(values.count("p1Factor")) par.P1 = atoi(values.at("p1Factor").c_str())*par.blockSize*par.blockSize;
-        if(values.count("p2Factor")) par.P2 = atoi(values.at("p2Factor").c_str())*par.blockSize*par.blockSize;
-        if(values.count("P1")) par.P1 = atoi(values.at("P1").c_str());
-        if(values.count("P2")) par.P2 = atoi(values.at("P2").c_str());
-    }
-}
-
-//! Percentage of pixels with a valid depth
-double validPercent(const cv::Mat& depth)
-{
-    int valid = 0;
-    for(int r=0; r<depth.rows; r++)
-    {
-        const float* d = depth.ptr<float>(r);
-        for(int c=0; c<depth.cols; c++)
-            if(d[c]==d[c]) valid++;
-    }
-    return 100.*valid/static_cast<double>(depth.total());
-}
-
 void benchDepth(const Options& opt)
 {
     printf("\n### Depth generation\n\n");
-    printf("| Resolution | Depth map | Convert [ms] | Rectify [ms] | Matching [ms] | Depth [ms] | Total [ms] | Depth FPS | Valid pixels | CPU | Refine [ms] |\n");
-    printf("|---|---|---|---|---|---|---|---|---|---|---|\n");
+    printf("| Resolution | Depth map | Convert [ms] | Rectify [ms] | Matching [ms] | Depth [ms] | Total [ms] | Depth FPS | CPU |\n");
+    printf("|---|---|---|---|---|---|---|---|---|\n");
 
     const Mode* depthModes[] = {&kModes[0], &kModes[1], &kModes[3], &kModes[5]};
 
@@ -419,16 +359,14 @@ void benchDepth(const Options& opt)
 
             // Default parameters, to get comparable results
             tools::StereoSgbmPar par;
-            applyPar(par, opt.par);
             par.matchScale = scale;
 
             tools::StereoDepth depth;
             if(!depth.init(calibration_file, cv::Size(w/2,h), par))
                 return;
 
-            // The first frames include the refinement of the rectification
+            // The first frames are not measured: memory allocation
             uint64_t lastTs = 0;
-            double refine_ms = 0;
             for(int i=0; i<3; )
             {
                 const video::Frame& frame = cap.getLastFrame(500);
@@ -436,12 +374,10 @@ void benchDepth(const Options& opt)
                     continue;
                 lastTs = frame.timestamp;
                 depth.compute(frame.data, frame.width, frame.height);
-                refine_ms = std::max(refine_ms, depth.timing().refine_ms);
                 i++;
             }
 
             tools::StereoDepth::Timing sum;
-            double valid = 0;
             int frames = 0;
 
             const double cpu0 = cpuSec();
@@ -459,258 +395,24 @@ void benchDepth(const Options& opt)
                 sum.rectify_ms += depth.timing().rectify_ms;
                 sum.match_ms += depth.timing().match_ms;
                 sum.depth_ms += depth.timing().depth_ms;
-                valid += validPercent(depth.depth());
                 frames++;
             }
             const double elapsed = nowSec()-start;
 
-            printf("| %s @ %d FPS | %dx%d | %.1f | %.1f | %.1f | %.1f | %.1f | %.1f | %.0f%% | %.0f%% | %.0f |\n", mode->name, cap.getFps(),
+            printf("| %s @ %d FPS | %dx%d | %.1f | %.1f | %.1f | %.1f | %.1f | %.1f | %.0f%% |\n", mode->name, cap.getFps(),
                    depth.depthSize().width, depth.depthSize().height, sum.convert_ms/frames, sum.rectify_ms/frames,
-                   sum.match_ms/frames, sum.depth_ms/frames, sum.total()/frames, frames/elapsed, valid/frames,
-                   100.*(cpuSec()-cpu0)/elapsed, refine_ms);
+                   sum.match_ms/frames, sum.depth_ms/frames, sum.total()/frames, frames/elapsed,
+                   100.*(cpuSec()-cpu0)/elapsed);
             fflush(stdout);
         }
     }
 
-    printf("\n*Depth FPS*: depth maps per second, including the image acquisition. *Valid pixels*: pixels with a depth "
-           "in the configured range, it depends on the scene. *CPU*: 100%% is one core fully used. *Refine*: time of the "
-           "refinement of the rectification, executed on the first two frames and then once every 300 frames, not included in the total.\n");
+    printf("\n*Depth FPS*: depth maps per second, including the image acquisition. *CPU*: 100%% is one core fully used.\n");
 }
-
-// ----> Tuning utilities: the same raw frames are processed with different parameters
-struct RawHeader
-{
-    char magic[8];
-    int32_t width, height, count, serial;
-};
-
-int recordFrames(const Options& opt)
-{
-    Mode mode = kModes[3];
-    for(const Mode& m : kModes)
-        if(opt.resName==m.name && static_cast<int>(m.fps)<=30) mode = m;
-    if(opt.resName=="HD2K") mode = kModes[0];
-
-    video::VideoCapture cap(makeParams(mode));
-    if(!cap.initializeVideo(opt.devId))
-        return EXIT_FAILURE;
-
-    // Let the automatic exposure settle
-    const double start = nowSec();
-    while(nowSec()-start < 2.0)
-        cap.getLastFrame(500);
-
-    std::ofstream file(opt.record, std::ios::binary);
-    RawHeader header;
-    memset(&header, 0, sizeof(header));
-    memcpy(header.magic, "ZEDOCRAW", 8);
-    int w=0, h=0;
-    cap.getFrameSize(w, h);
-    header.width = w;
-    header.height = h;
-    header.count = opt.frames;
-    header.serial = cap.getSerialNumber();
-    file.write(reinterpret_cast<const char*>(&header), sizeof(header));
-
-    uint64_t lastTs = 0;
-    for(int i=0; i<opt.frames; )
-    {
-        const video::Frame& frame = cap.getLastFrame(500);
-        if(frame.data==nullptr || frame.timestamp==lastTs)
-            continue;
-        lastTs = frame.timestamp;
-        file.write(reinterpret_cast<const char*>(frame.data), static_cast<std::streamsize>(w)*h*2);
-        i++;
-    }
-
-    printf("Saved %d frames %dx%d of camera %d to %s\n", opt.frames, w, h, header.serial, opt.record.c_str());
-    return file.good() ? EXIT_SUCCESS : EXIT_FAILURE;
-}
-
-int replayFrames(const Options& opt)
-{
-    std::ifstream file(opt.replay, std::ios::binary);
-    RawHeader header;
-    if(!file.read(reinterpret_cast<char*>(&header), sizeof(header)) || memcmp(header.magic, "ZEDOCRAW", 8)!=0)
-    {
-        std::cerr << "Not a recording: " << opt.replay << std::endl;
-        return EXIT_FAILURE;
-    }
-
-    const size_t frameSize = static_cast<size_t>(header.width)*header.height*2;
-    std::vector<std::vector<uint8_t>> frames(header.count, std::vector<uint8_t>(frameSize));
-    for(std::vector<uint8_t>& f : frames)
-        file.read(reinterpret_cast<char*>(f.data()), static_cast<std::streamsize>(frameSize));
-
-    std::string calibration_file;
-    if(!tools::downloadCalibrationFile(static_cast<unsigned int>(header.serial), calibration_file))
-        return EXIT_FAILURE;
-
-    tools::StereoSgbmPar par;
-    applyPar(par, opt.par);
-
-    tools::StereoDepth depth;
-    if(!depth.init(calibration_file, cv::Size(header.width/2, header.height), par))
-        return EXIT_FAILURE;
-
-    // ----> Matcher used to verify the disparity: right image as reference, obtained by mirroring the images
-    const cv::Size size = depth.depthSize();
-    const int minDisp = par.minDisparity;
-    const int numDisp = std::max(16, ((par.numDisparities+15)/16)*16);
-    // Its parameters are fixed, to compare different configurations with the same reference
-    const int checkBlock = 5;
-    cv::Ptr<cv::StereoSGBM> checker = cv::StereoSGBM::create(minDisp, numDisp, checkBlock, tools::P1_FACTOR*checkBlock*checkBlock,
-                                                              tools::P2_FACTOR*checkBlock*checkBlock, -1, 63, 10, 0, 0,
-                                                              cv::StereoSGBM::MODE_HH);
-    // <---- Matcher used to verify the disparity
-
-    double valid = 0, confirmed = 0, wrong = 0;
-    tools::StereoDepth::Timing sum;
-    std::vector<cv::Mat> disparities;
-
-    // The rectification is refined on the first frames
-    for(int i=0; i<2; i++)
-        depth.compute(frames.front().data(), header.width, header.height);
-    {
-        double offset=0, sx=0, sy=0;
-        depth.getRectificationCorrection(offset, sx, sy);
-        printf("rectification correction [px]: offset=%.2f, %.2f along the width, %.2f along the height\n", offset,
-               sx*size.width, sy*size.height);
-    }
-
-    for(const std::vector<uint8_t>& f : frames)
-    {
-        depth.compute(f.data(), header.width, header.height);
-        sum.convert_ms += depth.timing().convert_ms;
-        sum.rectify_ms += depth.timing().rectify_ms;
-        sum.match_ms += depth.timing().match_ms;
-        sum.depth_ms += depth.timing().depth_ms;
-        valid += validPercent(depth.depth());
-        disparities.push_back(depth.disparity().clone());
-
-        // Disparity of the right image
-        cv::Mat leftFlip, rightFlip, dispRight16, dispRight;
-        cv::flip(depth.leftGray(), leftFlip, 1);
-        cv::flip(depth.rightGray(), rightFlip, 1);
-        checker->compute(rightFlip, leftFlip, dispRight16);
-        cv::flip(dispRight16, dispRight, 1);
-
-        // A depth is confirmed if the two disparities agree within one pixel
-        int ok = 0, bad = 0;
-        for(int r=0; r<size.height; r++)
-        {
-            const float* dl = depth.disparity().ptr<float>(r);
-            const float* z = depth.depth().ptr<float>(r);
-            const short* dr = dispRight.ptr<short>(r);
-            for(int c=0; c<size.width; c++)
-            {
-                if(z[c]!=z[c])
-                    continue;
-                const int cr = static_cast<int>(std::lround(c-dl[c]));
-                if(cr<0 || dr[cr]<=0)
-                    continue; // Not visible by the right camera or not matched: unknown
-                if(std::fabs(dl[c]-dr[cr]/16.f)<=1.f) ok++;
-                else bad++;
-            }
-        }
-        confirmed += 100.*ok/static_cast<double>(size.area());
-        wrong += 100.*bad/static_cast<double>(size.area());
-    }
-
-    // ----> Temporal noise of a static scene: standard deviation of the disparity of each pixel
-    std::vector<double> noise;
-    if(disparities.size()>=3)
-    {
-        for(int r=0; r<size.height; r+=2)
-        {
-            for(int c=0; c<size.width; c+=2)
-            {
-                double s=0, s2=0;
-                bool all = true;
-                for(const cv::Mat& d : disparities)
-                {
-                    const float v = d.at<float>(r,c);
-                    if(v!=v) { all = false; break; }
-                    s += v; s2 += static_cast<double>(v)*v;
-                }
-                if(!all)
-                    continue;
-                const double n = static_cast<double>(disparities.size());
-                noise.push_back(std::sqrt(std::max(0., s2/n-(s/n)*(s/n))));
-            }
-        }
-    }
-    // <---- Temporal noise
-
-    const double n = static_cast<double>(frames.size());
-    printf("depth %dx%d valid=%.1f%% confirmed=%.1f%% wrong=%.2f%% noise[px] p50=%.3f p90=%.3f stable=%.1f%% | ms convert=%.1f rectify=%.1f match=%.1f depth=%.1f total=%.1f\n",
-           size.width, size.height, valid/n, confirmed/n, wrong/n, percentile(noise,0.5), percentile(noise,0.9),
-           100.*noise.size()*4./static_cast<double>(size.area()),
-           sum.convert_ms/n, sum.rectify_ms/n, sum.match_ms/n, sum.depth_ms/n, sum.total()/n);
-
-    // ----> Quality of the rectification: the same point must be on the same row of the two images
-    {
-        cv::Ptr<cv::ORB> orb = cv::ORB::create(4000, 1.2f, 4, 15, 0, 2, cv::ORB::HARRIS_SCORE, 31, 10);
-        std::vector<cv::KeyPoint> kl, kr;
-        cv::Mat dl, dr;
-        orb->detectAndCompute(depth.leftGray(), cv::noArray(), kl, dl);
-        orb->detectAndCompute(depth.rightGray(), cv::noArray(), kr, dr);
-        std::vector<double> dy;
-        if(!dl.empty() && !dr.empty())
-        {
-            std::vector<cv::DMatch> matches;
-            cv::BFMatcher(cv::NORM_HAMMING, true).match(dl, dr, matches);
-            for(const cv::DMatch& m : matches)
-            {
-                const cv::Point2f a = kl[m.queryIdx].pt, b = kr[m.trainIdx].pt;
-                if(m.distance<40 && a.x-b.x>-2 && a.x-b.x<numDisp+minDisp && std::fabs(a.y-b.y)<6)
-                {
-                    dy.push_back(a.y-b.y);
-                }
-            }
-        }
-        std::vector<double> ady;
-        for(double v : dy) ady.push_back(std::fabs(v));
-        printf("rectification: %zu matched points, vertical offset [px] median=%.2f |median|=%.2f p90=%.2f\n", dy.size(),
-               percentile(dy,0.5), percentile(ady,0.5), percentile(ady,0.9));
-    }
-    // <---- Quality of the rectification
-
-    if(!opt.out.empty())
-    {
-        cv::Mat image, left;
-        depth.getDepthImage(image);
-        depth.getLeftColor(frames.back().data(), left);
-        cv::imwrite(opt.out + "_depth.png", image);
-        cv::imwrite(opt.out + "_left.jpg", left);
-
-        // Point cloud seen from the side
-        cv::Mat cloud, colors, cloudImage;
-        depth.getPointCloud(cloud);
-        cv::resize(left, colors, cloud.size(), 0, 0, cv::INTER_AREA);
-        tools::CloudViewer viewer("Point Cloud", cv::Size(960, 540));
-        viewer.setView(0.5f, -0.25f, 0.8f);
-        viewer.render(cloud, colors, cloudImage);
-        cv::imwrite(opt.out + "_cloud.png", cloudImage);
-
-        // Rectified images side by side with horizontal lines, to verify the alignment
-        cv::Mat pair;
-        cv::hconcat(depth.leftGray(), depth.rightGray(), pair);
-        for(int r=20; r<pair.rows; r+=40)
-            cv::line(pair, cv::Point(0,r), cv::Point(pair.cols,r), cv::Scalar(255), 1);
-        cv::imwrite(opt.out + "_pair.jpg", pair);
-    }
-
-    return EXIT_SUCCESS;
-}
-// <---- Tuning utilities
 
 void usage()
 {
-    std::cout << "Usage: zed_open_capture_benchmark [--video] [--sensors] [--depth] [--duration <sec>] [--dev <id>]\n"
-                 "                                  [--par <name>=<value>]...\n"
-                 "       zed_open_capture_benchmark --record <file> [--res HD2K|HD1080|HD720|VGA] [--frames <n>]\n"
-                 "       zed_open_capture_benchmark --replay <file> [--par <name>=<value>]... [--out <prefix>]\n";
+    std::cout << "Usage: zed_open_capture_benchmark [--video] [--sensors] [--depth] [--duration <sec>] [--dev <id>]\n";
 }
 
 }
@@ -729,25 +431,8 @@ int main(int argc, char *argv[])
         else if(arg=="--depth") opt.depth = true;
         else if(arg=="--duration" && hasValue) opt.duration = atof(argv[++i]);
         else if(arg=="--dev" && hasValue) opt.devId = atoi(argv[++i]);
-        else if(arg=="--record" && hasValue) opt.record = argv[++i];
-        else if(arg=="--replay" && hasValue) opt.replay = argv[++i];
-        else if(arg=="--out" && hasValue) opt.out = argv[++i];
-        else if(arg=="--res" && hasValue) opt.resName = argv[++i];
-        else if(arg=="--frames" && hasValue) opt.frames = atoi(argv[++i]);
-        else if(arg=="--par" && hasValue)
-        {
-            const std::string kv = argv[++i];
-            const size_t eq = kv.find('=');
-            if(eq==std::string::npos) { usage(); return EXIT_FAILURE; }
-            opt.par[kv.substr(0,eq)] = kv.substr(eq+1);
-        }
         else { usage(); return arg=="--help" ? EXIT_SUCCESS : EXIT_FAILURE; }
     }
-
-    if(!opt.record.empty())
-        return recordFrames(opt);
-    if(!opt.replay.empty())
-        return replayFrames(opt);
 
     if(!opt.video && !opt.sensors && !opt.depth)
         opt.video = opt.sensors = opt.depth = true;

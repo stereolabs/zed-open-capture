@@ -366,16 +366,16 @@ The IMU is received at full rate with every video mode (this ZED 2 provides 396 
 
 ### Depth generation
 
-| Resolution | Depth map | Convert [ms] | Rectify [ms] | Matching [ms] | Depth [ms] | Total [ms] | Depth FPS | Valid pixels | CPU | Refine [ms] |
-|---|---|---|---|---|---|---|---|---|---|---|
-| HD2K @ 15 FPS | 2208x1242 | 9.8 | 44.8 | 5048.0 | 17.6 | 5120.1 | 0.2 | 56% | 219% | 656 |
-| HD2K @ 15 FPS | 1104x621 | 12.7 | 14.1 | 1068.7 | 5.4 | 1100.9 | 0.9 | 70% | 213% | 242 |
-| HD1080 @ 30 FPS | 1920x1080 | 7.7 | 49.0 | 3633.9 | 15.1 | 3705.7 | 0.3 | 55% | 224% | 403 |
-| HD1080 @ 30 FPS | 960x540 | 10.5 | 10.8 | 741.7 | 4.0 | 767.0 | 1.3 | 71% | 215% | 243 |
-| HD720 @ 30 FPS | 1280x720 | 4.0 | 19.2 | 1518.4 | 6.3 | 1547.8 | 0.6 | 68% | 212% | 314 |
-| HD720 @ 30 FPS | 640x360 | 5.2 | 6.0 | 294.2 | 2.1 | 307.5 | 3.2 | 69% | 211% | 187 |
-| VGA @ 30 FPS | 672x376 | 1.0 | 6.3 | 299.1 | 1.9 | 308.3 | 3.2 | 68% | 228% | 151 |
-| VGA @ 30 FPS | 336x188 | 1.6 | 3.0 | 37.8 | 0.5 | 42.9 | 22.9 | 62% | 212% | 113 |
+| Resolution | Depth map | Convert [ms] | Rectify [ms] | Matching [ms] | Depth [ms] | Total [ms] | Depth FPS | CPU |
+|---|---|---|---|---|---|---|---|---|
+| HD2K @ 15 FPS | 2208x1242 | 9.8 | 44.8 | 5048.0 | 17.6 | 5120.1 | 0.2 | 219% |
+| HD2K @ 15 FPS | 1104x621 | 12.7 | 14.1 | 1068.7 | 5.4 | 1100.9 | 0.9 | 213% |
+| HD1080 @ 30 FPS | 1920x1080 | 7.7 | 49.0 | 3633.9 | 15.1 | 3705.7 | 0.3 | 224% |
+| HD1080 @ 30 FPS | 960x540 | 10.5 | 10.8 | 741.7 | 4.0 | 767.0 | 1.3 | 215% |
+| HD720 @ 30 FPS | 1280x720 | 4.0 | 19.2 | 1518.4 | 6.3 | 1547.8 | 0.6 | 212% |
+| HD720 @ 30 FPS | 640x360 | 5.2 | 6.0 | 294.2 | 2.1 | 307.5 | 3.2 | 211% |
+| VGA @ 30 FPS | 672x376 | 1.0 | 6.3 | 299.1 | 1.9 | 308.3 | 3.2 | 228% |
+| VGA @ 30 FPS | 336x188 | 1.6 | 3.0 | 37.8 | 0.5 | 42.9 | 22.9 | 212% |
 
 For each resolution the first row is the depth map at full size (`matchScale` 1.0) and the second row at half size (`matchScale` 0.5, the default). On a Raspberry Pi 4 use the VGA resolution with the default settings to get the depth map in real time (about 23 FPS), or a 640x360 depth map at about 3 FPS when more detail is required.
 
@@ -400,20 +400,9 @@ zed_open_capture_benchmark --duration 20   # seconds for each measure, default 5
 
 ## Depth settings
 
-The depth example and the benchmark use the Semi-Global Block Matching algorithm of OpenCV on the CPU. The parameters are stored in `~/zed/settings/zed_oc_stereo.yaml`, created at the first start of `zed_open_capture_depth_example` and modified by `zed_open_capture_depth_tune_stereo`. The default values have been selected comparing the results on indoor scenes with a ZED Mini and a ZED 2: compared to the previous values the pixels with a wrong depth are less than half (from 15% to 5% in the most difficult scene) and the noise of the depth of a static scene is 2 to 3 times lower.
+The depth example and the benchmark use the Semi-Global Block Matching algorithm of OpenCV on the CPU. The parameters are stored in `~/zed/settings/zed_oc_stereo.yaml`, created at the first start of `zed_open_capture_depth_example` and modified by `zed_open_capture_depth_tune_stereo`.
 
-| Parameter | Default | Effect |
-|---|---|---|
-| `matchScale` | 0.5 | Size of the depth map relative to the camera image. 1.0 gives more detail but it is 4 to 8 times slower |
-| `numDisparities` | 96 | Disparity range in pixels of the depth map. A higher value measures closer objects (minimum distance = focal x baseline / numDisparities) and it is proportionally slower |
-| `blockSize` | 5 | Size of the matched block. Higher values give a smoother and more dense depth map with less detail |
-| `mode` | 2 | 2 (`MODE_SGBM_3WAY`) is the fastest on a Raspberry Pi 4. 3 (`MODE_HH4`) gives fewer wrong values on textured scenes, but more on repetitive patterns: it is as fast as mode 2 on a computer with many cores and 35-60% slower on a Raspberry Pi 4. 1 (`MODE_HH`) gives the best result (up to 60% less wrong values in our tests) but it is about 6 times slower |
-| `disp12MaxDiff` | 1 | Maximum difference in pixels accepted by the left-right consistency check. Higher values give a more dense depth map with more wrong values |
-| `uniquenessRatio` | 5 | Higher values remove uncertain matches |
-| `speckleWindowSize`, `speckleRange` | 255, 1 | Removal of small isolated regions |
-| `refineRectification` | 1 | Measures and corrects the vertical misalignment of the two images while running. A camera can show a misalignment of a few pixels after a shock or far from the calibration temperature |
-| `medianSize` | 0 | Median filter of the disparity map: 0 (disabled), 3 or 5 |
-| `minDepth_mm`, `maxDepth_mm` | 300, 10000 | Range of the valid depth values |
+`matchScale` (default 0.5) sets the size of the depth map relative to the camera image: 1.0 gives the depth map at full size, but it is 4 to 8 times slower. The other parameters are those of the OpenCV `StereoSGBM` matcher, described in [stereo.hpp](https://github.com/stereolabs/zed-open-capture/blob/master/examples/include/stereo.hpp).
 
 ## Documentation
 

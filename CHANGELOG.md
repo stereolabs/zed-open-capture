@@ -22,10 +22,8 @@ application: see **API changes** at the end of this section before updating an e
   * A warning is printed when the environmental and temperature sensors of the camera stop providing new data, a condition that `resetSensorModule()` recovers. The README describes when the camera does it and how to avoid it
 * Examples and tools
   * Add `zed_open_capture_benchmark`: it measures image, sensors and depth performance on the host and prints the results as Markdown tables. It does not need a display
-  * `zed_open_capture_benchmark` can also record a few frames and process them again with different stereo parameters (`--record`, `--replay`, `--par`), reporting quality and processing time of the depth map
-  * The depth example automatically corrects the vertical misalignment of the two images that a camera can show after a shock or far from the calibration temperature
   * Add `examples/include/cloud_viewer.hpp`: a point cloud viewer that only needs the core modules of OpenCV
-  * Add `examples/include/depth.hpp`: the depth extraction of the depth example as a class that can be reused in other applications, with depth map, point cloud and processing time of each step
+  * The processing of the depth example is in `examples/include/depth.hpp`, also used by the benchmark
 * Build
   * Add hardware tests based on GoogleTest (`-DBUILD_TESTS=ON`). They run on every connected camera, without a display, and check video, sensors and video/sensors synchronization
   * Add `test_controls`: every camera control is verified over its full range, including its effect on the image, in every video mode
@@ -57,13 +55,12 @@ application: see **API changes** at the end of this section before updating an e
   * Waiting for new data no longer uses polling
 * Depth example
   * Depth is extracted from grayscale images reduced before the rectification, and the color image is only converted for display: less processing for the same depth map
-  * New default matching parameters: on the test scenes the pixels with a wrong depth are less than half (from 15% to 5% in the most difficult scene), and the noise of the depth of a static scene is 2 to 3 times lower
   * The disparity is no longer used where the matching failed, and the distance range is applied to the depth map
   * The depth map is displayed with colors from red (near) to blue (far), and the depth of the central pixel is printed once per second
   * `zed_open_capture_depth_tune_stereo` uses the same images of the depth example, so the tuned parameters give the same result
   * Stereo parameters files saved by the previous versions are still loaded
   * The OpenCV Transparent API (OpenCL) is no longer used: the stereo matching of OpenCV does not support it
-  * New parameters `matchScale`, `medianSize`, `refineRectification`, `P1` and `P2` in the stereo parameters file
+  * New parameters `matchScale`, `P1` and `P2` in the stereo parameters file
 * Build
   * The library and the examples are now built with the C++17 standard. CMake v3.16 or newer is required
   * Compiler warnings are enabled for the library and the examples, that now build without warnings

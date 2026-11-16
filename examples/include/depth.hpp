@@ -36,7 +36,7 @@ namespace sl_oc {
 namespace tools {
 
 /*!
- * \brief The StereoDepth class extracts the depth map from the raw frames of the camera using only the CPU
+ * \brief The StereoDepth class contains the depth processing of the depth example, using only the CPU
  *
  * The frame is converted to grayscale, reduced to the matching size, rectified and matched with the
  * Semi-Global Block Matching algorithm of OpenCV. Everything that is not required to get the depth, like the
@@ -53,9 +53,8 @@ public:
         double convert_ms = 0.;  //!< Grayscale conversion and resize
         double rectify_ms = 0.;  //!< Rectification of the two images
         double match_ms = 0.;    //!< Stereo matching
-        double depth_ms = 0.;    //!< Disparity filtering and depth extraction
-        double refine_ms = 0.;   //!< Refinement of the rectification: only on the first frames, then once every 300 frames
-        double total() const { return convert_ms+rectify_ms+match_ms+depth_ms+refine_ms; }
+        double depth_ms = 0.;    //!< Depth extraction
+        double total() const { return convert_ms+rectify_ms+match_ms+depth_ms; }
     };
 
     /*!
@@ -99,12 +98,6 @@ public:
         reduceMap(map_right_y, ry);
         cv::convertMaps(lx, ly, mLeftMap1, mLeftMap2, CV_16SC2);
         cv::convertMaps(rx, ry, mRightMap1, mRightMap2, CV_16SC2);
-
-        // The right maps are modified by the refinement of the rectification
-        mRightMapX = rx;
-        mRightMapY = ry;
-        mAlign[0] = mAlign[1] = mAlign[2] = 0.;
-        mFrameCount = 0;
         // <---- Rectification maps
 
         // ----> Camera parameters of the depth map
@@ -175,18 +168,6 @@ public:
         cv::remap(right_raw, mRightRect, mRightMap1, mRightMap2, cv::INTER_LINEAR);
         // <---- Rectification
 
-        const Clock::time_point t2a = Clock::now();
-
-        // ----> Refinement of the rectification
-        // On the first frames, then from time to time: the alignment of the cameras changes slowly
-        if( mPar.refineRectification!=0 && (mFrameCount<2 || mFrameCount%REFINE_PERIOD==0) )
-        {
-            if( refineRectification() )
-                cv::remap(right_raw, mRightRect, mRightMap1, mRightMap2, cv::INTER_LINEAR);
-        }
-        mFrameCount++;
-        // <---- Refinement of the rectification
-
         const Clock::time_point t2 = Clock::now();
 
         // Stereo matching: the result is a fixed point disparity with 4 fractional bits
@@ -195,11 +176,6 @@ public:
         const Clock::time_point t3 = Clock::now();
 
         // ----> Disparity and depth
-        if( mPar.medianSize==3 || mPar.medianSize==5 )
-        {
-            cv::medianBlur(mDisp16, mDisp16, mPar.medianSize);
-        }
-
         // The pixels without a valid match have a disparity lower than the minimum
         mDisparity.create(mMatchSize, CV_32FC1);
         mDepth.create(mMatchSize, CV_32FC1);
@@ -240,8 +216,7 @@ public:
         const Clock::time_point t4 = Clock::now();
 
         mTiming.convert_ms = std::chrono::duration<double,std::milli>(t1-t0).count();
-        mTiming.rectify_ms = std::chrono::duration<double,std::milli>(t2a-t1).count();
-        mTiming.refine_ms = std::chrono::duration<double,std::milli>(t2-t2a).count();
+        mTiming.rectify_ms = std::chrono::duration<double,std::milli>(t2-t1).count();
         mTiming.match_ms = std::chrono::duration<double,std::milli>(t3-t2).count();
         mTiming.depth_ms = std::chrono::duration<double,std::milli>(t4-t3).count();
 
@@ -322,143 +297,6 @@ public:
         });
     }
 
-    /*!
-     * \brief Measure the vertical alignment of the last rectified images and correct the rectification
-     *
-     * The stereo matching searches the same point on the same row of the two images. A camera that received a shock, or
-     * that is used at a temperature far from the calibration one, can show a misalignment of a few pixels that makes the
-     * depth map sparse and noisy. The misalignment is measured by matching the details of the two images and it is
-     * removed by moving the right image. It is automatically called by \ref compute if `refineRectification` is enabled.
-     *
-     * \return true if the rectification has been modified
-     */
-    bool refineRectification()
-    {
-        if( !mInitialized || mLeftRect.empty() || mRightRect.empty() )
-            return false;
-
-        // ----> Matching of the details of the two images
-        cv::Ptr<cv::ORB> orb = cv::ORB::create(1500, 1.2f, 4, 15, 0, 2, cv::ORB::HARRIS_SCORE, 31, 10);
-        std::vector<cv::KeyPoint> kl, kr;
-        cv::Mat dl, dr;
-        orb->detectAndCompute(mLeftRect, cv::noArray(), kl, dl);
-        orb->detectAndCompute(mRightRect, cv::noArray(), kr, dr);
-        if( dl.rows<MIN_ALIGN_POINTS || dr.rows<MIN_ALIGN_POINTS )
-            return false;
-
-        std::vector<cv::DMatch> matches;
-        cv::BFMatcher(cv::NORM_HAMMING, true).match(dl, dr, matches);
-
-        // The same point is on the left in the right image, by a distance in the disparity range
-        const float maxDy = std::max(3.f, 0.012f*mMatchSize.height);
-        std::vector<cv::Point3d> pts; // x, y, vertical offset
-        for( const cv::DMatch& m : matches )
-        {
-            const cv::Point2f a = kl[m.queryIdx].pt, b = kr[m.trainIdx].pt;
-            const float dx = a.x-b.x, dy = a.y-b.y;
-            if( m.distance<40 && dx>mMinDisp-2 && dx<mMinDisp+mNumDisp && std::fabs(dy)<maxDy )
-                pts.push_back(cv::Point3d(a.x-0.5*mMatchSize.width, a.y-0.5*mMatchSize.height, dy));
-        }
-        // <---- Matching of the details of the two images
-
-        // ----> Robust estimation of the offset: constant, or changing linearly in the image if enough points
-        double coeff[3] = {0., 0., 0.};
-        double residual = 0.;
-        for( int iter=0; iter<6; iter++ )
-        {
-            if( static_cast<int>(pts.size())<MIN_ALIGN_POINTS )
-                return false;
-
-            const bool linear = static_cast<int>(pts.size())>=3*MIN_ALIGN_POINTS;
-            if( linear )
-            {
-                cv::Mat A(static_cast<int>(pts.size()), 3, CV_64F), B(static_cast<int>(pts.size()), 1, CV_64F), X;
-                for( int i=0; i<A.rows; i++ )
-                {
-                    A.at<double>(i,0) = 1.; A.at<double>(i,1) = pts[i].x; A.at<double>(i,2) = pts[i].y;
-                    B.at<double>(i,0) = pts[i].z;
-                }
-                if( !cv::solve(A, B, X, cv::DECOMP_SVD) )
-                    return false;
-                coeff[0] = X.at<double>(0); coeff[1] = X.at<double>(1); coeff[2] = X.at<double>(2);
-            }
-            else
-            {
-                std::vector<double> dy;
-                for( const cv::Point3d& p : pts ) dy.push_back(p.z);
-                std::nth_element(dy.begin(), dy.begin()+dy.size()/2, dy.end());
-                coeff[0] = dy[dy.size()/2]; coeff[1] = 0.; coeff[2] = 0.;
-            }
-
-            // Remove the points far from the model
-            double sum2 = 0.;
-            for( const cv::Point3d& p : pts )
-            {
-                const double r = p.z-(coeff[0]+coeff[1]*p.x+coeff[2]*p.y);
-                sum2 += r*r;
-            }
-            residual = std::sqrt(sum2/pts.size());
-            const double limit = std::max(0.5, 2.*residual);
-
-            std::vector<cv::Point3d> kept;
-            for( const cv::Point3d& p : pts )
-            {
-                if( std::fabs(p.z-(coeff[0]+coeff[1]*p.x+coeff[2]*p.y))<limit )
-                    kept.push_back(p);
-            }
-            if( kept.size()==pts.size() )
-                break;
-            pts.swap(kept);
-        }
-
-        if( static_cast<int>(pts.size())<MIN_ALIGN_POINTS || residual>1.0 )
-            return false;
-        // <---- Robust estimation of the offset
-
-        // Nothing to do if the images are already aligned
-        const double worst = std::fabs(coeff[0]) + std::fabs(coeff[1])*0.5*mMatchSize.width + std::fabs(coeff[2])*0.5*mMatchSize.height;
-        if( worst<0.1 )
-            return false;
-
-        // ----> Apply the correction to the rectification of the right image
-        // The estimations after the first ones are applied gradually
-        const double gain = mFrameCount<2 ? 1.0 : 0.5;
-        for( int i=0; i<3; i++ )
-            mAlign[i] += gain*coeff[i];
-
-        cv::Mat px(mMatchSize, CV_32FC1), py(mMatchSize, CV_32FC1);
-        for( int r=0; r<mMatchSize.height; r++ )
-        {
-            float* x = px.ptr<float>(r);
-            float* y = py.ptr<float>(r);
-            for( int c=0; c<mMatchSize.width; c++ )
-            {
-                const double dy = mAlign[0] + mAlign[1]*(c-0.5*mMatchSize.width) + mAlign[2]*(r-0.5*mMatchSize.height);
-                x[c] = static_cast<float>(c);
-                y[c] = static_cast<float>(r-dy);
-            }
-        }
-
-        cv::Mat rx, ry;
-        cv::remap(mRightMapX, rx, px, py, cv::INTER_LINEAR, cv::BORDER_REPLICATE);
-        cv::remap(mRightMapY, ry, px, py, cv::INTER_LINEAR, cv::BORDER_REPLICATE);
-        cv::convertMaps(rx, ry, mRightMap1, mRightMap2, CV_16SC2);
-        // <---- Apply the correction
-
-        return true;
-    }
-
-    /*!
-     * \brief Get the correction applied to the rectification of the right image
-     * \param offset vertical offset at the center of the depth map, in pixels of the depth map
-     * \param slope_x variation of the offset for each pixel along the horizontal direction
-     * \param slope_y variation of the offset for each pixel along the vertical direction
-     */
-    void getRectificationCorrection(double& offset, double& slope_x, double& slope_y) const
-    {
-        offset = mAlign[0]; slope_x = mAlign[1]; slope_y = mAlign[2];
-    }
-
     const cv::Mat& disparity() const { return mDisparity; } //!< Disparity in pixels of the depth map [CV_32FC1], NaN if not valid
     const cv::Mat& depth() const { return mDepth; }         //!< Depth in millimeters [CV_32FC1], NaN if not valid or out of range
     const cv::Mat& leftGray() const { return mLeftRect; }   //!< Rectified left image used for the matching [CV_8UC1]
@@ -516,13 +354,7 @@ private:
     double mBaseline = 0.;
     double mFx = 0., mFy = 0., mCx = 0., mCy = 0.;
 
-    static const int REFINE_PERIOD = 300;   // Frames between two refinements of the rectification
-    static const int MIN_ALIGN_POINTS = 40; // Minimum number of matched points to refine the rectification
-
     cv::Mat mLeftMap1, mLeftMap2, mRightMap1, mRightMap2; // Rectification maps at matching size
-    cv::Mat mRightMapX, mRightMapY;                       // Right rectification maps without corrections
-    double mAlign[3] = {0., 0., 0.};                      // Vertical offset of the right image: constant, x slope, y slope
-    int mFrameCount = 0;
     cv::Mat mColorMap1, mColorMap2;                       // Left rectification maps at full size
 
     cv::Ptr<cv::StereoSGBM> mMatcher;

@@ -45,18 +45,18 @@ The results depend on the computer, on the other running applications and, for t
 
 ### Depth generation
 
-| Resolution | Depth map | Convert [ms] | Rectify [ms] | Matching [ms] | Depth [ms] | Total [ms] | Depth FPS | Valid pixels | CPU | Refine [ms] |
-|---|---|---|---|---|---|---|---|---|---|---|
-| HD2K @ 15 FPS | 2208x1242 | 9.8 | 44.8 | 5048.0 | 17.6 | 5120.1 | 0.2 | 56% | 219% | 656 |
-| HD2K @ 15 FPS | 1104x621 | 12.7 | 14.1 | 1068.7 | 5.4 | 1100.9 | 0.9 | 70% | 213% | 242 |
-| HD1080 @ 30 FPS | 1920x1080 | 7.7 | 49.0 | 3633.9 | 15.1 | 3705.7 | 0.3 | 55% | 224% | 403 |
-| HD1080 @ 30 FPS | 960x540 | 10.5 | 10.8 | 741.7 | 4.0 | 767.0 | 1.3 | 71% | 215% | 243 |
-| HD720 @ 30 FPS | 1280x720 | 4.0 | 19.2 | 1518.4 | 6.3 | 1547.8 | 0.6 | 68% | 212% | 314 |
-| HD720 @ 30 FPS | 640x360 | 5.2 | 6.0 | 294.2 | 2.1 | 307.5 | 3.2 | 69% | 211% | 187 |
-| VGA @ 30 FPS | 672x376 | 1.0 | 6.3 | 299.1 | 1.9 | 308.3 | 3.2 | 68% | 228% | 151 |
-| VGA @ 30 FPS | 336x188 | 1.6 | 3.0 | 37.8 | 0.5 | 42.9 | 22.9 | 62% | 212% | 113 |
+| Resolution | Depth map | Convert [ms] | Rectify [ms] | Matching [ms] | Depth [ms] | Total [ms] | Depth FPS | CPU |
+|---|---|---|---|---|---|---|---|---|
+| HD2K @ 15 FPS | 2208x1242 | 9.8 | 44.8 | 5048.0 | 17.6 | 5120.1 | 0.2 | 219% |
+| HD2K @ 15 FPS | 1104x621 | 12.7 | 14.1 | 1068.7 | 5.4 | 1100.9 | 0.9 | 213% |
+| HD1080 @ 30 FPS | 1920x1080 | 7.7 | 49.0 | 3633.9 | 15.1 | 3705.7 | 0.3 | 224% |
+| HD1080 @ 30 FPS | 960x540 | 10.5 | 10.8 | 741.7 | 4.0 | 767.0 | 1.3 | 215% |
+| HD720 @ 30 FPS | 1280x720 | 4.0 | 19.2 | 1518.4 | 6.3 | 1547.8 | 0.6 | 212% |
+| HD720 @ 30 FPS | 640x360 | 5.2 | 6.0 | 294.2 | 2.1 | 307.5 | 3.2 | 211% |
+| VGA @ 30 FPS | 672x376 | 1.0 | 6.3 | 299.1 | 1.9 | 308.3 | 3.2 | 228% |
+| VGA @ 30 FPS | 336x188 | 1.6 | 3.0 | 37.8 | 0.5 | 42.9 | 22.9 | 212% |
 
-*Depth map*: the first row of each resolution uses `matchScale` 1.0, the second 0.5. *Depth FPS*: depth maps per second, including the image acquisition. *Valid pixels*: pixels with a depth in the configured range, it depends on the scene. *CPU*: 100% is one core fully used. *Refine*: time of the refinement of the rectification, executed on the first two frames and then once every 300 frames, not included in the total.
+*Depth map*: the first row of each resolution uses `matchScale` 1.0, the second 0.5. *Depth FPS*: depth maps per second, including the image acquisition. *CPU*: 100% is one core fully used.
 
 ### Comments
 
@@ -106,18 +106,18 @@ The results depend on the computer, on the other running applications and, for t
 
 ### Depth generation
 
-| Resolution | Depth map | Convert [ms] | Rectify [ms] | Matching [ms] | Depth [ms] | Total [ms] | Depth FPS | Valid pixels | CPU | Refine [ms] |
-|---|---|---|---|---|---|---|---|---|---|---|
-| HD2K @ 15 FPS | 2208x1242 | 1.5 | 3.3 | 188.7 | 0.5 | 194.0 | 5.1 | 64% | 357% | 100 |
-| HD2K @ 15 FPS | 1104x621 | 1.9 | 1.2 | 42.8 | 0.2 | 46.0 | 13.7 | 78% | 228% | 38 |
-| HD1080 @ 30 FPS | 1920x1080 | 1.2 | 2.5 | 140.5 | 0.4 | 144.5 | 6.3 | 63% | 329% | 73 |
-| HD1080 @ 30 FPS | 960x540 | 1.5 | 1.0 | 33.2 | 0.2 | 36.0 | 26.8 | 80% | 345% | 31 |
-| HD720 @ 30 FPS | 1280x720 | 0.5 | 1.4 | 60.0 | 0.2 | 62.1 | 15.9 | 79% | 362% | 47 |
-| HD720 @ 30 FPS | 640x360 | 0.6 | 0.6 | 13.6 | 0.1 | 15.0 | 26.0 | 79% | 142% | 22 |
-| VGA @ 30 FPS | 672x376 | 0.1 | 0.7 | 15.2 | 0.1 | 16.1 | 30.0 | 77% | 179% | 22 |
-| VGA @ 30 FPS | 336x188 | 0.2 | 0.5 | 3.3 | 0.0 | 4.0 | 29.9 | 69% | 42% | 15 |
+| Resolution | Depth map | Convert [ms] | Rectify [ms] | Matching [ms] | Depth [ms] | Total [ms] | Depth FPS | CPU |
+|---|---|---|---|---|---|---|---|---|
+| HD2K @ 15 FPS | 2208x1242 | 1.5 | 3.3 | 188.7 | 0.5 | 194.0 | 5.1 | 357% |
+| HD2K @ 15 FPS | 1104x621 | 1.9 | 1.2 | 42.8 | 0.2 | 46.0 | 13.7 | 228% |
+| HD1080 @ 30 FPS | 1920x1080 | 1.2 | 2.5 | 140.5 | 0.4 | 144.5 | 6.3 | 329% |
+| HD1080 @ 30 FPS | 960x540 | 1.5 | 1.0 | 33.2 | 0.2 | 36.0 | 26.8 | 345% |
+| HD720 @ 30 FPS | 1280x720 | 0.5 | 1.4 | 60.0 | 0.2 | 62.1 | 15.9 | 362% |
+| HD720 @ 30 FPS | 640x360 | 0.6 | 0.6 | 13.6 | 0.1 | 15.0 | 26.0 | 142% |
+| VGA @ 30 FPS | 672x376 | 0.1 | 0.7 | 15.2 | 0.1 | 16.1 | 30.0 | 179% |
+| VGA @ 30 FPS | 336x188 | 0.2 | 0.5 | 3.3 | 0.0 | 4.0 | 29.9 | 42% |
 
-*Depth map*: the first row of each resolution uses `matchScale` 1.0, the second 0.5. *Depth FPS*: depth maps per second, including the image acquisition. *Valid pixels*: pixels with a depth in the configured range, it depends on the scene. *CPU*: 100% is one core fully used. *Refine*: time of the refinement of the rectification, executed on the first two frames and then once every 300 frames, not included in the total.
+*Depth map*: the first row of each resolution uses `matchScale` 1.0, the second 0.5. *Depth FPS*: depth maps per second, including the image acquisition. *CPU*: 100% is one core fully used.
 
 ### Comments
 
@@ -137,7 +137,6 @@ The results depend on the computer, on the other running applications and, for t
  * Use `Frame::frame_id` or the frame timestamps to detect lost frames.
  * Read the IMU with `SensorCapture::getIMUData()` to receive all the samples.
  * For the depth, choose the camera resolution and `matchScale` according to the tables above. The other parameters that
-   change the processing time are `numDisparities` (the time is proportional to it) and `mode` (see the depth settings in
-   the README).
+   change the processing time are `numDisparities` (the time is proportional to it) and `mode`.
  * On a computer with many cores, keep the processing threads away from the core that serves the USB interrupts
    (see `/proc/interrupts`), for example with `taskset`.
