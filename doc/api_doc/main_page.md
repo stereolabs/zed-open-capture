@@ -115,8 +115,7 @@ A pkg-config file is also installed: `pkg-config --cflags --libs zed_open_captur
 
 ## Performance
 
-See \ref benchmarks for the frame rates, the sensors rates and the depth processing time measured on Raspberry Pi 4
-and NVIDIA Jetson AGX Thor.
+See \ref benchmarks for the frame rates and the sensors rates measured on Raspberry Pi 4 and NVIDIA Jetson AGX Thor.
 
 ## Local documentation
 

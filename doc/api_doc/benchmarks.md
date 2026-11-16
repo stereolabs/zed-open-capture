@@ -7,7 +7,7 @@ The tool does not need a display, so you can run it on your computer from a remo
     $ zed_open_capture_benchmark --depth         # only the selected measures: --video, --sensors, --depth
     $ zed_open_capture_benchmark --duration 20   # seconds for each measure, default 5
 
-The results depend on the computer, on the other running applications and, for the depth, on the scene.
+The results depend on the computer and on the other running applications.
 
 ## Raspberry Pi 4
 
@@ -43,21 +43,6 @@ The results depend on the computer, on the other running applications and, for t
 
 *Lost samples*: gaps in the IMU timestamps. *Latency*: time from the acquisition of a sample to its availability. *Synced frames*: frames that received the timestamp of the IMU sample acquired with their hardware sync signal. *CPU* includes the video stream, when active.
 
-### Depth generation
-
-| Resolution | Depth map | Convert [ms] | Rectify [ms] | Matching [ms] | Depth [ms] | Total [ms] | Depth FPS | CPU |
-|---|---|---|---|---|---|---|---|---|
-| HD2K @ 15 FPS | 2208x1242 | 9.8 | 44.8 | 5048.0 | 17.6 | 5120.1 | 0.2 | 219% |
-| HD2K @ 15 FPS | 1104x621 | 12.7 | 14.1 | 1068.7 | 5.4 | 1100.9 | 0.9 | 213% |
-| HD1080 @ 30 FPS | 1920x1080 | 7.7 | 49.0 | 3633.9 | 15.1 | 3705.7 | 0.3 | 224% |
-| HD1080 @ 30 FPS | 960x540 | 10.5 | 10.8 | 741.7 | 4.0 | 767.0 | 1.3 | 215% |
-| HD720 @ 30 FPS | 1280x720 | 4.0 | 19.2 | 1518.4 | 6.3 | 1547.8 | 0.6 | 212% |
-| HD720 @ 30 FPS | 640x360 | 5.2 | 6.0 | 294.2 | 2.1 | 307.5 | 3.2 | 211% |
-| VGA @ 30 FPS | 672x376 | 1.0 | 6.3 | 299.1 | 1.9 | 308.3 | 3.2 | 228% |
-| VGA @ 30 FPS | 336x188 | 1.6 | 3.0 | 37.8 | 0.5 | 42.9 | 22.9 | 212% |
-
-*Depth map*: the first row of each resolution uses `matchScale` 1.0, the second 0.5. *Depth FPS*: depth maps per second, including the image acquisition. *CPU*: 100% is one core fully used.
-
 ### Comments
 
  * **Images**: at VGA resolution all the frames are received up to 100 FPS. At higher resolutions the USB host of the
@@ -66,9 +51,6 @@ The results depend on the computer, on the other running applications and, for t
    The amount depends on the other activities of the system: at HD1080 and HD2K it changed from 8% to 20% in different runs.
  * **Sensors**: the IMU data are received at full rate, with or without the video stream. A few samples can be lost when
    the video stream is active (less than 0.1% up to 0.9%).
- * **Depth**: the stereo matching uses the 4 cores and it is the limit of the Raspberry Pi 4. A 336x188 depth map
-   (VGA resolution with `matchScale` 0.5) is generated at more than 20 FPS, a 640x360 or 672x376 depth map at about 3 FPS.
-   Higher resolutions are not suitable for real time.
 
 ## NVIDIA Jetson AGX Thor
 
@@ -104,27 +86,8 @@ The results depend on the computer, on the other running applications and, for t
 
 *Lost samples*: gaps in the IMU timestamps. *Latency*: time from the acquisition of a sample to its availability. *Synced frames*: frames that received the timestamp of the IMU sample acquired with their hardware sync signal. *CPU* includes the video stream, when active.
 
-### Depth generation
-
-| Resolution | Depth map | Convert [ms] | Rectify [ms] | Matching [ms] | Depth [ms] | Total [ms] | Depth FPS | CPU |
-|---|---|---|---|---|---|---|---|---|
-| HD2K @ 15 FPS | 2208x1242 | 1.5 | 3.3 | 188.7 | 0.5 | 194.0 | 5.1 | 357% |
-| HD2K @ 15 FPS | 1104x621 | 1.9 | 1.2 | 42.8 | 0.2 | 46.0 | 13.7 | 228% |
-| HD1080 @ 30 FPS | 1920x1080 | 1.2 | 2.5 | 140.5 | 0.4 | 144.5 | 6.3 | 329% |
-| HD1080 @ 30 FPS | 960x540 | 1.5 | 1.0 | 33.2 | 0.2 | 36.0 | 26.8 | 345% |
-| HD720 @ 30 FPS | 1280x720 | 0.5 | 1.4 | 60.0 | 0.2 | 62.1 | 15.9 | 362% |
-| HD720 @ 30 FPS | 640x360 | 0.6 | 0.6 | 13.6 | 0.1 | 15.0 | 26.0 | 142% |
-| VGA @ 30 FPS | 672x376 | 0.1 | 0.7 | 15.2 | 0.1 | 16.1 | 30.0 | 179% |
-| VGA @ 30 FPS | 336x188 | 0.2 | 0.5 | 3.3 | 0.0 | 4.0 | 29.9 | 42% |
-
-*Depth map*: the first row of each resolution uses `matchScale` 1.0, the second 0.5. *Depth FPS*: depth maps per second, including the image acquisition. *CPU*: 100% is one core fully used.
-
 ### Comments
 
- * **Depth**: with the heaviest configurations the depth frame rate is lower than the processing time allows, because
-   frames are lost while all the cores are busy. Keeping the application away from the core that serves the USB
-   interrupts (the first one on this computer) avoids it: with `taskset -c 4-13` the 640x360 depth map from HD720
-   reaches 29.7 FPS and the 1104x621 depth map from HD2K reaches 15 FPS (measured with a ZED Mini).
  * **Images**: a ZED Mini connected to the same USB hub lost up to 8% of the frames at HD2K and HD1080 in one of the
    runs, and none in the others: also on this computer the frames lost at the highest resolutions depend on the USB
    connection and on the system activity.
@@ -136,7 +99,5 @@ The results depend on the computer, on the other running applications and, for t
    available.
  * Use `Frame::frame_id` or the frame timestamps to detect lost frames.
  * Read the IMU with `SensorCapture::getIMUData()` to receive all the samples.
- * For the depth, choose the camera resolution and `matchScale` according to the tables above. The other parameters that
-   change the processing time are `numDisparities` (the time is proportional to it) and `mode`.
  * On a computer with many cores, keep the processing threads away from the core that serves the USB interrupts
    (see `/proc/interrupts`), for example with `taskset`.
