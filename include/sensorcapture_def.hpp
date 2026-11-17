@@ -31,8 +31,11 @@
 #define HUMID_SCALE_NEW (0.01f)         // FM >= V3.9
 #define HUMID_SCALE_OLD (1.0f/1024.0f)  // FW < v3.9
 
-#define TS_SCALE        (39062.5f)
 #define TEMP_NOT_VALID  (-27315)
+
+// A tick of the MCU timestamp lasts 39.0625 usec: [nsec] = ticks*TS_SCALE_NUM/TS_SCALE_DEN
+#define TS_SCALE_NUM    (78125ULL)
+#define TS_SCALE_DEN    (2ULL)
 
 #include "defines.hpp"
 
@@ -167,9 +170,6 @@ inline bool atLeast(const int &version_current, const ZED_M_FW &version_required
 // <---- FW versions
 
 
-#define NTP_ADJUST_CT 1
-const size_t TS_SHIFT_VAL_COUNT = 50; //!< Number of sensor data to use to update timestamp scaling
-
 }
 
 }
@@ -177,28 +177,20 @@ const size_t TS_SHIFT_VAL_COUNT = 50; //!< Number of sensor data to use to updat
 /*!
  * \brief Convert a wchar array to std::string
  * \param wstr the wchar array to be converted
- * \return
+ * \return the converted string, empty if `wstr` is null
  */
 inline std::string wstr2str( const wchar_t* wstr)
 {
-    if(wstr==NULL)
-        return std::string();
+    std::string str;
 
-    try
-    {
-        std::wstring ws( wstr );
-        std::string str( ws.begin(), ws.end() );
+    if(wstr==nullptr)
         return str;
-    }
-    catch(...)
-    {
-        std::cerr << "Failure reading USB data. Please install the udev rules available in the `udev` folder" << std::endl;
-        exit(-1);
-    }
 
-    return std::string();
+    // USB strings of the supported devices only contain ASCII characters
+    for( ; *wstr!=L'\0'; ++wstr )
+        str.push_back( (static_cast<unsigned long>(*wstr)<128UL) ? static_cast<char>(*wstr) : '?' );
+
+    return str;
 }
-
-
 
 #endif // SENSORCAPTURE_DEF_HPP

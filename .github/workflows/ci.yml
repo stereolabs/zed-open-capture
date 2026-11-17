@@ -1,0 +1,66 @@
+name: Build
+
+# Builds the library, the examples and the tests in every configuration. The hosted runners have no
+# camera: the hardware tests are built and started, but the cases that need a camera are skipped.
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.os }} / ${{ matrix.compiler }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            compiler: g++
+          - os: ubuntu-24.04
+            compiler: g++
+            sanitizers: 1
+          - os: ubuntu-24.04
+            compiler: clang++
+          # Same architecture of NVIDIA Jetson and Raspberry Pi
+          - os: ubuntu-24.04-arm
+            compiler: g++
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends build-essential clang cmake pkg-config \
+            libhidapi-libusb0 libhidapi-dev libopencv-dev libgtest-dev
+
+      - name: Build and check
+        env:
+          CXX: ${{ matrix.compiler }}
+          SANITIZERS: ${{ matrix.sanitizers || 0 }}
+        run: .github/scripts/check_without_camera.sh
+
+  # Single result to be used as required status check of the protected branch
+  build-check:
+    name: Build check
+    if: always()
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Verify the result of all the builds
+        env:
+          RESULT: ${{ needs.build.result }}
+        run: |
+          echo "Builds: $RESULT"
+          test "$RESULT" = "success"

@@ -471,6 +471,7 @@ void handleMouse(int event, int x, int y, int, void*)
 // Change active control
 void setActiveControl(sl_oc::video::VideoCapture &cap, CamControl control )
 {
+    (void)cap;
     activeControl = control;
 
     std::string ctrlStr;

@@ -25,6 +25,7 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <atomic>
 #include <thread>
 #include <mutex>
 
@@ -42,7 +43,7 @@ std::string imuTsStr;
 std::string imuAccelStr;
 std::string imuGyroStr;
 
-bool sensThreadStop=false;
+std::atomic<bool> sensThreadStop{false};
 uint64_t mcu_sync_ts=0;
 // <---- Global variables
 
@@ -100,7 +101,12 @@ int main(int argc, char *argv[])
     // <---- Create Sensors Capture
 
     // ----> Enable video/sensors synchronization
-    videoCap.enableSensorSync(&sensCap);
+    // Frames and sensors data always use the same clock. With the synchronization enabled each frame also takes
+    // the timestamp of the sensor data acquired with the hardware signal emitted by the camera for that frame.
+    if( !videoCap.enableSensorSync(&sensCap) )
+    {
+        std::cerr << "Cannot enable the video/sensors synchronization" << std::endl;
+    }
     // <---- Enable video/sensors synchronization
 
     // ----> Init OpenCV RGB frame
@@ -135,6 +141,9 @@ int main(int argc, char *argv[])
     // <---- Init OpenCV RGB frame
 
     uint64_t last_timestamp = 0;
+    uint64_t frame_count = 0;
+    double offset_sum = 0.;
+    int offset_count = 0;
 
     float frame_fps=0;
 
@@ -143,7 +152,7 @@ int main(int argc, char *argv[])
     {
         // ----> Get Video frame
         // Get last available frame
-        const sl_oc::video::Frame frame = videoCap.getLastFrame(1);
+        const sl_oc::video::Frame& frame = videoCap.getLastFrame(1);
 
         // If the frame is valid we can update it
         std::stringstream videoTs;
@@ -151,6 +160,7 @@ int main(int argc, char *argv[])
         {
             frame_fps = 1e9/static_cast<float>(frame.timestamp-last_timestamp);
             last_timestamp = frame.timestamp;
+            frame_count++;
 
             // ----> Conversion from YUV 4:2:2 to BGR for visualization
             cv::Mat frameYUV( frame.height, frame.width, CV_8UC2, frame.data);
@@ -184,13 +194,10 @@ int main(int argc, char *argv[])
             cv::putText( frameData, offsetStr.str().c_str(), cv::Point(10, 50),cv::FONT_HERSHEY_SIMPLEX, 0.35, cv::Scalar(241,240,236));
 
             // Average timestamp offset info (we wait at least 200 frames to be sure that offset is stable)
-            if( frame.frame_id>200 )
+            if( frame_count>200 )
             {
-                static double sum=0;
-                static int count=0;
-
-                sum += offset;
-                double avg_offset=sum/(++count);
+                offset_sum += offset;
+                double avg_offset=offset_sum/(++offset_count);
 
                 std::stringstream avgOffsetStr;
                 avgOffsetStr << std::fixed << std::setprecision(9) << std::showpos << "Avg timestamp offset: " << avg_offset << " sec";
@@ -232,9 +239,6 @@ int main(int argc, char *argv[])
 // Sensor acquisition runs at 400Hz, so it must be executed in a different thread
 void getSensorThreadFunc(sl_oc::sensors::SensorCapture* sensCap)
 {
-    // Flag to stop the thread
-    sensThreadStop = false;
-
     // Previous IMU timestamp to calculate frequency
     uint64_t last_imu_ts = 0;
 
@@ -242,10 +246,13 @@ void getSensorThreadFunc(sl_oc::sensors::SensorCapture* sensCap)
     while(!sensThreadStop)
     {
         // ----> Get IMU data
-        const sl_oc::sensors::data::Imu imuData = sensCap->getLastIMUData(2000);
+        // All the samples received after the previous call: no data is lost if the thread is slower than the sensor
+        const std::vector<sl_oc::sensors::data::Imu> imuQueue = sensCap->getIMUData(2000);
 
+        for( const sl_oc::sensors::data::Imu& imuData : imuQueue )
+        {
         // Process data only if valid
-        if(imuData.valid == sl_oc::sensors::data::Imu::NEW_VAL ) // Uncomment to use only data syncronized with the video frames
+        if(imuData.valid == sl_oc::sensors::data::Imu::NEW_VAL )
         {
             // ----> Data info to be displayed
             std::stringstream timestamp;
@@ -276,6 +283,7 @@ void getSensorThreadFunc(sl_oc::sensors::SensorCapture* sensCap)
             // <---- Timestamp of the synchronized data
 
             imuMutex.unlock();
+        }
         }
         // <---- Get IMU data
     }

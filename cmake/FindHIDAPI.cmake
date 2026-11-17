@@ -69,9 +69,9 @@ if("${HIDAPI_FIND_COMPONENTS}")
         list(REMOVE "${HIDAPI_FIND_COMPONENTS}" hidraw)
     endif()
 endif()
-if(NOT "${HIDAPI_FIND_COMPONENTS}")
+if(NOT HIDAPI_FIND_COMPONENTS)
     # Default to any
-    set("${HIDAPI_FIND_COMPONENTS}" any)
+    set(HIDAPI_FIND_COMPONENTS any)
 endif()
 
 # Ask pkg-config for hints

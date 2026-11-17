@@ -34,6 +34,11 @@
 // The main function
 int main(int argc, char *argv[])
 {
+    // ----> Silence unused warning
+    (void)argc;
+    (void)argv;
+    // <---- Silence unused warning
+
     // ----> Create Video Capture
     sl_oc::video::VideoParams params;
     params.res = sl_oc::video::RESOLUTION::HD720;
@@ -125,7 +130,7 @@ int main(int argc, char *argv[])
 
             f_count++;
             // Show frame
-            showImage( "Stream RGB", frameBGR, params.res );
+            sl_oc::tools::showImage( "Stream RGB", frameBGR, params.res );
         }
         else
         {

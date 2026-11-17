@@ -40,8 +40,19 @@ enum class SL_DEVICE {
     ZED_CBS,    //!< ZED new FW
     ZED_M_CBS,  //!< ZED Mini new FW
     ZED_2,      //!< ZED2
-    ZED_2i,      //!< ZED2
+    ZED_2i,     //!< ZED2i
     NONE
+};
+
+/*!
+ * \brief Description of a connected camera (see VideoCapture::getDeviceList)
+ */
+struct VideoDevice {
+    int dev_id = -1;                        //!< Id of the camera, to be used with VideoCapture::initializeVideo
+    std::string dev_name;                   //!< OS device name (e.g. `/dev/video0`)
+    SL_DEVICE model = SL_DEVICE::NONE;      //!< Camera model
+    int serial_number = -1;                 //!< Serial number, -1 if it cannot be read
+    int usb_speed = 0;                      //!< Speed of the USB connection in Mbps (480 for USB 2.0, 5000 for USB 3.0), 0 if unknown
 };
 
 /*!
@@ -136,11 +147,11 @@ struct UVCBuffer {
  */
 
 const unsigned char PRESET_GAMMA[9][16] = {
-    {7,14,29,54,66,78,89,103,114,123,139,154,183,206,228,254}, // gamma min
+    {7,14,29,54,66,78,89,103,114,123,139,154,183,206,228,254}, // gamma min/default
     {9,17,34,58,71,83,89,108,118,127,143,158,186,208,229,254},
     {10,20,38,63,75,88,99,112,123,132,147,162,189,210,230,254},
     {12,23,43,67,80,92,103,117,127,136,151,165,192,212,231,254},
-    {13,26,47,71,84,97,108,121,131,140,155,169,195,214,232,255}, // gamma middle/default
+    {13,26,47,71,84,97,108,121,131,140,155,169,195,214,232,255}, // gamma middle
     {18,32,54,80,93,106,117,130,140,149,164,177,202,219,236,255},
     {24,38,61,88,102,115,127,139,148,157,172,186,209,225,240,255},
     {29,44,68,97,111,124,136,147,157,166,181,194,215,230,243,255},

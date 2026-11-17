@@ -1,0 +1,72 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  references:
+    name: No internal references
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # This repository is public: files, commit messages, branch names and pull requests must not
+      # contain references to internal tools. The repository variable INTERNAL_REF_PATTERN can extend
+      # the default pattern with an extended regular expression.
+      - name: Search for internal references
+        env:
+          EXTRA_PATTERN: ${{ vars.INTERNAL_REF_PATTERN }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          BRANCH: ${{ github.head_ref || github.ref_name }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          pattern='linear\.app/'
+          if [ -n "$EXTRA_PATTERN" ]; then
+            pattern="$pattern|$EXTRA_PATTERN"
+          fi
+
+          failed=0
+          report() { echo "::error::Internal reference found in $1"; failed=1; }
+
+          if git grep -n -I -E "$pattern" -- . ; then report "the files listed above"; fi
+
+          if [ -n "$BASE_SHA" ]; then range="$BASE_SHA..HEAD"; else range="HEAD~1..HEAD"; fi
+          if git log --format='%H %s%n%b' "$range" | grep -n -E "$pattern"; then report "the commit messages"; fi
+
+          if echo "$BRANCH" | grep -q -i -E "$pattern"; then report "the branch name"; fi
+          if echo "$PR_TITLE" | grep -q -E "$pattern"; then report "the pull request title"; fi
+          if echo "$PR_BODY" | grep -q -E "$pattern"; then report "the pull request description"; fi
+
+          exit $failed
+
+  cppcheck:
+    name: Static analysis
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install cppcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends cppcheck
+
+      - name: Analyze the library
+        run: |
+          cppcheck --version
+          cppcheck --enable=warning,portability,performance --inline-suppr --error-exitcode=1 --std=c++17 \
+            -I include -I src --suppress=missingIncludeSystem --quiet src include
