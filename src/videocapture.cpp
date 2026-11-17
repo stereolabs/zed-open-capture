@@ -731,25 +731,18 @@ bool VideoCapture::finalizeInit()
                 const int verbose = mParams.verbose;
                 mParams.verbose = VERBOSITY::NONE; // The camera is not available while it restarts
 
+                // If the sensors module is in use, the camera cannot be restarted, but it can still start the image
+                // sensors by itself: the camera is opened again in both cases
+                const bool restarted = sensors::SensorCapture::resetSensorModule(sn);
+
+                // The pause between attempts avoids scanning the video devices continuously when opening fails fast:
+                // camera not enumerated yet, device busy, serial number not readable
                 bool recovered = false;
-                if( sensors::SensorCapture::resetSensorModule(sn) )
+                const uint64_t start = getSteadyTimestamp();
+                while( !recovered && getSteadyTimestamp()-start < RECOVERY_TIMEOUT_NSEC )
                 {
-                    const uint64_t start = getSteadyTimestamp();
-                    while( !recovered && getSteadyTimestamp()-start < RECOVERY_TIMEOUT_NSEC )
-                    {
-                        usleep(500000);
-                        recovered = initializeVideoBySerialNumber(sn);
-                    }
-                }
-                else
-                {
-                    // The sensors module is in use: the camera cannot be restarted, but it can still start the image
-                    // sensors by itself
-                    const uint64_t start = getSteadyTimestamp();
-                    while( !recovered && getSteadyTimestamp()-start < RECOVERY_TIMEOUT_NSEC )
-                    {
-                        recovered = initializeVideoBySerialNumber(sn);
-                    }
+                    usleep(500000);
+                    recovered = initializeVideoBySerialNumber(sn);
                 }
 
                 mParams.verbose = verbose;
@@ -757,7 +750,9 @@ bool VideoCapture::finalizeInit()
 
                 if( recovered )
                 {
-                    detail::log(mParams.verbose, VERBOSITY::WARNING, LOG_TAG, "Camera restarted, device '" + mDevName + "' opened");
+                    detail::log(mParams.verbose, VERBOSITY::WARNING, LOG_TAG,
+                                std::string(restarted ? "Camera restarted" : "Camera not restarted, the sensors module is not available") +
+                                ", device '" + mDevName + "' opened");
                     return true;
                 }
             }
