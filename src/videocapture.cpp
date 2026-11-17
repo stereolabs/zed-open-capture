@@ -64,6 +64,8 @@
 #define ADDR_CHIP_ID_H  0x300A
 #define ADDR_CHIP_ID_L  0x300B
 #define OV4689_CHIP_ID  0x4688
+#define SENSOR_ACCESS_TIMEOUT_NSEC 6000000000ULL // The left image sensor can stay unreachable for several seconds
+#define SENSOR_ACCESS_RETRY_USEC   10000
 
 #define XU_TASK_SET     0x50
 #define XU_TASK_GET     0x51
@@ -1365,57 +1367,117 @@ int VideoCapture::ll_isp_is_aecagc(int side) {
     return result;
 }
 
-int VideoCapture::ll_isp_get_gain(uint8_t *val, uint8_t sensorID) {
-    int hr = 0;
-    uint8_t buffL, buffM, buffH;
+int VideoCapture::ll_check_sensor_answers(int side)
+{
+    uint8_t hi=0, lo=0;
+    int hr = ll_read_sensor_register(side, 1, ADDR_CHIP_ID_H, &hi);
+    if( hr==0 )
+        hr = ll_read_sensor_register(side, 1, ADDR_CHIP_ID_L, &lo);
+    if( hr==0 && ((hi<<8)|lo)!=OV4689_CHIP_ID )
+        hr = -6;
+    return hr;
+}
 
-    hr += ll_read_sensor_register(sensorID, 1, ADDR_GAIN_H, &buffH);
-    hr += ll_read_sensor_register(sensorID, 1, ADDR_GAIN_M, &buffM);
-    hr += ll_read_sensor_register(sensorID, 1, ADDR_GAIN_L, &buffL);
+int VideoCapture::ll_access_sensor_registers(int side, const uint16_t* address, uint8_t* value, int count, bool write)
+{
+    // While the sensors module streams, the left image sensor does not answer for 0.5 s to several seconds at a
+    // time: reads return 0xff or 0x00, and writes are lost. The chip ID is read before and after the access: the
+    // access is valid only if both are right, otherwise it is repeated until the sensor answers again
+    uint8_t buff[8];
+    if( count<1 || count>8 )
+        return -2;
 
-    *val = buffL;
-    *(val + 1) = buffM;
-    *(val + 2) = buffH;
+    int hr = -6;
+    const uint64_t start = getSteadyTimestamp();
+    for(;;)
+    {
+        hr = ll_check_sensor_answers(side);
+        for( int i=0; i<count && hr==0; i++ )
+        {
+            if( write )
+                hr = ll_write_sensor_register(side, 1, address[i], value[i]);
+
+            // A single reply can also carry a wrong value: two reads must agree
+            uint8_t again = 0;
+            if( hr==0 )
+                hr = ll_read_sensor_register(side, 1, address[i], &buff[i]);
+            if( hr==0 )
+                hr = ll_read_sensor_register(side, 1, address[i], &again);
+            if( hr==0 && (again!=buff[i] || (write && buff[i]!=value[i])) )
+                hr = -6;
+        }
+        if( hr==0 )
+            hr = ll_check_sensor_answers(side);
+
+        if( hr==0 )
+        {
+            if( !write )
+                memcpy(value, buff, count);
+            return 0;
+        }
+
+        // The camera cannot be reached: waiting does not help
+        if( hr==-1 || hr==-3 || hr==-4 )
+            break;
+
+        if( getSteadyTimestamp()-start > SENSOR_ACCESS_TIMEOUT_NSEC )
+            break;
+
+        usleep(SENSOR_ACCESS_RETRY_USEC);
+    }
+
+    if( write )
+    {
+        ERROR_OUT(mParams.verbose, std::string("A setting has not been applied to the ") + (side==0?"left":"right") + " image sensor");
+    }
+    else
+    {
+        ERROR_OUT(mParams.verbose, std::string("A setting cannot be read from the ") + (side==0?"left":"right") + " image sensor");
+    }
+
+    return hr;
+}
+
+int VideoCapture::ll_isp_get_gain(uint8_t *val, uint8_t sensorID)
+{
+    const uint16_t address[3] = {ADDR_GAIN_H, ADDR_GAIN_M, ADDR_GAIN_L};
+    uint8_t buff[3] = {0, 0, 0};
+
+    const int hr = ll_access_sensor_registers(sensorID, address, buff, 3, false);
+
+    *val = buff[2];
+    *(val + 1) = buff[1];
+    *(val + 2) = buff[0];
 
     return hr;
 }
 
 int VideoCapture::ll_isp_set_gain(unsigned char ucGainH, unsigned char ucGainM, unsigned char ucGainL, int sensorID)
 {
-    int hr = 0;
-    hr += ll_write_sensor_register(sensorID, 1, ADDR_GAIN_H, ucGainH);
-    hr += ll_write_sensor_register(sensorID, 1, ADDR_GAIN_M, ucGainM);
-    hr += ll_write_sensor_register(sensorID, 1, ADDR_GAIN_L, ucGainL);
-    return hr;
+    const uint16_t address[3] = {ADDR_GAIN_H, ADDR_GAIN_M, ADDR_GAIN_L};
+    uint8_t value[3] = {ucGainH, ucGainM, ucGainL};
+    return ll_access_sensor_registers(sensorID, address, value, 3, true);
 }
 
 int VideoCapture::ll_isp_get_exposure(unsigned char *val, unsigned char sensorID)
 {
-    int hr = 0;
-    uint8_t buffL = 0;
-    uint8_t buffM = 0;
-    uint8_t buffH = 0;
+    const uint16_t address[3] = {ADDR_EXP_H, ADDR_EXP_M, ADDR_EXP_L};
+    uint8_t buff[3] = {0, 0, 0};
 
-    hr += ll_read_sensor_register(sensorID, 1, ADDR_EXP_H, (uint8_t*) & buffH);
-    usleep(10);
-    hr += ll_read_sensor_register(sensorID, 1, ADDR_EXP_M, (uint8_t*) & buffM);
-    usleep(10);
-    hr += ll_read_sensor_register(sensorID, 1, ADDR_EXP_L, (uint8_t*) & buffL);
+    const int hr = ll_access_sensor_registers(sensorID, address, buff, 3, false);
 
-    *val = buffL;
-    *(val + 1) = buffM;
-    *(val + 2) = buffH;
+    *val = buff[2];
+    *(val + 1) = buff[1];
+    *(val + 2) = buff[0];
 
     return hr;
 }
 
 int VideoCapture::ll_isp_set_exposure(unsigned char ucExpH, unsigned char ucExpM, unsigned char ucExpL, int sensorID)
 {
-    int hr = 0;
-    hr += ll_write_sensor_register(sensorID, 1, ADDR_EXP_H, ucExpH);
-    hr += ll_write_sensor_register(sensorID, 1, ADDR_EXP_M, ucExpM);
-    hr += ll_write_sensor_register(sensorID, 1, ADDR_EXP_L, ucExpL);
-    return hr;
+    const uint16_t address[3] = {ADDR_EXP_H, ADDR_EXP_M, ADDR_EXP_L};
+    uint8_t value[3] = {ucExpH, ucExpM, ucExpL};
+    return ll_access_sensor_registers(sensorID, address, value, 3, true);
 }
 
 void VideoCapture::ll_activate_sync()
