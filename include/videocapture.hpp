@@ -313,6 +313,8 @@ public:
     /*!
      * \brief Set the Gain value (disable Exposure and Gain control if active)
      * \note If the automatic control was active, the call blocks for 5 frame periods (see \ref setAECAGC)
+     * \note The value is read back. While the sensors module streams, the left sensor can stop answering for a few
+     *       seconds: the call then retries for up to 6 s, and logs an error if the value could not be applied
      * \param cam position of the camera sensor (see  CAM_SENS_POS)
      * \param gain Gain value in the range [0,100]
      */
@@ -321,13 +323,17 @@ public:
     /*!
      * \brief Get the current Gain value
      * \param cam position of the camera sensor (see  CAM_SENS_POS)
-     * \return the current Gain value
+     * \note While the sensors module streams, the left sensor can stop answering for a few seconds: the call then
+     *       retries for up to 6 s
+     * \return the current Gain value, or a negative value if it could not be read
      */
     int getGain(CAM_SENS_POS cam);
 
     /*!
      * \brief Set the Exposure value (disable Exposure and Gain control if active)
      * \note If the automatic control was active, the call blocks for 5 frame periods (see \ref setAECAGC)
+     * \note The value is read back. While the sensors module streams, the left sensor can stop answering for a few
+     *       seconds: the call then retries for up to 6 s, and logs an error if the value could not be applied
      * \param cam position of the camera sensor (see  CAM_SENS_POS)
      * \param exposure Exposure value in the range [0,100]
      */
@@ -336,7 +342,9 @@ public:
     /*!
      * \brief Get the current Exposure value
      * \param cam position of the camera sensor (see  CAM_SENS_POS)
-     * \return the current Exposure value
+     * \note While the sensors module streams, the left sensor can stop answering for a few seconds: the call then
+     *       retries for up to 6 s
+     * \return the current Exposure value, or a negative value if it could not be read
      */
     int getExposure(CAM_SENS_POS cam);
     // <---- Camera Settings control
@@ -419,6 +427,8 @@ private:
     int ll_read_sensor_register(int side, int sscb_id, uint64_t address, uint8_t *value);
     int ll_write_sensor_register(int side, int sscb_id, uint64_t address, uint8_t value);
     bool waitSensorsReady(int timeout_msec);
+    int ll_check_sensor_answers(int side); //!< 0 if the image sensor returns its chip ID
+    int ll_access_sensor_registers(int side, const uint16_t* address, uint8_t* value, int count, bool write); //!< Read or write (with read back) while the sensor answers
 
     int ll_SPI_FlashProgramRead(uint8_t *pBuf, int Adr, int len, bool force=false);
 
